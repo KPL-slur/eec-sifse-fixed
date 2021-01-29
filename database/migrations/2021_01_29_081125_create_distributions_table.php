@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTechnisiansTable extends Migration
+class CreateDistributionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateTechnisiansTable extends Migration
      */
     public function up()
     {
-        Schema::create('technisians', function (Blueprint $table) {
-            $table->id()->unique;
-            $table->string('name');
+        Schema::create('distributions', function (Blueprint $table) {
+            $table->id();
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ class CreateTechnisiansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('technisians');
+        Schema::dropIfExists('distributions');
     }
 }

@@ -14,7 +14,7 @@
             <div class="card-body">
                               <div class="row">
                 <div class="col-12 text-right">
-                  <a href="#" class="btn btn-sm btn-primary">Add Distribution</a>
+                  <a href="" class="btn btn-sm btn-primary">Add Distribution</a>
                 </div>
               </div>
               <div class="table-responsive">
@@ -45,7 +45,7 @@
                           2020-02-24
                         </td>
                         <td class="td-actions text-right">
-                              <a rel="tooltip" class="btn btn-success btn-link" href="#" data-original-title="" title="">
+                              <a rel="tooltip" class="btn btn-success btn-link" href="/distribution/add_distribution" data-original-title="" title="">
                                 <i class="material-icons">edit</i>
                                 <div class="ripple-container"></div>
                               </a>

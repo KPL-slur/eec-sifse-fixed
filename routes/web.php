@@ -53,10 +53,16 @@ Route::group(['middleware' => 'auth'], function () {
 		return view('pages.upgrade');
 	})->name('upgrade');
 
-	Route::get('distribution', function () {
-		return view('distribution.edit_distribution');
-	})->name('distribution');
+
 });
+
+//distribusi
+Route::get('distribution', function () {
+	return view('distribution.edit_distribution');
+})->name('distribution');
+
+
+
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
