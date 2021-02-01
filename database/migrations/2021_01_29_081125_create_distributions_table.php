@@ -15,6 +15,9 @@ class CreateDistributionsTable extends Migration
     {
         Schema::create('distributions', function (Blueprint $table) {
             $table->id();
+            $table->string('teknisi');
+            $table->string('tower');
+            $table->string('lokasi');
             $table->timestamps();
         });
     }

@@ -53,11 +53,10 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 //distribusi
-Route::get('distribution', function () {
-	return view('distribution.edit_distribution');
-})->name('distribution');
-
-
+Route::get('distribution', [App\Http\Controllers\DistributionController::class, 'index'])->name('distribution');
+Route::get('editDistribution', function() {
+	return view('distribution.edit');
+})->name('editDistribution');
 
 
 Route::group(['middleware' => 'auth'], function () {
