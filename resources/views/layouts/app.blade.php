@@ -19,10 +19,19 @@
     </head>
     <body class="{{ $class ?? '' }}">
         @auth()
+            @is_admin()
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
-            @include('layouts.page_templates.auth')
+            @include('layouts.page_templates.admin')
+            @endis_admin
+
+            {{-- NOT IS ADMIN BUT AUTH --}}
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+            @include('layouts.page_templates.tech')
+
         @endauth
         @guest()
             @include('layouts.page_templates.guest')
