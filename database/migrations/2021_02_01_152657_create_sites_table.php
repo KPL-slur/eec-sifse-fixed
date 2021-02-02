@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTowersTable extends Migration
+class CreateSitesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateTowersTable extends Migration
      */
     public function up()
     {
-        Schema::create('towers', function (Blueprint $table) {
-            $table->id()->unique;
-            $table->string('tower');
+        Schema::create('sites', function (Blueprint $table) {
+            $table->bigIncrements('site_id');
+            $table->string('site');
             $table->string('lokasi');
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ class CreateTowersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('towers');
+        Schema::dropIfExists('sites');
     }
 }
