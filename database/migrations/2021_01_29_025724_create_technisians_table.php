@@ -14,7 +14,7 @@ class CreateTechnisiansTable extends Migration
     public function up()
     {
         Schema::create('technisians', function (Blueprint $table) {
-            $table->bigIncrements('tech_id')->unique;
+            $table->bigIncrements('tech_id');
             $table->string('name');
             $table->timestamps();
         });

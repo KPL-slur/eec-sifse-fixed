@@ -62,9 +62,13 @@ Route::group(['middleware' => 'auth'], function () {
 
 //distribusi
 Route::get('distribution', [App\Http\Controllers\DistributionController::class, 'index'])->name('distribution');
-Route::get('editDistribution', function () {
-	return view('distribution.edit');
-})->name('editDistribution');
+Route::get('editDistribution/{id}', [App\Http\Controllers\DistributionController::class, 'edit']);
+Route::post('edit', [App\Http\Controllers\DistributionController::class, 'editData']);
+Route::get('deleteDistribution/{id}', [App\Http\Controllers\DistributionController::class, 'deleteData']);
+Route::get('addDistribution', function () {
+	return view('distribution.add');
+});
+
 
 
 Route::group(['middleware' => 'auth'], function () {
