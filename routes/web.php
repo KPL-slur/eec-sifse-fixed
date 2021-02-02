@@ -17,58 +17,84 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
 
 Auth::routes();
 
-Route::get('/tech', [App\Http\Controllers\TechController::class, 'index'])->name('tech');
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('is_admin');
-
+/*
+|--------------------------------------------------------------------------
+| USER/TECH/AUTH ROUTES
+|--------------------------------------------------------------------------
+|
+| Semua routes yang hanya bisa di akses oleh user
+| atau tech atau siapapun yang memiliki akun
+| tolong ditaro disini, karena pada route
+| ini digunakan middleware auth
+|
+*/
 Route::group(['middleware' => 'auth'], function () {
-	Route::get('table-list', function () {
-		return view('pages.table_list');
-	})->name('table');
-
-	Route::get('site', function () {
-		return view('pages.site');
-	})->name('site');
-
-	Route::get('typography', function () {
-		return view('pages.typography');
-	})->name('typography');
-
-	Route::get('icons', function () {
-		return view('pages.icons');
-	})->name('icons');
-
-	Route::get('map', function () {
-		return view('pages.map');
-	})->name('map');
-
-	Route::get('notifications', function () {
-		return view('pages.notifications');
-	})->name('notifications');
-
-	Route::get('rtl-support', function () {
-		return view('pages.language');
-	})->name('language');
-
-	Route::get('upgrade', function () {
-		return view('pages.upgrade');
-	})->name('upgrade');
+    Route::get('/tech', [App\Http\Controllers\TechController::class, 'index'])->name('tech');
 });
 
-//distribusi
-Route::get('distribution', [App\Http\Controllers\DistributionController::class, 'index'])->name('distribution');
-Route::get('editDistribution/{id}', [App\Http\Controllers\DistributionController::class, 'edit']);
-Route::post('edit', [App\Http\Controllers\DistributionController::class, 'editData']);
-Route::get('deleteDistribution/{id}', [App\Http\Controllers\DistributionController::class, 'deleteData']);
-Route::get('addDistribution', function () {
-	return view('distribution.add');
-});
+/*
+|--------------------------------------------------------------------------
+| ADMIN ROUTES
+|--------------------------------------------------------------------------
+|
+| Semua routes yang hanya bisa di akses oleh admin
+| tolong ditaro disini, karena pada route ini
+| digunakan middleware IsAdmin
+|
+*/
 
-//stock with currencies
-Route::get('stock_currency', [App\Http\Controllers\StockAndCurrencyController::class, 'index'])->name('stock_currency');
+Route::middleware(['auth', 'is_admin'])->group(function () {
+    //Halaman Pertama Admin
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::group(['middleware' => 'auth'], function () {
-	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
-	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
-	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
-	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
+    //Halman Statis Admin
+    //Nanti jgn lupa dihapus semua ini
+    Route::get('table-list', function () {
+        return view('pages.table_list');
+    })->name('table');
+
+    Route::get('site', function () {
+        return view('pages.site');
+    })->name('site');
+
+    Route::get('typography', function () {
+        return view('pages.typography');
+    })->name('typography');
+
+    Route::get('icons', function () {
+        return view('pages.icons');
+    })->name('icons');
+
+    Route::get('map', function () {
+        return view('pages.map');
+    })->name('map');
+
+    Route::get('notifications', function () {
+        return view('pages.notifications');
+    })->name('notifications');
+
+    Route::get('rtl-support', function () {
+        return view('pages.language');
+    })->name('language');
+
+    Route::get('upgrade', function () {
+        return view('pages.upgrade');
+    })->name('upgrade');
+
+    //distribusi
+    Route::get('distribution', [App\Http\Controllers\DistributionController::class, 'index'])->name('distribution');
+    Route::get('editDistribution/{id}', [App\Http\Controllers\DistributionController::class, 'edit']);
+    Route::post('edit', [App\Http\Controllers\DistributionController::class, 'editData']);
+    Route::get('deleteDistribution/{id}', [App\Http\Controllers\DistributionController::class, 'deleteData']);
+    Route::get('addDistribution', function () {
+        return view('distribution.add');
+    });
+    
+    //stock with currencies
+    Route::get('stock_currency', [App\Http\Controllers\StockAndCurrencyController::class, 'index'])->name('stock_currency');
+
+    Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
+    Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
+    Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
+    Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
