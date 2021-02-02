@@ -25,6 +25,16 @@ Route::group(['middleware' => 'auth'], function () {
 		return view('pages.table_list');
 	})->name('table');
 
+	Route::get('stock-currency', [App\Http\Controllers\StockAndCurrencyController::class, 'index'])->name('stock-currency');
+
+	Route::get('site', function () {
+		return view('pages.site');
+	})->name('site');
+
+	Route::get('stock-maintanance', function () {
+		return view('pages.stock-maintanance');
+	})->name('stock-maintanance');
+
 	Route::get('typography', function () {
 		return view('pages.typography');
 	})->name('typography');
@@ -48,13 +58,11 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('upgrade', function () {
 		return view('pages.upgrade');
 	})->name('upgrade');
-
-
 });
 
 //distribusi
 Route::get('distribution', [App\Http\Controllers\DistributionController::class, 'index'])->name('distribution');
-Route::get('editDistribution', function() {
+Route::get('editDistribution', function () {
 	return view('distribution.edit');
 })->name('editDistribution');
 
@@ -65,4 +73,3 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
-

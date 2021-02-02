@@ -47,10 +47,22 @@
           </ul>
         </div>
       </li>
+      <li class="nav-item{{ $activePage == 'site' ? ' active' : '' }}">
+        <a class="nav-link" href="{{ route('site') }}">
+          <i>S</i>
+            <p>{{ __('Sites') }}</p>
+        </a>
+      </li>
       <li class="nav-item{{ $activePage == 'table' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('table') }}">
           <i class="material-icons">content_paste</i>
             <p>{{ __('Table List') }}</p>
+        </a>
+      </li>
+      <li class="nav-item{{ $activePage == 'stock-currency' ? ' active' : '' }}">
+        <a class="nav-link" href="{{ route('stock-currency') }}">
+          <i class="material-icons">inventory_2</i>
+            <p>{{ __('Stocks & Currencies') }}</p>
         </a>
       </li>
     </ul>
