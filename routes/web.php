@@ -25,15 +25,9 @@ Route::group(['middleware' => 'auth'], function () {
 		return view('pages.table_list');
 	})->name('table');
 
-	Route::get('stock-currency', [App\Http\Controllers\StockAndCurrencyController::class, 'index'])->name('stock-currency');
-
 	Route::get('site', function () {
 		return view('pages.site');
 	})->name('site');
-
-	Route::get('stock-maintanance', function () {
-		return view('pages.stock-maintanance');
-	})->name('stock-maintanance');
 
 	Route::get('typography', function () {
 		return view('pages.typography');
@@ -69,7 +63,8 @@ Route::get('addDistribution', function () {
 	return view('distribution.add');
 });
 
-
+//stock with currencies
+Route::get('stock_currency', [App\Http\Controllers\StockAndCurrencyController::class, 'index'])->name('stock_currency');
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
