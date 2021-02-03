@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStocksAndCurrenciesTable extends Migration
+class CreateStocksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateStocksAndCurrenciesTable extends Migration
      */
     public function up()
     {
-        Schema::create('stocks_and_currencies', function (Blueprint $table) {
-            $table->id();
+        Schema::create('stocks', function (Blueprint $table) {
+            $table->bigIncrements('stock_id');
+            $table->foreignId('site_id');
             $table->string('nama_barang');
             $table->string('tgl_masuk');
+            $table->string('expired');
             $table->string('kurs_beli');
+            $table->integer('jumlah_unit');
             $table->timestamps();
         });
     }
@@ -29,6 +32,6 @@ class CreateStocksAndCurrenciesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stocks_and_currencies');
+        Schema::dropIfExists('stocks');
     }
 }
