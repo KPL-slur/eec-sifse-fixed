@@ -21,18 +21,22 @@
     <body class="{{ $class ?? '' }}">
         @auth()
             @is_admin()
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
-            @include('layouts.page_templates.admin')
+                {{-- @is_admin dibuat di app/AppServiceProvider.php --}}
+                {{-- ini admin --}}
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+                @include('layouts.page_templates.admin')
+
+                @else
+                    {{-- selain admin, berarti tech --}}
+                    {{-- NOT IS ADMIN BUT AUTH --}}
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                    @include('layouts.page_templates.tech')
+
             @endis_admin
-
-            {{-- NOT IS ADMIN BUT AUTH --}}
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
-            @include('layouts.page_templates.tech')
-
         @endauth
         @guest()
             @include('layouts.page_templates.guest')

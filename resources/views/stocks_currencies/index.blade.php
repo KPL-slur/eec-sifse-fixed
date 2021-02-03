@@ -5,9 +5,6 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <a class="btn btn-md btn-info text-right" href="#">Add Inventory</a>
-      </div>
-      <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-primary">
             <h4 class="card-title ">Table Inventory and Exchange Rate</h4>
@@ -16,7 +13,7 @@
           <div class="card-body">
             <p class="">Harga Kurs Sekarang : <span class="text-primary">$1000</span></p>
             <div class="text-right">
-              <a class="btn btn-sm btn-primary text-right" href="#">Add Inventory</a>
+              <a class="btn btn-sm btn-primary text-right" href="{{ route('stock_currency_create') }}">Add Inventory</a>
             </div>
             <div class="table-responsive">
               <table class="table">
@@ -25,6 +22,8 @@
                   <th>Nama Barang</th>
                   <th>Tanggal Masuk</th>
                   <th>Kurs Saat Membeli</th>
+                  <th>Sisa Stok</th>
+                  <th>Status</th>
                   <th class="text-center">Update or delete</th>
                 </thead>
                 <tbody>
@@ -34,8 +33,10 @@
                       <td>{{ $st->nama_barang }}</td>
                       <td>{{ $st->tgl_masuk }}</td>
                       <td>{{ $st->kurs_beli }}</td>
+                      <td>{{ $st->sisa_stok }}</td>
+                      <td>{{ $st->status }}</td>
                       <td class="td-actions text-center">
-                        <a rel="tooltip" class="btn btn-lg btn-success btn-link" href="#{{-- route('editDistribution') --}}" data-original-title="" title="">
+                        <a rel="tooltip" class="btn btn-lg btn-success btn-link" href="#" data-original-title="" title="">
                           <i class="material-icons">edit</i>
                           <div class="ripple-container"></div>
                         </a>

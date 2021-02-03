@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class StockAndCurrencyController extends Controller
+class StockController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,9 @@ class StockAndCurrencyController extends Controller
     public function index()
     {
         //
-        $stocks = DB::table('stocks_and_currencies')->get();
-
-        return view('stocks_currencies.stock_currency', ['stocks' => $stocks]);
+        $stocks = DB::table('stocks')->get();
+        
+        return view('stocks_currencies.index', ['stocks' => $stocks]);
     }
 
     /**
@@ -28,6 +28,7 @@ class StockAndCurrencyController extends Controller
     public function create()
     {
         //
+        return view('stocks_currencies.create');
     }
 
     /**

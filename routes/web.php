@@ -93,9 +93,10 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('inventorie', function(){
       return view('site.inventorie');
     });
-    
+
     //stock with currencies
-    Route::get('stock_currency', [App\Http\Controllers\StockAndCurrencyController::class, 'index'])->name('stock_currency');
+    Route::get('stock_currency', [App\Http\Controllers\StockController::class, 'index'])->name('stock_currency');
+    Route::get('stock_currency/create', [App\Http\Controllers\StockController::class, 'create'])->name('stock_currency_create');
 
     Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
     Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
