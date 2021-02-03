@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Distribution;
 
 class DistributionController extends Controller
 {
@@ -44,11 +45,21 @@ class DistributionController extends Controller
         return redirect('distribution')->with('success', 'Data Deleted!');
     }
 
+    public function add(){
+        $technisians = DB::table('technisians')
+        ->get();
+        $sites = DB::table('sites')
+        ->leftJoin('distributions', 'sites.site_id', '=', 'distributions.site_id')
+        ->get();
+        return view('distribution.add', ['technisians' => $technisians, 'sites' => $sites]);
+    }
+
     public function addData(Request $request){
-        $distributions = new distributions;
-        $distributions->tech_id = $request->input('tech_id');
-        $distributions->site_id = $request->input('site_id');
+        $distributions = new Distribution;
+        $distributions->tech_id = $request->tech_id;
+        $distributions->site_id = $request->site_id;
         $distributions->save();
+        
         return redirect('distribution')->with('success', 'Data Created!');
     }
 }

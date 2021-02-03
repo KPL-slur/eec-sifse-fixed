@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="content">
-  <div class="container-fluid">
+  <div class="container">
     <div class="row">
       <div class="col-md-12">
         <div class="card">
@@ -19,7 +19,7 @@
           <div class="card-body text-center">
             <div class="table-responsive">
                 <form method="POST" action="/edit">
-                  @csrf
+                  @csrf 
                   <div class="form-group">
                     <label >Technisian</label>
                     <select name="tech_id" id="tech_id" class="form-control">

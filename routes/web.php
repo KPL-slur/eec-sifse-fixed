@@ -99,11 +99,21 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('distribution', [App\Http\Controllers\DistributionController::class, 'index'])->name('distribution');
     Route::get('editDistribution/{id}', [App\Http\Controllers\DistributionController::class, 'edit']);
     Route::post('edit', [App\Http\Controllers\DistributionController::class, 'editData']);
-    Route::get('deleteDistribution/{id}', [App\Http\Controllers\DistributionController::class, 'deleteData']);
-    Route::get('addDistribution', function () {
-        return view('distribution.add');
+    Route::delete('deleteDistribution/{id}', [App\Http\Controllers\DistributionController::class, 'deleteData']);
+    Route::get('addDistribution', [App\Http\Controllers\DistributionController::class, 'add']);
+    Route::post('add', [App\Http\Controllers\DistributionController::class, 'addData']);
+
+    //inventorie
+    Route::get('inventorie', function(){
+      return view('site.inventorie');
     });
-    
+
     //stock with currencies
-    Route::get('stock_currency', [App\Http\Controllers\StockAndCurrencyController::class, 'index'])->name('stock_currency');
+    Route::get('stock_currency', [App\Http\Controllers\StockController::class, 'index'])->name('stock_currency');
+    Route::get('stock_currency/create', [App\Http\Controllers\StockController::class, 'create'])->name('stock_currency_create');
+
+    Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
+    Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
+    Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
+    Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
