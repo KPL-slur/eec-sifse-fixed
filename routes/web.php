@@ -30,6 +30,20 @@ Auth::routes();
 */
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/tech', [App\Http\Controllers\TechController::class, 'index'])->name('tech');
+    
+    // temporary route until i create the report crud controller
+    Route::get('/report/pm/new', function () {
+        return view('tech.report.pm.create');
+    })->name('report');
+    Route::get('/report/pm', function () {
+        return view('tech.report.pm.index');
+    })->name('report');
+    
+    //Bawaan dari template
+    Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
+    Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
+    Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
+    Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
 
 /*
@@ -92,9 +106,4 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     
     //stock with currencies
     Route::get('stock_currency', [App\Http\Controllers\StockAndCurrencyController::class, 'index'])->name('stock_currency');
-
-    Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
-    Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
-    Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
-    Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
