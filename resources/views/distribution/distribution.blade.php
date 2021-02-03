@@ -3,7 +3,7 @@
 @section('content')
     
 <div class="content">
-  <div class="container-fluid">
+  <div class="container">
     <div class="row">
       <div class="col-md-12">
           <div class="card">
@@ -13,9 +13,9 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                <div class="col-12 text-right">
-                  <a href="addDistribution" class="btn btn-sm btn-primary">Add Distribution</a>
-                </div>
+                  <div class="col-12 text-right">
+                    <a href="addDistribution" class="btn btn-sm btn-primary">Add Distribution</a>
+                  </div>
               </div>
               <div class="table-responsive">
                 <table class="table table-striped">
@@ -36,14 +36,18 @@
                         <td>{{$tns->site}}</td>
                         <td>{{$tns->lokasi}}</td>
                         <td class="td-actions text-right">
-                              <button rel="tooltip" class="btn btn-success btn-link" href="editDistribution/{{$tns->tech_id}}">
+                              <a rel="tooltip" class="btn btn-success btn-link" href="editDistribution/{{$tns->tech_id}}">
                                 <i class="material-icons">edit</i>
                                 <div class="ripple-container"></div>
-                              </button>
-                              <button class="btn btn-danger btn-link" href="deleteDistribution/{{$tns->tech_id}}" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')" >
-                                <i class="material-icons">delete</i>
-                                <div class="ripple-container"></div>
-                              </button>
+                              </a>
+                              <form method="POST" action="/deleteDistribution/{{$tns->tech_id}}" class="d-inline">
+                                @csrf
+                                @method('delete')
+                                <button class="btn btn-danger btn-link" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')" >
+                                  <i class="material-icons">delete</i>
+                                  <div class="ripple-container"></div>
+                                </button>
+                              </form>
                         </td>
                       </tr>
                     @endforeach

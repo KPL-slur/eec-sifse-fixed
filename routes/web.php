@@ -85,9 +85,13 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('distribution', [App\Http\Controllers\DistributionController::class, 'index'])->name('distribution');
     Route::get('editDistribution/{id}', [App\Http\Controllers\DistributionController::class, 'edit']);
     Route::post('edit', [App\Http\Controllers\DistributionController::class, 'editData']);
-    Route::get('deleteDistribution/{id}', [App\Http\Controllers\DistributionController::class, 'deleteData']);
-    Route::get('addDistribution', function () {
-        return view('distribution.add');
+    Route::delete('deleteDistribution/{id}', [App\Http\Controllers\DistributionController::class, 'deleteData']);
+    Route::get('addDistribution', [App\Http\Controllers\DistributionController::class, 'add']);
+    Route::post('add', [App\Http\Controllers\DistributionController::class, 'addData']);
+
+    //inventorie
+    Route::get('inventorie', function(){
+      return view('site.inventorie');
     });
     
     //stock with currencies
