@@ -17,7 +17,7 @@ class StockAndCurrencyController extends Controller
         //
         $stocks = DB::table('stocks_and_currencies')->get();
 
-        return view('pages.stock-currency', ['stocks' => $stocks]);
+        return view('stocks_currencies.stock_currency', ['stocks' => $stocks]);
     }
 
     /**

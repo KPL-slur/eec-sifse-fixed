@@ -18870,6 +18870,12 @@ Copyright (c) 2015 Daniel Eden
     padding-left: 0;
     margin-bottom: 0;
     list-style: none;
+  }
+}
+
+.main-panel.no-sidebar {
+  width: 100%;
+  float: none;
 }
 
 #towerA{

@@ -59,8 +59,8 @@
             <p>{{ __('Table List') }}</p>
         </a>
       </li>
-      <li class="nav-item{{ $activePage == 'stock-currency' ? ' active' : '' }}">
-        <a class="nav-link" href="{{ route('stock-currency') }}">
+      <li class="nav-item{{ $activePage == 'stock_currency' ? ' active' : '' }}">
+        <a class="nav-link" href="{{ route('stock_currency') }}">
           <i class="material-icons">inventory_2</i>
             <p>{{ __('Stocks & Currencies') }}</p>
         </a>
