@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="content">
-  <div class="container-fluid">
+  <div class="container">
     <div class="row">
       <div class="col-md-12">
         <div class="card">
@@ -19,37 +19,30 @@
           <div class="card-body text-center">
             <div class="table-responsive">
           
-                <form method="POST" action="add">
+                <form method="POST" action="/add">
                   @csrf
                   <div class="form-group">
                     <label >Nama Teknisi</label>
-                    <select name="" id="" class="form-control ">
+                    <select name="tech_id" id="tech_id" class="form-control ">
                         <option value="">--Pilih Teknisi--</option>
-                        
-                        <option value="nama">Rezza</option>
-                        
-                        
-
+                        @foreach ($technisians as $tns)
+                          <option value={{$tns->tech_id}}>{{$tns->name}}</option>
+                        @endforeach                        
                     </select>
-    
+
                   </div>
                   <div class="form-group">
-                  
                     <label>Site</label>
                     <select name="site_id" id="site_id" class="form-control ">
                       <option value="">--Pilih Site--</option>
-                      
-                      <option value="">Wamena</option>
-                      
-                      
-                      </select>
-              
+                      @foreach ($sites as $sites)
+                        <option value="{{$sites->site_id}}">{{$sites->lokasi}}</option>
+                      @endforeach
+                    </select>
                   </div>
-
                   <button type="submit" onclick="return confirm('Apakah yakin ingin menambahkan data?')" class="btn btn-primary">Tambah</button>
                   <a href="/distribution" class="btn btn-primary">Kembali</a>
-
-            </form>
+                </form>
               </div>
             </div>
           </div>

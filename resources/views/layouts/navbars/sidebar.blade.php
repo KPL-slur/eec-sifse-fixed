@@ -49,7 +49,7 @@
       </li>
       <li class="nav-item{{ $activePage == 'site' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('site') }}">
-          <i>S</i>
+          <i class="material-icons">S</i>
             <p>{{ __('Sites') }}</p>
         </a>
       </li>
