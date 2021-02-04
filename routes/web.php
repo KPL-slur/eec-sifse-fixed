@@ -30,6 +30,20 @@ Auth::routes();
 */
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/tech', [App\Http\Controllers\TechController::class, 'index'])->name('tech');
+    
+    // temporary route until i create the report crud controller
+    Route::get('/report/pm/new', function () {
+        return view('tech.report.pm.create');
+    })->name('report');
+    Route::get('/report/pm', function () {
+        return view('tech.report.pm.index');
+    })->name('report');
+    
+    //Bawaan dari template
+    Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
+    Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
+    Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
+    Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
 
 /*
@@ -47,15 +61,11 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     //Halaman Pertama Admin
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-    //Halman Statis Admin
+    //Halaman Statis Admin
     //Nanti jgn lupa dihapus semua ini
     Route::get('table-list', function () {
         return view('pages.table_list');
     })->name('table');
-
-    Route::get('site', function () {
-        return view('pages.site');
-    })->name('site');
 
     Route::get('typography', function () {
         return view('pages.typography');
@@ -89,14 +99,16 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('addDistribution', [App\Http\Controllers\DistributionController::class, 'add']);
     Route::post('add', [App\Http\Controllers\DistributionController::class, 'addData']);
 
-    //inventorie
-    Route::get('inventorie', function(){
-      return view('site.inventorie');
-    });
+    //site
+    Route::get('site', [App\Http\Controllers\SiteController::class, 'index'])->name('site');
+    Route::get('inventorie/{id}', [App\Http\Controllers\SiteController::class, 'show']);
+    Route::get('inventorySite', [App\Http\Controllers\SiteController::class, 'print']);
 
+    
     //stock with currencies
     Route::get('stock_currency', [App\Http\Controllers\StockController::class, 'index'])->name('stock_currency');
     Route::get('stock_currency/create', [App\Http\Controllers\StockController::class, 'create'])->name('stock_currency_create');
+    Route::post('stock_currency', [App\Http\Controllers\StockController::class, 'store']);
 
     Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
     Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
