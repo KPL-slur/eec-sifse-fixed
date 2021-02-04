@@ -18880,8 +18880,18 @@ Copyright (c) 2015 Daniel Eden
 
 /* NANTI CKEDITOR DIBUAT RESPONSIVE */
 .ck-editor__editable {
-  min-height: 50em !important;
-  min-width: 90em !important;
+  min-height: auto !important;
+  min-width: auto !important;
+}
+
+/* 
+* Digunakan pada tabel rekomendasi sparepart
+* pada form create pm/cm untuk mengoveride 
+* posisi icon yang margin topnya negatif
+ */
+.btn .material-icons.shoping {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 #towerA{

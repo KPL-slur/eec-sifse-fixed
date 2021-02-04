@@ -9,7 +9,7 @@
                 </div>
                 <div class="card-body ">
                     <div class="row">
-                        <div class="col">
+                        <div class="col table-responsive">
                             <table class="table">
                                 <thead>
                                     <tr>

@@ -32,7 +32,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/tech', [App\Http\Controllers\TechController::class, 'index'])->name('tech');
     
     // temporary route until i create the report crud controller
-    Route::get('/report/pm/new', function () {
+    Route::get('/report/pm/create', function () {
         return view('tech.report.pm.create');
     })->name('report');
     Route::get('/report/pm', function () {
@@ -111,9 +111,4 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     //stock with currencies
     Route::get('stock_currency', [App\Http\Controllers\StockController::class, 'index'])->name('stock_currency');
     Route::get('stock_currency/create', [App\Http\Controllers\StockController::class, 'create'])->name('stock_currency_create');
-
-    Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
-    Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
-    Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
-    Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
