@@ -18,23 +18,36 @@
             <div class="table-responsive">
               <table class="table">
                 <thead class=" text-primary text-middle">
+                  @if (session('status1'))
+                      <div class="alert alert-success">
+                        {{ session('status1') }}
+                      </div>
+                  @endif
+
                   <th>No</th>
+                  <th>Lokasi Site</th>
                   <th>Nama Barang</th>
+                  <th>Part Number</th>
+                  <th>Serial Number</th>
                   <th>Tanggal Masuk</th>
+                  <th>Expired</th>
                   <th>Kurs Saat Membeli</th>
-                  <th>Sisa Stok</th>
-                  <th>Status</th>
+                  <th>Jumlah Unit</th>
+                  {{-- <th>Status</th> --}}
                   <th class="text-center">Update or delete</th>
                 </thead>
                 <tbody>
                   <tr>
                     @foreach ($stocks as $st)
                       <td>{{ $loop->iteration }}</td>
+                      <td>{{ $st->site_id }}</td>
                       <td>{{ $st->nama_barang }}</td>
+                      <td>{{ $st->part_number }}</td>
+                      <td>{{ $st->serial_number }}</td>
                       <td>{{ $st->tgl_masuk }}</td>
+                      <td>{{ $st->expired }}</td>
                       <td>{{ $st->kurs_beli }}</td>
-                      <td>{{ $st->sisa_stok }}</td>
-                      <td>{{ $st->status }}</td>
+                      <td>{{ $st->jumlah_unit }}</td>
                       <td class="td-actions text-center">
                         <a rel="tooltip" class="btn btn-lg btn-success btn-link" href="#" data-original-title="" title="">
                           <i class="material-icons">edit</i>

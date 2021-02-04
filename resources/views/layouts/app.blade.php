@@ -32,6 +32,7 @@
                 @else
                     {{-- selain admin, berarti tech --}}
                     {{-- NOT IS ADMIN BUT AUTH --}}
+                    {{-- yg bukan is_admin, tp di dalem auth --}}
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
