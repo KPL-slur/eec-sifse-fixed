@@ -31,13 +31,18 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/tech', [App\Http\Controllers\TechController::class, 'index'])->name('tech');
     
+    // PM REPORT ROUTES
+    Route::resources([
+        'report/pm' => App\Http\Controllers\HeadReportsController::class,
+    ]);
+
     // temporary route until i create the report crud controller
-    Route::get('/report/pm/create', function () {
-        return view('tech.report.pm.create');
-    })->name('report');
-    Route::get('/report/pm', function () {
-        return view('tech.report.pm.index');
-    })->name('report');
+    // Route::get('/report/pm/create', function () {
+    //     return view('tech.report.pm.create');
+    // })->name('report');
+    // Route::get('/report/pm', function () {
+    //     return view('tech.report.pm.index');
+    // })->name('report');
     
     //Bawaan dari template
     Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
