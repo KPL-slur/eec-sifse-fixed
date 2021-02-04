@@ -18,9 +18,16 @@
                               Item Utama
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <a class="dropdown-item" href="inventorie">ITEM PENDUKUNG</a>
+                              <button class="btn btn-primary dropdown-item" type="button">ITEM PENDUKUNG</a>
                             </div>
                           </div>
+                    </div>
+                    <div class="col-12 text-right">
+                        <a rel="tooltip" class="btn btn-success" type="button" href="inventorySite">
+                          <i class="material-icons">
+                            local_printshop
+                          </i> Print Data
+                        </a> 
                     </div>
                 </div>
                 <div class="table-responsive">
@@ -28,42 +35,24 @@
                         <thead>
                           <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Part</th>
+                            <th scope="col">Sparepart</th>
                             <th scope="col">Part Number</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">In</th>
-                            <th scope="col">Out</th>
+                            <th scope="col">Serial Number</th>
+                            <th scope="col">Installed Date</th>
                             <th scope="col">Expired Date</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <th scope="row">1</th>
-                            <td>Transmitter</td>
-                            <td>O1xxx</td>
-                            <td>Penghubung dengan antena</td>
-                            <td>date in</td>
-                            <td>date out</td>
-                            <td>03-03-2021</td>
-                          </tr>
-                          <tr>
-                            <th scope="row">2</th>
-                            <td>Stalo</td>
-                            <td>O2xxx</td>
-                            <td>Stable Local Oscilator</td>
-                            <td>date in</td>
-                            <td>date out</td>
-                            <td>03-03-2021</td>
-                          </tr>
-                          <tr>
-                            <th scope="row">3</th>
-                            <td></td>
-                            <td>O1xxx</td>
-                            <td>Penghubung dengan antena</td>
-                            <td>date in</td>
-                            <td>date out</td>
-                            <td>03-03-2021</td>
-                          </tr>
+                          @foreach ($stocks as $stk)
+                            <tr>
+                              <th scope="row">{{$loop->iteration}}</th>
+                              <td>{{$stk->nama_barang}}</td>
+                              <td>{{$stk->part_number}}</td>
+                              <td>{{$stk->serial_number}}</td>
+                              <td>{{$stk->tgl_masuk}}</td>
+                              <td>{{$stk->expired}}</td>
+                            </tr>
+                          @endforeach
                         </tbody>
                       </table>
                 </div>
