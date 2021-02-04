@@ -48,13 +48,15 @@ class DistributionController extends Controller
     public function add(){
         $technisians = DB::table('technisians')
         ->get();
-        $sites = DB::table('sites')
-        ->leftJoin('distributions', 'sites.site_id', '=', 'distributions.site_id')
+        $sites = DB::table('distributions')
+        ->rightJoin('sites', 'sites.site_id', '=', 'distributions.site_id')
         ->get();
+        //  dd($sites);
         return view('distribution.add', ['technisians' => $technisians, 'sites' => $sites]);
     }
 
     public function addData(Request $request){
+        // dd($request->all());
         $distributions = new Distribution;
         $distributions->tech_id = $request->tech_id;
         $distributions->site_id = $request->site_id;
