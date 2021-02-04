@@ -49,8 +49,8 @@
       </li>
       <li class="nav-item{{ $activePage == 'site' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('site') }}">
-          <i class="material-icons">S</i>
-            <p>{{ __('Sites') }}</p>
+          <i class="material-icons">wifi_tethering</i>
+            <p>{{ __('Sites Monitor') }}</p>
         </a>
       </li>
       <li class="nav-item{{ $activePage == 'table' ? ' active' : '' }}">

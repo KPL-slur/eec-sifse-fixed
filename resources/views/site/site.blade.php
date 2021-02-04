@@ -1,24 +1,27 @@
-@extends('layouts.app', ['activePage' => 'site', 'titlePage' => __('Site & Inventories')])
+@extends('layouts.app', ['activePage' => 'site', 'titlePage' => __('Detail Site')])
 
 @section('content')
   <div class="content">
-    <div class="container-fluid">
+    <div class="container">
       <div class="row">
-        {{--  --}}
+
+        @foreach ($sites as $sts)
+        
         <div class="col-lg-4 col-md-6 col-sm-6">
           <div class="card card-stats">
               <div class="card-header card-header-warning card-header-icon">
                   <div class="card-icon">
                       <img id="towerA" src="{{ asset('material') }}/img/towerA.jpg" alt="towerA">
                   </div>
-                  <h3 class="card-title"><b>Banjarmasin<b></h3>
+                  <h3 class="card-title"><strong>{{$sts->lokasi}}</strong></h3>
               </div>
               <div class="card-footer">
-                  <a href="inventorie" class="btn btn-info" >VIEW</a>
+                  <a rel="tooltip" href="inventorie/{{$sts->site_id}}" class="btn btn-info" >VIEW</a>
               </div>
           </div>
         </div>
-        {{--  --}}
+
+        @endforeach
       </div>
   </div>
 </div>

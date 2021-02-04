@@ -23,7 +23,6 @@
                         {{ session('status1') }}
                       </div>
                   @endif
-
                   <th>No</th>
                   <th>Lokasi Site</th>
                   <th>Nama Barang</th>
@@ -37,30 +36,29 @@
                   <th class="text-center">Update or delete</th>
                 </thead>
                 <tbody>
-                  <tr>
-                    @foreach ($stocks as $st)
-                      <td>{{ $loop->iteration }}</td>
-                      <td>{{ $st->site_id }}</td>
-                      <td>{{ $st->nama_barang }}</td>
-                      <td>{{ $st->part_number }}</td>
-                      <td>{{ $st->serial_number }}</td>
-                      <td>{{ $st->tgl_masuk }}</td>
-                      <td>{{ $st->expired }}</td>
-                      <td>{{ $st->kurs_beli }}</td>
-                      <td>{{ $st->jumlah_unit }}</td>
-                      <td class="td-actions text-center">
-                        <a rel="tooltip" class="btn btn-lg btn-success btn-link" href="#" data-original-title="" title="">
-                          <i class="material-icons">edit</i>
-                          <div class="ripple-container"></div>
-                        </a>
-                        <button class="btn btn-lg btn-danger btn-link" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">
-                          <i class="material-icons">delete</i>
-                          <div class="ripple-container"></div>
-                        </button>
-                      </td>
-                        
-                    @endforeach
-                  </tr>
+                  @foreach ($stocks as $st)
+                    <tr>
+                        <td scope="row">{{$loop->iteration}}</td>
+                        <td>{{ $st->site_id }}</td>
+                        <td>{{ $st->nama_barang }}</td>
+                        <td>{{ $st->part_number }}</td>
+                        <td>{{ $st->serial_number }}</td>
+                        <td>{{ $st->tgl_masuk }}</td>
+                        <td>{{ $st->expired }}</td>
+                        <td>{{ $st->kurs_beli }}</td>
+                        <td>{{ $st->jumlah_unit }}</td>
+                        <td class="td-actions text-center">
+                          <a rel="tooltip" class="btn btn-lg btn-success btn-link" href="#" data-original-title="" title="">
+                            <i class="material-icons">edit</i>
+                            <div class="ripple-container"></div>
+                          </a>
+                          <button class="btn btn-lg btn-danger btn-link" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">
+                            <i class="material-icons">delete</i>
+                            <div class="ripple-container"></div>
+                          </button>
+                        </td>
+                    </tr>
+                  @endforeach
                 </tbody>
               </table>
             </div>
