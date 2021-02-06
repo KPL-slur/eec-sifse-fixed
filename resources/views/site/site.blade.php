@@ -3,6 +3,13 @@
 @section('content')
   <div class="content">
     <div class="container">
+      <div class="col-6 mt-10 text-left">
+        <a href="addSite" class="btn btn-sm btn-primary">
+          <i class="material-icons">
+            add
+          </i> Add New Site
+        </a>
+      </div>
       <div class="row">
 
         @foreach ($sites as $sts)

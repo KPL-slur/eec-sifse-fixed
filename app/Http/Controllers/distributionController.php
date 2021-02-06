@@ -50,6 +50,7 @@ class DistributionController extends Controller
         ->get();
         $sites = DB::table('distributions')
         ->rightJoin('sites', 'sites.site_id', '=', 'distributions.site_id')
+        ->whereNull('tech_id')
         ->get();
         //  dd($sites);
         return view('distribution.add', ['technisians' => $technisians, 'sites' => $sites]);

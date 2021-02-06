@@ -16,6 +16,7 @@ class CreateSitesTable extends Migration
         Schema::create('sites', function (Blueprint $table) {
             $table->bigIncrements('site_id');
             $table->string('site');
+            $table->string('img');
             $table->string('lokasi');
             $table->timestamps();
         });

@@ -21,10 +21,10 @@ class SiteController extends Controller
         ->where('sites.site_id', '=', $id  )
         ->get();
 
-        return view('site.inventorie', ['stocks' => $stocks]);
+        return view('site.inventorie', ['stocks' => $stocks, 'id'=>$id]);
     }
 
-    public function print(){
+    public function print($id){
         $stocks = DB::table('stocks')
         ->join('sites', 'stocks.site_id', '=', 'sites.site_id')
         ->where('sites.site_id', '=', $id  )
@@ -33,4 +33,7 @@ class SiteController extends Controller
         return view('pages.inventory_site', ['stocks' => $stocks]);
     }
     
+    public function add(){
+        return view('site.addSite');
+    }
 }
