@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\HeadReport;
 use Illuminate\Http\Request;
 
@@ -16,8 +17,7 @@ class HeadReportsController extends Controller
     {
         $HeadReport = HeadReport::all();
         // dd($data);
-        return view('tech.report.pm.index', compact('HeadReport'));
-        
+        return view('tech.report.index', compact('HeadReport'));
     }
 
     /**
@@ -27,8 +27,8 @@ class HeadReportsController extends Controller
      */
     public function create()
     {
-        return view('tech.report.pm.create');
-        
+        $technisians = DB::table('technisians')->get();
+        return view('tech.report.create', ['technisians' => $technisians]);
     }
 
     /**
@@ -41,7 +41,12 @@ class HeadReportsController extends Controller
     {
         HeadReport::create($request->all());
 
-        return redirect('/report/pm')->with('status', 'Data Ditambahkan');
+        $maintenance_type = $request->maintenance_type; //used to determine the next report form
+
+        $KontainerIdUntukNanti = HeadReport::select('id')->orderByDesc('id')->first(); //used to determine the head id of this report
+        $headId = $KontainerIdUntukNanti->id;
+
+        return view('tech.report.pm.create', compact('headId'));
     }
 
     /**

@@ -16,13 +16,14 @@ class CreateHeadReportsTable extends Migration
         Schema::create('head_reports', function (Blueprint $table) {
             $table->id();
 
+            $table->char('maintenance_type',2);
             $table->string('radar_name', 20);
             $table->string('station_id', 50);
             $table->date('report_date_start');
             $table->date('report_date_end');
 
             //nanti ini dibuat tabel sendiri aja
-            $table->string('expertise1');
+            $table->string('expertise1')->nullable();
             $table->string('expertise2')->nullable();
             $table->string('expertise3')->nullable();
             $table->string('expertise4')->nullable();
@@ -33,7 +34,7 @@ class CreateHeadReportsTable extends Migration
             $table->string('expertise9')->nullable();
             $table->string('expertise10')->nullable();
 
-            $table->string('expertise_company1');
+            $table->string('expertise_company1')->nullable();
             $table->string('expertise_company2')->nullable();
             $table->string('expertise_company3')->nullable();
             $table->string('expertise_company4')->nullable();

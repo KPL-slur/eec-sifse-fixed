@@ -11,6 +11,7 @@ class HeadReport extends Model
 
     protected $fillable = [
         'radar_name',
+        'maintenance_type',
         'station_id',
         'report_date_start',
         'report_date_end',

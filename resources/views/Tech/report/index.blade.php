@@ -9,7 +9,7 @@
                 </div>
                 <div class="card-body ">
                     <a type="button" class="btn btn-info" href="{{ url('tech') }}">BACK</a>
-                    <a type="button" class="btn btn-primary" href="{{ url('report/pm/create') }}">ADD NEW</a>
+                    <a type="button" class="btn btn-primary" href="{{ url('report/create') }}?entry_id={{ $maintenance_type }}">ADD NEW</a>
                     <div class="row">
                         <div class="col table-responsive">
                             <table class="table">
@@ -25,14 +25,14 @@
                                 <tbody>
                                     @foreach ($HeadReport as $hr)
                                     <tr>
-                                        <td class="text-center">1</td>
+                                        <td class="text-center">{{ $loop->iteration }}</td>
                                         <td>{{ $hr->radar_name }}</td>
                                         <td>{{ $hr->report_date_start }} - {{ $hr->report_date_end }}</td>
                                         <td>{{ $hr->expertise1 }} {{ $hr->expertise2 }} {{ $hr->expertise3 }}</td>
                                         <td class="td-actions text-right">
-                                            <button type="button" rel="tooltip" class="btn btn-info">
+                                            <a type="button" rel="tooltip" class="btn btn-info" href="{{ url('/report/pm/'.$hr->id) }}">
                                                 <i class="material-icons">visibility</i>
-                                            </button>
+                                            </a>
                                             <button type="button" rel="tooltip" class="btn btn-success">
                                                 <i class="material-icons">edit</i>
                                             </button>

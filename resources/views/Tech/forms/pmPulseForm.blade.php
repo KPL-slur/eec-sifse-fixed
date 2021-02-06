@@ -1,3 +1,10 @@
+{{-- 
+    INPUT LIST:
+    radio_{{ $namaKolom }}
+    hvps_v_{{ $namaKolom }}
+    hvps_i_{{ $namaKolom }}
+    mag_i_{{ $namaKolom }}
+    --}}
 <div class="row">
     <label class="col-sm-2 col-form-label"
         for="input_HVPS_V_{{ $namaKolom }}">{{ $namaKolom }}</label>
@@ -25,21 +32,21 @@
     </div>
     <div class="col-sm-2">
         <div class="form-group">
-            <input class="form-control" input type="text" name="HVPS_V_{{ $namaKolom }}"
+            <input class="form-control" input type="text" name="hvps_v_{{ $namaKolom }}"
                 id="input_HVPS_V_{{ $namaKolom }}" placeholder="{{ __('HVPS_V') }}" value=""
                    />
         </div>
     </div>
     <div class="col-sm-2">
         <div class="form-group">
-            <input class="form-control" input type="text" name="HVPS_I{{ $namaKolom }}"
+            <input class="form-control" input type="text" name="hvps_i_{{ $namaKolom }}"
                 id="input_HVPS_I{{ $namaKolom }}" placeholder="{{ __('HVPS_I') }}" value=""
                    />
         </div>
     </div>
     <div class="col-sm-2">
         <div class="form-group">
-            <input class="form-control" input type="text" name="Mag_I{{ $namaKolom }}"
+            <input class="form-control" input type="text" name="mag_i_{{ $namaKolom }}"
                 id="input_Mag_I{{ $namaKolom }}" placeholder="{{ __('Mag_I') }}" value=""
                    />
         </div>

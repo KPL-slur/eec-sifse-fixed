@@ -32,8 +32,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/tech', [App\Http\Controllers\TechController::class, 'index'])->name('tech');
     
     // PM REPORT ROUTES
+    // Route::get('report/pm/{pmBodyReport:head_id}', [App\Http\Controllers\PmBodyReportsController::class, 'show']);
+
+    Route::resource('report/pm', App\Http\Controllers\PmBodyReportsController::class)->parameters([
+        'pm' => 'pmBodyReport:head_id',
+    ]);
+    // REPORT ROUTES
     Route::resources([
-        'report/pm' => App\Http\Controllers\HeadReportsController::class,
+        'report' => App\Http\Controllers\HeadReportsController::class,
     ]);
 
     // temporary route until i create the report crud controller
