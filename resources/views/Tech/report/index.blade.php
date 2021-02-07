@@ -30,7 +30,7 @@
                                         <td>{{ $hr->report_date_start }} - {{ $hr->report_date_end }}</td>
                                         <td>{{ $hr->expertise1 }}; {{ $hr->expertise2 }}; {{ $hr->expertise3 }}</td>
                                         <td class="td-actions text-right">
-                                            <a type="button" rel="tooltip" class="btn btn-info" href="{{ url('/report/pm/'.$hr->id) }}">
+                                            <a type="button" rel="tooltip" class="btn btn-info" href="{{ url('/report/'.$maintenance_type.'/'.$hr->id) }}">
                                                 <i class="material-icons">visibility</i>
                                             </a>
                                             <button type="button" rel="tooltip" class="btn btn-success">

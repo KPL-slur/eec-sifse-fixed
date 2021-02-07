@@ -31,7 +31,7 @@
                         </div>
                         <div class="card-footer">
                             <a class="btn btn-success" href="{{ url('/report/create') }}?entry_id=cm">NEW</a>
-                            <a class="btn btn-info" href="{{ url('/report/pm') }}">VIEW</a>
+                            <a class="btn btn-info" href="{{ url('/report/cm') }}">VIEW</a>
                         </div>
                     </div>
                 </div>

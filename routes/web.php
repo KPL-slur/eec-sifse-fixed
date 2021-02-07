@@ -32,9 +32,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/tech', [App\Http\Controllers\TechController::class, 'index'])->name('tech');
     
     // PM REPORT ROUTES
-    // Route::get('report/pm/{pmBodyReport:head_id}', [App\Http\Controllers\PmBodyReportsController::class, 'show']);
-
     Route::resource('report/pm', 'App\Http\Controllers\PmBodyReportsController', ['except' => ['create'], 'parameters' => ['pm' => 'pmBodyReport:head_id',]]);
+    // PM REPORT ROUTES
+    Route::resource('report/cm', 'App\Http\Controllers\CmBodyReportsController', ['except' => ['create'], 'parameters' => ['cm' => 'cmBodyReport:head_id',]]);
     // REPORT ROUTES
     Route::resources([
         'report' => App\Http\Controllers\HeadReportsController::class,

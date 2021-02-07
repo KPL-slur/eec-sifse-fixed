@@ -186,6 +186,18 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="card ">
+                            <div class="card-header card-header-primary">
+                                <h4 class="card-title">{{ __('REMARK') }}</h4>
+                            </div>
+                            <div class="card-body ">
+                                <div class="row">
+                                    <div class="container">
+                                        <?php echo $pmBodyReport->remark ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
