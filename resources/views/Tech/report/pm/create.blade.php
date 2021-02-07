@@ -14,6 +14,9 @@
                         radio_inspect_all
 
                         radio_compressor_visual
+                        radio_duty_cycle
+
+                        radio_transmitter_visual
                         radio_running_time
                         radio_radiate_time
                         radio_0_4us
@@ -42,6 +45,9 @@
                         inspect_all
 
                         compressor_visual
+                        duty_cycle
+
+                        transmitter_visual
                         running_time
                         radiate_time
 

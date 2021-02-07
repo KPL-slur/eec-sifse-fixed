@@ -23,10 +23,10 @@ class CreateHeadReportsTable extends Migration
             $table->date('report_date_end');
 
             //nanti ini dibuat tabel sendiri aja
-            $table->string('expertise1')->nullable();
+            $table->string('expertise1');
             $table->string('expertise2')->nullable();
             $table->string('expertise3')->nullable();
-            $table->string('expertise4')->nullable();
+            $table->string('expertise4');
             $table->string('expertise5')->nullable();
             $table->string('expertise6')->nullable();
             $table->string('expertise7')->nullable();

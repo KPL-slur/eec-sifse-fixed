@@ -28,7 +28,7 @@
                                         <td class="text-center">{{ $loop->iteration }}</td>
                                         <td>{{ $hr->radar_name }}</td>
                                         <td>{{ $hr->report_date_start }} - {{ $hr->report_date_end }}</td>
-                                        <td>{{ $hr->expertise1 }} {{ $hr->expertise2 }} {{ $hr->expertise3 }}</td>
+                                        <td>{{ $hr->expertise1 }}; {{ $hr->expertise2 }}; {{ $hr->expertise3 }}</td>
                                         <td class="td-actions text-right">
                                             <a type="button" rel="tooltip" class="btn btn-info" href="{{ url('/report/pm/'.$hr->id) }}">
                                                 <i class="material-icons">visibility</i>

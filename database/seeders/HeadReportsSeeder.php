@@ -24,6 +24,10 @@ class HeadReportsSeeder extends Seeder
             'expertise2' => "M Fris Setiawan",
             'expertise_company1' => "Era Elektra Corpora Indonesia",
             'expertise_company2' => "Era Elektra Corpora Indonesia",
+            'expertise4' => "Frans X",
+            'expertise5' => "Alfin Rianto",
+            'expertise_company4' => "Statmet Timika",
+            'expertise_company5' => "Statmet Timika",
 
             'created_at' => now(),
         ]);
@@ -37,6 +41,10 @@ class HeadReportsSeeder extends Seeder
             'expertise2' => "M Fris Setiawan",
             'expertise_company1' => "Era Elektra Corpora Indonesia",
             'expertise_company2' => "Era Elektra Corpora Indonesia",
+            'expertise4' => "Asyrofi",
+            'expertise5' => "Iqbal Anskari",
+            'expertise_company4' => "Statmet Syamsudin Noor",
+            'expertise_company5' => "Statmet Syamsudin Noor",
 
             'created_at' => now(),
         ]);

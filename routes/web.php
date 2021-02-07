@@ -34,9 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
     // PM REPORT ROUTES
     // Route::get('report/pm/{pmBodyReport:head_id}', [App\Http\Controllers\PmBodyReportsController::class, 'show']);
 
-    Route::resource('report/pm', App\Http\Controllers\PmBodyReportsController::class)->parameters([
-        'pm' => 'pmBodyReport:head_id',
-    ]);
+    Route::resource('report/pm', 'App\Http\Controllers\PmBodyReportsController', ['except' => ['create'], 'parameters' => ['pm' => 'pmBodyReport:head_id',]]);
     // REPORT ROUTES
     Route::resources([
         'report' => App\Http\Controllers\HeadReportsController::class,

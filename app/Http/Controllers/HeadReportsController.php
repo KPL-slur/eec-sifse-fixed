@@ -46,7 +46,7 @@ class HeadReportsController extends Controller
         $KontainerIdUntukNanti = HeadReport::select('id')->orderByDesc('id')->first(); //used to determine the head id of this report
         $headId = $KontainerIdUntukNanti->id;
 
-        return view('tech.report.pm.create', compact('headId'));
+        return view('tech.report.'.$maintenance_type.'.create', compact('headId'));
     }
 
     /**
