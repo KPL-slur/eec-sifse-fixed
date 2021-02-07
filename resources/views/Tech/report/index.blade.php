@@ -33,9 +33,9 @@
                                             <a type="button" rel="tooltip" class="btn btn-info" href="{{ url('/report/'.$maintenance_type.'/'.$hr->id) }}">
                                                 <i class="material-icons">visibility</i>
                                             </a>
-                                            <button type="button" rel="tooltip" class="btn btn-success">
+                                            <a type="button" rel="tooltip" class="btn btn-success"  href="{{ url('/report/'.$maintenance_type.'/'.$hr->id.'/edit') }}">
                                                 <i class="material-icons">edit</i>
-                                            </button>
+                                            </a>
                                             <button type="button" rel="tooltip" class="btn btn-danger">
                                                 <i class="material-icons">close</i>
                                             </button>

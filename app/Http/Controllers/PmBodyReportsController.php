@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PmBodyReport;
 use App\Models\HeadReport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PmBodyReportsController extends Controller
 {
@@ -67,7 +68,9 @@ class PmBodyReportsController extends Controller
     */
     public function edit(PmBodyReport $pmBodyReport)
     {
-        dd($pmBodyReport);
+        // dd($pmBodyReport);
+        $technisians = DB::table('technisians')->get();
+        return view('tech.report.edit', ['technisians' => $technisians]);
     }
 
     /**

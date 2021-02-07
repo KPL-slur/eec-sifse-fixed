@@ -15,9 +15,7 @@ class HeadReportsController extends Controller
      */
     public function index()
     {
-        $HeadReport = HeadReport::all();
-        // dd($data);
-        return view('tech.report.index', compact('HeadReport'));
+        //NOT USED
     }
 
     /**
@@ -39,6 +37,16 @@ class HeadReportsController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'radar_name' => 'required',
+            'station_id' => 'required',
+            'report_date_start' => 'required',
+            'report_date_end' => 'required',
+            'expertise1' => 'required',
+            'expertise4' => 'required',
+            'expertise_company4' => 'required',
+        ]);
+
         HeadReport::create($request->all());
 
         $maintenance_type = $request->maintenance_type; //used to determine the next report form

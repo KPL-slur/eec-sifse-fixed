@@ -121,8 +121,8 @@
                             </div>
                             <div class="card-body " id="">
                                 @include('tech.forms.pmForm', ['namaKolom' => 'transmitter_visual'])
-                                @include('tech.forms.pmForm', ['namaKolom' => 'running_time'])
-                                @include('tech.forms.pmForm', ['namaKolom' => 'radiate_time'])
+                                @include('tech.forms.pmAppendedForm', ['namaKolom' => 'running_time', 'satuan' => 'hrs'])
+                                @include('tech.forms.pmAppendedForm', ['namaKolom' => 'radiate_time', 'satuan' => 'hrs'])
 
                                 <div class="row">
                                     <label class="col-sm-2 col-form-label" for="">{{ __('Pulse Width') }}</label>
@@ -132,9 +132,9 @@
                                 @include('tech.forms.pmPulseForm', ['namaKolom' => '1_0us'])
                                 @include('tech.forms.pmPulseForm', ['namaKolom' => '2_0us'])
 
-                                @include('tech.forms.pmForm', ['namaKolom' => 'forward_power'])
-                                @include('tech.forms.pmForm', ['namaKolom' => 'reverse_power'])
-                                @include('tech.forms.pmForm', ['namaKolom' => 'vswr'])
+                                @include('tech.forms.pmAppendedForm', ['namaKolom' => 'forward_power', 'satuan' => 'dBm'])
+                                @include('tech.forms.pmAppendedForm', ['namaKolom' => 'reverse_power', 'satuan' => 'dBm'])
+                                @include('tech.forms.pmAppendedForm', ['namaKolom' => 'vswr', 'satuan' => ':1'])
 
                             </div>
                         </div>

@@ -60,9 +60,14 @@
                                         <label class="col-sm-2 col-form-label"
                                             for="inputInternalExpertise">{{ __('Internal Expertise') }}</label>
                                         @for ($i = 1; $i <= 3; $i++)
-                                            <div class="form-group col-md-3">
-                                                <select id="inputInternalExpertise{{ $i }}"
-                                                    class="form-control" name="expertise{{ $i }}">
+                                            <div
+                                                class="form-group col-md-3 @error('expertise1') label-floating has-danger @enderror">
+                                                @error('expertise1')
+                                                    <label class="control-label">{{ $message }}</label>
+                                                    <span class="material-icons form-control-feedback">clear</span>
+                                                @enderror
+                                                <select id="inputInternalExpertise{{ $i }}" class="form-control"
+                                                    disabled name="expertise{{ $i }}">
                                                     <option selected disabled>Choose...</option>
                                                     @foreach ($technisians as $tech)
                                                         <option value="{{ $tech->name }}">{{ $tech->name }}</option>
@@ -79,13 +84,23 @@
                                         <label class="col-sm-2 col-form-label"
                                             for="inputExpertise">{{ __('External Expertise') }}</label>
                                         <div class="col-sm-4">
-                                            <div class="form-group">
+                                            <div
+                                                class="form-group @error('expertise4') label-floating has-danger @enderror">
+                                                @error('expertise4')
+                                                    <label class="control-label">{{ $message }}</label>
+                                                    <span class="material-icons form-control-feedback">clear</span>
+                                                @enderror
                                                 <input class="form-control" input type="text" name="expertise4"
                                                     id="inputExpertise" placeholder="{{ __('Name') }}" value="" />
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
-                                            <div class="form-group">
+                                            <div
+                                                class="form-group @error('expertise4') label-floating has-danger @enderror">
+                                                @error('expertise4')
+                                                    <label class="control-label">{{ $message }}</label>
+                                                    <span class="material-icons form-control-feedback">clear</span>
+                                                @enderror
                                                 <input class="form-control" input type="text" name="expertise_company4"
                                                     id="inputExpertiseCompany"
                                                     placeholder="{{ __('Expertise Company') }}" value="" />
@@ -148,6 +163,17 @@
                 $('#dynamicField' + $i + '').detach();
                 $i--;
             }
+        });
+
+        /*
+         *
+         */
+        $("#inputInternalExpertise1").prop("disabled", false);
+        $("#inputInternalExpertise1").on("click", function() {
+            $("#inputInternalExpertise2").prop("disabled", false);
+            $("#inputInternalExpertise2").on("click", function() {
+                $("#inputInternalExpertise3").prop("disabled", false);
+            });
         });
     };
 
