@@ -38,9 +38,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('report/cm/create/{headId}', ['App\Http\Controllers\CmBodyReportsController', 'create']); //custom create routing
     Route::resource('report/cm', 'App\Http\Controllers\CmBodyReportsController', ['except' => ['create'], 'parameters' => ['cm' => 'cmBodyReport:head_id',]]);
     // REPORT ROUTES
-    Route::resources([
-        'report' => App\Http\Controllers\HeadReportsController::class,
-    ]);
+    Route::resource('report', 'App\Http\Controllers\HeadReportsController', ['parameters' => ['report' => 'headReport',]]);
 
     // temporary route until i create the report crud controller
     // Route::get('/report/pm/create', function () {

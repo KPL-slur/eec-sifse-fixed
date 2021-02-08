@@ -107,9 +107,7 @@ class PmBodyReportsController extends Controller
     */
     public function edit(PmBodyReport $pmBodyReport)
     {
-        // dd($pmBodyReport);
-        $technisians = DB::table('technisians')->get();
-        return view('tech.report.edit', ['technisians' => $technisians]);
+        //
     }
 
     /**

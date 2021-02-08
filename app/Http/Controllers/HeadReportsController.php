@@ -95,7 +95,8 @@ class HeadReportsController extends Controller
      */
     public function edit(HeadReport $headReport)
     {
-        //
+        $technisians = DB::table('technisians')->get();
+        return view('tech.report.edit', compact('headReport','technisians'));
     }
 
     /**

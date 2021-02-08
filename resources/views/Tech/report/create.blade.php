@@ -7,7 +7,7 @@
     @section('content')
         <div class="content">
             <div class="container-fluid">
-                <h1>Create New {{ ($_GET['entry_id'] === "pm" ? "Preventive" : $_GET['entry_id'] === "cm") ? "Corective" : "" }} Maintenance Report</h1>
+                <h1>Create New {{ $_GET['entry_id'] === 'pm' ? 'Preventive' : 'Corective' }} Maintenance Report</h1>
                 <div class="row">
                     <div class="col-md-12">
                         {{-- List of Form Name Inputs:
@@ -36,7 +36,7 @@
                         expertise_company8
                         expertise_company9
                         expertise_company10 --}}
-                        <form method="post" action="/report" class="form-horizontal">
+                        <form method="post" action="{{ url('/report') }}" class="form-horizontal">
                             @csrf
 
                             {{-- HIDDEN --}}
@@ -174,17 +174,17 @@
         /*
          *
          */
-        if ($("#inputInternalExpertise2").val() === null) {
+        if ($("#inputInternalExpertise1").val() === null) {
             $("#inputInternalExpertise2").prop("disabled", true);
         };
-        if ($("#inputInternalExpertise3").val() === null) {
+        if ($("#inputInternalExpertise2").val() === null) {
             $("#inputInternalExpertise3").prop("disabled", true);
         };
         $("#inputInternalExpertise1").on("change", function() {
             $("#inputInternalExpertise2").prop("disabled", false);
-            $("#inputInternalExpertise2").on("change", function() {
-                $("#inputInternalExpertise3").prop("disabled", false);
-            });
+        });
+        $("#inputInternalExpertise2").on("change", function() {
+            $("#inputInternalExpertise3").prop("disabled", false);
         });
     };
 

@@ -8,7 +8,7 @@
             @enderror
             <input class="form-control " input
                 type="{{ $tipeForm }}" name="{{ $namaKolom }}" id="input{{ $namaKolom }}"
-                placeholder="{{ $namaKolom }}" value="{{ old($namaKolom) }}" />
+                placeholder="{{ $namaKolom }}" value="{{ ($headReport->$namaKolom) ?? old($namaKolom) }}" />
         </div>
     </div>
 </div>
