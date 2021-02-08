@@ -18873,44 +18873,4 @@ Copyright (c) 2015 Daniel Eden
   }
 }
 
-/* 
-*  user created css
-*/
-
-/* digunakan di pm report form */
-.force-has-danger {
-  color: #f44336 !important;
-}
-
-.main-panel.no-sidebar {
-  width: 100%;
-  float: none;
-}
-
-/* NANTI CKEDITOR DIBUAT RESPONSIVE */
-.ck-editor__editable {
-  min-height: auto !important;
-  min-width: auto !important;
-}
-
-.ck.ck-editor__editable > .ck-placeholder::before {
-  color: #f44336;
-  font-weight: 400;
-}
-
-/* 
-* Digunakan pada tabel rekomendasi sparepart
-* pada form create pm/cm untuk mengoveride 
-* posisi icon yang margin topnya negatif
- */
-.btn .material-icons.shoping {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-#towerA{
-    height: 100px;
-    width: 100px;
-}
-
 /*# sourceMappingURL=dashboard-free.css.map */

@@ -1,6 +1,5 @@
 @extends('layouts.app', ['activePage' => 'dashboard', 'titlePage' => __('Dashboard')])
 
-
 {{-- IF entry_id not pm or cm will redirect to /tech --}}
 @if ($_GET['entry_id'] == 'pm' or $_GET['entry_id'] == 'cm')
 
@@ -60,10 +59,9 @@
                                         <label class="col-sm-2 col-form-label"
                                             for="inputInternalExpertise">{{ __('Internal Expertise') }}</label>
                                         @for ($i = 1; $i <= 3; $i++)
-                                            <div
-                                                class="form-group col-md-3 @error('expertise1') label-floating has-danger @enderror">
-                                                @error('expertise1')
-                                                    <label class="control-label">{{ $message }}</label>
+                                            <div class="form-group col-md-3 @error("expertise$i") label-floating has-danger @enderror">
+                                                @error("expertise$i")
+                                                    <label class="control-label force-has-danger">{{ $message }}</label>
                                                     <span class="material-icons form-control-feedback">clear</span>
                                                 @enderror
                                                 <select id="inputInternalExpertise{{ $i }}" class="form-control"
@@ -86,26 +84,24 @@
                                         <label class="col-sm-2 col-form-label"
                                             for="inputExpertise">{{ __('External Expertise') }}</label>
                                         <div class="col-sm-4">
-                                            <div
-                                                class="form-group @error('expertise4') label-floating has-danger @enderror">
+                                            <div class="form-group @error('expertise4') label-floating has-danger @enderror">
                                                 @error('expertise4')
                                                     <label class="control-label">{{ $message }}</label>
                                                     <span class="material-icons form-control-feedback">clear</span>
                                                 @enderror
                                                 <input class="form-control" input type="text" name="expertise4"
-                                                    id="inputExpertise" placeholder="{{ __('Name') }}"
+                                                    id="inputExpertise4" placeholder="{{ __('Name') }}"
                                                     value="{{ old('expertise4') }}" />
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
-                                            <div
-                                                class="form-group @error('expertise4') label-floating has-danger @enderror">
-                                                @error('expertise4')
+                                            <div class="form-group @error('expertise_company4') label-floating has-danger @enderror">
+                                                @error('expertise_company4')
                                                     <label class="control-label">{{ $message }}</label>
                                                     <span class="material-icons form-control-feedback">clear</span>
                                                 @enderror
                                                 <input class="form-control" input type="text" name="expertise_company4"
-                                                    id="inputExpertiseCompany"
+                                                    id="inputExpertiseCompany4"
                                                     placeholder="{{ __('Expertise Company') }}"
                                                     value="{{ old('expertise_company4') }}" />
                                             </div>
@@ -113,6 +109,12 @@
                                         <button type="button" id="add" class="btn btn-primary">ADD</button>
                                         <button type="button" id="remove" class="btn btn-danger">DELETE LAST</button>
                                     </div>
+                                    {{--  --}}
+                                    @for ($i = 5; $i <= 10; $i++)
+
+                                        @include('tech.forms.externalExpertiseForm', ['iterasiKe'=>$i])
+
+                                    @endfor
                                     {{--  --}}
                                 </div>
                             </div>
@@ -131,61 +133,14 @@
         </div>
     @endsection
 
+    <script src="{{ asset('user') }}/js/head-report.js" type="text/javascript"></script>
 @else
-    <script>
-        window.location = "/tech";
-
-    </script>
+    @php
+        // redirect to /tech, replace, 
+        // 301 Moved Permanently redirect status response code indicates that 
+        // the resource requested has been definitively moved to the URL given by the Location headers
+        header("location: ".url('/tech'), true, 301); 
+        exit();
+    @endphp
 @endif
 
-<script>
-    window.onload = function() {
-        /*
-         *   FUNGSI MENAMBAHKAN INPUT FIELD BARU
-         *   
-         *   old input belum dapat diberikan pada field yang ditambahkan menggunakan js
-         */
-        var $i = 4;
-        $('#add').click(function() {
-            if ($i < 10) {
-                $i++;
-                $('#dynamicField').append(
-                    '<div class="row" id="dynamicField' + $i +
-                    '"><label class="col-sm-2 col-form-label" for="inputExpertise' + $i +
-                    '">Expertise ' + $i +
-                    '</label><div class="col-sm-4"><div class="form-group"><input class="form-control" input type="text" name="expertise' +
-                    $i + '" id="inputExpertise' + $i +
-                    '" placeholder="{{ __('Expertise') }}" value="{{ old("expertise'+$i+'") }}"   /></div></div><div class="col-sm-3"><div class="form-group"><input class="form-control" input type="text" name="expertise_company' +
-                    $i + '" id="inputExpertiseCompany' + $i +
-                    '" placeholder="{{ __('Expertise Company') }}" value="{{ old("expertise_company'+$i+'") }}"   /></div></div></div>'
-                );
-            }
-        });
-        /*
-         *   FUNGSI MENGAHPUS INPUT FIELD  YANG BARU DITAMBAHKAN
-         */
-        $('#remove').click(function() {
-            if (!($i <= 1)) {
-                $('#dynamicField' + $i + '').detach();
-                $i--;
-            }
-        });
-
-        /*
-         *
-         */
-        if ($("#inputInternalExpertise1").val() === null) {
-            $("#inputInternalExpertise2").prop("disabled", true);
-        };
-        if ($("#inputInternalExpertise2").val() === null) {
-            $("#inputInternalExpertise3").prop("disabled", true);
-        };
-        $("#inputInternalExpertise1").on("change", function() {
-            $("#inputInternalExpertise2").prop("disabled", false);
-        });
-        $("#inputInternalExpertise2").on("change", function() {
-            $("#inputInternalExpertise3").prop("disabled", false);
-        });
-    };
-
-</script>
