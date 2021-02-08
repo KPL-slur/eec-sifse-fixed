@@ -8,8 +8,7 @@
                 <div class="col-md-12">
                     {{-- List of Form Name Inputs:
                         head_id
-                        remark
-                         --}}
+                        remark --}}
                     <form method="post" action="/report/cm" class="form-horizontal">
                         @csrf
 
@@ -28,7 +27,10 @@
                                     <div class="col-sm-7">
                                         <div class="form-group">
                                             <textarea class="editor" name="remark" id="editor" cols="50" rows="10"
-                                                class="form-control"></textarea>
+                                                class="form-control"
+                                                placeholder="@error('remark') {{ $message }} @enderror">
+                                                {{ old('remark') }}
+                                            </textarea>
                                         </div>
                                     </div>
                                 </div>

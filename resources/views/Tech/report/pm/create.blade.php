@@ -183,7 +183,10 @@
                                     <div class="col-sm-7">
                                         <div class="form-group">
                                             <textarea class="editor" name="remark" id="editor" cols="50" rows="10"
-                                                class="form-control"></textarea>
+                                                class="form-control"
+                                                placeholder="@error('remark') {{ $message }} @enderror">
+                                                {{ old('remark') }}
+                                            </textarea>
                                         </div>
                                     </div>
                                 </div>

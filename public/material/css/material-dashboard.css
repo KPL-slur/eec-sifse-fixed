@@ -18873,6 +18873,15 @@ Copyright (c) 2015 Daniel Eden
   }
 }
 
+/* 
+*  user created css
+*/
+
+/* digunakan di pm report form */
+.force-has-danger {
+  color: #f44336 !important;
+}
+
 .main-panel.no-sidebar {
   width: 100%;
   float: none;
@@ -18882,6 +18891,11 @@ Copyright (c) 2015 Daniel Eden
 .ck-editor__editable {
   min-height: auto !important;
   min-width: auto !important;
+}
+
+.ck.ck-editor__editable > .ck-placeholder::before {
+  color: #f44336;
+  font-weight: 400;
 }
 
 /* 

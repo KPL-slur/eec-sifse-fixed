@@ -50,15 +50,11 @@ class HeadReportsController extends Controller
         HeadReport::create($request->all());
 
         $maintenance_type = $request->maintenance_type; //used to determine the next report form
-        dump($maintenance_type);
 
         $KontainerIdUntukNanti = HeadReport::select('id')->orderByDesc('id')->first(); //used to determine the head id of this report
         $headId = $KontainerIdUntukNanti->id;
 
         // return view('tech.report.'.$maintenance_type.'.create', compact('headId'));  //not working with validation
-        
-        
-
         switch ($maintenance_type) {
             case 'pm':
                 return redirect()->action(
