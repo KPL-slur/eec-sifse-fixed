@@ -32,8 +32,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/tech', [App\Http\Controllers\TechController::class, 'index'])->name('tech');
     
     // PM REPORT ROUTES
+    Route::get('report/pm/create/{headId}', ['App\Http\Controllers\PmBodyReportsController', 'create']); //custom create routing
     Route::resource('report/pm', 'App\Http\Controllers\PmBodyReportsController', ['except' => ['create'], 'parameters' => ['pm' => 'pmBodyReport:head_id',]]);
     // PM REPORT ROUTES
+    Route::get('report/cm/create/{headId}', ['App\Http\Controllers\CmBodyReportsController', 'create']); //custom create routing
     Route::resource('report/cm', 'App\Http\Controllers\CmBodyReportsController', ['except' => ['create'], 'parameters' => ['cm' => 'cmBodyReport:head_id',]]);
     // REPORT ROUTES
     Route::resources([

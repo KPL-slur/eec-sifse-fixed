@@ -23,12 +23,13 @@ class CmBodyReportsController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
+     * @param $headId
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($headId)
     {
-        //NEVER USED because the view already called after headreport's store method
+        // dd($headId);
+        return view('tech.report.cm.create', compact('headId'));
     }
 
     /**

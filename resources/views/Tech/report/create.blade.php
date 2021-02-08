@@ -7,7 +7,7 @@
     @section('content')
         <div class="content">
             <div class="container-fluid">
-                <h1>Create New Preventive Maintenance Report</h1>
+                <h1>Create New {{ ($_GET['entry_id'] === "pm" ? "Preventive" : $_GET['entry_id'] === "cm") ? "Corective" : "" }} Maintenance Report</h1>
                 <div class="row">
                     <div class="col-md-12">
                         {{-- List of Form Name Inputs:
@@ -67,10 +67,12 @@
                                                     <span class="material-icons form-control-feedback">clear</span>
                                                 @enderror
                                                 <select id="inputInternalExpertise{{ $i }}" class="form-control"
-                                                    disabled name="expertise{{ $i }}">
+                                                    name="expertise{{ $i }}">
                                                     <option selected disabled>Choose...</option>
                                                     @foreach ($technisians as $tech)
-                                                        <option value="{{ $tech->name }}">{{ $tech->name }}</option>
+                                                        <option value="{{ $tech->name }}"
+                                                            {{ old("expertise$i") == $tech->name ? 'selected' : '' }}>
+                                                            {{ $tech->name }}</option>
                                                     @endforeach
                                                 </select>
                                                 <input type="hidden" value="Era Elektra Corpora Indonesia"
@@ -91,7 +93,8 @@
                                                     <span class="material-icons form-control-feedback">clear</span>
                                                 @enderror
                                                 <input class="form-control" input type="text" name="expertise4"
-                                                    id="inputExpertise" placeholder="{{ __('Name') }}" value="" />
+                                                    id="inputExpertise" placeholder="{{ __('Name') }}"
+                                                    value="{{ old('expertise4') }}" />
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
@@ -103,7 +106,8 @@
                                                 @enderror
                                                 <input class="form-control" input type="text" name="expertise_company4"
                                                     id="inputExpertiseCompany"
-                                                    placeholder="{{ __('Expertise Company') }}" value="" />
+                                                    placeholder="{{ __('Expertise Company') }}"
+                                                    value="{{ old('expertise_company4') }}" />
                                             </div>
                                         </div>
                                         <button type="button" id="add" class="btn btn-primary">ADD</button>
@@ -138,6 +142,8 @@
     window.onload = function() {
         /*
          *   FUNGSI MENAMBAHKAN INPUT FIELD BARU
+         *   
+         *   old input belum dapat diberikan pada field yang ditambahkan menggunakan js
          */
         var $i = 4;
         $('#add').click(function() {
@@ -149,9 +155,9 @@
                     '">Expertise ' + $i +
                     '</label><div class="col-sm-4"><div class="form-group"><input class="form-control" input type="text" name="expertise' +
                     $i + '" id="inputExpertise' + $i +
-                    '" placeholder="{{ __('Expertise') }}" value=""   /></div></div><div class="col-sm-3"><div class="form-group"><input class="form-control" input type="text" name="expertise_company' +
+                    '" placeholder="{{ __('Expertise') }}" value="{{ old("expertise'+$i+'") }}"   /></div></div><div class="col-sm-3"><div class="form-group"><input class="form-control" input type="text" name="expertise_company' +
                     $i + '" id="inputExpertiseCompany' + $i +
-                    '" placeholder="{{ __('Expertise Company') }}" value=""   /></div></div></div>'
+                    '" placeholder="{{ __('Expertise Company') }}" value="{{ old("expertise_company'+$i+'") }}"   /></div></div></div>'
                 );
             }
         });
@@ -168,10 +174,15 @@
         /*
          *
          */
-        $("#inputInternalExpertise1").prop("disabled", false);
-        $("#inputInternalExpertise1").on("click", function() {
+        if ($("#inputInternalExpertise2").val() === null) {
+            $("#inputInternalExpertise2").prop("disabled", true);
+        };
+        if ($("#inputInternalExpertise3").val() === null) {
+            $("#inputInternalExpertise3").prop("disabled", true);
+        };
+        $("#inputInternalExpertise1").on("change", function() {
             $("#inputInternalExpertise2").prop("disabled", false);
-            $("#inputInternalExpertise2").on("click", function() {
+            $("#inputInternalExpertise2").on("change", function() {
                 $("#inputInternalExpertise3").prop("disabled", false);
             });
         });

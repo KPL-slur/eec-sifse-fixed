@@ -37,30 +37,30 @@ class PmBodyReportsSeeder extends Seeder
             'radio_grease_gear' => '1',
 
             //remark
-            'running_time' => '047399.0 hrs',
-            'radiate_time' => '046936.9 hrs',
+            'running_time' => '047399.0',
+            'radiate_time' => '046936.9',
 
-            'hvps_v_0_4us' => '752.8 V',
-            'hvps_i_0_4us' => '1.6 A',
-            'mag_i_0_4us' => '27.3 mA',
+            'hvps_v_0_4us' => '752.8',
+            'hvps_i_0_4us' => '1.6',
+            'mag_i_0_4us' => '27.3',
             
-            'hvps_v_0_8us' => '752.0 V',
-            'hvps_i_0_8us' => '2.4 A',
-            'mag_i_0_8us' => '47.2 mA',
+            'hvps_v_0_8us' => '752.0',
+            'hvps_i_0_8us' => '2.4',
+            'mag_i_0_8us' => '47.2',
             
-            'hvps_v_1_0us' => '753.0 V',
-            'hvps_i_1_0us' => '0.6 A',
-            'mag_i_1_0us' => '12.4 mA',
+            'hvps_v_1_0us' => '753.0',
+            'hvps_i_1_0us' => '0.6',
+            'mag_i_1_0us' => '12.4',
 
-            'hvps_v_2_0us' => '752.8 V',
-            'hvps_i_2_0us' => '1.0 A',
-            'mag_i_2_0us' => '23.2 mA',
+            'hvps_v_2_0us' => '752.8',
+            'hvps_i_2_0us' => '1.0',
+            'mag_i_2_0us' => '23.2',
 
-            'forward_power' => '85.704 dBm',
-            'reverse_power' => '54.93 dBm',
-            'vswr' => '1.02 :1',
+            'forward_power' => '85.704',
+            'reverse_power' => '54.93',
+            'vswr' => '1.02',
 
-            'remark' => 'lorem ipsum blah blah blah',
+            'remark' => '<h1>Olive Oil</h1><p>Olive oil composed of refined olive oils and virgin olive oils. Oil comprising exclusively olive  oils that have undergone refining and oils obtained directly from olives</p>',
 
             'created_at' => now(),
         ]);

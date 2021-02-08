@@ -24,12 +24,13 @@ class PmBodyReportsController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     * @param $passedHeadId
+     * @param $headId
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($headId)
     {
-        //NEVER USED because the view already called after headreport's store method
+        // dd($headId);
+        return view('tech.report.pm.create', compact('headId'));
     }
 
     /**
@@ -40,6 +41,44 @@ class PmBodyReportsController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'radio_general_visual' => 'required',
+            'radio_rcms' => 'required',
+            'radio_wipe_down' => 'required',
+            'radio_inspect_all' => 'required',
+            'radio_compressor_visual' => 'required',
+            'radio_duty_cycle' => 'required',
+            'radio_transmitter_visual' => 'required',
+            'radio_receiver_visual' => 'required',
+            'radio_stalo_check' => 'required',
+            'radio_afc_check' => 'required',
+            'radio_mrp_check' => 'required',
+            'radio_rcu_check' => 'required',
+            'radio_iq2_check' => 'required',
+            'radio_antenna_visual' => 'required',
+            'radio_inspect_motor' => 'required',
+            'radio_clean_slip' => 'required',
+            'radio_grease_gear' => 'required',
+            'running_time' => 'required|numeric',
+            'radiate_time' => 'required|numeric',
+            'hvps_v_0_4us' => 'required|numeric',
+            'hvps_i_0_4us' => 'required|numeric',
+            'mag_i_0_4us' => 'required|numeric',
+            'hvps_v_0_8us' => 'required|numeric',
+            'hvps_i_0_8us' => 'required|numeric',
+            'mag_i_0_8us' => 'required|numeric',
+            'hvps_v_1_0us' => 'required|numeric',
+            'hvps_i_1_0us' => 'required|numeric',
+            'mag_i_1_0us' => 'required|numeric',
+            'hvps_v_2_0us' => 'required|numeric',
+            'hvps_i_2_0us' => 'required|numeric',
+            'mag_i_2_0us' => 'required|numeric',
+            'forward_power' => 'required|numeric',
+            'reverse_power' => 'required|numeric',
+            'vswr' => 'required|numeric',
+            'remark' => 'required',
+        ]);
+
         PmBodyReport::create($request->all());
 
         return redirect()->action(
