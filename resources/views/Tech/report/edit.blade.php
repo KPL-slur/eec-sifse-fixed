@@ -48,11 +48,11 @@
                             </div>
                             {{-- DYNAMIC FIELDS --}}
                             <div class="card-body " id="dynamicField">
-                                @include('tech.forms.summaryForm', ['namaKolom'=>'radar_name', 'tipeForm'=>'text'])
-                                @include('tech.forms.summaryForm', ['namaKolom'=>'station_id', 'tipeForm'=>'text'])
-                                @include('tech.forms.summaryForm', ['namaKolom'=>'report_date_start',
+                                @include('tech.report.layout.forms.summary-form', ['namaKolom'=>'radar_name', 'tipeForm'=>'text'])
+                                @include('tech.report.layout.forms.summary-form', ['namaKolom'=>'station_id', 'tipeForm'=>'text'])
+                                @include('tech.report.layout.forms.summary-form', ['namaKolom'=>'report_date_start',
                                 'tipeForm'=>'date'])
-                                @include('tech.forms.summaryForm', ['namaKolom'=>'report_date_end', 'tipeForm'=>'date'])
+                                @include('tech.report.layout.forms.summary-form', ['namaKolom'=>'report_date_end', 'tipeForm'=>'date'])
 
                                 <div class="row">
                                     <label class="col-sm-2 col-form-label"
@@ -115,7 +115,7 @@
                                 {{--  --}}
                                 @for ($i = 5; $i <= 10; $i++)
 
-                                    @include('tech.forms.externalExpertiseForm', ['iterasiKe'=>$i])
+                                    @include('tech.report.layout.forms.external-expertise-form', ['iterasiKe'=>$i])
 
                                 @endfor
                                 {{--  --}}

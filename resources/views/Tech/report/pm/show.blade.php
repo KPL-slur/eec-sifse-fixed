@@ -69,10 +69,10 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @include('tech.report.layout.reportRow', ['namaKolom'=>'general_visual'])
-                                                @include('tech.report.layout.reportRow', ['namaKolom'=>'rcms'])
-                                                @include('tech.report.layout.reportRow', ['namaKolom'=>'wipe_down'])
-                                                @include('tech.report.layout.reportRow', ['namaKolom'=>'inspect_all'])
+                                                @include('tech.report.layout.report-row', ['namaKolom'=>'general_visual'])
+                                                @include('tech.report.layout.report-row', ['namaKolom'=>'rcms'])
+                                                @include('tech.report.layout.report-row', ['namaKolom'=>'wipe_down'])
+                                                @include('tech.report.layout.report-row', ['namaKolom'=>'inspect_all'])
                                             </tbody>
                                         </table>
                                     </div>
@@ -95,8 +95,8 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @include('tech.report.layout.reportRow', ['namaKolom'=>'compressor_visual'])
-                                                @include('tech.report.layout.reportRow', ['namaKolom'=>'duty_cycle'])
+                                                @include('tech.report.layout.report-row', ['namaKolom'=>'compressor_visual'])
+                                                @include('tech.report.layout.report-row', ['namaKolom'=>'duty_cycle'])
                                             </tbody>
                                         </table>
                                     </div>
@@ -119,13 +119,13 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @include('tech.report.layout.reportRow',
+                                                @include('tech.report.layout.report-row',
                                                 ['namaKolom'=>'transmitter_visual'])
-                                                @include('tech.report.layout.reportRow', ['namaKolom'=>'running_time'])
-                                                @include('tech.report.layout.reportRow', ['namaKolom'=>'radiate_time'])
-                                                @include('tech.report.layout.reportRow', ['namaKolom'=>'forward_power'])
-                                                @include('tech.report.layout.reportRow', ['namaKolom'=>'reverse_power'])
-                                                @include('tech.report.layout.reportRow', ['namaKolom'=>'vswr'])
+                                                @include('tech.report.layout.report-row', ['namaKolom'=>'running_time'])
+                                                @include('tech.report.layout.report-row', ['namaKolom'=>'radiate_time'])
+                                                @include('tech.report.layout.report-row', ['namaKolom'=>'forward_power'])
+                                                @include('tech.report.layout.report-row', ['namaKolom'=>'reverse_power'])
+                                                @include('tech.report.layout.report-row', ['namaKolom'=>'vswr'])
                                             </tbody>
                                         </table>
                                     </div>
@@ -148,12 +148,12 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @include('tech.report.layout.reportRow', ['namaKolom'=>'receiver_visual'])
-                                                @include('tech.report.layout.reportRow', ['namaKolom'=>'stalo_check'])
-                                                @include('tech.report.layout.reportRow', ['namaKolom'=>'afc_check'])
-                                                @include('tech.report.layout.reportRow', ['namaKolom'=>'mrp_check'])
-                                                @include('tech.report.layout.reportRow', ['namaKolom'=>'rcu_check'])
-                                                @include('tech.report.layout.reportRow', ['namaKolom'=>'iq2_check'])
+                                                @include('tech.report.layout.report-row', ['namaKolom'=>'receiver_visual'])
+                                                @include('tech.report.layout.report-row', ['namaKolom'=>'stalo_check'])
+                                                @include('tech.report.layout.report-row', ['namaKolom'=>'afc_check'])
+                                                @include('tech.report.layout.report-row', ['namaKolom'=>'mrp_check'])
+                                                @include('tech.report.layout.report-row', ['namaKolom'=>'rcu_check'])
+                                                @include('tech.report.layout.report-row', ['namaKolom'=>'iq2_check'])
                                             </tbody>
                                         </table>
                                     </div>
@@ -176,10 +176,10 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @include('tech.report.layout.reportRow', ['namaKolom'=>'antenna_visual'])
-                                                @include('tech.report.layout.reportRow', ['namaKolom'=>'inspect_motor'])
-                                                @include('tech.report.layout.reportRow', ['namaKolom'=>'clean_slip'])
-                                                @include('tech.report.layout.reportRow', ['namaKolom'=>'grease_gear'])
+                                                @include('tech.report.layout.report-row', ['namaKolom'=>'antenna_visual'])
+                                                @include('tech.report.layout.report-row', ['namaKolom'=>'inspect_motor'])
+                                                @include('tech.report.layout.report-row', ['namaKolom'=>'clean_slip'])
+                                                @include('tech.report.layout.report-row', ['namaKolom'=>'grease_gear'])
                                             </tbody>
                                         </table>
                                     </div>

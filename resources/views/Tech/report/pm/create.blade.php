@@ -92,10 +92,10 @@
                                 <h4 class="card-title">{{ __('General') }}</h4>
                             </div>
                             <div class="card-body " id="">
-                                @include('tech.forms.pmForm', ['namaKolom' => 'general_visual'])
-                                @include('tech.forms.pmForm', ['namaKolom' => 'rcms'])
-                                @include('tech.forms.pmForm', ['namaKolom' => 'wipe_down'])
-                                @include('tech.forms.pmForm', ['namaKolom' => 'inspect_all'])
+                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'general_visual'])
+                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'rcms'])
+                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'wipe_down'])
+                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'inspect_all'])
 
                             </div>
                         </div>
@@ -107,8 +107,8 @@
                                 <h4 class="card-title">{{ __('Compressor') }}</h4>
                             </div>
                             <div class="card-body " id="">
-                                @include('tech.forms.pmForm', ['namaKolom' => 'compressor_visual'])
-                                @include('tech.forms.pmForm', ['namaKolom' => 'duty_cycle'])
+                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'compressor_visual'])
+                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'duty_cycle'])
 
                             </div>
                         </div>
@@ -120,21 +120,21 @@
                                 <h4 class="card-title">{{ __('Transmitter') }}</h4>
                             </div>
                             <div class="card-body " id="">
-                                @include('tech.forms.pmForm', ['namaKolom' => 'transmitter_visual'])
-                                @include('tech.forms.pmAppendedForm', ['namaKolom' => 'running_time', 'satuan' => 'hrs'])
-                                @include('tech.forms.pmAppendedForm', ['namaKolom' => 'radiate_time', 'satuan' => 'hrs'])
+                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'transmitter_visual'])
+                                @include('tech.report.layout.forms.pm-appended-form', ['namaKolom' => 'running_time', 'satuan' => 'hrs'])
+                                @include('tech.report.layout.forms.pm-appended-form', ['namaKolom' => 'radiate_time', 'satuan' => 'hrs'])
 
                                 <div class="row">
                                     <label class="col-sm-2 col-form-label" for="">{{ __('Pulse Width') }}</label>
                                 </div>
-                                @include('tech.forms.pmPulseForm', ['namaKolom' => '0_4us'])
-                                @include('tech.forms.pmPulseForm', ['namaKolom' => '0_8us'])
-                                @include('tech.forms.pmPulseForm', ['namaKolom' => '1_0us'])
-                                @include('tech.forms.pmPulseForm', ['namaKolom' => '2_0us'])
+                                @include('tech.report.layout.forms.pm-pulse-form', ['namaKolom' => '0_4us'])
+                                @include('tech.report.layout.forms.pm-pulse-form', ['namaKolom' => '0_8us'])
+                                @include('tech.report.layout.forms.pm-pulse-form', ['namaKolom' => '1_0us'])
+                                @include('tech.report.layout.forms.pm-pulse-form', ['namaKolom' => '2_0us'])
 
-                                @include('tech.forms.pmAppendedForm', ['namaKolom' => 'forward_power', 'satuan' => 'dBm'])
-                                @include('tech.forms.pmAppendedForm', ['namaKolom' => 'reverse_power', 'satuan' => 'dBm'])
-                                @include('tech.forms.pmAppendedForm', ['namaKolom' => 'vswr', 'satuan' => ':1'])
+                                @include('tech.report.layout.forms.pm-appended-form', ['namaKolom' => 'forward_power', 'satuan' => 'dBm'])
+                                @include('tech.report.layout.forms.pm-appended-form', ['namaKolom' => 'reverse_power', 'satuan' => 'dBm'])
+                                @include('tech.report.layout.forms.pm-appended-form', ['namaKolom' => 'vswr', 'satuan' => ':1'])
 
                             </div>
                         </div>
@@ -146,12 +146,12 @@
                                 <h4 class="card-title">{{ __('Receiver') }}</h4>
                             </div>
                             <div class="card-body " id="">
-                                @include('tech.forms.pmForm', ['namaKolom' => 'receiver_visual'])
-                                @include('tech.forms.pmForm', ['namaKolom' => 'stalo_check'])
-                                @include('tech.forms.pmForm', ['namaKolom' => 'afc_check'])
-                                @include('tech.forms.pmForm', ['namaKolom' => 'mrp_check'])
-                                @include('tech.forms.pmForm', ['namaKolom' => 'rcu_check'])
-                                @include('tech.forms.pmForm', ['namaKolom' => 'iq2_check'])
+                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'receiver_visual'])
+                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'stalo_check'])
+                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'afc_check'])
+                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'mrp_check'])
+                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'rcu_check'])
+                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'iq2_check'])
 
                             </div>
                         </div>
@@ -163,10 +163,10 @@
                                 <h4 class="card-title">{{ __('Antenna/Pedestal') }}</h4>
                             </div>
                             <div class="card-body " id="">
-                                @include('tech.forms.pmForm', ['namaKolom' => 'antenna_visual'])
-                                @include('tech.forms.pmForm', ['namaKolom' => 'inspect_motor'])
-                                @include('tech.forms.pmForm', ['namaKolom' => 'clean_slip'])
-                                @include('tech.forms.pmForm', ['namaKolom' => 'grease_gear'])
+                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'antenna_visual'])
+                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'inspect_motor'])
+                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'clean_slip'])
+                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'grease_gear'])
 
                             </div>
                         </div>
