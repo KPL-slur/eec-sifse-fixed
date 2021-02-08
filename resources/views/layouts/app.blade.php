@@ -16,8 +16,6 @@
     <link href="{{ asset('material') }}/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
     <link href="{{ asset('user') }}/css/style.css" rel="stylesheet" />
     {{-- <link href="{{ asset('resources/css/app.css') }}" rel="stylesheet" /> --}}
-    <!-- CSS Just for demo purpose, don't include it in your project -->
-    {{-- <link href="{{ asset('material') }}/demo/demo.css" rel="stylesheet" /> --}}
     </head>
     <body class="{{ $class ?? '' }}">
         @auth()
@@ -87,8 +85,7 @@
         <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
         <script src="{{ asset('material') }}/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
         <!-- Material Dashboard DEMO methods, don't include it in your project! -->
-        {{-- <script src="{{ asset('material') }}/demo/demo.js"></script>
-        <script src="{{ asset('material') }}/js/settings.js"></script> --}}
+        {{-- <script src="{{ asset('material') }}/js/settings.js"></script> --}}
         {{-- IMPORT CKEDITOR, NANTI DI DOWNLOAD JGN DARI CDN --}}
         <script src="https://cdn.ckeditor.com/ckeditor5/25.0.0/classic/ckeditor.js"></script>
         @stack('js')
