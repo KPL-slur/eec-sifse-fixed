@@ -95,7 +95,8 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @include('tech.report.layout.report-row', ['namaKolom'=>'compressor_visual'])
+                                                @include('tech.report.layout.report-row',
+                                                ['namaKolom'=>'compressor_visual'])
                                                 @include('tech.report.layout.report-row', ['namaKolom'=>'duty_cycle'])
                                             </tbody>
                                         </table>
@@ -121,11 +122,31 @@
                                             <tbody>
                                                 @include('tech.report.layout.report-row',
                                                 ['namaKolom'=>'transmitter_visual'])
-                                                @include('tech.report.layout.report-row', ['namaKolom'=>'running_time'])
-                                                @include('tech.report.layout.report-row', ['namaKolom'=>'radiate_time'])
-                                                @include('tech.report.layout.report-row', ['namaKolom'=>'forward_power'])
-                                                @include('tech.report.layout.report-row', ['namaKolom'=>'reverse_power'])
-                                                @include('tech.report.layout.report-row', ['namaKolom'=>'vswr'])
+                                                @include('tech.report.layout.report-row', ['namaKolom'=>'running_time',
+                                                'satuan'=>'hrs'])
+                                                @include('tech.report.layout.report-row', ['namaKolom'=>'radiate_time',
+                                                'satuan'=>'hrs'])
+
+                                                <th>Pulse Width</th>
+                                                <th></th>
+                                                <th>HVPS V</th>
+                                                <th>HVPS I</th>
+                                                <th>Mag I</th>
+                                                @include('tech.report.layout.report-pulse-row',
+                                                ['namaKolom'=>'0_4us'])
+                                                @include('tech.report.layout.report-pulse-row',
+                                                ['namaKolom'=>'0_8us'])
+                                                @include('tech.report.layout.report-pulse-row',
+                                                ['namaKolom'=>'1_0us'])
+                                                @include('tech.report.layout.report-pulse-row',
+                                                ['namaKolom'=>'2_0us'])
+
+                                                @include('tech.report.layout.report-row', ['namaKolom'=>'forward_power',
+                                                'satuan'=>'mBm'])
+                                                @include('tech.report.layout.report-row', ['namaKolom'=>'reverse_power',
+                                                'satuan'=>'mBm'])
+                                                @include('tech.report.layout.report-row', ['namaKolom'=>'vswr',
+                                                'satuan'=>':1'])
                                             </tbody>
                                         </table>
                                     </div>
@@ -193,7 +214,7 @@
                             <div class="card-body ">
                                 <div class="row">
                                     <div class="container">
-                                        <?php echo $pmBodyReport->remark ?>
+                                        <?php echo $pmBodyReport->remark; ?>
                                     </div>
                                 </div>
                             </div>

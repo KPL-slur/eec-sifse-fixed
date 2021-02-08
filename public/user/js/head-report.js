@@ -54,16 +54,21 @@ window.onload = function () {
      *   METHOD MENONAKTIFKAN FIELD
      *   Menonaktifkan field sebelum user mengisikan form sebelumnya
      */
-    if ($("#inputInternalExpertise1").val() === null) {
-        $("#inputInternalExpertise2").prop("disabled", true);
+    function disableInternalExpertise() {
+        if ($("#inputInternalExpertise1").val() === "") {
+            $("#inputInternalExpertise2").prop("disabled", true);
+        }
+        if ($("#inputInternalExpertise2").val() === "") {
+            $("#inputInternalExpertise3").prop("disabled", true);
+        }
     }
-    if ($("#inputInternalExpertise2").val() === null) {
-        $("#inputInternalExpertise3").prop("disabled", true);
-    }
+    disableInternalExpertise();
     $("#inputInternalExpertise1").on("change", function () {
         $("#inputInternalExpertise2").prop("disabled", false);
+        disableInternalExpertise();
     });
     $("#inputInternalExpertise2").on("change", function () {
         $("#inputInternalExpertise3").prop("disabled", false);
+        disableInternalExpertise();
     });
 };

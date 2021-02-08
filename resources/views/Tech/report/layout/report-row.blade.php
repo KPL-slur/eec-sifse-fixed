@@ -5,5 +5,5 @@
     <td>{{ $namaKolom }}</td>
     <td>{{ ($pmBodyReport->$radioNamaKolom === 0 ? 'FAIL' : $pmBodyReport->$radioNamaKolom === 1) ? 'PASS' : 'not defined' }}
     </td>
-    <td>{{ $pmBodyReport->$namaKolom ?? 'empty' }}</td>
+    <td colspan="3">{{ $pmBodyReport->$namaKolom ?? 'empty' }} <strong>{{ $satuan ?? "" }}</strong></td>
 </tr>

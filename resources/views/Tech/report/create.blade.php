@@ -66,7 +66,7 @@
                                                 @enderror
                                                 <select id="inputInternalExpertise{{ $i }}" class="form-control"
                                                     name="expertise{{ $i }}">
-                                                    <option selected disabled>Choose...</option>
+                                                    <option selected value="">Choose...</option>
                                                     @foreach ($technisians as $tech)
                                                         <option value="{{ $tech->name }}"
                                                             {{ old("expertise$i") == $tech->name ? 'selected' : '' }}>
