@@ -15,7 +15,7 @@
                             <h3 class="card-title">Preventive Maintenance</h3>
                         </div>
                         <div class="card-footer">
-                            <a class="btn btn-success" href="{{ url('/report/pm/new') }}">NEW</a>
+                            <a class="btn btn-success" data-id="1" href="{{ url('/report/create') }}?entry_id=pm">NEW</a>
                             <a class="btn btn-info" href="{{ url('/report/pm') }}">VIEW</a>
                         </div>
                     </div>
@@ -30,8 +30,8 @@
                             <h3 class="card-title">Corective Maintenance</h3>
                         </div>
                         <div class="card-footer">
-                            <button class="btn btn-success">NEW</button>
-                            <button class="btn btn-info">VIEW</button>
+                            <a class="btn btn-success" href="{{ url('/report/create') }}?entry_id=cm">NEW</a>
+                            <a class="btn btn-info" href="{{ url('/report/cm') }}">VIEW</a>
                         </div>
                     </div>
                 </div>

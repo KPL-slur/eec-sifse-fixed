@@ -18873,20 +18873,4 @@ Copyright (c) 2015 Daniel Eden
   }
 }
 
-.main-panel.no-sidebar {
-  width: 100%;
-  float: none;
-}
-
-/* NANTI CKEDITOR DIBUAT RESPONSIVE */
-.ck-editor__editable {
-  min-height: 50em !important;
-  min-width: 90em !important;
-}
-
-#towerA{
-    height: 100px;
-    width: 100px;
-}
-
 /*# sourceMappingURL=dashboard-free.css.map */

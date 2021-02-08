@@ -31,13 +31,22 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/tech', [App\Http\Controllers\TechController::class, 'index'])->name('tech');
     
+    // PM REPORT ROUTES
+    Route::get('report/pm/create/{headId}', ['App\Http\Controllers\PmBodyReportsController', 'create']); //custom create routing
+    Route::resource('report/pm', 'App\Http\Controllers\PmBodyReportsController', ['except' => ['create'], 'parameters' => ['pm' => 'pmBodyReport:head_id',]]);
+    // PM REPORT ROUTES
+    Route::get('report/cm/create/{headId}', ['App\Http\Controllers\CmBodyReportsController', 'create']); //custom create routing
+    Route::resource('report/cm', 'App\Http\Controllers\CmBodyReportsController', ['except' => ['create'], 'parameters' => ['cm' => 'cmBodyReport:head_id',]]);
+    // REPORT ROUTES
+    Route::resource('report', 'App\Http\Controllers\HeadReportsController', ['parameters' => ['report' => 'headReport',]]);
+
     // temporary route until i create the report crud controller
-    Route::get('/report/pm/new', function () {
-        return view('tech.report.pm.create');
-    })->name('report');
-    Route::get('/report/pm', function () {
-        return view('tech.report.pm.index');
-    })->name('report');
+    // Route::get('/report/pm/create', function () {
+    //     return view('tech.report.pm.create');
+    // })->name('report');
+    // Route::get('/report/pm', function () {
+    //     return view('tech.report.pm.index');
+    // })->name('report');
     
     //Bawaan dari template
     Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
@@ -110,9 +119,4 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('stock_currency', [App\Http\Controllers\StockController::class, 'index'])->name('stock_currency');
     Route::get('stock_currency/create', [App\Http\Controllers\StockController::class, 'create'])->name('stock_currency_create');
     Route::post('stock_currency', [App\Http\Controllers\StockController::class, 'store']);
-
-    Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
-    Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
-    Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
-    Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });

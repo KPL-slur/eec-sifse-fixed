@@ -8,8 +8,10 @@
                     <h4 class="card-title">{{ __('Weather Radar Service Report') }}</h4>
                 </div>
                 <div class="card-body ">
+                    <a type="button" class="btn btn-info" href="{{ url('tech') }}">BACK</a>
+                    <a type="button" class="btn btn-primary" href="{{ url('report/create') }}?entry_id={{ $maintenance_type }}">ADD NEW</a>
                     <div class="row">
-                        <div class="col">
+                        <div class="col table-responsive">
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -21,23 +23,25 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($HeadReport as $hr)
                                     <tr>
-                                        <td class="text-center">1</td>
-                                        <td>Banjarmasin</td>
-                                        <td>25 Januari 2021 - 26 Januari 2021</td>
-                                        <td>M. Fris Setiawan; Pontjo Agus Winarno</td>
+                                        <td class="text-center">{{ $loop->iteration }}</td>
+                                        <td>{{ $hr->radar_name }}</td>
+                                        <td>{{ $hr->report_date_start }} - {{ $hr->report_date_end }}</td>
+                                        <td>{{ $hr->expertise1 }}; {{ $hr->expertise2 }}; {{ $hr->expertise3 }}</td>
                                         <td class="td-actions text-right">
-                                            <button type="button" rel="tooltip" class="btn btn-info">
+                                            <a type="button" rel="tooltip" class="btn btn-info" href="{{ url('/report/'.$maintenance_type.'/'.$hr->id) }}">
                                                 <i class="material-icons">visibility</i>
-                                            </button>
-                                            <button type="button" rel="tooltip" class="btn btn-success">
+                                            </a>
+                                            <a type="button" rel="tooltip" class="btn btn-success"  href="{{ url('/report/'.$hr->id.'/edit') }}">
                                                 <i class="material-icons">edit</i>
-                                            </button>
+                                            </a>
                                             <button type="button" rel="tooltip" class="btn btn-danger">
                                                 <i class="material-icons">close</i>
                                             </button>
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
