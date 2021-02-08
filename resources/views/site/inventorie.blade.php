@@ -7,8 +7,8 @@
         <div class="col-md-12">
             <div class="card">
               <div class="card-header card-header-primary">
-                <h4 class="card-title ">Inventorie</h4>
-                <p class="card-category"> Here you can manage inventorie</p>
+                <h4 class="card-title ">Inventory</h4>
+                <p class="card-category"> Here you can manage inventory</p>
               </div>
               <div class="card-body">
                   <div class="row">
@@ -23,11 +23,13 @@
                           </div>
                     </div>
                     <div class="col-12 text-right">
-                        <a rel="tooltip" class="btn btn-success" type="button" href="inventorySite">
+                      
+                        <a rel="tooltip" class="btn btn-success" type="button" href="{{ url('inventorySite') }}/{{ $id }}">
                           <i class="material-icons">
                             local_printshop
                           </i> Print Data
-                        </a> 
+                        </a>
+                
                     </div>
                 </div>
                 <div class="table-responsive">
@@ -62,4 +64,6 @@
       </div>
     </div>
   </div>
+
+
 @endsection

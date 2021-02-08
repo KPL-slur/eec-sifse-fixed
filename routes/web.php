@@ -101,8 +101,9 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
 
     //site
     Route::get('site', [App\Http\Controllers\SiteController::class, 'index'])->name('site');
+    Route::get('addSite', [App\Http\Controllers\SiteController::class, 'add']);
     Route::get('inventorie/{id}', [App\Http\Controllers\SiteController::class, 'show']);
-    Route::get('inventorySite', [App\Http\Controllers\SiteController::class, 'print']);
+    Route::get('inventorySite/{id}', [App\Http\Controllers\SiteController::class, 'print']);
 
     
     //stock with currencies
