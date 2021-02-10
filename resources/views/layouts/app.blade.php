@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <!-- CSS Files -->
+    <meta charset="UTF-8">	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <link href="{{ asset('material') }}/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
     <link href="{{ asset('user') }}/css/style.css" rel="stylesheet" />
     {{-- <link href="{{ asset('resources/css/app.css') }}" rel="stylesheet" /> --}}
@@ -88,6 +89,8 @@
         {{-- <script src="{{ asset('material') }}/js/settings.js"></script> --}}
         {{-- IMPORT CKEDITOR, NANTI DI DOWNLOAD JGN DARI CDN --}}
         <script src="https://cdn.ckeditor.com/ckeditor5/25.0.0/classic/ckeditor.js"></script>
+        {{-- DataTable plug in --}}
+        <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
         @stack('js')
     </body>
 </html>

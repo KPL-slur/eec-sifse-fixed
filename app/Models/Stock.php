@@ -10,6 +10,8 @@ class Stock extends Model
     use HasFactory;
     protected $table = 'stocks';
 
+    protected $primaryKey = 'site_id';
+
     protected $fillable = [
         'site_id',
         'nama_barang',

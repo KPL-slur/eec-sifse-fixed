@@ -52,16 +52,16 @@ class DistributionController extends Controller
         ->rightJoin('sites', 'sites.site_id', '=', 'distributions.site_id')
         ->whereNull('tech_id')
         ->get();
-        //  dd($sites);
         return view('distribution.add', ['technisians' => $technisians, 'sites' => $sites]);
     }
 
     public function addData(Request $request){
-        // dd($request->all());
+        dd($request);
         $distributions = new Distribution;
         $distributions->tech_id = $request->tech_id;
         $distributions->site_id = $request->site_id;
         $distributions->save();
+
         
         return redirect('distribution')->with('success', 'Data Created!');
     }
