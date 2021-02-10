@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call([PmBodyReportsSeeder::class]);
         $this->call([CmBodyReportsSeeder::class]);
         $this->call([TechnisiansSeeder::class]);
+        $this->call([StockSeeder::class]);
     }
 }

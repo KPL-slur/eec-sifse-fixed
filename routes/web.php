@@ -117,6 +117,9 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     
     //stock with currencies
     Route::get('stock_currency', [App\Http\Controllers\StockController::class, 'index'])->name('stock_currency');
+    Route::get('stock_currency/{stock}/edit', [App\Http\Controllers\StockController::class, 'edit']);
     Route::get('stock_currency/create', [App\Http\Controllers\StockController::class, 'create'])->name('stock_currency_create');
     Route::post('stock_currency', [App\Http\Controllers\StockController::class, 'store']);
+    Route::put('stock_currency/{stock}/update', [App\Http\Controllers\StockController::class, 'update']);
+
 });

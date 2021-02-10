@@ -17,12 +17,14 @@ class CreateStocksTable extends Migration
             $table->bigIncrements('stock_id');
             $table->foreignId('site_id');
             $table->string('nama_barang');
+            $table->smallInteger('group');
             $table->string('part_number');
             $table->string('serial_number');
             $table->date('tgl_masuk');
             $table->date('expired');
             $table->integer('kurs_beli');
             $table->integer('jumlah_unit');
+            $table->smallInteger('status');
             $table->timestamps();
         });
     }
