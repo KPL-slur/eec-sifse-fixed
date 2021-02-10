@@ -18,7 +18,7 @@
           <div class="card card-stats">
               <div class="card-header card-header-warning card-header-icon">
                   <div class="card-icon">
-                      <img id="towerA" src="{{ asset('material') }}/img/towerA.jpg" alt="towerA">
+                    <img id="towers" src="storage/app/image/{{ $sts->image }}" alt="tower" ></img>
                   </div>
                   <h3 class="card-title"><strong>{{$sts->lokasi}}</strong></h3>
               </div>

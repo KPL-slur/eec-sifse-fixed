@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" id="table-stk">
                         <thead>
                           <tr>
                             <th scope="col">#</th>
@@ -65,5 +65,10 @@
     </div>
   </div>
 
+{{-- <script type="text/javascript"> 
+    $(stk).ready(function(){
+      $('#table-stk').DataTable();
+    });
+</script> --}}
 
 @endsection

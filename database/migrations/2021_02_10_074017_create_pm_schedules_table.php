@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSitesTable extends Migration
+class CreatePmSchedulesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateSitesTable extends Migration
      */
     public function up()
     {
-        Schema::create('sites', function (Blueprint $table) {
-            $table->bigIncrements('site_id');
-            $table->string('site');
-            $table->string('image');
-            $table->string('lokasi');
+        Schema::create('pm_schedules', function (Blueprint $table) {
+            $table->id();
+            $table->string('radar_name', 20);
+            $table->string('station_id', 50);
+            $table->date('date_start');
+            $table->date('date_end');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateSitesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sites');
+        Schema::dropIfExists('pm_schedules');
     }
 }
