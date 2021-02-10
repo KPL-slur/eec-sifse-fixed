@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call([HeadReportsSeeder::class]);
         $this->call([PmBodyReportsSeeder::class]);
         $this->call([CmBodyReportsSeeder::class]);
+        $this->call([RecommendationsSeeder::class]);
         $this->call([TechnisiansSeeder::class]);
     }
 }

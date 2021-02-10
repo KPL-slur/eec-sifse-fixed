@@ -41,6 +41,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('report/cm/{cmBodyReport}/{headId}/edit', ['App\Http\Controllers\CmBodyReportsController', 'edit'])->name('cm.custom.edit'); //custom create routing
 
     Route::resource('report/cm', 'App\Http\Controllers\CmBodyReportsController', ['except' => ['create', 'edit'], 'parameters' => ['cm' => 'cmBodyReport:head_id',]]);
+    
+    // recommendations ROUTES
+    Route::resource('report/recommendations', 'App\Http\Controllers\RecommendationsController', ['except' => ['create', 'edit']]);
     // REPORT ROUTES
     Route::resource('report', 'App\Http\Controllers\HeadReportsController', ['parameters' => ['report' => 'headReport',]]);
 
