@@ -10,16 +10,22 @@ class Stock extends Model
     use HasFactory;
     protected $table = 'stocks';
 
-    protected $primaryKey = 'site_id';
+    protected $primaryKey = 'stock_id';
 
     protected $fillable = [
         'site_id',
         'nama_barang',
+        'group',
         'part_number',
         'serial_number',
         'tgl_masuk',
         'expired',
         'kurs_beli',
-        'jumlah_unit'
+        'jumlah_unit',
+        'status'
+    ];
+
+    protected $attributes = [
+        'status' => 0
     ];
 }
