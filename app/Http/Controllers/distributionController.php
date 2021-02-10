@@ -56,7 +56,6 @@ class DistributionController extends Controller
     }
 
     public function addData(Request $request){
-        dd($request);
         $distributions = new Distribution;
         $distributions->tech_id = $request->tech_id;
         $distributions->site_id = $request->site_id;
