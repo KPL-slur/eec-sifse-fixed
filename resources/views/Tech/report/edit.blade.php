@@ -65,7 +65,7 @@
                                             @enderror
                                             <select id="inputInternalExpertise{{ $i }}" class="form-control"
                                                 name="expertise{{ $i }}">
-                                                <option selected disabled>Choose...</option>
+                                                <option selected value="">Choose...</option>
                                                 @foreach ($technisians as $tech)
                                                     {{-- Concat it with iteration so it can be used to extract the object --}}
                                                     @php

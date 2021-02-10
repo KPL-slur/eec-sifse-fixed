@@ -28,7 +28,6 @@ class CmBodyReportsController extends Controller
      */
     public function create($headId)
     {
-        // dd($headId);
         return view('tech.report.cm.create', compact('headId'));
     }
 
@@ -64,11 +63,12 @@ class CmBodyReportsController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\CmBodyReport  $cmBodyReport
+     * @param   $headId
      * @return \Illuminate\Http\Response
      */
-    public function edit(CmBodyReport $cmBodyReport)
+    public function edit(CmBodyReport $cmBodyReport, $headId)
     {
-        //
+        return view('tech.report.cm.edit', compact('cmBodyReport', 'headId'));
     }
 
     /**
@@ -80,7 +80,14 @@ class CmBodyReportsController extends Controller
      */
     public function update(Request $request, CmBodyReport $cmBodyReport)
     {
-        //
+        $request->validate($this->rules);
+
+        $input = $request->all();
+        $cmBodyReport->fill($input)->save();
+
+        return redirect()->action(
+            [CmBodyReportsController::class, 'index']
+        );
     }
 
     /**

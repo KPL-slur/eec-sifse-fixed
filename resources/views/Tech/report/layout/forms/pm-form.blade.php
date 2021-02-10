@@ -1,13 +1,16 @@
 {{-- INPUT LIST=
     radio_{{ $namaKolom }}
     {{ $namaKolom }} --}}
+@php
+    $radioNamaKolom = 'radio_' . $namaKolom;
+@endphp
 <div class="row">
     <label class="col-sm-2 col-form-label" for="input_{{ $namaKolom }}">{{ $namaKolom }}</label>
     <div class="col-sm-2">
         {{--  --}}
         <div class="form-check form-check-radio form-check-inline">
             <label class="form-check-label @error('radio_' . $namaKolom) force-has-danger @enderror">
-                <input {{ old("radio_$namaKolom") === "1" ? 'checked' : '' }} class="form-check-input" type="radio" name="radio_{{ $namaKolom }}"
+                <input {{ ($pmBodyReport->$radioNamaKolom ?? old("radio_$namaKolom")) == "1" ? 'checked' : '' }} class="form-check-input" type="radio" name="radio_{{ $namaKolom }}"
                     id="input_{{ $namaKolom }}1" value="1"> PASS
                 <span class="circle">
                     <span class="check"></span>
@@ -16,7 +19,7 @@
         </div>
         <div class="form-check form-check-radio form-check-inline">
             <label class="form-check-label @error('radio_' . $namaKolom) force-has-danger @enderror">
-                <input {{ old("radio_$namaKolom") === "0" ? 'checked' : '' }} class="form-check-input" type="radio" name="radio_{{ $namaKolom }}"
+                <input {{ ($pmBodyReport->$radioNamaKolom ?? old("radio_$namaKolom")) == "0" ? 'checked' : '' }} class="form-check-input" type="radio" name="radio_{{ $namaKolom }}"
                     id="input_{{ $namaKolom }}0" value="0"> FAIL
                 <span class="circle">
                     <span class="check"></span>
@@ -37,7 +40,7 @@
             @enderror
             <input class="form-control @error($namaKolom) label-floating has-danger @enderror" input type="text"
                 name="{{ $namaKolom }}" id="input_{{ $namaKolom }}" placeholder="{{ $namaKolom }} remark"
-                value="{{ old($namaKolom) }}" />
+                value="{{ $pmBodyReport->$namaKolom ?? old($namaKolom) }}" />
         </div>
     </div>
 </div>

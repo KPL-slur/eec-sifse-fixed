@@ -32,11 +32,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/tech', [App\Http\Controllers\TechController::class, 'index'])->name('tech');
     
     // PM REPORT ROUTES
-    Route::get('report/pm/create/{headId}', ['App\Http\Controllers\PmBodyReportsController', 'create']); //custom create routing
-    Route::resource('report/pm', 'App\Http\Controllers\PmBodyReportsController', ['except' => ['create'], 'parameters' => ['pm' => 'pmBodyReport:head_id',]]);
+    Route::get('report/pm/create/{headId}', ['App\Http\Controllers\PmBodyReportsController', 'create'])->name('pm.custom.create'); //custom create routing
+    Route::get('report/pm/{pmBodyReport}/{headId}/edit', ['App\Http\Controllers\PmBodyReportsController', 'edit'])->name('pm.custom.edit'); //custom create routing
+
+    Route::resource('report/pm', 'App\Http\Controllers\PmBodyReportsController', ['except' => ['create', 'edit'], 'parameters' => ['pm' => 'pmBodyReport:head_id',]]);
     // PM REPORT ROUTES
-    Route::get('report/cm/create/{headId}', ['App\Http\Controllers\CmBodyReportsController', 'create']); //custom create routing
-    Route::resource('report/cm', 'App\Http\Controllers\CmBodyReportsController', ['except' => ['create'], 'parameters' => ['cm' => 'cmBodyReport:head_id',]]);
+    Route::get('report/cm/create/{headId}', ['App\Http\Controllers\CmBodyReportsController', 'create'])->name('cm.custom.create'); //custom create routing
+    Route::get('report/cm/{cmBodyReport}/{headId}/edit', ['App\Http\Controllers\CmBodyReportsController', 'edit'])->name('cm.custom.edit'); //custom create routing
+
+    Route::resource('report/cm', 'App\Http\Controllers\CmBodyReportsController', ['except' => ['create', 'edit'], 'parameters' => ['cm' => 'cmBodyReport:head_id',]]);
     // REPORT ROUTES
     Route::resource('report', 'App\Http\Controllers\HeadReportsController', ['parameters' => ['report' => 'headReport',]]);
 
