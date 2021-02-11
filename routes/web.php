@@ -43,7 +43,10 @@ Route::group(['middleware' => 'auth'], function () {
     
     // recommendations ROUTES
     Route::get('report/recommendations/create/{headId}', ['App\Http\Controllers\RecommendationsController', 'create'])->name('recommendations.custom.create'); //custom create routing
-    Route::resource('report/recommendations', 'App\Http\Controllers\RecommendationsController', ['except' => ['create', 'edit']]);
+    Route::get('report/recommendations/{headId}/edit', ['App\Http\Controllers\RecommendationsController', 'edit'])->name('recommendations.custom.edit'); //custom edit routing
+    Route::get('report/recommendations/{headId}', ['App\Http\Controllers\RecommendationsController', 'show'])->name('recommendations.custom.show'); //custom show routing
+    Route::put('report/recommendations/{headId}', ['App\Http\Controllers\RecommendationsController', 'update'])->name('recommendations.custom.update'); //custom update routing
+    Route::resource('report/recommendations', 'App\Http\Controllers\RecommendationsController', ['except' => ['create', 'edit', 'show', 'update', 'destroy']]);
 
     // REPORT ROUTES
     Route::resource('report', 'App\Http\Controllers\HeadReportsController', ['parameters' => ['report' => 'headReport',]]);

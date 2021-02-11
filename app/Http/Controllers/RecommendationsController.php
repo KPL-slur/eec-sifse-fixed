@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Recommendation;
+use App\Models\HeadReport;
 use App\Models\Stock;
 use Illuminate\Http\Request;
 
@@ -48,7 +49,7 @@ class RecommendationsController extends Controller
         ]);
         };
 
-        return redirect('report.index')->with('status', 'data recorded!');
+        return redirect(url('tech'))->with('status', 'data recorded!');
     }
 
     /**
@@ -57,20 +58,27 @@ class RecommendationsController extends Controller
      * @param  \App\Models\Recommendation  $recommendation
      * @return \Illuminate\Http\Response
      */
-    public function show(Recommendation $recommendation)
+    public function show(Recommendation $recommendation, $headId)
     {
-        //
+        // dd($headId);
+        $HeadReport = HeadReport::Where('id', $headId)->get();
+        $recommendations = Recommendation::Where('head_id', $headId)->get();
+
+        return view('tech.report.recommendation.show', compact('recommendations', 'HeadReport'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Recommendation  $recommendation
+     * @param    $headId
      * @return \Illuminate\Http\Response
      */
-    public function edit(Recommendation $recommendation)
+    public function edit($headId)
     {
-        //
+        $recommendations = Recommendation::Where('head_id', $headId)->get();
+
+        return view('tech.report.recommendation.edit', compact('recommendations', 'headId'));
     }
 
     /**
@@ -80,9 +88,26 @@ class RecommendationsController extends Controller
      * @param  \App\Models\recommendation  $recommendation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Recommendation $recommendation)
+    public function update(Request $request, $headId)
     {
-        //
+        foreach ($request->recommends as $recommend) {
+            // dd($recommend);
+            if (array_key_exists("id", $recommend)) {
+                Recommendation::where('id', $recommend['id'])
+                ->update([
+                    'spare_part_name' => $recommend['spare_part_name'],
+                    'qty' => $recommend['qty']
+                ]);
+            } else {
+                Recommendation::create([
+                    'head_id' => $request->head_id,
+                    'spare_part_name' => $recommend['spare_part_name'],
+                    'qty' => $recommend['qty']
+                ]);
+            }
+        };
+
+        return redirect('tech')->with('status', 'data updated!');
     }
 
     /**
