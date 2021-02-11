@@ -19,5 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call([CmBodyReportsSeeder::class]);
         $this->call([RecommendationsSeeder::class]);
         $this->call([TechnisiansSeeder::class]);
+        $this->call([StockSeeder::class]);
+        $this->call([SitesSeeder::class]);
     }
 }

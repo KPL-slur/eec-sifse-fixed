@@ -14,7 +14,11 @@
             <div class="card-body">
                 <div class="row">
                   <div class="col-12 text-right">
-                    <a href="addDistribution" class="btn btn-sm btn-primary">Add Distribution</a>
+                    <a href="addDistribution" class="btn btn-sm btn-primary">
+                      <i class="material-icons">
+                        add
+                      </i>Add Distribution
+                    </a>
                   </div>
               </div>
               <div class="table-responsive">
@@ -36,14 +40,15 @@
                         <td>{{$tns->site}}</td>
                         <td>{{$tns->lokasi}}</td>
                         <td class="td-actions text-right">
-                              <a rel="tooltip" class="btn btn-success btn-link" href="editDistribution/{{$tns->tech_id}}">
+                              <a rel="tooltip" class="btn btn-warning " href="editDistribution/{{$tns->tech_id}}">
                                 <i class="material-icons">edit</i>
                                 <div class="ripple-container"></div>
                               </a>
+                              
                               <form method="POST" action="/deleteDistribution/{{$tns->tech_id}}" class="d-inline">
                                 @csrf
                                 @method('delete')
-                                <button class="btn btn-danger btn-link" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')" >
+                                <button class="btn btn-danger " onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')" >
                                   <i class="material-icons">delete</i>
                                   <div class="ripple-container"></div>
                                 </button>

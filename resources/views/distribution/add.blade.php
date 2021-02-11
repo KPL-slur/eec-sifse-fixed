@@ -9,7 +9,7 @@
           <div class="card-header card-header-primary">
             <div class="row">
               <div class="col-md-6">
-                <h4 class="card-title mt-2" >Penambahan Distribusi Ruangan</h4>
+                <h4 class="card-title mt-2" >Penambahan Distribusi</h4>
               </div>
               <div class="col-md-6">
                
@@ -41,6 +41,7 @@
                       @endforeach
                     </select>
                   </div>
+                  
                   <button type="submit" onclick="return confirm('Apakah yakin ingin menambahkan data?')" class="btn btn-primary">Tambah</button>
                   <a href="/distribution" class="btn btn-primary">Kembali</a>
                 </form>

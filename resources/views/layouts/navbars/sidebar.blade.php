@@ -53,10 +53,10 @@
             <p>{{ __('Sites Monitor') }}</p>
         </a>
       </li>
-      <li class="nav-item{{ $activePage == 'table' ? ' active' : '' }}">
+      <li class="nav-item{{ $activePage == 'activity' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('table') }}">
           <i class="material-icons">content_paste</i>
-            <p>{{ __('Table List') }}</p>
+            <p>{{ __('Technisians Activity') }}</p>
         </a>
       </li>
       <li class="nav-item{{ $activePage == 'stock_currency' ? ' active' : '' }}">

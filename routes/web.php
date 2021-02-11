@@ -79,9 +79,6 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
 
     //Halaman Statis Admin
     //Nanti jgn lupa dihapus semua ini
-    Route::get('table-list', function () {
-        return view('pages.table_list');
-    })->name('table');
 
     Route::get('typography', function () {
         return view('pages.typography');
@@ -118,12 +115,19 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     //site
     Route::get('site', [App\Http\Controllers\SiteController::class, 'index'])->name('site');
     Route::get('addSite', [App\Http\Controllers\SiteController::class, 'add']);
+    Route::post('add', [App\Http\Controllers\SiteController::class, 'addData']);
     Route::get('inventorie/{id}', [App\Http\Controllers\SiteController::class, 'show']);
     Route::get('inventorySite/{id}', [App\Http\Controllers\SiteController::class, 'print']);
 
+    //logActivity
+    Route::get('table-list', function () {
+        return view('activity.table_list');
+    })->name('table');
     
     //stock with currencies
     Route::get('stock_currency', [App\Http\Controllers\StockController::class, 'index'])->name('stock_currency');
+    Route::get('stock_currency/{stock}/edit', [App\Http\Controllers\StockController::class, 'edit']);
     Route::get('stock_currency/create', [App\Http\Controllers\StockController::class, 'create'])->name('stock_currency_create');
     Route::post('stock_currency', [App\Http\Controllers\StockController::class, 'store']);
+    Route::put('stock_currency/{stock}/update', [App\Http\Controllers\StockController::class, 'update']);
 });
