@@ -34,16 +34,17 @@ Route::group(['middleware' => 'auth'], function () {
     // PM REPORT ROUTES
     Route::get('report/pm/create/{headId}', ['App\Http\Controllers\PmBodyReportsController', 'create'])->name('pm.custom.create'); //custom create routing
     Route::get('report/pm/{pmBodyReport}/{headId}/edit', ['App\Http\Controllers\PmBodyReportsController', 'edit'])->name('pm.custom.edit'); //custom create routing
-
     Route::resource('report/pm', 'App\Http\Controllers\PmBodyReportsController', ['except' => ['create', 'edit'], 'parameters' => ['pm' => 'pmBodyReport:head_id',]]);
+    
     // PM REPORT ROUTES
     Route::get('report/cm/create/{headId}', ['App\Http\Controllers\CmBodyReportsController', 'create'])->name('cm.custom.create'); //custom create routing
     Route::get('report/cm/{cmBodyReport}/{headId}/edit', ['App\Http\Controllers\CmBodyReportsController', 'edit'])->name('cm.custom.edit'); //custom create routing
-
     Route::resource('report/cm', 'App\Http\Controllers\CmBodyReportsController', ['except' => ['create', 'edit'], 'parameters' => ['cm' => 'cmBodyReport:head_id',]]);
     
     // recommendations ROUTES
+    Route::get('report/recommendations/create/{headId}', ['App\Http\Controllers\RecommendationsController', 'create'])->name('recommendations.custom.create'); //custom create routing
     Route::resource('report/recommendations', 'App\Http\Controllers\RecommendationsController', ['except' => ['create', 'edit']]);
+
     // REPORT ROUTES
     Route::resource('report', 'App\Http\Controllers\HeadReportsController', ['parameters' => ['report' => 'headReport',]]);
 

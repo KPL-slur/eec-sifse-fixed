@@ -16,6 +16,7 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center">#</th>
+                                        <th>Radar Name</th>
                                         <th>Station ID</th>
                                         <th>Date</th>
                                         <th>Expertises</th>
@@ -27,6 +28,7 @@
                                     <tr>
                                         <td class="text-center">{{ $loop->iteration }}</td>
                                         <td>{{ $hr->radar_name }}</td>
+                                        <td>{{ $hr->station_id }}</td>
                                         <td>{{ $hr->report_date_start }} - {{ $hr->report_date_end }}</td>
                                         <td>{{ $hr->expertise1 }}; {{ $hr->expertise2 }}; {{ $hr->expertise3 }}</td>
                                         <td class="td-actions text-right">

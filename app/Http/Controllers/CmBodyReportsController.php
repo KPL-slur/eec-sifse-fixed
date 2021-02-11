@@ -41,8 +41,16 @@ class CmBodyReportsController extends Controller
     {
         CmBodyReport::create($request->all());
 
+        // return redirect()->action(
+        //     [CmBodyReportsController::class, 'index']
+        // );
+
+        $queryHeadId = HeadReport::select('id')->orderByDesc('id')->first(); //used to determine the head id of this report
+        $headId = $queryHeadId->id;
+        
         return redirect()->action(
-            [CmBodyReportsController::class, 'index']
+            [RecommendationsController::class, 'create'],
+            ['headId' => $headId]
         );
     }
 

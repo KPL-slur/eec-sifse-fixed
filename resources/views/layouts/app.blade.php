@@ -15,6 +15,7 @@
     <!-- CSS Files -->
     <link href="{{ asset('material') }}/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
     <link href="{{ asset('user') }}/css/style.css" rel="stylesheet" />
+    @livewireStyles
     {{-- <link href="{{ asset('resources/css/app.css') }}" rel="stylesheet" /> --}}
     </head>
     <body class="{{ $class ?? '' }}">
@@ -90,5 +91,6 @@
         {{-- IMPORT CKEDITOR, NANTI DI DOWNLOAD JGN DARI CDN --}}
         <script src="https://cdn.ckeditor.com/ckeditor5/25.0.0/classic/ckeditor.js"></script>
         @stack('js')
+        @livewireScripts
     </body>
 </html>

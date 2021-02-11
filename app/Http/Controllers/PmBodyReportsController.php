@@ -83,7 +83,8 @@ class PmBodyReportsController extends Controller
         PmBodyReport::create($request->all());
 
         return redirect()->action(
-            [PmBodyReportsController::class, 'index']
+            [RecommendationsController::class, 'create'],
+            ['headId' => $headId]
         );
     }
 

@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\recommendation;
+use App\Models\Recommendation;
+use App\Models\Stock;
 use Illuminate\Http\Request;
 
 class RecommendationsController extends Controller
@@ -22,9 +23,9 @@ class RecommendationsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($headId)
     {
-        //
+        return view('tech.report.recommendation.create', compact('headId'));
     }
 
     /**
@@ -35,16 +36,28 @@ class RecommendationsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->head_id);
+
+        foreach ($request->recommends as $recommend) {
+            Recommendation::create([
+            // dump($recommend['nama_barang']);
+            // dump($recommend['quantity']);
+            'head_id' => $request->head_id,
+            'spare_part_name' => $recommend['nama_barang'],
+            'qty' => $recommend['quantity']
+        ]);
+        };
+
+        return redirect('report.index')->with('status', 'data recorded!');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\recommendation  $recommendation
+     * @param  \App\Models\Recommendation  $recommendation
      * @return \Illuminate\Http\Response
      */
-    public function show(recommendation $recommendation)
+    public function show(Recommendation $recommendation)
     {
         //
     }
@@ -52,10 +65,10 @@ class RecommendationsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\recommendation  $recommendation
+     * @param  \App\Models\Recommendation  $recommendation
      * @return \Illuminate\Http\Response
      */
-    public function edit(recommendation $recommendation)
+    public function edit(Recommendation $recommendation)
     {
         //
     }
@@ -67,7 +80,7 @@ class RecommendationsController extends Controller
      * @param  \App\Models\recommendation  $recommendation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, recommendation $recommendation)
+    public function update(Request $request, Recommendation $recommendation)
     {
         //
     }
@@ -78,7 +91,7 @@ class RecommendationsController extends Controller
      * @param  \App\Models\recommendation  $recommendation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(recommendation $recommendation)
+    public function destroy(Recommendation $recommendation)
     {
         //
     }
