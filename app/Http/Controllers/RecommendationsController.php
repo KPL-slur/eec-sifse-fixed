@@ -49,7 +49,9 @@ class RecommendationsController extends Controller
         ]);
         };
 
-        return redirect(url('tech'))->with('status', 'data recorded!');
+        $maintenanceType = HeadReport::select('maintenance_type')->where('id', $request->head_id)->first()->maintenance_type;
+
+        return redirect(url("report/$maintenanceType"))->with('status_success', 'data recorded!');
     }
 
     /**
@@ -107,7 +109,9 @@ class RecommendationsController extends Controller
             }
         };
 
-        return redirect('tech')->with('status', 'data updated!');
+        $maintenanceType = HeadReport::select('maintenance_type')->where('id', $request->head_id)->first()->maintenance_type;
+
+        return redirect(url("report/$maintenanceType"))->with('status_edit', 'data updated!');
     }
 
     /**

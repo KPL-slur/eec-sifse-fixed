@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\HeadReport;
+use App\Models\PmBodyReport;
+use App\Models\CmBodyReport;
+use App\Models\Recommendation;
 use Illuminate\Http\Request;
 
 class HeadReportsController extends Controller
@@ -161,6 +164,18 @@ class HeadReportsController extends Controller
      */
     public function destroy(HeadReport $headReport)
     {
-        //
+        // info('Deleteing report.', ['headReport' => $headReport->id]);
+        HeadReport::destroy($headReport->id);
+        if ($headReport->maintenance_type == 'pm') {
+            // info('Deleteing pm report.');
+            PmBodyReport::where('head_id', $headReport->id)->delete();
+        } elseif ($headReport->maintenance_type == 'cm') {
+            // info('Deleteing cm report.');
+            CmBodyReport::where('head_id', $headReport->id)->delete();
+        }
+        // info('Deleteing recomendation');
+        Recommendation::where('head_id', $headReport->id)->delete();
+        
+        return redirect()->back()->with('status_delete', 'data deleted!');
     }
 }
