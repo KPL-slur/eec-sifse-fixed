@@ -14,8 +14,8 @@ class CreateDistributionsTable extends Migration
     public function up()
     {
         Schema::create('distributions', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('tech_id');
+            $table->bigIncrements('dist_id');
+            $table->foreignId('expert_id');
             $table->foreignId('site_id');
             $table->timestamps();
         });

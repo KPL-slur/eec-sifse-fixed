@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSitesTable extends Migration
+class CreateExpertReportsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateSitesTable extends Migration
      */
     public function up()
     {
-        Schema::create('sites', function (Blueprint $table) {
-            $table->bigIncrements('site_id');
-            $table->string('radar_name');
-            $table->string('image');
-            $table->string('station_id');
+        // ===== hasil rancangan erd =====
+        Schema::create('expert_reports', function (Blueprint $table) {
+            $table->bigIncrements('expert_report_id');
+            $table->foreignId('head_id');
+            $table->foreignId('expert_id');
             $table->timestamps();
         });
+        // ===== hasil rancangan erd =====
     }
 
     /**
@@ -29,6 +30,6 @@ class CreateSitesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sites');
+        Schema::dropIfExists('expert_reports');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSitesTable extends Migration
+class CreateReportImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,15 @@ class CreateSitesTable extends Migration
      */
     public function up()
     {
-        Schema::create('sites', function (Blueprint $table) {
-            $table->bigIncrements('site_id');
-            $table->string('radar_name');
+        // ===== hasil rancangan erd =====
+        Schema::create('report_images', function (Blueprint $table) {
+            $table->bigIncrements('image_id');
+            $table->foreignId('head_id');
             $table->string('image');
-            $table->string('station_id');
+            $table->string('caption');
             $table->timestamps();
         });
+        // ===== hasil rancangan erd =====
     }
 
     /**
@@ -29,6 +31,6 @@ class CreateSitesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sites');
+        Schema::dropIfExists('report_images');
     }
 }

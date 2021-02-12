@@ -17,8 +17,11 @@ class DatabaseSeeder extends Seeder
         $this->call([HeadReportsSeeder::class]);
         $this->call([PmBodyReportsSeeder::class]);
         $this->call([CmBodyReportsSeeder::class]);
-        $this->call([TechnisiansSeeder::class]);
-        $this->call([StockSeeder::class]);
+        $this->call([ExpertsSeeder::class]);
+        $this->call([StocksSeeder::class]);
         $this->call([SitesSeeder::class]);
+        $this->call([RecommendationsSeeder::class]);
+        $this->call([ExpertReportsSeeder::class]);
+        $this->call([DistributionsSeeder::class]);
     }
 }
