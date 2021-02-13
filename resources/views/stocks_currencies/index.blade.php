@@ -16,10 +16,9 @@
 
           {{-- body paling luar --}}
           <div class="card-body">
-            <button class="btn"type="button" onclick="showNotification('top', 'right', 'test')">oi</button>
-            <p class="text-center">Harga Kurs Sekarang : <div class="text-primary text-center display-4">Rp {{ $rates->rates->IDR }}</div></p>
+            <p class="text-center">Harga Kurs Sekarang : <div class="text-primary text-center display-4">Rp {{ $rate_fix }}</div></p>
             <div class="text-right">
-              <a class="btn btn-sm btn-primary text-right" href="{{ route('stock_currency_create') }}">Add Inventory</a>
+              <a class="btn btn-md btn-primary text-right my-4 " href="{{ route('stock_currency_create') }}">Add Inventory</a>
             </div>
             @if (session('status1'))
                 <script>
@@ -27,14 +26,18 @@
                     showNotification('top', 'right', 'success' ,'<?php echo session('status1') ?>');
                   };
                 </script>
-                {{-- <div class="alert alert-success">
-                  {{ session('status1') }}
-                </div> --}}
-            @endif
-            @if (session('status2'))
-                <div class="alert alert-warning">
-                  {{ session('status2') }}
-                </div>
+            @elseif (session('status2'))
+              <script>
+                window.onload = () => {
+                  showNotification('top', 'right', 'warning' ,'<?php echo session('status2') ?>');
+                };
+              </script>
+            @elseif (session('status0'))
+              <script>
+                window.onload = () => {
+                  showNotification('top', 'right', 'danger' ,'<?php echo session('status0') ?>');
+                };
+              </script>
             @endif
 
             @php
@@ -45,12 +48,12 @@
                 @if ($st->group == 1)
                   @if ($i1 == 1)
                     {{-- card kedua --}}
-                    <div class="card ">
+                    <div class="card m-3 my-5">
 
                       {{-- header kedua --}}
                       <div class="card-header card-header-rose">
-                        <h4 class="card-title">Group 1 transmitter</h4>
-                        <p class="card-category">sub</p>
+                        {{-- <h4 class="card-title">Group 1 transmitter</h4> --}}
+                        <p class="card-category">transmitter</p>
                       </div>
 
                       {{-- card body kedua --}}
@@ -83,14 +86,22 @@
                                   <td>{{ $st->jumlah_unit }}</td>
                                   <td>{{ $st->status }}</td>
                                   <td class="td-actions text-center">
-                                    <a rel="tooltip" class="btn btn-lg btn-warning " href="{{ url('stock_currency') }}/{{ $st->stock_id }}/edit" type="submit">
+                                    <a rel="tooltip" class="btn btn-lg btn-warning m-2" href="{{ url('stock_currency') }}/{{ $st->stock_id }}/edit" type="submit">
                                       <i class="material-icons">edit</i>
                                       <div class="ripple-container"></div>
                                     </a>
-                                    <button class="btn btn-lg btn-danger " onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">
+                                    <form action="{{ url('stock_currency') }}/{{ $st->stock_id }}" class="d-inline" method="POST">
+                                      @method('DELETE')
+                                      @csrf
+                                        <button type="submit" class="btn btn-lg btn-danger m-2" onclick="return confirm('Are you sure you want to delete '+ '{{ $st->nama_barang }}' +'?')">
+                                          <i class="material-icons">delete</i>
+                                          <div class="ripple-container"></div>
+                                        </button>
+                                    </form>
+                                    {{-- <button class="btn btn-lg btn-danger m-2" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">
                                       <i class="material-icons">delete</i>
                                       <div class="ripple-container"></div>
-                                    </button>
+                                    </button> --}}
                                   </td>
                                 </tr>
                               </tbody>
@@ -109,12 +120,12 @@
                 @elseif ($st->group == 2)
                   @if ($i2 == 1)
                     {{-- card ketiga --}}
-                    <div class="card ">
+                    <div class="card m-3 my-5">
 
                       {{-- header ketiga --}}
                       <div class="card-header card-header-rose">
-                        <h4 class="card-title">Group 2 receiver</h4>
-                        <p class="card-category">sub</p>
+                        {{-- <h4 class="card-title">Group 2 receiver</h4> --}}
+                        <p class="card-category">receiver</p>
                       </div>
 
                       {{-- card body ketiga --}}
@@ -148,14 +159,22 @@
                                   <td>{{ $st->jumlah_unit }}</td>
                                   <td>{{ $st->status }}</td>
                                   <td class="td-actions text-center">
-                                    <a rel="tooltip" class="btn btn-lg btn-warning " href="{{ url('stock_currency') }}/{{ $st->stock_id }}/edit" type="submit">
+                                    <a rel="tooltip" class="btn btn-lg btn-warning m-2" href="{{ url('stock_currency') }}/{{ $st->stock_id }}/edit" type="submit">
                                       <i class="material-icons">edit</i>
                                       <div class="ripple-container"></div>
                                     </a>
-                                    <button class="btn btn-lg btn-danger " onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">
+                                    <form action="{{ url('stock_currency') }}/{{ $st->stock_id }}" class="d-inline" method="POST">
+                                      @method('DELETE')
+                                      @csrf
+                                        <button type="submit" class="btn btn-lg btn-danger m-2" onclick="return confirm('Are you sure you want to delete '+ '{{ $st->nama_barang }}' +'?')">
+                                          <i class="material-icons">delete</i>
+                                          <div class="ripple-container"></div>
+                                        </button>
+                                    </form>
+                                    {{-- <button class="btn btn-lg btn-danger m-2" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">
                                       <i class="material-icons">delete</i>
                                       <div class="ripple-container"></div>
-                                    </button>
+                                    </button> --}}
                                   </td>
                                 </tr>
                               </tbody>
@@ -174,12 +193,12 @@
                 @elseif ($st->group == 3)
                   @if ($i3 == 1)
                     {{-- card keempat --}}
-                    <div class="card ">
+                    <div class="card m-3 my-5">
 
                       {{-- header keempat --}}
                       <div class="card-header card-header-rose">
-                        <h4 class="card-title">Group 3 antenna</h4>
-                        <p class="card-category">sub</p>
+                        {{-- <h4 class="card-title">Group 3 antenna</h4> --}}
+                        <p class="card-category">antenna</p>
                       </div>
 
                       {{-- card body keempat --}}
@@ -213,14 +232,22 @@
                                   <td>{{ $st->jumlah_unit }}</td>
                                   <td>{{ $st->status }}</td>
                                   <td class="td-actions text-center">
-                                    <a rel="tooltip" class="btn btn-lg btn-warning " href="{{ url('stock_currency') }}/{{ $st->stock_id }}/edit" type="submit">
+                                    <a rel="tooltip" class="btn btn-lg btn-warning m-2" href="{{ url('stock_currency') }}/{{ $st->stock_id }}/edit" type="submit">
                                       <i class="material-icons">edit</i>
                                       <div class="ripple-container"></div>
                                     </a>
-                                    <button class="btn btn-lg btn-danger " onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">
+                                    <form action="{{ url('stock_currency') }}/{{ $st->stock_id }}" class="d-inline" method="POST">
+                                      @method('DELETE')
+                                      @csrf
+                                        <button type="submit" class="btn btn-lg btn-danger m-2" onclick="return confirm('Are you sure you want to delete '+ '{{ $st->nama_barang }}' +'?')">
+                                          <i class="material-icons">delete</i>
+                                          <div class="ripple-container"></div>
+                                        </button>
+                                    </form>
+                                    {{-- <button class="btn btn-lg btn-danger m-2" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">
                                       <i class="material-icons">delete</i>
                                       <div class="ripple-container"></div>
-                                    </button>
+                                    </button> --}}
                                   </td>
                                 </tr>
                               </tbody>

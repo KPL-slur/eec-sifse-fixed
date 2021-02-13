@@ -123,4 +123,5 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('stock_currency/create', [App\Http\Controllers\StockController::class, 'create'])->name('stock_currency_create');
     Route::post('stock_currency', [App\Http\Controllers\StockController::class, 'store']);
     Route::put('stock_currency/{stock}/update', [App\Http\Controllers\StockController::class, 'update']);
+    Route::delete('stock_currency/{stock}', [App\Http\Controllers\StockController::class, 'destroy']);
 });

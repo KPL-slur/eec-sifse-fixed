@@ -11,7 +11,7 @@
             <p class="card-category"> Here is a subtitle for this table</p>
           </div>
           <div class="card-body">
-                <p class="mb-4 text-center h3">Harga Kurs Sekarang : <span class="text-primary text-center display-4">Rp {{ $rates->rates->IDR }}</span> ke USD</p>
+                <p class="mb-4 text-center h3">Harga Kurs Sekarang : <span class="text-primary text-center display-4">Rp {{ $rate_fix }}</span> ke USD</p>
                 <form action="{{ url('stock_currency/') }}" method="POST">
                   @csrf
                     <div class="form-group my-4">
@@ -61,8 +61,8 @@
                       <input type="text" class="form-control" id="kurs_beli" name="kurs_beli" placeholder="Kurs Beli">
                     </div>
                     <div class="form-group my-4">
-                      <label for="jumlah_unit">Jumlah Stok</label>
-                      <input type="text" class="form-control" id="jumlah_unit" name="jumlah_unit" placeholder="Stok yg ada">
+                      <label for="jumlah_unit">Jumlah Unit</label>
+                      <input type="text" class="form-control" id="jumlah_unit" name="jumlah_unit" placeholder="Mau masukin berapa">
                     </div>
                     <div class="form-group my-4">
                       <label for="status">Status</label>
