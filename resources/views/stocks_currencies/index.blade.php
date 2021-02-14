@@ -73,7 +73,8 @@
                               <th>Status</th>
                               <th class="text-center">Update or delete</th>
                             </thead>
-                  @endif            
+                  @endif
+                              <tbody>
                                 <tr>
                                   <td scope="row">{{$i1}}</td>
                                   <td>{{ $st->site }}</td>
