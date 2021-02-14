@@ -51,7 +51,7 @@
         </div>
         {{-- BUTTON GROUP --}}
         <div class="d-flex justify-content-end">
-            <a type="button" class="btn btn-info" href="{{ url('tech') }}">BACK</a>
+            <a type="button" class="btn btn-info" href="{{ url('expert') }}">BACK</a>
             <button type="submit" class="btn btn-primary mx-5">SUBMIT</button>
         </div>
     </form>

@@ -10,9 +10,9 @@
                         <h4 class="card-title">{{ __('Weather Radar Service Report') }}</h4>
                     </div>
                     <div class="card-body ">
-                        <a type="button" class="btn btn-info" href="{{ url('tech') }}">BACK</a>
-                        <a type="button" class="btn btn-primary" href="{{ url('tech') }}">EDIT</a>
-                        <a type="button" class="btn btn-danger" href="{{ url('tech') }}">DELETE</a>
+                        <a type="button" class="btn btn-info" href="{{ url('expert') }}">BACK</a>
+                        <a type="button" class="btn btn-primary" href="{{ url('expert') }}">EDIT</a>
+                        <a type="button" class="btn btn-danger" href="{{ url('expert') }}">DELETE</a>
                         <div class="card ">
                             <div class="card-header card-header-primary">
                                 <h4 class="card-title">{{ $hr->radar_name }}</h4>
@@ -56,27 +56,12 @@
                         {{-- END OF HEAD AND START OF BODY --}}
                         <div class="card ">
                             <div class="card-header card-header-primary">
-                                <h4 class="card-title">{{ __('GENERAL') }}</h4>
+                                <h4 class="card-title">{{ __('REMARK') }}</h4>
                             </div>
                             <div class="card-body ">
                                 <div class="row">
-                                    <div class="col table-responsive">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Spare Part Name</th>
-                                                    <th>Quantity</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($recommendations as $recommendation)
-                                                <tr>
-                                                    <td>{{ $recommendation->spare_part_name }}</td>
-                                                    <td>{{ $recommendation->qty }}</td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                    <div class="container">
+                                        <?php echo $cmBodyReport->remark ?>
                                     </div>
                                 </div>
                             </div>

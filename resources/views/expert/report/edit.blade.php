@@ -48,11 +48,11 @@
                             </div>
                             {{-- DYNAMIC FIELDS --}}
                             <div class="card-body " id="dynamicField">
-                                @include('tech.report.layout.forms.summary-form', ['namaKolom'=>'radar_name', 'tipeForm'=>'text'])
-                                @include('tech.report.layout.forms.summary-form', ['namaKolom'=>'station_id', 'tipeForm'=>'text'])
-                                @include('tech.report.layout.forms.summary-form', ['namaKolom'=>'report_date_start',
+                                @include('expert.report.layout.forms.summary-form', ['namaKolom'=>'radar_name', 'tipeForm'=>'text'])
+                                @include('expert.report.layout.forms.summary-form', ['namaKolom'=>'station_id', 'tipeForm'=>'text'])
+                                @include('expert.report.layout.forms.summary-form', ['namaKolom'=>'report_date_start',
                                 'tipeForm'=>'date'])
-                                @include('tech.report.layout.forms.summary-form', ['namaKolom'=>'report_date_end', 'tipeForm'=>'date'])
+                                @include('expert.report.layout.forms.summary-form', ['namaKolom'=>'report_date_end', 'tipeForm'=>'date'])
 
                                 <div class="row">
                                     <label class="col-sm-2 col-form-label"
@@ -115,7 +115,7 @@
                                 {{--  --}}
                                 @for ($i = 5; $i <= 10; $i++)
 
-                                    @include('tech.report.layout.forms.external-expertise-form', ['iterasiKe'=>$i])
+                                    @include('expert.report.layout.forms.external-expertise-form', ['iterasiKe'=>$i])
 
                                 @endfor
                                 {{--  --}}
@@ -125,7 +125,7 @@
 
                         {{-- BUTTON GROUP --}}
                         <div class="d-flex justify-content-end">
-                            <a type="button" class="btn btn-info" href="{{ url('tech') }}">BACK</a>
+                            <a type="button" class="btn btn-info" href="{{ url('expert') }}">BACK</a>
                             <button type="submit" class="btn btn-primary mx-5">SUBMIT</button>
                         </div>
                         {{-- END OF BUTTON GROUP --}}

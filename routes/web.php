@@ -19,17 +19,17 @@ Auth::routes();
 
 /*
 |--------------------------------------------------------------------------
-| USER/TECH/AUTH ROUTES
+| USER/expert/AUTH ROUTES
 |--------------------------------------------------------------------------
 |
 | Semua routes yang hanya bisa di akses oleh user
-| atau tech atau siapapun yang memiliki akun
+| atau expert atau siapapun yang memiliki akun
 | tolong ditaro disini, karena pada route
 | ini digunakan middleware auth
 |
 */
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/tech', [App\Http\Controllers\TechController::class, 'index'])->name('tech');
+    Route::get('/expert', [App\Http\Controllers\TechController::class, 'index'])->name('expert');
     
     // PM REPORT ROUTES
     Route::get('report/pm/create/{headId}', ['App\Http\Controllers\PmBodyReportsController', 'create'])->name('pm.custom.create'); //custom create routing
@@ -53,10 +53,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     // temporary route until i create the report crud controller
     // Route::get('/report/pm/create', function () {
-    //     return view('tech.report.pm.create');
+    //     return view('expert.report.pm.create');
     // })->name('report');
     // Route::get('/report/pm', function () {
-    //     return view('tech.report.pm.index');
+    //     return view('expert.report.pm.index');
     // })->name('report');
     
     //Bawaan dari template

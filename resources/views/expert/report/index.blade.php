@@ -8,7 +8,7 @@
                     <h4 class="card-title">{{ __('Weather Radar Service Report') }}</h4>
                 </div>
                 <div class="card-body ">
-                    <a type="button" class="btn btn-info" href="{{ url('tech') }}">BACK</a>
+                    <a type="button" class="btn btn-info" href="{{ url('expert') }}">BACK</a>
                     <a type="button" class="btn btn-primary"
                         href="{{ url('report/create') }}?entry_id={{ $maintenance_type }}">ADD NEW</a>
                     <div class="row">

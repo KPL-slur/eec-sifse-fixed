@@ -56,7 +56,7 @@ class PmBodyReportsController extends Controller
         $HeadReport = HeadReport::where('maintenance_type', "pm")->get();
         $maintenance_type = "pm"; //used to determine the add new button route
 
-        return view('tech.report.index', compact('HeadReport', 'maintenance_type'));
+        return view('expert.report.index', compact('HeadReport', 'maintenance_type'));
     }
 
     /**
@@ -67,7 +67,7 @@ class PmBodyReportsController extends Controller
     public function create($headId)
     {
         // dd($headId);
-        return view('tech.report.pm.create', compact('headId'));
+        return view('expert.report.pm.create', compact('headId'));
     }
 
     /**
@@ -81,6 +81,9 @@ class PmBodyReportsController extends Controller
         $request->validate($this->rules);
 
         PmBodyReport::create($request->all());
+
+        $queryHeadId = HeadReport::select('id')->orderByDesc('id')->first(); //used to determine the head id of this report
+        $headId = $queryHeadId->id;
 
         return redirect()->action(
             [RecommendationsController::class, 'create'],
@@ -98,7 +101,7 @@ class PmBodyReportsController extends Controller
     {
         $HeadReport = HeadReport::Where('id', $pmBodyReport->head_id)->get();
 
-        return view('tech.report.pm.show', compact('pmBodyReport', 'HeadReport'));
+        return view('expert.report.pm.show', compact('pmBodyReport', 'HeadReport'));
     }
 
     /**
@@ -110,7 +113,7 @@ class PmBodyReportsController extends Controller
     */
     public function edit(PmBodyReport $pmBodyReport, $headId)
     {
-        return view('tech.report.pm.edit', compact('pmBodyReport', 'headId'));
+        return view('expert.report.pm.edit', compact('pmBodyReport', 'headId'));
     }
 
     /**

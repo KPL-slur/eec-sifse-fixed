@@ -1,6 +1,6 @@
 @extends('layouts.app', ['activePage' => 'dashboard', 'titlePage' => __('Dashboard')])
 
-{{-- IF entry_id not pm or cm will redirect to /tech --}}
+{{-- IF entry_id not pm or cm will redirect to /expert --}}
 @if ($_GET['entry_id'] == 'pm' or $_GET['entry_id'] == 'cm')
 
     @section('content')
@@ -49,11 +49,11 @@
                                 </div>
                                 {{-- DYNAMIC FIELDS --}}
                                 <div class="card-body " id="dynamicField">
-                                    @include('tech.report.layout.forms.summary-form', ['namaKolom'=>'radar_name', 'tipeForm'=>'text'])
-                                    @include('tech.report.layout.forms.summary-form', ['namaKolom'=>'station_id', 'tipeForm'=>'text'])
-                                    @include('tech.report.layout.forms.summary-form', ['namaKolom'=>'report_date_start',
+                                    @include('expert.report.layout.forms.summary-form', ['namaKolom'=>'radar_name', 'tipeForm'=>'text'])
+                                    @include('expert.report.layout.forms.summary-form', ['namaKolom'=>'station_id', 'tipeForm'=>'text'])
+                                    @include('expert.report.layout.forms.summary-form', ['namaKolom'=>'report_date_start',
                                     'tipeForm'=>'date'])
-                                    @include('tech.report.layout.forms.summary-form', ['namaKolom'=>'report_date_end', 'tipeForm'=>'date'])
+                                    @include('expert.report.layout.forms.summary-form', ['namaKolom'=>'report_date_end', 'tipeForm'=>'date'])
 
                                     <div class="row">
                                         <label class="col-sm-2 col-form-label"
@@ -112,7 +112,7 @@
                                     {{--  --}}
                                     @for ($i = 5; $i <= 10; $i++)
 
-                                        @include('tech.report.layout.forms.external-expertise-form', ['iterasiKe'=>$i])
+                                        @include('expert.report.layout.forms.external-expertise-form', ['iterasiKe'=>$i])
 
                                     @endfor
                                     {{--  --}}
@@ -122,7 +122,7 @@
 
                             {{-- BUTTON GROUP --}}
                             <div class="d-flex justify-content-end">
-                                <a type="button" class="btn btn-info" href="{{ url('tech') }}">BACK</a>
+                                <a type="button" class="btn btn-info" href="{{ url('expert') }}">BACK</a>
                                 <button type="submit" class="btn btn-primary mx-5">SUBMIT</button>
                             </div>
                             {{-- END OF BUTTON GROUP --}}
@@ -136,10 +136,10 @@
     <script src="{{ asset('user') }}/js/head-report.js" type="text/javascript"></script>
 @else
     @php
-        // redirect to /tech, replace, 
+        // redirect to /expert, replace, 
         // 301 Moved Permanently redirect status response code indicates that 
         // the resource requested has been definitively moved to the URL given by the Location headers
-        header("location: ".url('/tech'), true, 301); 
+        header("location: ".url('/expert'), true, 301); 
         exit();
     @endphp
 @endif

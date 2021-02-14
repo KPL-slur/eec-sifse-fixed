@@ -26,6 +26,6 @@ class TechController extends Controller
     public function index()
     {
         $loggedName = Auth::user()->name;
-        return view('Tech.dashboard', compact('loggedName'));
+        return view('expert.dashboard', compact('loggedName'));
     }
 }

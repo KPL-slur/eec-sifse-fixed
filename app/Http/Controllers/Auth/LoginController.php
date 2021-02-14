@@ -55,7 +55,7 @@ class LoginController extends Controller
             }
             else
             {
-                return redirect()->route('tech');
+                return redirect()->route('expert');
             }
         }
         else

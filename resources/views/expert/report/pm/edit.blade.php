@@ -93,10 +93,10 @@
                                 <h4 class="card-title">{{ __('General') }}</h4>
                             </div>
                             <div class="card-body " id="">
-                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'general_visual'])
-                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'rcms'])
-                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'wipe_down'])
-                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'inspect_all'])
+                                @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'general_visual'])
+                                @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'rcms'])
+                                @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'wipe_down'])
+                                @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'inspect_all'])
 
                             </div>
                         </div>
@@ -108,8 +108,8 @@
                                 <h4 class="card-title">{{ __('Compressor') }}</h4>
                             </div>
                             <div class="card-body " id="">
-                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'compressor_visual'])
-                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'duty_cycle'])
+                                @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'compressor_visual'])
+                                @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'duty_cycle'])
 
                             </div>
                         </div>
@@ -121,21 +121,21 @@
                                 <h4 class="card-title">{{ __('Transmitter') }}</h4>
                             </div>
                             <div class="card-body " id="">
-                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'transmitter_visual'])
-                                @include('tech.report.layout.forms.pm-appended-form', ['namaKolom' => 'running_time', 'satuan' => 'hrs'])
-                                @include('tech.report.layout.forms.pm-appended-form', ['namaKolom' => 'radiate_time', 'satuan' => 'hrs'])
+                                @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'transmitter_visual'])
+                                @include('expert.report.layout.forms.pm-appended-form', ['namaKolom' => 'running_time', 'satuan' => 'hrs'])
+                                @include('expert.report.layout.forms.pm-appended-form', ['namaKolom' => 'radiate_time', 'satuan' => 'hrs'])
 
                                 <div class="row">
                                     <label class="col-sm-2 col-form-label" for="">{{ __('Pulse Width') }}</label>
                                 </div>
-                                @include('tech.report.layout.forms.pm-pulse-form', ['namaKolom' => '0_4us'])
-                                @include('tech.report.layout.forms.pm-pulse-form', ['namaKolom' => '0_8us'])
-                                @include('tech.report.layout.forms.pm-pulse-form', ['namaKolom' => '1_0us'])
-                                @include('tech.report.layout.forms.pm-pulse-form', ['namaKolom' => '2_0us'])
+                                @include('expert.report.layout.forms.pm-pulse-form', ['namaKolom' => '0_4us'])
+                                @include('expert.report.layout.forms.pm-pulse-form', ['namaKolom' => '0_8us'])
+                                @include('expert.report.layout.forms.pm-pulse-form', ['namaKolom' => '1_0us'])
+                                @include('expert.report.layout.forms.pm-pulse-form', ['namaKolom' => '2_0us'])
 
-                                @include('tech.report.layout.forms.pm-appended-form', ['namaKolom' => 'forward_power', 'satuan' => 'dBm'])
-                                @include('tech.report.layout.forms.pm-appended-form', ['namaKolom' => 'reverse_power', 'satuan' => 'dBm'])
-                                @include('tech.report.layout.forms.pm-appended-form', ['namaKolom' => 'vswr', 'satuan' => ':1'])
+                                @include('expert.report.layout.forms.pm-appended-form', ['namaKolom' => 'forward_power', 'satuan' => 'dBm'])
+                                @include('expert.report.layout.forms.pm-appended-form', ['namaKolom' => 'reverse_power', 'satuan' => 'dBm'])
+                                @include('expert.report.layout.forms.pm-appended-form', ['namaKolom' => 'vswr', 'satuan' => ':1'])
 
                             </div>
                         </div>
@@ -147,12 +147,12 @@
                                 <h4 class="card-title">{{ __('Receiver') }}</h4>
                             </div>
                             <div class="card-body " id="">
-                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'receiver_visual'])
-                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'stalo_check'])
-                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'afc_check'])
-                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'mrp_check'])
-                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'rcu_check'])
-                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'iq2_check'])
+                                @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'receiver_visual'])
+                                @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'stalo_check'])
+                                @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'afc_check'])
+                                @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'mrp_check'])
+                                @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'rcu_check'])
+                                @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'iq2_check'])
 
                             </div>
                         </div>
@@ -164,10 +164,10 @@
                                 <h4 class="card-title">{{ __('Antenna/Pedestal') }}</h4>
                             </div>
                             <div class="card-body " id="">
-                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'antenna_visual'])
-                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'inspect_motor'])
-                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'clean_slip'])
-                                @include('tech.report.layout.forms.pm-form', ['namaKolom' => 'grease_gear'])
+                                @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'antenna_visual'])
+                                @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'inspect_motor'])
+                                @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'clean_slip'])
+                                @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'grease_gear'])
 
                             </div>
                         </div>
@@ -197,7 +197,7 @@
 
                         {{-- BUTTON GROUP --}}
                         <div class="d-flex justify-content-end">
-                            <a type="button" class="btn btn-info" href="{{ url('tech') }}">BACK</a>
+                            <a type="button" class="btn btn-info" href="{{ url('expert') }}">BACK</a>
                             <button type="submit" value='submit' class="btn btn-primary mx-5">SUBMIT</button>
                         </div>
                         {{-- END OF BUTTON GROUP --}}

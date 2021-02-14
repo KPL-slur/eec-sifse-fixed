@@ -26,7 +26,7 @@ class RecommendationsController extends Controller
      */
     public function create($headId)
     {
-        return view('tech.report.recommendation.create', compact('headId'));
+        return view('expert.report.recommendation.create', compact('headId'));
     }
 
     /**
@@ -66,7 +66,7 @@ class RecommendationsController extends Controller
         $HeadReport = HeadReport::Where('id', $headId)->get();
         $recommendations = Recommendation::Where('head_id', $headId)->get();
 
-        return view('tech.report.recommendation.show', compact('recommendations', 'HeadReport'));
+        return view('expert.report.recommendation.show', compact('recommendations', 'HeadReport'));
     }
 
     /**
@@ -80,7 +80,7 @@ class RecommendationsController extends Controller
     {
         $recommendations = Recommendation::Where('head_id', $headId)->get();
 
-        return view('tech.report.recommendation.edit', compact('recommendations', 'headId'));
+        return view('expert.report.recommendation.edit', compact('recommendations', 'headId'));
     }
 
     /**

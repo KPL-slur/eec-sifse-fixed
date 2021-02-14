@@ -39,7 +39,7 @@ class HeadReportsController extends Controller
     public function create()
     {
         $technisians = DB::table('technisians')->get();
-        return view('tech.report.create', ['technisians' => $technisians]);
+        return view('expert.report.create', ['technisians' => $technisians]);
     }
 
     /**
@@ -59,7 +59,7 @@ class HeadReportsController extends Controller
         $queryHeadId = HeadReport::select('id')->orderByDesc('id')->first(); //used to determine the head id of this report
         $headId = $queryHeadId->id;
 
-        // return view('tech.report.'.$maintenance_type.'.create', compact('headId'));  //not working with validation
+        // return view('expert.report.'.$maintenance_type.'.create', compact('headId'));  //not working with validation
         switch ($maintenance_type) {
             case 'pm':
                 return redirect()->action(
@@ -76,7 +76,7 @@ class HeadReportsController extends Controller
                 break;
             
             default:
-                return redirect()->route('tech');
+                return redirect()->route('expert');
                 break;
         }
     }
@@ -101,7 +101,7 @@ class HeadReportsController extends Controller
     public function edit(HeadReport $headReport)
     {
         $technisians = DB::table('technisians')->get();
-        return view('tech.report.edit', compact('headReport', 'technisians'));
+        return view('expert.report.edit', compact('headReport', 'technisians'));
     }
 
     /**
@@ -134,7 +134,7 @@ class HeadReportsController extends Controller
         ->where('head_id', $headId)
         ->first();
         $bodyId = $QueryBodyId->id;
-        // return view('tech.report.'.$maintenance_type.'.create', compact('headId'));  //not working with validation
+        // return view('expert.report.'.$maintenance_type.'.create', compact('headId'));  //not working with validation
         switch ($maintenance_type) {
             case 'pm':
                 return redirect()->action(
@@ -151,7 +151,7 @@ class HeadReportsController extends Controller
                 break;
             
             default:
-                return redirect()->route('tech');
+                return redirect()->route('expert');
                 break;
         }
     }

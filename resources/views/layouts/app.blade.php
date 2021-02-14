@@ -30,13 +30,13 @@
                 @include('layouts.page_templates.admin')
 
                 @else
-                    {{-- selain admin, berarti tech --}}
+                    {{-- selain admin, berarti expert --}}
                     {{-- NOT IS ADMIN BUT AUTH --}}
                     {{-- yg bukan is_admin, tp di dalem auth --}}
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
-                    @include('layouts.page_templates.tech')
+                    @include('layouts.page_templates.expert')
 
             @endis_admin
         @endauth

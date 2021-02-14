@@ -18,7 +18,7 @@ class CmBodyReportsController extends Controller
         $HeadReport = HeadReport::where('maintenance_type', "cm")->get();
         $maintenance_type = "cm"; //used to determine the add new button route
 
-        return view('tech.report.index', compact('HeadReport', 'maintenance_type'));
+        return view('expert.report.index', compact('HeadReport', 'maintenance_type'));
     }
 
     /**
@@ -28,7 +28,7 @@ class CmBodyReportsController extends Controller
      */
     public function create($headId)
     {
-        return view('tech.report.cm.create', compact('headId'));
+        return view('expert.report.cm.create', compact('headId'));
     }
 
     /**
@@ -64,7 +64,7 @@ class CmBodyReportsController extends Controller
     {
         $HeadReport = HeadReport::Where('id', $cmBodyReport->head_id)->get();
 
-        return view('tech.report.cm.show', compact('cmBodyReport', 'HeadReport'));
+        return view('expert.report.cm.show', compact('cmBodyReport', 'HeadReport'));
     }
 
     /**
@@ -76,7 +76,7 @@ class CmBodyReportsController extends Controller
      */
     public function edit(CmBodyReport $cmBodyReport, $headId)
     {
-        return view('tech.report.cm.edit', compact('cmBodyReport', 'headId'));
+        return view('expert.report.cm.edit', compact('cmBodyReport', 'headId'));
     }
 
     /**
