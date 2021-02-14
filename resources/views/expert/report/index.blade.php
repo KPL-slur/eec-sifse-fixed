@@ -25,13 +25,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($HeadReport as $hr)
+                                    @foreach ($headReports as $hr)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
-                                            <td>{{ $hr->radar_name }}</td>
-                                            <td>{{ $hr->station_id }}</td>
+                                            <td>{{ $hr->site->radar_name }}</td>
+                                            <td>{{ $hr->site->station_id }}</td>
                                             <td>{{ $hr->report_date_start }} - {{ $hr->report_date_end }}</td>
-                                            <td>{{ $hr->expertise1 }}; {{ $hr->expertise2 }}; {{ $hr->expertise3 }}
+                                            <td>
+                                                @foreach ($hr->experts as $expert)
+                                                    {{ $expert->name }};
+                                                @endforeach
                                             </td>
                                             <td class="td-actions text-right">
                                                 <a type="button" rel="tooltip" class="btn btn-secondary"
@@ -39,7 +42,7 @@
                                                     <i class="material-icons">receipt_long</i>
                                                 </a>
                                                 <a type="button" rel="tooltip" class="btn btn-info"
-                                                    href="{{ url('/report/' . $maintenance_type . '/' . $hr->id) }}">
+                                                    href="{{ url('/expert/' . $maintenance_type . '/' . $hr->head_id) }}">
                                                     <i class="material-icons">visibility</i>
                                                 </a>
                                                 <a type="button" rel="tooltip" class="btn btn-warning"

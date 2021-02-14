@@ -99,7 +99,7 @@ class PmBodyReportsController extends Controller
     */
     public function show(PmBodyReport $pmBodyReport)
     {
-        $HeadReport = HeadReport::Where('id', $pmBodyReport->head_id)->get();
+        $HeadReport = HeadReport::Where('id', $pmBodyReport->head_id)->first();
 
         return view('expert.report.pm.show', compact('pmBodyReport', 'HeadReport'));
     }

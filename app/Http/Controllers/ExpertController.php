@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 
 // use Illuminate\Http\Request;
 
-class TechController extends Controller
+class ExpertController extends Controller
 {
     /**
      * Create a new controller instance.
