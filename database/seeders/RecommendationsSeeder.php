@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Seeder;
 
 class RecommendationsSeeder extends Seeder
 {
@@ -14,28 +14,15 @@ class RecommendationsSeeder extends Seeder
      */
     public function run()
     {
+        // ===== hasil rancangan erd =====
         DB::table('recommendations')->insert([
-            'head_id' => '1',
-            'spare_part_name' => 'Protection Board',
-            'qty' => '2',
+            'rec_id' => 1,
+            'head_id' => 1,
+            'stock_id' => 1,
+            'jumlah_unit_needed' => 5,
 
-            'created_at' => now(),
+            'created_at' => now()
         ]);
-
-        DB::table('recommendations')->insert([
-            'head_id' => '1',
-            'spare_part_name' => 'Acromag',
-            'qty' => '2',
-
-            'created_at' => now(),
-        ]);
-
-        DB::table('recommendations')->insert([
-            'head_id' => '1',
-            'spare_part_name' => 'KVM Display',
-            'qty' => '1',
-
-            'created_at' => now(),
-        ]);
+        // ===== hasil rancangan erd =====
     }
 }

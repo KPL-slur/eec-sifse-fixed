@@ -14,6 +14,7 @@ class PmBodyReportsSeeder extends Seeder
      */
     public function run()
     {
+        // ===== bawaan letoy & hasil rancangan erd =====
         DB::table('pm_body_reports')->insert([
             'head_id' => '1',
 
@@ -61,6 +62,56 @@ class PmBodyReportsSeeder extends Seeder
             'vswr' => '1.02',
 
             'remark' => '<h1>Olive Oil</h1><p>Olive oil composed of refined olive oils and virgin olive oils. Oil comprising exclusively olive  oils that have undergone refining and oils obtained directly from olives</p>',
+
+            'created_at' => now(),
+        ]);
+        DB::table('pm_body_reports')->insert([
+            'head_id' => '2',
+
+            //radio
+            'radio_general_visual' => '2',
+            'radio_rcms' => '2',
+            'radio_wipe_down' => '2',
+            'radio_inspect_all' => '2',
+            'radio_compressor_visual' => '2',
+            'radio_duty_cycle' => '2',
+            'radio_transmitter_visual' => '2',
+            'radio_receiver_visual' => '2',
+            'radio_stalo_check' => '2',
+            'radio_afc_check' => '2',
+            'radio_mrp_check' => '2',
+            'radio_rcu_check' => '2',
+            'radio_iq2_check' => '2',
+            'radio_antenna_visual' => '2',
+            'radio_inspect_motor' => '2',
+            'radio_clean_slip' => '2',
+            'radio_grease_gear' => '2',
+
+            //remark
+            'running_time' => '047399.0',
+            'radiate_time' => '046936.9',
+
+            'hvps_v_0_4us' => '752.8',
+            'hvps_i_0_4us' => '1.6',
+            'mag_i_0_4us' => '27.3',
+            
+            'hvps_v_0_8us' => '752.0',
+            'hvps_i_0_8us' => '2.4',
+            'mag_i_0_8us' => '47.2',
+            
+            'hvps_v_1_0us' => '753.0',
+            'hvps_i_1_0us' => '0.6',
+            'mag_i_1_0us' => '12.4',
+
+            'hvps_v_2_0us' => '752.8',
+            'hvps_i_2_0us' => '1.0',
+            'mag_i_2_0us' => '23.2',
+
+            'forward_power' => '85.704',
+            'reverse_power' => '54.93',
+            'vswr' => '1.02',
+
+            'remark' => 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor dolorum modi, quidem aperiam laudantium pariatur ut quam labore quisquam cum odio adipisci a nobis libero, iure minima consequatur, sed consequuntur?',
 
             'created_at' => now(),
         ]);
