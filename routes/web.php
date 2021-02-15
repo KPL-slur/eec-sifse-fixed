@@ -97,13 +97,16 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         return view('pages.upgrade');
     })->name('upgrade');
 
+    //sementara buat user-management (jgn diapus bre)
+    Route::get('userManagement', [App\Http\Controllers\UserController::class, 'index'])->name('userManagement');
+
     //distribusi
     Route::get('distribution', [App\Http\Controllers\DistributionController::class, 'index'])->name('distribution');
     Route::get('editDistribution/{id}', [App\Http\Controllers\DistributionController::class, 'edit']);
     Route::post('edit', [App\Http\Controllers\DistributionController::class, 'editData']);
     Route::delete('deleteDistribution/{id}', [App\Http\Controllers\DistributionController::class, 'deleteData']);
     Route::get('addDistribution', [App\Http\Controllers\DistributionController::class, 'add']);
-    Route::post('add', [App\Http\Controllers\DistributionController::class, 'addData']);
+    Route::post('addDst', [App\Http\Controllers\DistributionController::class, 'addData']);
 
     //site
     Route::get('site', [App\Http\Controllers\SiteController::class, 'index'])->name('site');
@@ -112,10 +115,16 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('inventorie/{id}', [App\Http\Controllers\SiteController::class, 'show']);
     Route::get('inventorySite/{id}', [App\Http\Controllers\SiteController::class, 'print']);
 
-    //logActivity
-    Route::get('table-list', function () {
-        return view('activity.table_list');
-    })->name('table');
+    //expertActivity
+    Route::get('expertActivity', [App\Http\Controllers\ExpertActivityController::class, 'index'])->name('expertActivity'); 
+    Route::get('pm', [App\Http\Controllers\ExpertActivityController::class, 'indexPM']); 
+    Route::get('addPm', [App\Http\Controllers\ExpertActivityController::class, 'add']); 
+    Route::post('addPM', [App\Http\Controllers\ExpertActivityController::class, 'addData']); 
+    Route::delete('deletePm/{id}', [App\Http\Controllers\ExpertActivityController::class, 'deleteData']);
+    Route::get('editPm/{id}', [App\Http\Controllers\ExpertActivityController::class, 'editPm']);
+    Route::post('editPM', [App\Http\Controllers\ExpertActivityController::class, 'editDataPm']);
+
+    Route::get('cm', [App\Http\Controllers\ExpertActivityController::class, 'indexCM']); 
     
     //stock with currencies
     Route::get('stock_currency', [App\Http\Controllers\StockController::class, 'index'])->name('stock_currency');

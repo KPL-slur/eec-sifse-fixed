@@ -103,7 +103,7 @@ class StockController extends Controller
         //belom nambah validasi
         dd($request);
         $stock_where = Stock::where('stock_id', $stocks->stock_id)
-                    ->udpate([
+                    ->update([
                         'site_id'=>$request->site_id,
                         'nama_barang'=>$request->nama_barang,
                         'part_number'=>$request->part_number,

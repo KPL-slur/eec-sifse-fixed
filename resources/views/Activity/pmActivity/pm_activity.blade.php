@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'distribution-management', 'titlePage' => __('Distribution Management')])
+@extends('layouts.app', ['activePage' => 'activity', 'titlePage' => __('Technisians Activity')])
 
 @section('content')
     
@@ -8,16 +8,16 @@
       <div class="col-md-12">
           <div class="card">
             <div class="card-header card-header-primary">
-              <h4 class="card-title ">Distribution</h4>
-              <p class="card-category"> Here you can manage distributions</p>
+              <h4 class="card-title ">PM Schedule</h4>
+              
             </div>
             <div class="card-body">
                 <div class="row">
                   <div class="col-12 text-right">
-                    <a href="addDistribution" class="btn btn-sm btn-primary">
+                    <a href="addPm" class="btn btn-sm btn-primary">
                       <i class="material-icons">
                         add
-                      </i>Add Distribution
+                      </i>Add PM Schedule
                     </a>
                   </div>
               </div>
@@ -26,26 +26,35 @@
                   <thead class=" text-primary">
                     <tr>
                       <th scope="col">#</th>
-                      <th scope="col">Nama Teknisi</th>
+                      <th scope="col">Maintenance Type</th>
                       <th scope="col">Radar Name</th>
                       <th scope="col">Station ID</th>
+                      <th scope="col">Date Start</th>
+                      <th scope="col">Date End</th>
                       <th class="text-right">Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach ($experts as $exp)
+                    @foreach ($pm as $pm)
                       <tr>
                         <td scope="row">{{$loop->iteration}}</td>
-                        <td>{{$exp->name}}</td>
-                        <td>{{$exp->radar_name}}</td>
-                        <td>{{$exp->station_id}}</td>
+                        <td>{{$pm->maintenance_type}}</td>
+                        <td>{{$pm->radar_name}}</td>
+                        <td>{{$pm->station_id}}</td>
+                        <td>{{$pm->report_date_start}}</td>
+                        <td>{{$pm->report_date_end}}</td>
                         <td class="td-actions text-right">
-                              <a rel="tooltip" class="btn btn-warning " href="editDistribution/{{$exp->expert_id}}">
-                                <i class="material-icons">edit</i>
-                                <div class="ripple-container"></div>
-                              </a>
+                            <a rel="tooltip" class="btn btn-info " href="">
+                              <i class="material-icons">visibility</i>
+                              <div class="ripple-container"></div>
+                            </a>
                               
-                              <form method="POST" action="/deleteDistribution/{{$exp->expert_id}}" class="d-inline">
+                            <a rel="tooltip" class="btn btn-warning" href="editPm/{{$pm->head_id}}">
+                              <i class="material-icons">edit</i>
+                              <div class="ripple-container"></div>
+                            </a>
+                              
+                              <form method="POST" action="/deletePm/{{ $pm->head_id }}" class="d-inline">
                                 @csrf
                                 @method('delete')
                                 <button class="btn btn-danger " onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')" >

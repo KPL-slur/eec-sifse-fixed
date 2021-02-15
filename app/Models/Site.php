@@ -9,8 +9,8 @@ class Site extends Model
 {
     protected $table = 'sites';
     protected $fillable = [
-        'site',
-        'lokasi',
+        'radar_name',
+        'station_id',
         'image',
     ];
     use HasFactory;
