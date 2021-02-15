@@ -19,7 +19,7 @@ class StockController extends Controller
         // $stocks = DB::table('stocks')->get();
         $stocks = Stock::select()
                         ->leftJoin('sites', 'sites.site_id', '=', 'stocks.site_id')
-                        ->orderBy('group', 'asc')
+                        // ->orderBy('group', 'asc')
                         ->get();
 
         $rate_fix = $ex_rate->apiCall();
