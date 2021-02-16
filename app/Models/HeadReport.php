@@ -12,6 +12,7 @@ class HeadReport extends Model
     protected $primaryKey = 'head_id';
 
     protected $guarded = [
+        'id',
         'created_at',
         'deleted_at',
     ];

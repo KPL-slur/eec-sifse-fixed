@@ -42,3 +42,10 @@
     position: relative;
 }
   
+.hidden {
+    display: none !important;
+}
+
+.select2{
+    width: 50vw !important;
+}

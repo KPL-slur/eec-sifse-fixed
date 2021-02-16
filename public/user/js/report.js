@@ -5,11 +5,14 @@ window.onload = function () {
     /*
      *   METHOD MEMUNCULKAN INPUT FIELD BARU
      */
-    var $i = 4;
+    for (let index = 2; index <= 10; index++) {
+        $("#dynamicFields" + index).addClass("hidden");
+    }
+    var $i = 1;
     $("#add").on("click", function () {
         if ($i < 10) {
             $i++;
-            $("#dynamicFields" + $i).removeClass("d-none");
+            $("#dynamicFields" + $i).removeClass("hidden");
         }
     });
     /*
@@ -17,39 +20,12 @@ window.onload = function () {
      */
     $("#remove").on("click", function () {
         if (!($i <= 1)) {
-            $("#dynamicFields" + $i).addClass("d-none");
+            $("#dynamicFields" + $i).addClass("hidden");
+            $("#expertForms"+$i).val(null).trigger('change');
             $i--;
         }
     });
-
-    /*
-     *   METHOD MENONAKTIFKAN TOMBOL
-     *   Menonaktifkan tombol add dan remove untuk memunculkan input field
-     *   baru sebelum user mengisikan form pertama
-     */
-    if (
-        $("#inputExpertise4").val() === "" ||
-        $("#inputExpertiseCompany4").val() === ""
-    ) {
-        $("#add").prop("disabled", true);
-        $("#remove").prop("disabled", true);
-    }
-    $("#inputExpertise4").on("change", function () {
-        $("#inputExpertiseCompany4").on("change", function () {
-            $("#add").prop("disabled", false);
-            $("#remove").prop("disabled", false);
-        });
-    });
-    /*
-     *    METHOD MEMUNCULKAN FIELD YANG SUDAH DIIISI
-     *    Memunculkan field yang sudah diisi ketika halamn di reload
-     *    atau pada halaman edit
-     */
-    for (let $j = 0; $j < 10; $j++) {
-        if ($("#inputExpertise" + $j).val() !== "") {
-            $("#dynamicFields" + $j).removeClass("d-none");
-        }
-    }
+    
     /*
      *   METHOD MENONAKTIFKAN FIELD
      *   Menonaktifkan field sebelum user mengisikan form sebelumnya
@@ -70,5 +46,19 @@ window.onload = function () {
     $("#inputInternalExpertise2").on("change", function () {
         $("#inputInternalExpertise3").prop("disabled", false);
         disableInternalExpertise();
+    });
+
+    /*
+     *   FUNGSI MEMANGGIL CKEDITOR
+     */
+    ClassicEditor.create(document.querySelector("#editor")).catch((error) => {
+        console.error(error);
+    });
+
+    /*
+     *  Select2 init
+     */
+    $(".inputExpert").select2({
+        tags: true,
     });
 };

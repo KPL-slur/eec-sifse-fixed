@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <!-- CSS Files -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="{{ asset('material') }}/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
     <link href="{{ asset('user') }}/css/style.css" rel="stylesheet" />
     @livewireStyles
@@ -90,6 +91,10 @@
         {{-- <script src="{{ asset('material') }}/js/settings.js"></script> --}}
         {{-- IMPORT CKEDITOR, NANTI DI DOWNLOAD JGN DARI CDN --}}
         <script src="https://cdn.ckeditor.com/ckeditor5/25.0.0/classic/ckeditor.js"></script>
+        <!-- SELECT2 IMPORT -->
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <!-- js for headreport expert coloumn -->
+        <script src="{{ asset('user') }}/js/report.js" type="text/javascript"></script>
         @stack('js')
         @livewireScripts
     </body>

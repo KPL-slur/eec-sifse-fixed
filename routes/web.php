@@ -34,6 +34,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'expert'], function () {
     // PM REPORT ROUTES
     Route::group(['prefix' => 'pm', 'as' => 'pm.'], function () {
         Route::get('/', [App\Http\Controllers\PmReportController::class, 'index'])->name('index');
+        Route::get('/create', [App\Http\Controllers\PmReportController::class, 'create'])->name('show');
+        Route::post('/create', [App\Http\Controllers\PmReportController::class, 'store'])->name('store');
         Route::get('/{id}', [App\Http\Controllers\PmReportController::class, 'show'])->name('show');
     });
 
