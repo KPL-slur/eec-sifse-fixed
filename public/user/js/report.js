@@ -22,31 +22,60 @@ window.onload = function () {
         if (!($i <= 1)) {
             $("#dynamicFields" + $i).addClass("hidden");
             $("#expertForms"+$i).val(null).trigger('change');
+            $("#expertCompanyForms"+$i).val(null).trigger('change');
+            $("#expertNipForms"+$i).val(null).trigger('change');
             $i--;
         }
     });
+
     
+    /*
+     *
+     */
+    function checkId(num) {
+        var id = parseInt($("#expertForms" + num).val())
+        // console.log($("#expertForms1").val());
+        if (!isNaN(id) || $("#expertForms"+ num).val() == "") {
+            $("#expertCompanyForms"+num).prop("disabled", true);
+            $("#expertNipForms"+num).prop("disabled", true);
+        }
+    }
+    $('#dynamicFields1').on('change', function (){
+        checkId(1);
+    });
+    $('#dynamicFields2').on('change', function (){
+        checkId(2);
+    });
+    $('#dynamicFields3').on('change', function (){
+        checkId(3);
+    });
+    $('#dynamicFields4').on('change', function (){
+        checkId(4);
+    });
+    $('#dynamicFields5').on('change', function (){
+        checkId(5);
+    });
+    $('#dynamicFields6').on('change', function (){
+        checkId(6);
+    });
+    $('#dynamicFields7').on('change', function (){
+        checkId(7);
+    });
+    $('#dynamicFields8').on('change', function (){
+        checkId(8);
+    });
+    $('#dynamicFields9').on('change', function (){
+        checkId(9);
+    });
+    $('#dynamicFields10').on('change', function (){
+        checkId(10);
+    });
+
     /*
      *   METHOD MENONAKTIFKAN FIELD
      *   Menonaktifkan field sebelum user mengisikan form sebelumnya
      */
-    function disableInternalExpertise() {
-        if ($("#inputInternalExpertise1").val() === "") {
-            $("#inputInternalExpertise2").prop("disabled", true);
-        }
-        if ($("#inputInternalExpertise2").val() === "") {
-            $("#inputInternalExpertise3").prop("disabled", true);
-        }
-    }
-    disableInternalExpertise();
-    $("#inputInternalExpertise1").on("change", function () {
-        $("#inputInternalExpertise2").prop("disabled", false);
-        disableInternalExpertise();
-    });
-    $("#inputInternalExpertise2").on("change", function () {
-        $("#inputInternalExpertise3").prop("disabled", false);
-        disableInternalExpertise();
-    });
+    
 
     /*
      *   FUNGSI MEMANGGIL CKEDITOR

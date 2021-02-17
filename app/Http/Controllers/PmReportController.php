@@ -17,7 +17,9 @@ class PmReportController extends Controller
         'station_id' => 'required',
         'report_date_start' => 'required',
         'report_date_end' => 'required',
-        'expert' => 'required',
+        'expert1' => 'required',
+        'expert_company1' => 'required',
+        'expert_nip1' => 'required',
 
         'radio_general_visual' => 'required',
         'radio_rcms' => 'required',
@@ -88,8 +90,11 @@ class PmReportController extends Controller
     public function create()
     {
         $experts = Expert::all();
+        $uniqueCompany = $experts->unique('expert_company');
 
-        return view('expert.report.pm.create', compact('experts'));
+        // dd($experts);
+
+        return view('expert.report.pm.create', compact('experts', 'uniqueCompany'));
     }
 
     /**

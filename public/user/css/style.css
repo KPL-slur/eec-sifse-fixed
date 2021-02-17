@@ -33,7 +33,7 @@
 /* 
 *  
 */
-#towers{
+#towers {
     height: 100px;
     width: 100px;
 }
@@ -41,11 +41,16 @@
 .form-group-site {
     position: relative;
 }
-  
+
 .hidden {
     display: none !important;
 }
 
-.select2{
-    width: 50vw !important;
+.select2 {
+    width: 20vw !important;
+}
+
+.has-error .select2-selection {
+    border-color: rgb(185, 74, 72) !important;
+    border-width: 3px;
 }
