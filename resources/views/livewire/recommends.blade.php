@@ -1,8 +1,6 @@
 <div>
-    <form action="{{ url('report/recommendations') }}" method="post">
+    {{-- <form action="{{ url('report/recommendations') }}" method="post"> --}}
         @csrf
-                                
-        <input type="hidden" name="head_id" value="{{ $headId }}">
 
         <table class="table" id="products_table">
             <thead>
@@ -47,9 +45,9 @@
             </div>
         </div>
         {{-- BUTTON GROUP --}}
-        <div class="d-flex justify-content-end">
+        {{-- <div class="d-flex justify-content-end">
             <a type="button" class="btn btn-info" href="{{ url('expert') }}">BACK</a>
             <button type="submit" class="btn btn-primary mx-5">SUBMIT</button>
-        </div>
-    </form>
+        </div> --}}
+    {{-- </form> --}}
 </div>

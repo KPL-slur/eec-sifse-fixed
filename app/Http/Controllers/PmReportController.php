@@ -17,9 +17,6 @@ class PmReportController extends Controller
         'station_id' => 'required',
         'report_date_start' => 'required',
         'report_date_end' => 'required',
-        'expert1' => 'required',
-        'expert_company1' => 'required',
-        'expert_nip1' => 'required',
 
         'radio_general_visual' => 'required',
         'radio_rcms' => 'required',

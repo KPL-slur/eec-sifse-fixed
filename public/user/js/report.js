@@ -21,53 +21,58 @@ window.onload = function () {
     $("#remove").on("click", function () {
         if (!($i <= 1)) {
             $("#dynamicFields" + $i).addClass("hidden");
-            $("#expertForms"+$i).val(null).trigger('change');
-            $("#expertCompanyForms"+$i).val(null).trigger('change');
-            $("#expertNipForms"+$i).val(null).trigger('change');
+            $("#expertForms" + $i)
+                .val(null)
+                .trigger("change");
+            $("#expertCompanyForms" + $i)
+                .val(null)
+                .trigger("change");
+            $("#expertNipForms" + $i)
+                .val(null)
+                .trigger("change");
             $i--;
         }
     });
 
-    
     /*
      *
      */
     function checkId(num) {
-        var id = parseInt($("#expertForms" + num).val())
+        var id = parseInt($("#expertForms" + num).val());
         // console.log($("#expertForms1").val());
-        if (!isNaN(id) || $("#expertForms"+ num).val() == "") {
-            $("#expertCompanyForms"+num).prop("disabled", true);
-            $("#expertNipForms"+num).prop("disabled", true);
+        if (!isNaN(id) || $("#expertForms" + num).val() == "") {
+            $("#expertCompanyForms" + num).prop("disabled", true);
+            $("#expertNipForms" + num).prop("disabled", true);
         }
     }
-    $('#dynamicFields1').on('change', function (){
+    $("#dynamicFields1").on("change", function () {
         checkId(1);
     });
-    $('#dynamicFields2').on('change', function (){
+    $("#dynamicFields2").on("change", function () {
         checkId(2);
     });
-    $('#dynamicFields3').on('change', function (){
+    $("#dynamicFields3").on("change", function () {
         checkId(3);
     });
-    $('#dynamicFields4').on('change', function (){
+    $("#dynamicFields4").on("change", function () {
         checkId(4);
     });
-    $('#dynamicFields5').on('change', function (){
+    $("#dynamicFields5").on("change", function () {
         checkId(5);
     });
-    $('#dynamicFields6').on('change', function (){
+    $("#dynamicFields6").on("change", function () {
         checkId(6);
     });
-    $('#dynamicFields7').on('change', function (){
+    $("#dynamicFields7").on("change", function () {
         checkId(7);
     });
-    $('#dynamicFields8').on('change', function (){
+    $("#dynamicFields8").on("change", function () {
         checkId(8);
     });
-    $('#dynamicFields9').on('change', function (){
+    $("#dynamicFields9").on("change", function () {
         checkId(9);
     });
-    $('#dynamicFields10').on('change', function (){
+    $("#dynamicFields10").on("change", function () {
         checkId(10);
     });
 
@@ -75,7 +80,23 @@ window.onload = function () {
      *   METHOD MENONAKTIFKAN FIELD
      *   Menonaktifkan field sebelum user mengisikan form sebelumnya
      */
-    
+    disbaleAddRemove();
+    $("#expertForms1").on("change", function () {
+        if ($("#expertForms1").val() == "") {
+            disbaleAddRemove();
+        }
+        else{
+            enableAddRemove();
+        }
+    });
+    function disbaleAddRemove() {
+        $("#add").prop("disabled", true);
+        $("#remove").prop("disabled", true);
+    }
+    function enableAddRemove() {
+        $("#add").prop("disabled", false);
+        $("#remove").prop("disabled", false);
+    }
 
     /*
      *   FUNGSI MEMANGGIL CKEDITOR
