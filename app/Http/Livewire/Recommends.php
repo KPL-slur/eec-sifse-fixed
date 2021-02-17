@@ -11,6 +11,7 @@ class Recommends extends Component
     public $headId;
     public $stocks = [];
     public $recommends = [];
+    public $manualRecommends = [];
 
     public function mount()
     {
@@ -29,6 +30,17 @@ class Recommends extends Component
     {
         unset($this->recommends[$index]);
         array_values($this->recommends);
+    }
+
+    public function addManualRecommends ()
+    {
+        $this->manualRecommends[] = ['nama_barang' => '', 'quantity' => 1];
+    }
+
+    public function removeManualRecommends($index)
+    {
+        unset($this->manualRecommends[$index]);
+        array_values($this->manualRecommends);
     }
 
     public function render()

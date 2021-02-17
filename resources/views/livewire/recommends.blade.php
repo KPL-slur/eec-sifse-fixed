@@ -37,11 +37,30 @@
                         </td>
                     </tr>
                 @endforeach
+                @foreach ($manualRecommends as $index => $manualRecommend)
+                    <tr>
+                        <td>
+                            <input type="text" class="form-control" 
+                                name="manualRecommends[{{ $index }}][nama_barang]" 
+                                wire:model="manualRecommends.{{ $index }}.nama_barang">
+                        </td>
+                        <td>
+                            <input type="number" name="manualRecommends[{{ $index }}][quantity]" 
+                                wire:model="manualRecommends.{{ $index }}.quantity" class="form-control" /
+                            >
+                        </td>
+                        <td>
+                            <a href="#"
+                                wire:click.prevent="removeManualRecommends({{ $index }})">Delete</a>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
         <div class="row">
             <div class="col-md-12">
                 <button class="btn btn-sm btn-secondary" wire:click.prevent="addRecommend">+ Add Another Product</button>
+                <button class="btn btn-sm btn-secondary" wire:click.prevent="addManualRecommends">+ Add Manual Product</button>
             </div>
         </div>
         {{-- BUTTON GROUP --}}
