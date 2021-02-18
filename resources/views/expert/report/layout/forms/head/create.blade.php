@@ -32,8 +32,9 @@ expertise_company10 --}}
     </div>
     {{-- DYNAMIC FIELDS --}}
     <div class="card-body " id="dynamicField">
-        @include('expert.report.layout.forms.summary-form', ['namaKolom'=>'radar_name', 'tipeForm'=>'text'])
-        @include('expert.report.layout.forms.summary-form', ['namaKolom'=>'station_id', 'tipeForm'=>'text'])
+        {{-- @include('expert.report.layout.forms.summary-form', ['namaKolom'=>'station_id', 'tipeForm'=>'text'])
+        @include('expert.report.layout.forms.summary-form', ['namaKolom'=>'radar_name', 'tipeForm'=>'text']) --}}
+        @include('expert.report.layout.forms.select-site') 
         @include('expert.report.layout.forms.summary-form', ['namaKolom'=>'report_date_start',
         'tipeForm'=>'date'])
         @include('expert.report.layout.forms.summary-form', ['namaKolom'=>'report_date_end', 'tipeForm'=>'date'])

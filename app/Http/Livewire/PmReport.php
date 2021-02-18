@@ -4,12 +4,14 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Expert;
+use App\Models\Site;
 
 class PmReport extends Component
 {
     public $currentStep = 1;
+
     //head forms
-    public $radar_name, $station_id, $report_date_start, $report_date_end;
+    public $radar, $site_id, $report_date_start, $report_date_end;
     //pm body forms
     public $radio_general_visual, $radio_rcms, $radio_wipe_down, $radio_inspect_all, $radio_compressor_visual, $radio_duty_cycle;
     public $radio_transmitter_visual, $radio_receiver_visual, $radio_stalo_check, $radio_afc_check, $radio_mrp_check, $radio_rcu_check, $radio_iq2_check;
@@ -148,6 +150,12 @@ class PmReport extends Component
 
     public function render()
     {
-        return view('livewire.pm-report');
+        // return view('livewire.pm-report');
+
+        if(!empty($this->site_id)) {
+            $this->radar = Site::where('site_id', $this->site_id)->first();
+        }
+        return view('livewire.pm-report')
+            ->withStations(Site::get());
     }
 }

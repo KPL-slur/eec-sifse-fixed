@@ -97,5 +97,10 @@
         <script src="{{ asset('user') }}/js/report.js" type="text/javascript"></script>
         @stack('js')
         @livewireScripts
+        <script>
+            window.livewire.on('fileUploaded'), () => {
+                $('#form-upload')[0].reset();
+            }
+        </script>
     </body>
 </html>
