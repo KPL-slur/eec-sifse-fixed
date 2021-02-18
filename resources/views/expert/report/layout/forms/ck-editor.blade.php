@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-sm-7">
                 <div class="form-group" wire:ignore>
-                    <textarea class="editor" name="remark" id="editor" cols="50" rows="10"
+                    <textarea class="editor" name="remark" id="editor" cols="50" rows="10" wire:model.lazy="remark"
                         class="form-control"
                         placeholder="@error('remark') {{ $message }} @enderror">
                         {{ old('remark') }}

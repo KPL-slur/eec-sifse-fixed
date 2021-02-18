@@ -27,8 +27,9 @@
                             </select>
                         </td>
                         <td>
-                            <input type="number" name="recommends[{{ $index }}][quantity]" 
-                                wire:model="recommends.{{ $index }}.quantity" class="form-control" /
+                            <input type="number" class="form-control"
+                                name="recommends[{{ $index }}][quantity]" 
+                                wire:model="recommends.{{ $index }}.quantity"
                             >
                         </td>
                         <td>
@@ -42,11 +43,12 @@
                         <td>
                             <input type="text" class="form-control" 
                                 name="manualRecommends[{{ $index }}][nama_barang]" 
-                                wire:model="manualRecommends.{{ $index }}.nama_barang">
+                                wire:model.defer="manualRecommends.{{ $index }}.nama_barang">
                         </td>
                         <td>
-                            <input type="number" name="manualRecommends[{{ $index }}][quantity]" 
-                                wire:model="manualRecommends.{{ $index }}.quantity" class="form-control" /
+                            <input type="number" class="form-control"
+                                name="manualRecommends[{{ $index }}][quantity]" 
+                                wire:model.defer="manualRecommends.{{ $index }}.quantity"
                             >
                         </td>
                         <td>

@@ -38,12 +38,24 @@ expertise_company10 --}}
         'tipeForm'=>'date'])
         @include('expert.report.layout.forms.summary-form', ['namaKolom'=>'report_date_end', 'tipeForm'=>'date'])
 
-        @include('expert.report.layout.forms.expert-form', ['index' => 1])
+        
+        <div class="row">
+            <div class="card ">
+                <div class="card-header card-header-primary">
+                    <h4 class="card-title">{{ __('Experts') }}</h4>
+                </div>
+    
+                <div class="card-body">
+                    @livewire('experts')
+                </div>
+            </div>
+        </div>
+        {{-- @include('expert.report.layout.forms.expert-form', ['index' => 1])
         @for ($index = 2; $index <= 10; $index++)
             @include('expert.report.layout.forms.expert-form', compact('index'))
         @endfor
         <button type="button" id="add" class="btn btn-primary">ADD</button>
-        <button type="button" id="remove" class="btn btn-danger">DELETE LAST</button>
+        <button type="button" id="remove" class="btn btn-danger">DELETE LAST</button> --}}
         
 
         {{-- FIELDS THAT CAN BE ADDED BY USER USING JS BELOW --}}

@@ -86,12 +86,11 @@ class PmReportController extends Controller
      */
     public function create()
     {
-        $experts = Expert::all();
-        $uniqueCompany = $experts->unique('expert_company');
+        // $experts = Expert::all();
+        // $uniqueCompany = $experts->unique('expert_company');
 
         // dd($experts);
-
-        return view('expert.report.pm.create', compact('experts', 'uniqueCompany'));
+        return view('expert.report.pm.create');
     }
 
     /**
@@ -102,7 +101,7 @@ class PmReportController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate($this->rules);
+        // $request->validate($this->rules);
         
         dd($request);
     }
