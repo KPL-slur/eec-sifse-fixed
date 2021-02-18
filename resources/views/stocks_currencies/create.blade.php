@@ -11,7 +11,7 @@
             <p class="card-category"> Here is a subtitle for this table</p>
           </div>
           <div class="card-body">
-                <p class="mb-4 text-center h3">Harga Kurs Sekarang : <span class="text-primary text-center display-4">Rp {{ $rates->rates->IDR }}</span> ke USD</p>
+                <p class="mb-4 text-center h3">Harga Kurs Sekarang : <span class="text-primary text-center display-4">Rp {{ $rate_fix }}</span> ke USD</p>
                 <form action="{{ url('stock_currency/') }}" method="POST">
                   @csrf
                     <div class="form-group my-4">
@@ -19,7 +19,7 @@
                       <select name="site_id" id="site_id" class="form-control">
                         <option value="">-- Pilih Site --</option>
                         @foreach ($sites as $st)
-                          <option value="{{ $st->site_id }}">{{ $st->site }}</option>  
+                          <option value="{{ $st->site_id }}">{{ $st->station_id }}</option>  
                         @endforeach
                       </select>
                       {{-- <input type="text" class="form-control" id="site_id" name="site_id"> --}}
@@ -59,10 +59,16 @@
                     <div class="form-group my-4">
                       <label for="kurs_beli">Kurs Beli</label>
                       <input type="text" class="form-control" id="kurs_beli" name="kurs_beli" placeholder="Kurs Beli">
+                      <button type="button" id="button_kurs_beli" class="btn btn-sm my-4">Ingin masukkan kurs sekarang?</button>
+                      <script type="text/javascript">
+                        document.getElementById("button_kurs_beli").addEventListener("click", (e) => {
+                          document.getElementById("kurs_beli").value = '<?php echo $rate_fix ?>';
+                        });
+                      </script>
                     </div>
                     <div class="form-group my-4">
-                      <label for="jumlah_unit">Jumlah Stok</label>
-                      <input type="text" class="form-control" id="jumlah_unit" name="jumlah_unit" placeholder="Stok yg ada">
+                      <label for="jumlah_unit">Jumlah Unit</label>
+                      <input type="text" class="form-control" id="jumlah_unit" name="jumlah_unit" placeholder="Mau masukin berapa">
                     </div>
                     <div class="form-group my-4">
                       <label for="status">Status</label>
