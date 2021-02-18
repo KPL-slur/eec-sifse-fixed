@@ -42,6 +42,7 @@
                             <input type="file" name="image" id="image" onchange="validateImage()"/>
                         </span>
                         
+                        {{--js image validation--}}
                         <script type="text/javascript">
                           function validateImage() {
                               var formData = new FormData();

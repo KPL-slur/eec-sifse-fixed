@@ -17,22 +17,30 @@ class SiteController extends Controller
     }
     
     public function show($id){
+        $sites = DB::table('sites')
+        ->select('radar_name')
+        ->where('sites.site_id', '=', $id)
+        ->first();
+        //dd($sites);
         
+
         $stocks = DB::table('stocks')
         ->join('sites', 'stocks.site_id', '=', 'sites.site_id')
-        ->where('sites.site_id', '=', $id  )
+        ->where('sites.site_id', '=', $id)
         ->get();
+        //dd($stocks);
 
-        return view('site.inventorie', ['stocks' => $stocks, 'id'=>$id]);
+        return view('site.inventorie', compact('sites', 'stocks'));
     }
 
     public function print($id){
         $stocks = DB::table('stocks')
         ->join('sites', 'stocks.site_id', '=', 'sites.site_id')
-        ->where('sites.site_id', '=', $id  )
+        ->where('sites.site_id', '=', $id)
         ->get();
+        //dd($stocks);
 
-        return view('pages.inventory_site', ['stocks' => $stocks]);
+        return view('pages.inventory_site', compact('stocks'));
     }
     
     public function add(){

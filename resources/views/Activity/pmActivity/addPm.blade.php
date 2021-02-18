@@ -25,35 +25,20 @@
                   <input type="hidden" class="form-control" id="maintenance_type" name="maintenance_type" placeholder="Maintenance Type" value="pm">
                 </div>
 
-                {{-- <div class="form-group">
-                    <label>Station ID</label>
-                    <select name="radar_name" id="radar_name" class="form-control ">
-                      <option value="">--Choose Radar Name--</option>
+                <div class="form-group">
+                  <label>Radar Name</label>
+                  <select name="radar_name" id="radar_name" class="form-control ">
+                    <option value="">--Choose Radar Name--</option>
 
-                      @foreach ($sites as $sts)
-                        <option value={{$sts->site_id}}>{{$sts->radar_name}}</option>
-                      @endforeach
-                    </select>
-                  </div> --}}
-                {{-- 
-                  <div class="form-group">
-                    <label>Station ID</label>
-                    <select name="station_id" id="station_id" class="form-control ">
-                      <option value="">--Choose Station ID--</option>
-
-                      @foreach ($sites as $sts)
-                        <option value={{$sts->site_id}}>{{$sts->station_id}}</option>
-                      @endforeach
-                    </select>
-                  </div> --}}
-                <div class="form-group-site">   
-                    <label for="inputSite">Radar Name</label>
-                    <input type="text" class="form-control" id="radar_name" name="radar_name" placeholder="Input Radar Name">
+                    @foreach ($sites as $sts)
+                      <option value={{$sts->site_id}}>{{$sts->radar_name}}</option>
+                    @endforeach
+                  </select>
                 </div>
 
                 <div class="form-group-site">   
                     <label for="inputSite">Station ID</label>
-                    <input type="text" class="form-control" id="station_id" name="station_id" placeholder="Input Station ID">
+                    <input type="text" class="form-control" id="station_id" name="station_id" placeholder="Input Station ID" disabled>
                 </div>
 
                 <div class="form-group-site">   

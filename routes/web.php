@@ -97,8 +97,13 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         return view('pages.upgrade');
     })->name('upgrade');
 
-    //sementara buat user-management (jgn diapus bre)
+    //user_management
     Route::get('userManagement', [App\Http\Controllers\UserController::class, 'index'])->name('userManagement');
+    Route::post('addUser', [App\Http\Controllers\UserController::class, 'addData']);
+    Route::get('editUser/{id}', [App\Http\Controllers\UserController::class, 'index']);
+    Route::post('editUser', [App\Http\Controllers\UserController::class, 'editData']);
+    Route::delete('deleteUser/{id}', [App\Http\Controllers\UserController::class, 'deleteData']);
+
 
     //distribusi
     Route::get('distribution', [App\Http\Controllers\DistributionController::class, 'index'])->name('distribution');
@@ -112,8 +117,8 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('site', [App\Http\Controllers\SiteController::class, 'index'])->name('site');
     Route::get('addSite', [App\Http\Controllers\SiteController::class, 'add']);
     Route::post('add', [App\Http\Controllers\SiteController::class, 'addData']);
-    Route::get('inventorie/{id}', [App\Http\Controllers\SiteController::class, 'show']);
-    Route::get('inventorySite/{id}', [App\Http\Controllers\SiteController::class, 'print']);
+    Route::get('inventory/{id}', [App\Http\Controllers\SiteController::class, 'show']);
+    Route::get('/inventorySite/{id}', [App\Http\Controllers\SiteController::class, 'print']);
 
     //expertActivity
     Route::get('expertActivity', [App\Http\Controllers\ExpertActivityController::class, 'index'])->name('expertActivity'); 

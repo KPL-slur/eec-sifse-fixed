@@ -27,48 +27,47 @@
 
                 <div class="form-group">
                     <label>Radar Name</label>
-                    <select name="radar_name" id="radar_name" class="form-control ">
-                      <option value="">--Choose Radar Name--</option>
+                    <select name="radar_name" id="radar_name" class="form-control" onchange="fillStationID()">
+                      <option value="" selected disabled>--Choose Radar Name--</option>
 
                       @foreach ($sites as $sts)
                         <option value={{$sts->site_id}}>{{$sts->radar_name}}</option>
                       @endforeach
                     </select>
                   </div>
+                  <div id="result"></div>
 
-                  <script>
-                    window.onload(){
-                      $( "#radar_name" ).on("change", function(){
-                        $( "#radar_name" ).val();
-                        var $radar_name = $( "#site_id" ).val();
-                        
-                      });
-                      
-                      
-                    }
-                    
-                  </script>
+                  {{--jquery auto select station ID, belum selesai--}}
 
-                  {{-- <div class="form-group">
-                    <label>Station ID</label>
-                    <select name="station_id" id="station_id" class="form-control ">
-                      <option value="">--Choose Station ID--</option>
-
-                      @foreach ($sites as $sts)
-                        <option value={{$sts->site_id}}>{{$sts->station_id}}</option>
-                      @endforeach
-                    </select>
-                  </div> --}}
-
-                {{-- <div class="form-group-site">   
-                    <label for="inputSite">Radar Name</label>
-                    <input type="text" class="form-control" id="radar_name" name="radar_name" placeholder="Input Radar Name">
-                </div> --}}
 
                 <div class="form-group-site" >   
                     <label for="inputSite">Station ID</label>
                     <input type="text" class="form-control" id="station_id" name="station_id" placeholder="Input Station ID" disabled>
                 </div>
+
+                <script>
+                  function fillStationID(){
+                    var station_id = document.getElementById("radar_name").value;
+                    console.log(station_id);
+                    
+                  }
+                  // window.onload = ($site_id) => {
+                  //   $( "#radar_name" ).on("change", function(){
+                  //     $( "#radar_name" ).val();
+                  //     var $radar_name = $( "#site_id" ).val();
+                  //     $("select option:selected").each(function(){
+                  //       $radar_name += $(this).text() + " ";
+                  //       $('#result').html($radar_name);
+                  //      });
+                  //   });
+                    
+                  // };
+                  // window.onload(){
+                  //   $("#radar_name").on("change", function() {
+                  //     var
+                  //   });  
+                  // }
+                </script>
 
                 <div class="form-group-site">   
                     <label for="inputSite">Date Start</label>

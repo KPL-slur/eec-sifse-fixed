@@ -23,10 +23,11 @@ class ExpertActivityController extends Controller
 
     public function indexCM(){
         $cm = DB::table('head_reports')
+        ->join('sites', 'head_reports.site_id' ,'=', 'sites.site_id')
         ->where('maintenance_type' , 'cm')
         ->get();
 
-        return view('Activity.cmActivity.cm_activity', ['cm' => $cm]);
+        return view('Activity.cmActivity.cm_activity', compact('cm'));
     }
 
     public function add(){
@@ -37,10 +38,12 @@ class ExpertActivityController extends Controller
     }
 
     public function addData(Request $request){
+        //$head_reports = DB::table()
+
         $head_reports = new HeadReport;
         $head_reports->maintenance_type = $request->maintenance_type;
         $head_reports->radar_name = $request->radar_name;
-        $head_reports->station_id = $request->station_id;
+        $head_reports->station_id = $request.value();
         $head_reports->report_date_start = $request->report_date_start;
         $head_reports->report_date_end = $request->report_date_end;
         $head_reports->save();
