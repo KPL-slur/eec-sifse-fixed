@@ -21,10 +21,10 @@
                 <form method="POST" action="/edit">
                   @csrf 
                   <div class="form-group">
-                    <label >Technisian</label>
+                    <label >Expert</label>
                     <select name="tech_id" id="tech_id" class="form-control">
-                        @foreach ($technisians as $tns)
-                            <option value="{{$tns->tech_id}}">{{$tns->name}}</option>
+                        @foreach ($experts as $exp)
+                            <option value="{{$exp->expert_id}}">{{$exp->name}}</option>
                         @endforeach
                     </select>    
                   </div>
@@ -33,7 +33,7 @@
                       <select name="site_id" id="site_id" class="form-control">
                         <option value="">--Pilih Site--</option>
                         @foreach ($sites as $sites)
-                            <option value="{{$sites->site_id}}">{{$sites->site}}</option>
+                            <option value="{{$sites->site_id}}">{{$sites->radar_name}}</option>
                         @endforeach
                     </select>   
                   </div>

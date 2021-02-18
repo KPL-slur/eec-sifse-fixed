@@ -49,7 +49,7 @@ class StockController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+{
         //belom nambah validas
         Stock::create($request->all());
         

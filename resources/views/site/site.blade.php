@@ -18,12 +18,12 @@
           <div class="card card-stats">
               <div class="card-header card-header-warning card-header-icon">
                   <div class="card-icon">
-                    <img id="towers" src="storage/app/image/{{ $sts->image }}" alt="tower" ></img>
+                    <img id="towers" src="storage/image/{{ $sts->image }}" alt="tower" >
                   </div>
-                  <h3 class="card-title"><strong>{{$sts->lokasi}}</strong></h3>
+                  <h3 class="card-title"><strong>{{$sts->station_id}}</strong></h3>
               </div>
               <div class="card-footer">
-                  <a rel="tooltip" href="inventorie/{{$sts->site_id}}" class="btn btn-info" >VIEW</a>
+                  <a rel="tooltip" href="inventory/{{$sts->site_id}}" class="btn btn-info" >VIEW</a>
               </div>
           </div>
         </div>

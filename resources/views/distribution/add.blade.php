@@ -16,28 +16,29 @@
               </div>
             </div>
           </div>
-          <div class="card-body text-center">
+          
+        <div class="card-body text-center">
             <div class="table-responsive">
           
-                <form method="POST" action="/add">
+                <form method="POST" action="/addDst">
                   @csrf
                   <div class="form-group">
                     <label >Nama Teknisi</label>
-                    <select name="tech_id" id="tech_id" class="form-control ">
+                    <select name="expert_id" id="expert_id" class="form-control ">
                         <option value="">--Pilih Teknisi--</option>
-                        @foreach ($technisians as $tns)
-                          <option value={{$tns->tech_id}}>{{$tns->name}}</option>
+                        @foreach ($experts as $exp)
+                          <option value={{$exp->expert_id}}>{{$exp->name}}</option>
                         @endforeach                        
                     </select>
 
                   </div>
                   <div class="form-group">
-                    <label>Site</label>
+                    <label>Station ID</label>
                     <select name="site_id" id="site_id" class="form-control ">
-                      <option value="">--Pilih Site--</option>
+                      <option value="">--Pilih Station ID--</option>
 
                       @foreach ($sites as $sts)
-                        <option value={{$sts->site_id}}>{{$sts->lokasi}}</option>
+                        <option value={{$sts->site_id}}>{{$sts->station_id}}</option>
                       @endforeach
                     </select>
                   </div>
@@ -47,6 +48,25 @@
                 </form>
               </div>
             </div>
+            @if (session('status1'))
+              <script>
+                window.onload = () => {
+                  showNotification('top', 'right', 'success' ,'<?php echo session('status1') ?>');
+                };
+              </script>
+              @elseif (session('status2'))
+              <script>
+                window.onload = () => {
+                  showNotification('top', 'right', 'warning' ,'<?php echo session('status2') ?>');
+                };
+              </script>
+              @elseif (session('status3'))
+              <script>
+                window.onload = () => {
+                  showNotification('top', 'right', 'danger' ,'<?php echo session('status3') ?>');
+                };
+              </script>
+              @endif
           </div>
         </div>
       </div>
