@@ -19,7 +19,7 @@
                       <select name="site_id" id="site_id" class="form-control">
                         <option value="">-- Pilih Site --</option>
                         @foreach ($sites as $st)
-                          <option value="{{ $st->site_id }}">{{ $st->site }}</option>  
+                          <option value="{{ $st->site_id }}">{{ $st->station_id }}</option>  
                         @endforeach
                       </select>
                       {{-- <input type="text" class="form-control" id="site_id" name="site_id"> --}}

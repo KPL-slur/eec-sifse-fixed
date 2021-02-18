@@ -35,7 +35,7 @@ class StockController extends Controller
     public function create(ExchangeRate $ex_rate)
     {
         $sites = DB::table('sites')
-                    ->select('site_id','site')
+                    ->select('site_id','station_id')
                     ->get();
 
         $rate_fix = $ex_rate->apiCall();        
@@ -144,5 +144,21 @@ class StockController extends Controller
         // dd($stock);
         Stock::destroy($stock->stock_id);
         return redirect('/stock_currency')->with('status0', 'Data '.$stock->nama.' berhasil di hapus');
+    }
+
+    /**
+     * for reports stocks according input start date & end date
+     * 
+     * 
+     */
+    public function report($date_start, $date_end){
+        $siteAndStock = DB::table('sites')
+                            ->rightJoin('stocks', 'sites.site_id', '=', 'stocks.site_id')
+                            ->whereBetween('tgl_masuk', [$date_start, $date_end])
+                            ->get();
+
+        // dd($siteAndStock);
+
+        return view('stocks_currencies.print', compact('siteAndStock'));
     }
 }

@@ -6,10 +6,6 @@
     <div class="row">
       <div class="col-md-12">
 
-        {{-- buat oper data stocks ke javascript 'select-group-in-stocks' --}}
-        {{-- buat sekarang pake ini dulu, nanti ganti --}}
-        {{-- <input type="hidden" id="stockDatas" value="{{ json_encode($stocks) }}"> --}}
-
         {{-- card paling luar --}}
         <div class="card">
           {{-- header read plg luar --}}
@@ -22,20 +18,110 @@
           <div class="card-body">
             <p class="text-center">Harga Kurs Sekarang : <div class="text-primary text-center display-4">Rp {{ $rate_fix }}</div></p>
             <div class="text-right">
-              <a class="btn btn-md btn-primary text-right my-4 " href="{{ route('stock_currency_create') }}">Add Inventory</a>
+              {{-- button modal trigger  --}}
+              <button type="button" class="btn btn-outline-primary " data-toggle="modal" data-target="#modal_input_stocks_report">
+                <i class="material-icons">print</i>
+              </button>
+              {{-- for create button --}}
+              <a class="btn btn-md btn-outline-primary text-right m-4 " href="{{ route('stock_currency_create') }}">
+                <i class="material-icons">note_add</i>
+              </a>
             </div>
+
+            {{-- for modal --}}
+            <div class="modal fade" id="modal_input_stocks_report" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="form-group">
+                      <label for="input_date_start_stocks_report">Tanggal Awal</label>
+                      <input type="date" name="input_date_start_stocks_report" id="input_date_start_stocks_report" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label for="input_date_end_stocks_report">Tanggal Akhir</label>
+                      <input type="date" name="input_date_end_stocks_report" id="input_date_end_stocks_report" class="form-control" disabled>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                    <button id="reset_input_stocks_report" type="button" class="btn btn-warning">Reset!</button>
+                    <a href="#" id="link_stocks_report" class="btn btn-success" style="pointer-events: none;">Input tanggal awal dan akhir!</a>
+                  </div>
+
+                  {{-- script for modal input --}}
+                  <script>
+                    const id_input_date_start = document.getElementById("input_date_start_stocks_report");
+                    const id_input_date_end = document.getElementById("input_date_end_stocks_report");
+                    var button_input = document.getElementById("link_stocks_report");
+                    var href_input_js = button_input.href;
+                    href_input_js = "stock_currency/";
+                    var href_input_start, href_input_end;
+
+                    const input_date_start = id_input_date_start.addEventListener("input", (e) => {
+                      href_input_start = e.target.value;
+                      href_input_js = href_input_js + href_input_start + '/';
+                      id_input_date_end.disabled = false;
+                    });
+                    const input_date_end = id_input_date_end.addEventListener("input", (e) => {
+                      href_input_end = e.target.value;
+                      href_input_js = href_input_js + href_input_end;
+                      button_input.href = href_input_js;
+                      button_input.style.pointerEvents = "";
+                      button_input.innerHTML = "Report!";
+                      button_input.target = "_blank";
+                    });
+                    
+                    window.onload = () => {
+                      // kalo teken button reset
+                      $('#reset_input_stocks_report').on('click', function(){
+                        alert("every input will be resetted");
+                        id_input_date_start.value = "";
+                        id_input_date_end.value = "";
+                        button_input.innerHTML = "Input tanggal awal dan akhir!";
+                      });
+
+                      // kalo modal ditutup
+                      $('#modal_input_stocks_report').on('hide.bs.modal', function(){
+                        if (id_input_date_end.value != "" || id_input_date_start.value != ""){
+                          alert('every date input will be deleted');
+                          $('#input_date_start_stocks_report').val("");
+                          $('#input_date_end_stocks_report').val("");
+                          $('#link_stocks_report').css('pointer-events', 'none');
+                          $('#input_date_end_stocks_report').prop("disabled", true);
+                          $('#link_stocks_report').html("Input tanggal awal dan akhir!");
+                          href_input_js = "stock_currency/";
+                        }
+                      });
+                    }
+                  </script>
+                  {{-- script for modal input --}}
+
+                </div>
+              </div>
+            </div>
+            {{-- for end modal --}}
+
+            {{-- success created new sparepart --}}
             @if (session('status1'))
                 <script>
                   window.onload = () => {
                     showNotification('top', 'right', 'success' ,'<?php echo session('status1') ?>');
                   };
                 </script>
+            {{-- success edited sparepart --}}
             @elseif (session('status2'))
               <script>
                 window.onload = () => {
                   showNotification('top', 'right', 'warning' ,'<?php echo session('status2') ?>');
                 };
               </script>
+            {{-- success deleted sparepart --}}
             @elseif (session('status0'))
               <script>
                 window.onload = () => {
@@ -45,7 +131,7 @@
             @endif
 
             <div>
-              <select name="selectGroupStock" class="form-control m-3" id="selectGroupStock" onchange="selectGroupIndexStocks()" style="max-width:50%;">
+              <select name="selectGroupStock" class="form-control m-3" id="selectGroupStock" onchange="selectGroupIndexStocks()" style="max-width:30%;">
                 <option selected value="">Semua</option>
                 <option value="1" >Transmitter</option>
                 <option value="2" >Receiver</option>
