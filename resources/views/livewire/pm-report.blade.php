@@ -14,15 +14,7 @@
     </div>
 
     <div class="row setup-content {{ $currentStep != 4 ? 'd-none' : '' }}" id="step-4">
-        <div class="card ">
-            <div class="card-header card-header-primary">
-                <h4 class="card-title">{{ __('Weather Radar Service Report') }}</h4>
-            </div>
-
-            <div class="card-body">
-                @livewire('recommends')
-            </div>
-        </div>
+        @include('expert.report.layout.forms.recommends-form')
     </div>
 
     <div class="row setup-content {{ $currentStep != 5 ? 'd-none' : '' }}" id="step-3">

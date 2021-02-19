@@ -2,13 +2,20 @@
 
 namespace App\Http\Livewire;
 
+
 use Livewire\Component;
+
 use App\Models\Expert;
 use App\Models\Site;
+
+use App\Models\Recommendation;
+use App\Models\Stock;
 
 class PmReport extends Component
 {
     public $currentStep = 1;
+
+    public $headId;
 
     //head forms
     public $radar, $site_id, $report_date_start, $report_date_end;
@@ -31,12 +38,16 @@ class PmReport extends Component
     public $remark;
 
     // expert form
-    public $headId;
     public $experts = [];
     public $manualExperts = [];
     public $expertsData;
     public $uniqueCompanies;
     public $selectedExpert = []; //queriedvalue
+
+    // recomendation form
+    public $stocks = [];
+    public $recommends = [];
+    public $manualRecommends = [];
 
 
     //validation
@@ -96,6 +107,12 @@ class PmReport extends Component
         ];
         $this->expertsData = Expert::all();
         $this->uniqueCompanies = $this->expertsData->unique('expert_company');
+
+        //recomendation mount
+        $this->stocks = Stock::all();
+        $this->recommends = [
+            ['stock_id' => '', 'jumlah_unit_needed' => 1]
+        ];
     }
 
     // EXXPERT METHOD
@@ -127,6 +144,29 @@ class PmReport extends Component
             $this->selectedExpert[$index] = Expert::where('expert_id', $this->experts[$index]['expert_id'])->first();
             // dd($this->selectedExpert);
         }
+    }
+
+    // RECOMENDATION FORMS
+    public function addRecommend()
+    {
+        $this->recommends[] = ['stock_id' => '', 'jumlah_unit_needed' => 1];
+    }
+    
+    public function removeRecommend($index)
+    {
+        unset($this->recommends[$index]);
+        array_values($this->recommends);
+    }
+
+    public function addManualRecommends ()
+    {
+        $this->manualRecommends[] = ['nama_barang' => '', 'jumlah_unit_needed' => 1];
+    }
+
+    public function removeManualRecommends($index)
+    {
+        unset($this->manualRecommends[$index]);
+        array_values($this->manualRecommends);
     }
 
     /*
