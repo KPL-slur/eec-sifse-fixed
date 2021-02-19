@@ -99,7 +99,7 @@
         @livewireScripts
         <script>
             window.livewire.on('fileUploaded'), () => {
-                $('#form-upload')[0].reset();
+                $('input[name=image').val('');
             }
         </script>
     </body>

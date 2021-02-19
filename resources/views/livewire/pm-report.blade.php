@@ -1,4 +1,4 @@
-<form method="post" action="{{ url('/expert/pm/create') }}" class="form-horizontal">
+<form method="post" action="{{ url('/expert/pm/create') }}" class="form-horizontal" enctype="multipart/form-data">
     @csrf
     
     <div class="row setup-content {{ $currentStep != 1 ? 'd-none' : '' }}" id="step-1">
@@ -18,7 +18,7 @@
     </div>
 
     <div class="row setup-content {{ $currentStep != 5 ? 'd-none' : '' }}" id="step-3">
-        @livewire('report-images')
+        @include('expert.report.layout.forms.report-images')
     </div>
     
     <button class="btn btn-primary nextBtn btn-lg pull-right {{ $currentStep === 5 ? 'd-none' : '' }}" type="button" wire:click="nextStep">Next</button>

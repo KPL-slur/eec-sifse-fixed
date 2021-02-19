@@ -4,12 +4,15 @@ namespace App\Http\Livewire;
 
 
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 use App\Models\Expert;
 use App\Models\Site;
 
 use App\Models\Recommendation;
 use App\Models\Stock;
+
+use App\Models\ReportImage;
 
 class PmReport extends Component
 {
@@ -49,6 +52,11 @@ class PmReport extends Component
     public $recommends = [];
     public $manualRecommends = [];
 
+    // report image form
+    public $caption;
+    public $image;
+
+    use WithFileUploads;
 
     //validation
     private $headRules = ([
@@ -167,6 +175,21 @@ class PmReport extends Component
     {
         unset($this->manualRecommends[$index]);
         array_values($this->manualRecommends);
+    }
+
+    // FILE UPLOAD
+    public function fileUpload()
+    {
+        $validatedData = $this->validate([
+            'caption' => 'required',
+            'image' => 'required'
+        ]);
+
+        $image = $this->image->store('files', 'public');
+        $validatedData['image'] = $image;
+        ReportImage::create($validatedData);
+        session()->flash('message', 'File Uploaded');
+        $this->emit('fileUploaded');
     }
 
     /*
