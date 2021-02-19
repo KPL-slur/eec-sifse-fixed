@@ -60,8 +60,7 @@ class PmReport extends Component
 
     //validation
     private $headRules = ([
-        'radar_name' => 'required',
-        'station_id' => 'required',
+        'site_id' => 'required',
         'report_date_start' => 'required',
         'report_date_end' => 'required',
     ]);
@@ -107,6 +106,7 @@ class PmReport extends Component
     ]);
 
     //METHODD
+    //  Livewire lifecycle hook
     public function mount()
     {
         //expert mount

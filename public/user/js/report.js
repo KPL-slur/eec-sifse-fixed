@@ -84,8 +84,7 @@ window.onload = function () {
     $("#expertForms1").on("change", function () {
         if ($("#expertForms1").val() == "") {
             disbaleAddRemove();
-        }
-        else{
+        } else {
             enableAddRemove();
         }
     });
@@ -101,14 +100,24 @@ window.onload = function () {
     /*
      *   FUNGSI MEMANGGIL CKEDITOR
      */
-    ClassicEditor.create(document.querySelector("#editor")).catch((error) => {
-        console.error(error);
-    });
+    // ClassicEditor.create(document.querySelector("#editor"))
+    // .catch((error) => {
+    //     console.error(error);
+    // });
+    let editor;
 
-    /*
-     *  Select2 init
-     */
-    $(".inputExpert").select2({
-        tags: true,
-    });
+    ClassicEditor.create(document.querySelector("#editor"))
+        .then((newEditor) => {
+            editor = newEditor;
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+
+    // Assuming there is a <button id="submit">Submit</button> in your application.
+    // $("#save").on("click", () => {
+    //     const editorData = editor.getData();
+
+    //     console.log(editorData);
+    // });
 };

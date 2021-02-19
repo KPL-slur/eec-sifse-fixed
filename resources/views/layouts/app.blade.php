@@ -100,7 +100,7 @@
         <script>
             window.livewire.on('fileUploaded'), () => {
                 $('input[name=image').val('');
-            }
+            };
         </script>
     </body>
 </html>
