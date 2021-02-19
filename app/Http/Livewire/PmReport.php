@@ -29,7 +29,17 @@ class PmReport extends Component
     public $antenna_visual, $inspect_motor, $clean_slip, $grease_gear;
 
     public $remark;
-    
+
+    // expert form
+    public $headId;
+    public $experts = [];
+    public $manualExperts = [];
+    public $expertsData;
+    public $uniqueCompanies;
+    public $selectedExpert = []; //queriedvalue
+
+
+    //validation
     private $headRules = ([
         'radar_name' => 'required',
         'station_id' => 'required',
@@ -77,8 +87,46 @@ class PmReport extends Component
         'remark' => 'required',
     ]);
 
+    //METHODD
     public function mount()
     {
+        //expert mount
+        $this->experts = [
+            ['expert_id' => '', 'expert_company' => '', 'expert_nip' => '']
+        ];
+        $this->expertsData = Expert::all();
+        $this->uniqueCompanies = $this->expertsData->unique('expert_company');
+    }
+
+    // EXXPERT METHOD
+    public function addExpert()
+    {
+        $this->experts[] = ['expert_id' => '', 'expert_company' => '', 'expert_nip' => ''];
+    }
+    
+    public function removeExpert($index)
+    {
+        unset($this->experts[$index]);
+        array_values($this->experts);
+    }
+
+    public function addManualExpert ()
+    {
+        $this->manualExperts[] = ['expert_name' => '', 'expert_company' => '', 'expert_nip' => ''];
+    }
+
+    public function removeManualExpert($index)
+    {
+        unset($this->manualExperts[$index]);
+        array_values($this->manualExperts);
+    }
+
+    public function setCompanyAndNip($index){
+        // dd($this->experts[$index]['expert_id']);
+        if(!empty($this->experts[$index]['expert_id'])){
+            $this->selectedExpert[$index] = Expert::where('expert_id', $this->experts[$index]['expert_id'])->first();
+            // dd($this->selectedExpert);
+        }
     }
 
     /*

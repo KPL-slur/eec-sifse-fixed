@@ -35,22 +35,12 @@ expertise_company10 --}}
         {{-- @include('expert.report.layout.forms.summary-form', ['namaKolom'=>'station_id', 'tipeForm'=>'text'])
         @include('expert.report.layout.forms.summary-form', ['namaKolom'=>'radar_name', 'tipeForm'=>'text']) --}}
         @include('expert.report.layout.forms.select-site') 
+        
         @include('expert.report.layout.forms.summary-form', ['namaKolom'=>'report_date_start',
         'tipeForm'=>'date'])
         @include('expert.report.layout.forms.summary-form', ['namaKolom'=>'report_date_end', 'tipeForm'=>'date'])
 
-        
-        <div class="row">
-            <div class="card ">
-                <div class="card-header card-header-primary">
-                    <h4 class="card-title">{{ __('Experts') }}</h4>
-                </div>
-    
-                <div class="card-body">
-                    @livewire('experts')
-                </div>
-            </div>
-        </div>
+        @include('expert.report.layout.forms.experts')
         {{-- @include('expert.report.layout.forms.expert-form', ['index' => 1])
         @for ($index = 2; $index <= 10; $index++)
             @include('expert.report.layout.forms.expert-form', compact('index'))
