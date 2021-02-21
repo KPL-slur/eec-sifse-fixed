@@ -6,6 +6,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
+use App\Models\HeadReport;
 use App\Models\Expert;
 use App\Models\Site;
 
@@ -54,7 +55,8 @@ class PmReport extends Component
 
     // report image form
     public $caption;
-    public $image;
+    public $image=[];
+    public $attachments = [];
 
     use WithFileUploads;
 
@@ -109,6 +111,8 @@ class PmReport extends Component
     //  Livewire lifecycle hook
     public function mount()
     {
+        $this->headId = HeadReport::select('head_id')->orderByDesc('head_id')->first()->head_id + 1;
+
         //expert mount
         $this->experts = [
             ['expert_id' => '', 'expert_company' => '', 'expert_nip' => '']
@@ -120,6 +124,11 @@ class PmReport extends Component
         $this->stocks = Stock::all();
         $this->recommends = [
             ['stock_id' => '', 'jumlah_unit_needed' => 1]
+        ];
+
+        // images mount
+        $this->attachments = [
+            ['caption' => '', 'image' => '', 'uploaded' => 0]
         ];
     }
 
@@ -177,17 +186,44 @@ class PmReport extends Component
         array_values($this->manualRecommends);
     }
 
-    // FILE UPLOAD
-    public function fileUpload()
+    // ATTACHMENT
+    public function addAttachment()
     {
-        $validatedData = $this->validate([
-            'caption' => 'required',
-            'image' => 'required'
+        $this->attachments[] = ['caption' => '', 'image' => '', 'uploaded' => 0];
+    }
+    
+    public function removeAttachment($index)
+    {
+        if ($this->attachments[$index]['uploaded'] === 1) {
+            \Storage::delete('public/'.$this->image[$index]);
+            ReportImage::where('image', $this->image[$index])->delete();
+            $this->attachments[$index]['uploaded'] = 0;
+        }
+
+        unset($this->attachments[$index]);
+        array_values($this->attachments);
+    }
+
+    public function fileUpload($index)
+    {
+        // dd($this->attachments);
+        $this->validate([
+            'attachments.'.$index.'.caption' => 'required',
+            'attachments.'.$index.'.image' => 'required'
         ]);
 
-        $image = $this->image->store('files', 'public');
-        $validatedData['image'] = $image;
-        ReportImage::create($validatedData);
+        $this->image[$index] = $this->attachments[$index]['image']->store('files', 'public');
+        // dd($image);
+        // $validatedData['attachments.'.$index.'.image'] = $image;
+        
+        ReportImage::create([
+            'head_id' => $this->headId,
+            'image' => $this->image[$index],
+            'caption' => $this->attachments[$index]['caption']
+        ]);
+
+        $this->attachments[$index]['uploaded'] = 1;
+
         session()->flash('message', 'File Uploaded');
         $this->emit('fileUploaded');
     }
@@ -222,41 +258,9 @@ class PmReport extends Component
         $this->currentStep++;
     }
 
-    public function secondStepSubmit()
-    {
-        // $validatedData = $this->validate([
-        //     'stock' => 'required',
-        //     'status' => 'required',
-        // ]);
-        $this->currentStep = 3;
-    }
-
-    public function submitForm()
-    {
-        // Product::create([
-        //     'name' => $this->name,
-        //     'amount' => $this->amount,
-        //     'description' => $this->description,
-        //     'stock' => $this->stock,
-        //     'status' => $this->status,
-        // ]);
-        $this->successMessage = 'Product Created Successfully.';
-        $this->clearForm();
-        $this->currentStep = 1;
-    }
-
     public function back()
     {
         $this->currentStep--;
-    }
-
-    public function clearForm()
-    {
-        // $this->name = '';
-        // $this->amount = '';
-        // $this->description = '';
-        // $this->stock = '';
-        // $this->status = 1;
     }
 
     public function render()

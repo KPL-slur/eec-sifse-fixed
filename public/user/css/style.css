@@ -54,3 +54,8 @@
     border-color: rgb(185, 74, 72) !important;
     border-width: 3px;
 }
+
+.image-upload-preview {
+    width: 35vw !important;
+    height: auto !important;
+}

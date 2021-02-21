@@ -1,29 +1,32 @@
-<div class="card ">
-    <div class="card-header card-header-primary">
-        <h4 class="card-title">{{ __('Attachments') }}</h4>
-    </div>
+@foreach ($attachments as $index => $attachment)
+
+    <div class="card ">
+        <div class="card-header card-header-primary">
+            <h4 class="card-title">{{ __('Attachments') }}</h4>
+        </div>
 
         <div class="card-body">
-            @if (session()->has('message'))
-                <div class="alert alert-success">
-                    {{ session('message') }}
+            @if ($this->attachments[$index]['uploaded'] === 1)
+            <div class="row">
+                <div class="col-10 alert alert-success">
+                    UPLOADED
                 </div>
+            </div>
             @endif
-            @error('caption')
+            @error('attachments.'.$index.'.caption')
                 <span class="text-danger">{{ $message }}</span>
             @enderror
             <div class="row">
                 <label class="col-sm-2 col-form-label" for="inputCaption">Caption</label>
                 <div class="col-sm-8">
                     <div class="form-group">
-                        <input class="form-control "
-                            type="text" name="caption" id="inputCaption"
-                            placeholder="Caption..." value="" 
-                            wire:model.defer="caption" />
+                        <input class="form-control" type="text" name="attachments[{{ $index }}][caption]"
+                            id="inputCaption" placeholder="Caption..." value=""
+                            wire:model.defer="attachments.{{ $index }}.caption" />
                     </div>
                 </div>
             </div>
-            @error('image')
+            @error('attachments.'.$index.'.image')
                 <span class="text-danger">{{ $message }}</span>
             @enderror
             <div class="row">
@@ -35,24 +38,36 @@
                             wire:model="image" />
                     </div>
                 </div> --}}
-                @if ($image)
-                    <img class="fileinput-preview fileinput-exists thumbnail img-raised" src="{{ $image->temporaryUrl() }}">
-                @endif
                 <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                     {{-- <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div> --}}
-                    <div wire:loading wire:target="photo">Uploading...</div>
-                    <div>
-                        <span class="btn btn-raised btn-round btn-default btn-file">
-                            <span class="fileinput-new">Select image</span>
-                            <input type="file" name="image" wire:model.defer='image'  />
+                    <div class="">
+                        <span class="btn btn-raised btn-round btn-default btn-file {{ $attachments[$index]['image'] ? 'd-none' : '' }}">
+                            <input type="file" name="attachments[{{ $index }}][image]" class="fileinput-new"
+                                wire:model='attachments.{{ $index }}.image' />
                         </span>
-                        <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                        
                     </div>
                 </div>
+                <div wire:loading wire:target="photo">Uploading...</div>
+                @if ($attachments[$index]['image'])
+                    <img class="fileinput-preview fileinput-exists thumbnail img-raised image-upload-preview"
+                        src="{{ $attachments[$index]['image']->temporaryUrl() }}">
+                    <div>
+                        <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"
+                        wire:click.prevent="removeAttachment({{ $index }})">
+                            <i class="fa fa-times"></i>
+                            Remove
+                        </a>  
+                        <button class="btn btn-sm btn-primary" wire:click.prevent="fileUpload({{ $index }})">Upload</button>
+                    </div>
+                @endif
             </div>
-
-            <button class="btn btn-success" type="button" wire:click="fileUpload">Upload</button>
-
+            
         </div>
-    {{-- </form> --}}
-</div>
+        
+    </div>
+
+@endforeach
+<button class="btn btn-sm btn-secondary" wire:click.prevent="addAttachment">+ Add Another
+    Attachment</button>
+    

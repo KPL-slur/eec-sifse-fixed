@@ -1,10 +1,10 @@
-<div class="card ">
-    <div class="card-header card-header-primary">
-        <h4 class="card-title">{{ __('Attachments') }}</h4>
-    </div>
+@foreach ($attachments as $index => $attachment)
 
-    {{-- <form action="" id="form-upload" enctype="multipart/form-data" class="form-control"
-            wire:submit.prevent="fileUpload"> --}}
+    <div class="card ">
+        <div class="card-header card-header-primary">
+            <h4 class="card-title">{{ __('Attachments') }}</h4>
+        </div>
+
         <div class="card-body">
             @if (session()->has('message'))
                 <div class="alert alert-success">
@@ -18,10 +18,9 @@
                 <label class="col-sm-2 col-form-label" for="inputCaption">Caption</label>
                 <div class="col-sm-8">
                     <div class="form-group">
-                        <input class="form-control "
-                            type="text" name="caption" id="inputCaption"
-                            placeholder="Caption..." value="" 
-                            wire:model.defer="caption" />
+                        <input class="form-control" type="text" name="attachments[{{ $index }}][caption]"
+                            placeholder="Caption..." value=""
+                            wire:model.defer="attachments.{{ $index }}.caption" />
                     </div>
                 </div>
             </div>
@@ -38,19 +37,39 @@
                     </div>
                 </div> --}}
                 <div class="fileinput fileinput-new text-center" data-provides="fileinput">
-                    <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
+                    {{-- <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div> --}}
                     <div>
                         <span class="btn btn-raised btn-round btn-default btn-file">
-                            <span class="fileinput-new">Select image</span>
-                            <input type="file" name="image" wire:model='image'  />
+                            <input type="file" name="attachments[{{ $index }}][image]" class="fileinput-new"
+                                wire:model='attachments.{{ $index }}.image' />
                         </span>
-                        <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                        <a class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"
+                            wire:click.prevent="addAttachment">
+                            <i class="fa fa-times"></i>
+                            {{-- Remove --}}
+                            Add
+                        </a>
                     </div>
                 </div>
+                {{-- <div wire:loading wire:target="photo">Uploading...</div> --}}
+                @if ($attachments[$index]['image'])
+                    <img class="fileinput-preview fileinput-exists thumbnail img-raised image-upload-preview"
+                        src="{{ $attachments[$index]['image']->temporaryUrl() }}"/>
+                @endif
             </div>
-
-            <button class="btn btn-success" type="button" wire:click="fileUpload">Upload</button>
-
+            
         </div>
-    {{-- </form> --}}
+        `   
+    </div>
+
+@endforeach
+<div class="row">
+    <div class="col-md-12">
+        <button class="btn btn-sm btn-secondary" wire:click.prevent="$toggle('addAttachment')">+ Addaaa
+            Attachment</button>
+            <button class="btn btn-sm btn-secondary" wire:click.prevent="fileUpload">+ Add
+            Attachment</button>
+
+    </div>
+
 </div>

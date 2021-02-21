@@ -2,31 +2,31 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\Component;
 
 use App\Models\ReportImage;
 
-class ReportImages extends Component
+class Attachments extends Component
 {
-    public $headId = 'headId';
+    public $caption;
+    public $image;
     public $attachments = [];
 
     use WithFileUploads;
 
     public function mount()
     {
-        // dd($this->headId);
-        //images mount
+        // images mount
         $this->attachments = [
             ['caption' => '', 'image' => '']
         ];
     }
 
+    // ATTACHMENT
     public function addAttachment()
     {
         $this->attachments[] = ['caption' => '', 'image' => ''];
-        // dd($this->attachments);
     }
     
     public function removeAttachment($index)
@@ -37,8 +37,7 @@ class ReportImages extends Component
 
     public function fileUpload()
     {
-        //dd($this->attachments);
-
+        dd($this->attachments);
         $validatedData = $this->validate([
             'caption' => 'required',
             'image' => 'required'
@@ -47,12 +46,13 @@ class ReportImages extends Component
         $image = $this->image->store('files', 'public');
         $validatedData['image'] = $image;
         ReportImage::create($validatedData);
-        session()->flash('message', 'File Upload');
+        session()->flash('message', 'File Uploaded');
         $this->emit('fileUploaded');
     }
 
+
     public function render()
     {
-        return view('livewire.report-images');
+        return view('livewire.attachments');
     }
 }

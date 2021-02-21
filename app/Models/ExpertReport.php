@@ -10,4 +10,9 @@ class ExpertReport extends Model
     use HasFactory;
 
     protected $primaryKey = 'expert_report_id';
+
+    protected $fillable = [
+        'head_id',
+        'expert_id',
+    ];
 }

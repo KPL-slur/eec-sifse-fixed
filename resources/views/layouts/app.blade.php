@@ -94,7 +94,6 @@
         <!-- SELECT2 IMPORT -->
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <!-- js for headreport expert coloumn -->
-        <script src="{{ asset('user') }}/js/report.js" type="text/javascript"></script>
         @stack('js')
         @livewireScripts
         <script>

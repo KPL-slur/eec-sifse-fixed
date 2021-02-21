@@ -7,8 +7,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
 
 use App\Models\Headreport;
-use App\Models\PmBodyReport;
 use App\Models\Expert;
+use App\Models\ExpertReport;
+use App\Models\PmBodyReport;
+use App\Models\Recommendation;
 
 class PmReportController extends Controller
 {
@@ -94,6 +96,10 @@ class PmReportController extends Controller
     }
 
     /**
+     * Rawan akan kesalahan data, Semisal head sudah di store namun pmbodyreport gagal di store 
+     * akan menyebabkan itegeritas data menjadi rusak, sehingga data yg akan dimasukan setelahnya 
+     * menjadi error semua. misal akan terjadi sebuah head yg tidak memiliki body.
+     * 
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -102,8 +108,75 @@ class PmReportController extends Controller
     public function store(Request $request)
     {
         // $request->validate($this->rules);
+        // foreach ($request->recommends as $recommend){
+        //     if ($recommend['stock_id']) {
+        //         dd($recommend);
+        //     }
+        // }
+        // dd('die');
+        // dd($request->all());
+
+        //INSERT HEADREPORT
+        Headreport::create([
+            'head_id' => $request->head_id,
+            'site_id' => $request->site_id,
+            'maintenance_type' => 'pm',
+            'report_date_start' => $request->report_date_start,
+            'report_date_end' => $request->report_date_end,
+        ]);
+        // $headId = HeadReport::select('head_id')->orderByDesc('head_id')->first()->head_id; //used to determine the head id of this report
+        // $request->merge([
+        //     'head_id' => $headId
+        // ]);
+
+        //INSERT EXPERTREPORT
+        foreach ($request->experts as $expert) {
+            if ($expert['expert_id']) {
+                ExpertReport::create([
+                    'head_id' => $request->head_id,
+                    'expert_id' => $expert['expert_id']
+                ]);
+            }
+        }
+
+        //INSERT NEW EXPERT
+        if ($request->manualExperts) {
+            foreach ($request->manualExperts as $manualExpert){
+                if ($manualExpert['expert_name']) {
+                Expert::create([
+                    'name' => $manualExpert['expert_name'],
+                    'nip' => $manualExpert['expert_nip'],
+                    'expert_company' => $manualExpert['expert_company'],
+                    ]);
+                    $expertId = Expert::select('expert_id')->orderByDesc('expert_id')->first()->expert_id; //used to determine the expert_id of this report
+                    ExpertReport::create([
+                        'head_id' => $request->head_id,
+                        'expert_id' => $expertId
+                    ]);
+                }
+            }
+        }
+                
+        //INSERT BODY REPORT
+        PmBodyReport::create($request->all());
+
+        //INSERT RECOMENDATION
+        foreach ($request->recommends as $recommend){
+            if ($recommend['stock_id']) {
+                Recommendation::create([
+                    'head_id' => $request->head_id,
+                    'stock_id' => $recommend['stock_id'],
+                    'jumlah_unit_needed' => $recommend['jumlah_unit_needed'],
+                ]);
+            }
+        }
+
+        //INSERT MANUAL RECOMENDATION
+            //DISINI NUGGU @wicak
         
-        dd($request);
+        //INSERT IMAGE
+
+        return redirect()->route('pm.index')->with('status', 'Data Ditambahkan');
     }
 
     /**
@@ -115,7 +188,11 @@ class PmReportController extends Controller
     public function show($id)
     {
         $headReport = HeadReport::Where('head_id', $id)->first();
-        $pmBodyReport = PmBodyReport::Where('pm_id', $id)->first();
+        $pmBodyReport = PmBodyReport::Where('head_id', $id)->first();
+
+        if (!$pmBodyReport) {
+            return  'uhoh body not found, please delete this report';
+        }
 
         return view('expert.report.pm.show', compact('pmBodyReport', 'headReport'));
     }
@@ -152,5 +229,16 @@ class PmReportController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Image upload view.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function reportImage($id)
+    {
+        return view('expert/report/layout/report-images', compact('id'));
     }
 }

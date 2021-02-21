@@ -11,7 +11,7 @@ class Recommendation extends Model
 
     protected $fillable = [
         'head_id',
-        'spare_part_name',
-        'qty',
+        'stock_id',
+        'jumlah_unit_needed',
     ];
 }

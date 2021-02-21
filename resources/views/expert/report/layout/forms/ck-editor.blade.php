@@ -16,7 +16,7 @@
                         {{ old('remark') }}
                     </textarea>
                 </div>
-                <button type="button" class="btn btn-info" id="save">Save</button>
+                {{-- <button type="button" class="btn btn-info" id="save">Save</button> --}}
             </div>
         </div>
     </div>

@@ -1,5 +1,6 @@
 <form method="post" action="{{ url('/expert/pm/create') }}" class="form-horizontal" enctype="multipart/form-data">
     @csrf
+    <input type="hidden" name="head_id" value="{{ $headId }}">
     
     <div class="row setup-content {{ $currentStep != 1 ? 'd-none' : '' }}" id="step-1">
         @include('expert.report.layout.forms.head.create')
@@ -25,3 +26,4 @@
     <button class="btn btn-success nextBtn btn-lg pull-right {{ $currentStep !== 5 ? 'd-none' : '' }}" type="submit">Submit</button>
     <button class="btn btn-danger nextBtn btn-lg pull-right {{ $currentStep === 1 ? 'd-none' : '' }}" type="button" wire:click="back">Back</button>
 </form>
+<script src="{{ asset('user') }}/js/report.js" type="text/javascript"></script>

@@ -10,4 +10,10 @@ class Expert extends Model
     use HasFactory;
 
     protected $primaryKey = 'expert_id';
+
+    protected $fillable = [
+        'name',
+        'nip',
+        'expert_company',
+    ];
 }
