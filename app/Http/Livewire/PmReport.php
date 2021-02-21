@@ -65,6 +65,7 @@ class PmReport extends Component
         'site_id' => 'required',
         'report_date_start' => 'required',
         'report_date_end' => 'required',
+        'experts.0.expert_id' => 'required',
     ]);
     private $pmRules = ([
         'radio_general_visual' => 'required',
@@ -235,11 +236,11 @@ class PmReport extends Component
     {
         switch ($this->currentStep) {
             case 1:
-                // $this->validate($this->headRules);
+                $this->validate($this->headRules);
                 break;
 
             case 2:
-                // $this->validate($this->pmRules);
+                $this->validate($this->pmRules);
                 break;
                 
             case 3:

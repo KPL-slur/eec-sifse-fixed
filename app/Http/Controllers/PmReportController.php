@@ -107,7 +107,8 @@ class PmReportController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate($this->rules);
+        $request->validate($this->rules);
+        
         // foreach ($request->recommends as $recommend){
         //     if ($recommend['stock_id']) {
         //         dd($recommend);

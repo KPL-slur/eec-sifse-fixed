@@ -102,7 +102,11 @@
                 <div class="row">
                     <div class="col-md-12">
                         <button class="btn btn-sm btn-secondary" wire:click.prevent="addExpert">+ Add Another Expert</button>
-                        <button class="btn btn-sm btn-secondary" wire:click.prevent="addManualExpert">+ Add Manual Expert</button>
+                        @if (empty($experts))
+                            <p class="text-danger d-inline"> select atleast one expert to continue </p>
+                        @else
+                            <button class="btn btn-sm btn-secondary" id="btnManualExpert" wire:click.prevent="addManualExpert">+ Add Manual Expert</button>
+                        @endif
                     </div>
                 </div>
             </div>
