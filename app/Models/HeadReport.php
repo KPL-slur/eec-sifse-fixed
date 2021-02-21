@@ -27,4 +27,20 @@ class HeadReport extends Model
     {
         return $this->belongsToMany(Expert::class, 'expert_reports', 'head_id', 'expert_id');
     }
+    public function recommendations()
+    {
+        return $this->belongsToMany(Stock::class, 'recommendations', 'head_id', 'stock_id')->withPivot('jumlah_unit_needed');
+    }
+
+    //ONE TO ONE
+    public function pmBodyReport()
+    {
+        return $this->hasOne(PmBodyReport::class, 'head_id');
+    }
+
+    //ONE TO MANY
+    public function reportImages()
+    {
+        return $this->hasMany(ReportImage::class, 'head_id');
+    }
 }

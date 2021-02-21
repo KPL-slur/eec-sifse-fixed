@@ -73,4 +73,10 @@ class PmBodyReport extends Model
         'grease_gear',
         'remark',
     ];
+
+    //ONE TO ONE INVERS
+    public function headReport()
+    {
+        return $this->belongsTo(HeadReport::class, 'head_id');
+    }
 }

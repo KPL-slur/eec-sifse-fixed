@@ -213,7 +213,7 @@ class PmReport extends Component
             'attachments.'.$index.'.image' => 'required'
         ]);
 
-        $this->image[$index] = $this->attachments[$index]['image']->store('files', 'public');
+        $this->image[$index] = $this->attachments[$index]['image']->storePublicly('files', 'public');
         // dd($image);
         // $validatedData['attachments.'.$index.'.image'] = $image;
         

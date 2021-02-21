@@ -8,7 +8,8 @@
                     <h4 class="card-title">{{ __('Preventive Maintenance Report') }}</h4>
                 </div>
                 <div class="card-body ">
-                    <a type="button" class="btn btn-info" href="{{ url("expert/$headReport->maintenance_type") }}">BACK</a>
+                    <a type="button" class="btn btn-info"
+                        href="{{ url("expert/$headReport->maintenance_type") }}">BACK</a>
                     <a type="button" class="btn btn-primary" href="{{ url('expert') }}">EDIT</a>
                     <a type="button" class="btn btn-danger" href="{{ url('expert') }}">DELETE</a>
                     <div class="card ">
@@ -48,6 +49,7 @@
                                             <tr>
                                                 <th>Name</th>
                                                 <th>Company</th>
+                                                <th>Nip</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -55,6 +57,7 @@
                                                 <tr>
                                                     <td>{{ $expert->name }}</td>
                                                     <td>{{ $expert->expert_company }}</td>
+                                                    <td>{{ $expert->nip }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -227,6 +230,58 @@
                                     <?php echo $pmBodyReport->remark; ?>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="card ">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title">{{ __('Recoomendation') }}</h4>
+                        </div>
+                        <div class="card-body ">
+                            <div class="row">
+                                <div class="col table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Spare Part Name</th>
+                                                <th>Quantity</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($recommendations as $recommendation)
+                                                <tr>
+                                                    <td>{{ $recommendation->nama_barang }}</td>
+                                                    <td>{{ $recommendation->pivot->jumlah_unit_needed }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card ">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title">{{ __('Report Image') }}</h4>
+                        </div>
+                        <div class="card-body ">
+
+                            <div class="row image-grid">
+                                @foreach ($reportImages as $reportImage)
+                                <div class="col-sm-4 col-md-4">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <a href="{{ asset('storage/' . $reportImage->image) }}" target="_blank">
+                                                <img alt="" class="img-responsive center-block" 
+                                                width="250px" height="100%" 
+                                                src="{{ asset('storage/' . $reportImage->image) }}">
+                                            </a>
+                                        </div>
+                                        <div class="panel-footer">{{ $reportImage->caption }}</div>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+
                         </div>
                     </div>
                 </div>

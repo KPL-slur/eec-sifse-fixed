@@ -188,13 +188,16 @@ class PmReportController extends Controller
     public function show($id)
     {
         $headReport = HeadReport::Where('head_id', $id)->first();
-        $pmBodyReport = PmBodyReport::Where('head_id', $id)->first();
+        $pmBodyReport = HeadReport::Where('head_id', $id)->first()->pmBodyReport;
+        $recommendations = HeadReport::Where('head_id', $id)->first()->recommendations;
+        $reportImages = HeadReport::Where('head_id', $id)->first()->reportImages;
+        // dd($reportImages);
 
         if (!$pmBodyReport) {
             return  'uhoh body not found, please delete this report';
         }
 
-        return view('expert.report.pm.show', compact('pmBodyReport', 'headReport'));
+        return view('expert.report.pm.show', compact('pmBodyReport', 'headReport', 'recommendations', 'reportImages'));
     }
 
     /**

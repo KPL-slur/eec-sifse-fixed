@@ -14,4 +14,10 @@ class ReportImage extends Model
         'image',
         'caption',
     ];
+
+    //ONE TO MANY INVERS
+    public function headReport()
+    {
+        return $this->belongsTo(HeadReport::class, 'head_id');
+    }
 }
