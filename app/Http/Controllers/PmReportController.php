@@ -15,8 +15,7 @@ use App\Models\Recommendation;
 class PmReportController extends Controller
 {
     private $rules = ([
-        'radar_name' => 'required',
-        'station_id' => 'required',
+        'site_id' => 'required',
         'report_date_start' => 'required',
         'report_date_end' => 'required',
 
@@ -107,7 +106,7 @@ class PmReportController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate($this->rules);
+        // $request->validate($this->rules);
         
         // foreach ($request->recommends as $recommend){
         //     if ($recommend['stock_id']) {
