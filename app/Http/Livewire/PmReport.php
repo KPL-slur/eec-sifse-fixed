@@ -19,6 +19,8 @@ class PmReport extends Component
 {
     public $currentStep = 1;
 
+    public $headReport, $pmBodyReport, $recommendations, $reportImages;
+
     public $headId;
 
     //head forms
@@ -110,8 +112,15 @@ class PmReport extends Component
 
     //METHODD
     //  Livewire lifecycle hook
-    public function mount()
+    public function mount($id)
     {
+        $this->headReport = HeadReport::Where('head_id', $id)->first();
+        $this->pmBodyReport = HeadReport::Where('head_id', $id)->first()->pmBodyReport;
+        $this->recommendations = HeadReport::Where('head_id', $id)->first()->recommendations;
+        $this->reportImages = HeadReport::Where('head_id', $id)->first()->reportImages;
+
+        $this->site_id = HeadReport::Where('head_id', $id)->first()->site_id;
+
         $this->headId = HeadReport::select('head_id')->orderByDesc('head_id')->first()->head_id + 1;
 
         //expert mount
@@ -210,7 +219,7 @@ class PmReport extends Component
         // dd($this->attachments);
         $this->validate([
             'attachments.'.$index.'.caption' => 'required',
-            'attachments.'.$index.'.image' => 'required'
+            'attachments.'.$index.'.image' => 'required|image'
         ]);
 
         $this->image[$index] = $this->attachments[$index]['image']->storePublicly('files', 'public');

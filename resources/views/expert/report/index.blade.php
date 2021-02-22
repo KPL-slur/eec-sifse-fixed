@@ -10,7 +10,7 @@
                 <div class="card-body ">
                     <a type="button" class="btn btn-info" href="{{ url('expert') }}">BACK</a>
                     <a type="button" class="btn btn-primary"
-                        href="{{ url('report/create') }}?entry_id={{ $maintenance_type }}">ADD NEW</a>
+                        href="{{ route($maintenance_type.".create") }}">ADD NEW</a>
                     <div class="row">
                         <div class="col table-responsive">
                             <table class="table">
@@ -37,16 +37,15 @@
                                                 @endforeach
                                             </td>
                                             <td class="td-actions text-right">
-                                                <a type="button" rel="tooltip" class="btn btn-secondary"
-                                                    href="{{ url('/report/recommendations/' . $hr->id) }}">
-                                                    <i class="material-icons">receipt_long</i>
-                                                </a>
                                                 <a type="button" rel="tooltip" class="btn btn-info"
-                                                    href="{{ url('/expert/' . $maintenance_type . '/' . $hr->head_id) }}">
+                                                    {{-- href="{{ url('/expert/' . $maintenance_type . '/' . $hr->head_id) }}"> --}}
+                                                    href="{{ route($maintenance_type.".show", ['id' => $hr->head_id]) }}">
                                                     <i class="material-icons">visibility</i>
                                                 </a>
                                                 <a type="button" rel="tooltip" class="btn btn-warning"
-                                                    href="{{ url('/report/' . $hr->id . '/edit') }}">
+                                                    {{-- href="{{ url('/report/' . $hr->id . '/edit') }}" --}}
+                                                    href="{{ route($maintenance_type.".edit", ['id' => $hr->head_id]) }}"
+                                                    >
                                                     <i class="material-icons">edit</i>
                                                 </a>
                                                 <form action="{{ url("report/$hr->id") }}" method="post"

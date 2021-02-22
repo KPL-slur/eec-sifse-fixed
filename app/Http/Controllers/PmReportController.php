@@ -208,7 +208,7 @@ class PmReportController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('expert.report.pm.edit', compact('id'));
     }
 
     /**

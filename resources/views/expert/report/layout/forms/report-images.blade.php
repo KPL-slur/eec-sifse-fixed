@@ -7,13 +7,13 @@
 
         <div class="card-body">
             @if ($this->attachments[$index]['uploaded'] === 1)
-            <div class="row">
-                <div class="col-10 alert alert-success">
-                    UPLOADED
+                <div class="row">
+                    <div class="col-10 alert alert-success">
+                        UPLOADED
+                    </div>
                 </div>
-            </div>
             @endif
-            @error('attachments.'.$index.'.caption')
+            @error('attachments.' . $index . '.caption')
                 <span class="text-danger">{{ $message }}</span>
             @enderror
             <div class="row">
@@ -26,7 +26,7 @@
                     </div>
                 </div>
             </div>
-            @error('attachments.'.$index.'.image')
+            @error('attachments.' . $index . '.image')
                 <span class="text-danger">{{ $message }}</span>
             @enderror
             <div class="row">
@@ -41,33 +41,35 @@
                 <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                     {{-- <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div> --}}
                     <div class="">
-                        <span class="btn btn-raised btn-round btn-default btn-file {{ $attachments[$index]['image'] ? 'd-none' : '' }}">
+                        <span
+                            class="btn btn-raised btn-round btn-default btn-file {{ $attachments[$index]['image'] ? 'd-none' : '' }}">
                             <input type="file" name="attachments[{{ $index }}][image]" class="fileinput-new"
                                 wire:model='attachments.{{ $index }}.image' />
                         </span>
-                        
+
                     </div>
                 </div>
                 <div wire:loading wire:target="photo">Uploading...</div>
+                <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"
+                    wire:click.prevent="removeAttachment({{ $index }})">
+                    <i class="fa fa-times"></i>
+                    Remove
+                </a>
                 @if ($attachments[$index]['image'])
                     <img class="fileinput-preview fileinput-exists thumbnail img-raised image-upload-preview"
                         src="{{ $attachments[$index]['image']->temporaryUrl() }}">
                     <div>
-                        <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"
-                        wire:click.prevent="removeAttachment({{ $index }})">
-                            <i class="fa fa-times"></i>
-                            Remove
-                        </a>  
-                        <button class="btn btn-sm btn-primary" wire:click.prevent="fileUpload({{ $index }})">Upload</button>
+
+                        <button class="btn btn-sm btn-primary"
+                            wire:click.prevent="fileUpload({{ $index }})">Upload</button>
                     </div>
                 @endif
             </div>
-            
+
         </div>
-        
+
     </div>
 
 @endforeach
 <button class="btn btn-sm btn-secondary" wire:click.prevent="addAttachment">+ Add Another
     Attachment</button>
-    
