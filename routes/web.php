@@ -19,34 +19,46 @@ Auth::routes();
 
 /*
 |--------------------------------------------------------------------------
-| USER/TECH/AUTH ROUTES
+| USER/expert/AUTH ROUTES
 |--------------------------------------------------------------------------
 |
 | Semua routes yang hanya bisa di akses oleh user
-| atau tech atau siapapun yang memiliki akun
+| atau expert atau siapapun yang memiliki akun
 | tolong ditaro disini, karena pada route
 | ini digunakan middleware auth
 |
 */
-Route::group(['middleware' => 'auth'], function () {
-    Route::get('/tech', [App\Http\Controllers\TechController::class, 'index'])->name('tech');
+Route::group(['middleware' => 'auth', 'prefix' => 'expert'], function () {
+    Route::get('/', [App\Http\Controllers\ExpertController::class, 'index'])->name('expert');
     
     // PM REPORT ROUTES
-    Route::get('report/pm/create/{headId}', ['App\Http\Controllers\PmBodyReportsController', 'create']); //custom create routing
-    Route::resource('report/pm', 'App\Http\Controllers\PmBodyReportsController', ['except' => ['create'], 'parameters' => ['pm' => 'pmBodyReport:head_id',]]);
-    // PM REPORT ROUTES
-    Route::get('report/cm/create/{headId}', ['App\Http\Controllers\CmBodyReportsController', 'create']); //custom create routing
-    Route::resource('report/cm', 'App\Http\Controllers\CmBodyReportsController', ['except' => ['create'], 'parameters' => ['cm' => 'cmBodyReport:head_id',]]);
-    // REPORT ROUTES
-    Route::resource('report', 'App\Http\Controllers\HeadReportsController', ['parameters' => ['report' => 'headReport',]]);
+    Route::group(['prefix' => 'pm', 'as' => 'pm.'], function () {
+        Route::get('/', [App\Http\Controllers\PmReportController::class, 'index'])->name('index');
+        Route::get('/create', [App\Http\Controllers\PmReportController::class, 'create'])->name('create');
+        Route::post('/', [App\Http\Controllers\PmReportController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [App\Http\Controllers\PmReportController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [App\Http\Controllers\PmReportController::class, 'edit'])->name('update');
+        Route::get('/{id}', [App\Http\Controllers\PmReportController::class, 'show'])->name('show');
+    });
 
-    // temporary route until i create the report crud controller
-    // Route::get('/report/pm/create', function () {
-    //     return view('tech.report.pm.create');
-    // })->name('report');
-    // Route::get('/report/pm', function () {
-    //     return view('tech.report.pm.index');
-    // })->name('report');
+    // Route::get('report/pm/create/{headId}', ['App\Http\Controllers\PmBodyReportsController', 'create'])->name('pm.custom.create'); //custom create routing
+    // Route::get('report/pm/{pmBodyReport}/{headId}/edit', ['App\Http\Controllers\PmBodyReportsController', 'edit'])->name('pm.custom.edit'); //custom create routing
+    // Route::resource('report/pm', 'App\Http\Controllers\PmBodyReportsController', ['except' => ['create', 'edit'], 'parameters' => ['pm' => 'pmBodyReport:head_id',]]);
+    
+    // PM REPORT ROUTES
+    // Route::get('report/cm/create/{headId}', ['App\Http\Controllers\CmBodyReportsController', 'create'])->name('cm.custom.create'); //custom create routing
+    // Route::get('report/cm/{cmBodyReport}/{headId}/edit', ['App\Http\Controllers\CmBodyReportsController', 'edit'])->name('cm.custom.edit'); //custom create routing
+    // Route::resource('report/cm', 'App\Http\Controllers\CmBodyReportsController', ['except' => ['create', 'edit'], 'parameters' => ['cm' => 'cmBodyReport:head_id',]]);
+    
+    // recommendations ROUTES
+    // Route::get('report/recommendations/create/{headId}', ['App\Http\Controllers\RecommendationsController', 'create'])->name('recommendations.custom.create'); //custom create routing
+    // Route::get('report/recommendations/{headId}/edit', ['App\Http\Controllers\RecommendationsController', 'edit'])->name('recommendations.custom.edit'); //custom edit routing
+    // Route::get('report/recommendations/{headId}', ['App\Http\Controllers\RecommendationsController', 'show'])->name('recommendations.custom.show'); //custom show routing
+    // Route::put('report/recommendations/{headId}', ['App\Http\Controllers\RecommendationsController', 'update'])->name('recommendations.custom.update'); //custom update routing
+    // Route::post('report/recommendations', ['App\Http\Controllers\RecommendationsController', 'store'])->name('recommendations.custom.store'); //custom store routing
+
+    // REPORT ROUTES
+    // Route::resource('report', 'App\Http\Controllers\HeadReportsController', ['parameters' => ['report' => 'headReport',]]);
     
     //Bawaan dari template
     Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);

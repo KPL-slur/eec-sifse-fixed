@@ -54,9 +54,25 @@ class HeadReportsSeeder extends Seeder
         // ===== hasil rancangan erd =====
         DB::table('head_reports')->insert([
             'site_id' => 1,
+            'maintenance_type' => 'pm',
+            'report_date_start' => now(),
+            'report_date_end' => now(),
+            'created_at' => now(),
+        ]);
+        DB::table('head_reports')->insert([
+            'site_id' => 1,
+            'maintenance_type' => 'pm',
+            'report_date_start' => now(),
+            'report_date_end' => now(),
+
+            'created_at' => now(),
+        ]);
+        DB::table('head_reports')->insert([
+            'site_id' => 2,
             'maintenance_type' => 'cm',
             'report_date_start' => now(),
             'report_date_end' => now(),
+
             'created_at' => now(),
         ]);
         DB::table('head_reports')->insert([

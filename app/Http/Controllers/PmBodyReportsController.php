@@ -9,6 +9,43 @@ use Illuminate\Support\Facades\DB;
 
 class PmBodyReportsController extends Controller
 {
+    private $rules = ([
+        'radio_general_visual' => 'required',
+        'radio_rcms' => 'required',
+        'radio_wipe_down' => 'required',
+        'radio_inspect_all' => 'required',
+        'radio_compressor_visual' => 'required',
+        'radio_duty_cycle' => 'required',
+        'radio_transmitter_visual' => 'required',
+        'radio_receiver_visual' => 'required',
+        'radio_stalo_check' => 'required',
+        'radio_afc_check' => 'required',
+        'radio_mrp_check' => 'required',
+        'radio_rcu_check' => 'required',
+        'radio_iq2_check' => 'required',
+        'radio_antenna_visual' => 'required',
+        'radio_inspect_motor' => 'required',
+        'radio_clean_slip' => 'required',
+        'radio_grease_gear' => 'required',
+        'running_time' => 'required',
+        'radiate_time' => 'required',
+        'hvps_v_0_4us' => 'required',
+        'hvps_i_0_4us' => 'required',
+        'mag_i_0_4us' => 'required',
+        'hvps_v_0_8us' => 'required',
+        'hvps_i_0_8us' => 'required',
+        'mag_i_0_8us' => 'required',
+        'hvps_v_1_0us' => 'required',
+        'hvps_i_1_0us' => 'required',
+        'mag_i_1_0us' => 'required',
+        'hvps_v_2_0us' => 'required',
+        'hvps_i_2_0us' => 'required',
+        'mag_i_2_0us' => 'required',
+        'forward_power' => 'required',
+        'reverse_power' => 'required',
+        'vswr' => 'required',
+        'remark' => 'required',
+    ]);
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +56,7 @@ class PmBodyReportsController extends Controller
         $HeadReport = HeadReport::where('maintenance_type', "pm")->get();
         $maintenance_type = "pm"; //used to determine the add new button route
 
-        return view('tech.report.index', compact('HeadReport', 'maintenance_type'));
+        return view('expert.report.index', compact('HeadReport', 'maintenance_type'));
     }
 
     /**
@@ -30,7 +67,7 @@ class PmBodyReportsController extends Controller
     public function create($headId)
     {
         // dd($headId);
-        return view('tech.report.pm.create', compact('headId'));
+        return view('expert.report.pm.create', compact('headId'));
     }
 
     /**
@@ -41,48 +78,16 @@ class PmBodyReportsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'radio_general_visual' => 'required',
-            'radio_rcms' => 'required',
-            'radio_wipe_down' => 'required',
-            'radio_inspect_all' => 'required',
-            'radio_compressor_visual' => 'required',
-            'radio_duty_cycle' => 'required',
-            'radio_transmitter_visual' => 'required',
-            'radio_receiver_visual' => 'required',
-            'radio_stalo_check' => 'required',
-            'radio_afc_check' => 'required',
-            'radio_mrp_check' => 'required',
-            'radio_rcu_check' => 'required',
-            'radio_iq2_check' => 'required',
-            'radio_antenna_visual' => 'required',
-            'radio_inspect_motor' => 'required',
-            'radio_clean_slip' => 'required',
-            'radio_grease_gear' => 'required',
-            'running_time' => 'required|numeric',
-            'radiate_time' => 'required|numeric',
-            'hvps_v_0_4us' => 'required|numeric',
-            'hvps_i_0_4us' => 'required|numeric',
-            'mag_i_0_4us' => 'required|numeric',
-            'hvps_v_0_8us' => 'required|numeric',
-            'hvps_i_0_8us' => 'required|numeric',
-            'mag_i_0_8us' => 'required|numeric',
-            'hvps_v_1_0us' => 'required|numeric',
-            'hvps_i_1_0us' => 'required|numeric',
-            'mag_i_1_0us' => 'required|numeric',
-            'hvps_v_2_0us' => 'required|numeric',
-            'hvps_i_2_0us' => 'required|numeric',
-            'mag_i_2_0us' => 'required|numeric',
-            'forward_power' => 'required|numeric',
-            'reverse_power' => 'required|numeric',
-            'vswr' => 'required|numeric',
-            'remark' => 'required',
-        ]);
+        $request->validate($this->rules);
 
         PmBodyReport::create($request->all());
 
+        $queryHeadId = HeadReport::select('id')->orderByDesc('id')->first(); //used to determine the head id of this report
+        $headId = $queryHeadId->id;
+
         return redirect()->action(
-            [PmBodyReportsController::class, 'index']
+            [RecommendationsController::class, 'create'],
+            ['headId' => $headId]
         );
     }
 
@@ -94,20 +99,21 @@ class PmBodyReportsController extends Controller
     */
     public function show(PmBodyReport $pmBodyReport)
     {
-        $HeadReport = HeadReport::Where('id', $pmBodyReport->head_id)->get();
+        $HeadReport = HeadReport::Where('id', $pmBodyReport->head_id)->first();
 
-        return view('tech.report.pm.show', compact('pmBodyReport', 'HeadReport'));
+        return view('expert.report.pm.show', compact('pmBodyReport', 'HeadReport'));
     }
 
     /**
     * Show the form for editing the specified resource.
     *
     * @param \App\Models\PmBodyReport $pmBodyReport
+    * @param    $headId
     * @return \Illuminate\Http\Response
     */
-    public function edit(PmBodyReport $pmBodyReport)
+    public function edit(PmBodyReport $pmBodyReport, $headId)
     {
-        //
+        return view('expert.report.pm.edit', compact('pmBodyReport', 'headId'));
     }
 
     /**
@@ -119,7 +125,17 @@ class PmBodyReportsController extends Controller
     */
     public function update(Request $request, PmBodyReport $pmBodyReport)
     {
-//
+        // $attributes = $this->validate($request, $this->rules);
+        // $pmBodyReport->update($attributes);
+
+        $request->validate($this->rules);
+
+        $input = $request->all();
+        $pmBodyReport->fill($input)->save();
+
+        return redirect()->action(
+            [PmBodyReportsController::class, 'index']
+        );
     }
 
     /**

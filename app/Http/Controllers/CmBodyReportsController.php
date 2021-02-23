@@ -18,7 +18,7 @@ class CmBodyReportsController extends Controller
         $HeadReport = HeadReport::where('maintenance_type', "cm")->get();
         $maintenance_type = "cm"; //used to determine the add new button route
 
-        return view('tech.report.index', compact('HeadReport', 'maintenance_type'));
+        return view('expert.report.index', compact('HeadReport', 'maintenance_type'));
     }
 
     /**
@@ -28,8 +28,7 @@ class CmBodyReportsController extends Controller
      */
     public function create($headId)
     {
-        // dd($headId);
-        return view('tech.report.cm.create', compact('headId'));
+        return view('expert.report.cm.create', compact('headId'));
     }
 
     /**
@@ -42,8 +41,16 @@ class CmBodyReportsController extends Controller
     {
         CmBodyReport::create($request->all());
 
+        // return redirect()->action(
+        //     [CmBodyReportsController::class, 'index']
+        // );
+
+        $queryHeadId = HeadReport::select('id')->orderByDesc('id')->first(); //used to determine the head id of this report
+        $headId = $queryHeadId->id;
+        
         return redirect()->action(
-            [CmBodyReportsController::class, 'index']
+            [RecommendationsController::class, 'create'],
+            ['headId' => $headId]
         );
     }
 
@@ -57,18 +64,19 @@ class CmBodyReportsController extends Controller
     {
         $HeadReport = HeadReport::Where('id', $cmBodyReport->head_id)->get();
 
-        return view('tech.report.cm.show', compact('cmBodyReport', 'HeadReport'));
+        return view('expert.report.cm.show', compact('cmBodyReport', 'HeadReport'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\CmBodyReport  $cmBodyReport
+     * @param   $headId
      * @return \Illuminate\Http\Response
      */
-    public function edit(CmBodyReport $cmBodyReport)
+    public function edit(CmBodyReport $cmBodyReport, $headId)
     {
-        //
+        return view('expert.report.cm.edit', compact('cmBodyReport', 'headId'));
     }
 
     /**
@@ -80,7 +88,14 @@ class CmBodyReportsController extends Controller
      */
     public function update(Request $request, CmBodyReport $cmBodyReport)
     {
-        //
+        $request->validate($this->rules);
+
+        $input = $request->all();
+        $cmBodyReport->fill($input)->save();
+
+        return redirect()->action(
+            [CmBodyReportsController::class, 'index']
+        );
     }
 
     /**

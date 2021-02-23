@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
-
 // use Illuminate\Http\Request;
 
 class TechController extends Controller
@@ -25,7 +23,6 @@ class TechController extends Controller
      */
     public function index()
     {
-        $loggedName = Auth::user()->name;
-        return view('Tech.dashboard', compact('loggedName'));
+        return view('Tech.dashboard');
     }
 }

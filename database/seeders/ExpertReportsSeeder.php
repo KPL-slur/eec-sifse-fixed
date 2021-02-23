@@ -21,8 +21,43 @@ class ExpertReportsSeeder extends Seeder
             'created_at'=>now()
         ]);
         DB::table('expert_reports')->insert([
+            'head_id'=>1,
+            'expert_id'=>2,
+            'created_at'=>now()
+        ]);
+        DB::table('expert_reports')->insert([
+            'head_id'=>1,
+            'expert_id'=>4,
+            'created_at'=>now()
+        ]);
+        DB::table('expert_reports')->insert([
+            'head_id'=>1,
+            'expert_id'=>5,
+            'created_at'=>now()
+        ]);
+        DB::table('expert_reports')->insert([
             'head_id'=>2,
             'expert_id'=>2,
+            'created_at'=>now()
+        ]);
+        DB::table('expert_reports')->insert([
+            'head_id'=>2,
+            'expert_id'=>1,
+            'created_at'=>now()
+        ]);
+        DB::table('expert_reports')->insert([
+            'head_id'=>2,
+            'expert_id'=>6,
+            'created_at'=>now()
+        ]);
+        DB::table('expert_reports')->insert([
+            'head_id'=>2,
+            'expert_id'=>7,
+            'created_at'=>now()
+        ]);
+        DB::table('expert_reports')->insert([
+            'head_id'=>2,
+            'expert_id'=>8,
             'created_at'=>now()
         ]);
         // ===== hasil rancangan erd =====

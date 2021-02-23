@@ -25,12 +25,12 @@ class CmBodyReportsSeeder extends Seeder
             
         // ==== hasil rancangan erd =====
         DB::table('cm_body_reports')->insert([
-            'head_id' => 1,
+            'head_id' => 3,
             'remark' => 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nam ut dicta laudantium quis, dignissimos accusamus voluptas itaque dolor tempora ducimus voluptate nesciunt quisquam eligendi dolore, mollitia eaque iusto. Impedit, beatae.',
             'created_at' => now()
         ]);
         DB::table('cm_body_reports')->insert([
-            'head_id' => 2,
+            'head_id' => 4,
             'remark' => 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nam ut dicta laudantium quis, dignissimos accusamus voluptas itaque dolor tempora ducimus voluptate nesciunt quisquam eligendi dolore, mollitia eaque iusto. Impedit, beatae.',
             'created_at' => now()
         ]);

@@ -13,8 +13,10 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <!-- CSS Files -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="{{ asset('material') }}/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
     <link href="{{ asset('user') }}/css/style.css" rel="stylesheet" />
+    @livewireStyles
     {{-- <link href="{{ asset('resources/css/app.css') }}" rel="stylesheet" /> --}}
     </head>
     <body class="{{ $class ?? '' }}">
@@ -29,13 +31,13 @@
                 @include('layouts.page_templates.admin')
 
                 @else
-                    {{-- selain admin, berarti tech --}}
+                    {{-- selain admin, berarti expert --}}
                     {{-- NOT IS ADMIN BUT AUTH --}}
                     {{-- yg bukan is_admin, tp di dalem auth --}}
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
-                    @include('layouts.page_templates.tech')
+                    @include('layouts.page_templates.expert')
 
             @endis_admin
         @endauth
@@ -91,6 +93,15 @@
         {{-- <script src="{{ asset('material') }}/js/settings.js"></script> --}}
         {{-- IMPORT CKEDITOR, NANTI DI DOWNLOAD JGN DARI CDN --}}
         <script src="https://cdn.ckeditor.com/ckeditor5/25.0.0/classic/ckeditor.js"></script>
+        <!-- SELECT2 IMPORT -->
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <!-- js for headreport expert coloumn -->
         @stack('js')
+        @livewireScripts
+        <script>
+            window.livewire.on('fileUploaded'), () => {
+                $('input[name=image').val('');
+            };
+        </script>
     </body>
 </html>
