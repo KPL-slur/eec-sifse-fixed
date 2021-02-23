@@ -84,10 +84,6 @@
                         <td>{{$user->created_at}}</td>
 
                         <td class="td-actions text-right">
-                                <a rel="tooltip" class="btn btn-warning" data-toggle="modal" data-target="#modalEditUser" href="editUser/{{ $user->id }}" >
-                                  <i class="material-icons">edit</i>
-                                  <div class="ripple-container"></div>
-                                </a>
 
                               <form method="POST" action="/deleteUser/{{$user->id}}" class="d-inline">
                                 @csrf
@@ -98,6 +94,7 @@
                                 </button>
                               </form>
                         </td>
+
                         <!-- Modal Edit User -->
                           <div class="modal fade" id="modalEditUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">

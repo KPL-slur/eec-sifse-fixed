@@ -51,22 +51,6 @@
                     console.log(station_id);
                     
                   }
-                  // window.onload = ($site_id) => {
-                  //   $( "#radar_name" ).on("change", function(){
-                  //     $( "#radar_name" ).val();
-                  //     var $radar_name = $( "#site_id" ).val();
-                  //     $("select option:selected").each(function(){
-                  //       $radar_name += $(this).text() + " ";
-                  //       $('#result').html($radar_name);
-                  //      });
-                  //   });
-                    
-                  // };
-                  // window.onload(){
-                  //   $("#radar_name").on("change", function() {
-                  //     var
-                  //   });  
-                  // }
                 </script>
 
                 <div class="form-group-site">   
@@ -80,7 +64,7 @@
                 </div>
                 <br>
                 <button type="submit" onclick="return confirm('Apakah yakin ingin menambahkan data?')" class="btn btn-primary">Ubah</button>
-                <a href="/site" class="btn btn-primary">Kembali</a>
+                <a href="/pm" class="btn btn-primary">Kembali</a>
               </form>
             </div>
           </div>

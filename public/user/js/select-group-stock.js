@@ -1,12 +1,12 @@
 function selectGroupIndexStocks(){
     var input, header, table, tr, td, i;
-    // nama dropdown gua
+    // dropdown name
     input = document.getElementById("selectGroupStock").value;
-    // nama header yg nnt berubah2
+    // dynamic header
     header = document.getElementById("groupStocksCardHeader");
-    // id table gua
+    // table id
     table = document.getElementById("indexStocksTable");
-    //ngambil row dari setiap table
+    // import row
     tr = table.getElementsByTagName("tr");
     // mulai dari 1 karena tr yg pertama tuh cuma no, namabarang dll
     for (i = 1; i < tr.length; i++) {
@@ -25,6 +25,40 @@ function selectGroupIndexStocks(){
             } else if (input == 4){
               header.innerHTML = "Tambahan"
             }
+        } else {
+          tr[i].style.display = "none";
+        }
+      } 
+    }
+  }
+
+  function selectYearIndexStocks(){
+    var input, header, table, tr, td, i;
+    // nama dropdown gua
+    input = document.getElementById("selectYearStock").value;
+    // nama header yg nnt berubah2
+    header = document.getElementById("yearStocksCardHeader");
+    // id table gua
+    table = document.getElementById("indexStocksTable");
+    //ngambil row dari setiap table
+    tr = table.getElementsByTagName("tr");
+    // mulai dari 1 karena tr yg pertama tuh cuma no, namabarang dll
+    for (i = 1; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("input")[0].value;
+      if (td){
+        if (input == td || input == ""){
+          tr[i].style.display = "";
+            if (input == ""){
+              header.innerHTML = "Semua"
+            } else if(input == 2020){
+              header.innerHTML = "2020";
+            } else if (input == 2021){
+              header.innerHTML = "2021"
+            } else if ( input == 2022){
+              header.innerHTML = "2022"
+            } else if (input == 2023){
+              header.innerHTML = "2023"
+            } 
         } else {
           tr[i].style.display = "none";
         }

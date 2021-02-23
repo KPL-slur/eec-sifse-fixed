@@ -25,7 +25,7 @@
                   <div class="form-group">
                     <label >Nama Teknisi</label>
                     <select name="expert_id" id="expert_id" class="form-control ">
-                        <option value="">--Pilih Teknisi--</option>
+                        <option selected disabled value="">--Pilih Teknisi--</option>
                         @foreach ($experts as $exp)
                           <option value={{$exp->expert_id}}>{{$exp->name}}</option>
                         @endforeach                        
@@ -35,7 +35,7 @@
                   <div class="form-group">
                     <label>Station ID</label>
                     <select name="site_id" id="site_id" class="form-control ">
-                      <option value="">--Pilih Station ID--</option>
+                      <option selected disabled value="">--Pilih Station ID--</option>
 
                       @foreach ($sites as $sts)
                         <option value={{$sts->site_id}}>{{$sts->station_id}}</option>

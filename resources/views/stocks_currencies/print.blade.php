@@ -10,14 +10,16 @@
     <title>Print</title>
 </head>
 <body>
-    <h1 class="text-center">Laporan Harian</h1>
-    <div class="text-center">
-      <p id="tanggal"></p>
-      <script>
-        var d = new Date();
-        document.getElementById("tanggal").innerHTML = d;
-      </script>
-    </div>
+  <img class="mT-30 mL-20" src="{{ asset('material') }}/img/kop.png" alt="image" style="width:300px !important;">
+  <h4 class="c-grey-900 text-center mT-40 mB-0"><b>PT. Era Elektra Corpora Indonesia</b></h4>
+  <h4 class="c-grey-900 text-center mB-50"><b>Inventory Stock</b></h4>
+  <div class="text-center">
+    <p id="demo"></p>
+    <script>
+      var d = new Date();
+      document.getElementById("demo").innerHTML = d;
+    </script>
+  </div>
     <div class="row">
         <div class="col-md-12">
           <div class="card ">
@@ -74,7 +76,14 @@
       </div>
 
       <script type="text/javascript">
-        // window.print();
+         window.print();
       </script>
+
+    <footer class="footer-export fixed-bottom text-center">
+      <p class="mB-0">Head Office : Eightyeight@Kasablanka Tower A 26D floor. Jl. Raya Casablanca Kav. 88 Jakarta Selatan - 12870</p>
+      <p class="mB-0">Operational Office : Grand Palace Rukan A-16. Jl. Benyamin Suaeb No.5 - Kemayoran. Jakarta Pusat - 10630</p>
+      <p>Phone : 62-21-22606878, Email : eecindonesia@eecindonesia.co.id</p>
+    </footer>
+
 </body>
 </html>

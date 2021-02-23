@@ -44,10 +44,6 @@
                         <td>{{$pm->report_date_start}}</td>
                         <td>{{$pm->report_date_end}}</td>
                         <td class="td-actions text-right">
-                            {{-- <a rel="tooltip" class="btn btn-info " href="">
-                              <i class="material-icons">visibility</i>
-                              <div class="ripple-container"></div>
-                            </a> --}}
                               
                             <a rel="tooltip" class="btn btn-warning" href="editPm/{{$pm->head_id}}">
                               <i class="material-icons">edit</i>

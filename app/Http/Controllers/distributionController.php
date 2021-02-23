@@ -10,12 +10,12 @@ class DistributionController extends Controller
 {
     public function index(){
         
-        $experts = DB::table('experts')
+        $distributions = DB::table('experts')
         ->join('distributions', 'experts.expert_id', '=', 'distributions.expert_id')
         ->join('sites', 'sites.site_id', '=', 'distributions.site_id')
         ->get();
 
-        return view('distribution.distribution', compact('experts'));
+        return view('distribution.distribution', compact('distributions'));
     }
 
     public function edit($id){
@@ -39,8 +39,8 @@ class DistributionController extends Controller
     }
 
     public function deleteData($id){
-        $technisians = DB::table('distributions')->where('expert_id',$id);
-        $technisians->delete();
+        $distributions = DB::table('distributions')->where('dist_id',$id);
+        $distributions->delete();
         return redirect('distribution')->with('status3', 'Data Deleted!');
     }
 
@@ -49,7 +49,7 @@ class DistributionController extends Controller
         ->get();
         $sites = DB::table('distributions')
         ->rightJoin('sites', 'sites.site_id', '=', 'distributions.site_id')
-        ->whereNull('expert_id')
+        //->whereNull('expert_id')
         ->get();
         return view('distribution.add', compact('experts', 'sites'));
     }
@@ -60,7 +60,6 @@ class DistributionController extends Controller
         $distributions->site_id = $request->site_id;
         $distributions->save();
 
-        
         return redirect('distribution')->with('status1', 'Data Created!');
     }
 }

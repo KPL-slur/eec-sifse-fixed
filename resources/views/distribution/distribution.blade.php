@@ -33,19 +33,19 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach ($experts as $exp)
+                    @foreach ($distributions as $dst)
                       <tr>
                         <td scope="row">{{$loop->iteration}}</td>
-                        <td>{{$exp->name}}</td>
-                        <td>{{$exp->radar_name}}</td>
-                        <td>{{$exp->station_id}}</td>
+                        <td>{{$dst->name}}</td>
+                        <td>{{$dst->radar_name}}</td>
+                        <td>{{$dst->station_id}}</td>
                         <td class="td-actions text-right">
-                              <a rel="tooltip" class="btn btn-warning " href="editDistribution/{{$exp->expert_id}}">
+                              <a rel="tooltip" class="btn btn-warning " href="editDistribution/{{$dst->expert_id}}">
                                 <i class="material-icons">edit</i>
                                 <div class="ripple-container"></div>
                               </a>
                               
-                              <form method="POST" action="/deleteDistribution/{{$exp->expert_id}}" class="d-inline">
+                              <form method="POST" action="/deleteDistribution/{{$dst->dist_id}}" class="d-inline">
                                 @csrf
                                 @method('delete')
                                 <button class="btn btn-danger " onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')" >

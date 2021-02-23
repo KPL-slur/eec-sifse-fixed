@@ -31,7 +31,7 @@
                   <div class="form-group">
                       <label ><b>Sites</b></label>
                       <select name="site_id" id="site_id" class="form-control">
-                        <option value="">--Pilih Site--</option>
+                        <option selected disabled value="">--Pilih Site--</option>
                         @foreach ($sites as $sites)
                             <option value="{{$sites->site_id}}">{{$sites->radar_name}}</option>
                         @endforeach

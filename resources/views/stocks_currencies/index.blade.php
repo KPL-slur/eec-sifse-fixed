@@ -19,12 +19,16 @@
             <p class="text-center">Harga Kurs Sekarang : <div class="text-primary text-center display-4">Rp {{ $rate_fix }}</div></p>
             <div class="text-right">
               {{-- button modal trigger  --}}
-              <button type="button" class="btn btn-outline-primary " data-toggle="modal" data-target="#modal_input_stocks_report">
+              <button type="button" rel="tooltip" title="print data" class="btn btn-outline-primary " data-toggle="modal" data-target="#modal_input_stocks_report">
                 <i class="material-icons">print</i>
               </button>
               {{-- for create button --}}
-              <a class="btn btn-md btn-outline-primary text-right m-4 " href="{{ route('stock_currency_create') }}">
+              <a type="button" rel="tooltip" title="add item" class="btn btn-md btn-outline-primary text-right m-4 " href="{{ route('stock_currency_create') }}">
                 <i class="material-icons">note_add</i>
+              </a>
+              {{-- for recommendatio item --}}
+              <a type="button" rel="tooltip" title="recommendation item" class="btn btn-md btn-outline-primary text-right m-8 " href="{{ route('recommendation') }}">
+                <i class="material-icons">shopping_basket</i>
               </a>
             </div>
 
@@ -131,7 +135,7 @@
             @endif
 
             <div>
-              <select name="selectGroupStock" class="form-control m-3" id="selectGroupStock" onchange="selectGroupIndexStocks()" style="max-width:30%;">
+              <select name="selectGroupStock" class="form-control m-3" id="selectGroupStock" onchange="selectGroupIndexStocks()" style="max-width:15%;">
                 <option selected value="">Semua</option>
                 <option value="1" >Transmitter</option>
                 <option value="2" >Receiver</option>
@@ -187,10 +191,11 @@
                               <form action="{{ url('stock_currency') }}/{{ $st->stock_id }}" class="d-inline" method="POST">
                                 @method('DELETE')
                                 @csrf
-                                <button type="submit" class="btn btn-lg btn-danger m-2" onclick="return confirm('Are you sure you want to delete '+ '{{ $st->nama_barang }}' +'?')">
+                                <button type="submit" class="btn btn-lg btn-danger m-2" title="delete" onclick="return confirm('Are you sure you want to delete '+ '{{ $st->nama_barang }}' +'?')">
                                   <i class="material-icons">delete</i>
                                   <div class="ripple-container"></div>
                                   </button>
+              
                               </form>
                               {{-- <button class="btn btn-lg btn-danger m-2" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">
                                 <i class="material-icons">delete</i>

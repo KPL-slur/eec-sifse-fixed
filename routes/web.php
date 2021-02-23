@@ -139,4 +139,5 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::put('stock_currency/{stock}/update', [App\Http\Controllers\StockController::class, 'update']); // save the edited stock
     Route::delete('stock_currency/{stock}', [App\Http\Controllers\StockController::class, 'destroy']); // delete specific spare part
     Route::get('stock_currency/{date_start}/{date_end}/', [App\Http\Controllers\StockController::class, 'report']);
+    Route::get('recommendation', [App\Http\Controllers\StockController::class, 'showRecommendation'])->name('recommendation'); //recommendation item
 });

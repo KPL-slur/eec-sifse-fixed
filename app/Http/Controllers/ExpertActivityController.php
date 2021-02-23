@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\HeadReport;
+use App\Models\Site;
 use Illuminate\Support\Facades\DB;
 
 class ExpertActivityController extends Controller
@@ -38,12 +39,17 @@ class ExpertActivityController extends Controller
     }
 
     public function addData(Request $request){
-        //$head_reports = DB::table()
-
+        // $this->validate($request, [
+        //     'radar_name' => 'required',
+        //     'station_is' => 'required',
+        //     'report_date_start' => 'required',
+        //     'report_date_end' => 'required',
+        // ]);
+        //dd($request);
         $head_reports = new HeadReport;
         $head_reports->maintenance_type = $request->maintenance_type;
-        $head_reports->radar_name = $request->radar_name;
-        $head_reports->station_id = $request.value();
+        $head_reports->site_id = $request->radar_name;
+        //$sites->station_id = $request->station_id;
         $head_reports->report_date_start = $request->report_date_start;
         $head_reports->report_date_end = $request->report_date_end;
         $head_reports->save();
@@ -52,7 +58,7 @@ class ExpertActivityController extends Controller
     }
 
     public function deleteData($id){
-        $head_reports = DB::table('head_reports')->where('id',$id);
+        $head_reports = DB::table('head_reports')->where('head_id',$id);
         $head_reports->delete();
 
         return redirect('pm')->with('status3', 'Data Deleted!');

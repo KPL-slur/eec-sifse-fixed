@@ -28,7 +28,7 @@
                 <div class="form-group">
                   <label>Radar Name</label>
                   <select name="radar_name" id="radar_name" class="form-control ">
-                    <option value="">--Choose Radar Name--</option>
+                    <option  selected disabled value="">--Choose Radar Name--</option>
 
                     @foreach ($sites as $sts)
                       <option value={{$sts->site_id}}>{{$sts->radar_name}}</option>
@@ -38,7 +38,7 @@
 
                 <div class="form-group-site">   
                     <label for="inputSite">Station ID</label>
-                    <input type="text" class="form-control" id="station_id" name="station_id" placeholder="Input Station ID" disabled>
+                    <input type="text" class="form-control" id="station_id" name="station_id" placeholder="Input Station ID" >
                 </div>
 
                 <div class="form-group-site">   
@@ -52,7 +52,7 @@
                 </div>
                 <br>
                 <button type="submit" onclick="return confirm('Apakah yakin ingin menambahkan data?')" class="btn btn-primary">Tambah</button>
-                <a href="/site" class="btn btn-primary">Kembali</a>
+                <a href="/pm" class="btn btn-primary">Kembali</a>
               </form>
             </div>
           </div>

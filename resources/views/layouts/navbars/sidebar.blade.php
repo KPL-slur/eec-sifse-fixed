@@ -49,7 +49,7 @@
       </li>
       <li class="nav-item{{ $activePage == 'site' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('site') }}">
-          <i class="material-icons">wifi_tethering</i>
+          <i class="material-icons">radar</i>
             <p>{{ __('Sites Monitor') }}</p>
         </a>
       </li>

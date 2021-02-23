@@ -161,4 +161,15 @@ class StockController extends Controller
 
         return view('stocks_currencies.print', compact('siteAndStock'));
     }
+
+    public function showRecommendation(){
+        $recommendations =  DB::table('recommendations')
+        ->join('head_reports', 'recommendations.head_id', '=', 'head_reports.head_id')
+        ->join('stocks', 'recommendations.stock_id', '=', 'stocks.stock_id')
+        ->join('sites', 'stocks.site_id', '=', 'sites.site_id')
+        ->get();
+        //dd($recommendations);
+
+        return view('stocks_currencies.recommendation', compact('recommendations'));
+    }
 }

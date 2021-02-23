@@ -84,7 +84,7 @@
         <script src="{{ asset('material') }}/js/plugins/bootstrap-notify.js"></script>
         <script src="{{ asset('user') }}/js/notification.js"></script>
         {{-- buat ngubah table di index stocks --}}
-        <script src="{{ asset('user') }}/js/select-group-stocks.js"></script>
+        <script src="{{ asset('user') }}/js/select-group-stock.js"></script>
         <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
         <script src="{{ asset('material') }}/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
         <!-- Material Dashboard DEMO methods, don't include it in your project! -->

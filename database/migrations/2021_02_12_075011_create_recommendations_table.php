@@ -19,6 +19,7 @@ class CreateRecommendationsTable extends Migration
             $table->foreignId('head_id');
             $table->foreignId('stock_id');
             $table->integer('jumlah_unit_needed');
+            $table->integer('year');
             $table->timestamps();
         });
         // ===== hasil rancangan erd =====
