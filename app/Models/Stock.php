@@ -25,6 +25,10 @@ class Stock extends Model
         'status'
     ];
 
+    protected $guarded = [
+        'stock_id'
+    ];
+
     protected $attributes = [
         'status' => 0
     ];

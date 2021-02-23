@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\ValidateStockRequest;
 use Illuminate\Support\Facades\DB;
 use App\Models\Stock;
 use App\Services\ExchangeRate;
@@ -12,6 +13,7 @@ class StockController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param \App\Services\ExchangeRate $ex_rate
      * @return \Illuminate\Http\Response
      */
     public function index(ExchangeRate $ex_rate)
@@ -30,6 +32,7 @@ class StockController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param \App\Services\ExchangeRate $ex_rate
      * @return \Illuminate\Http\Response
      */
     public function create(ExchangeRate $ex_rate)
@@ -45,14 +48,17 @@ class StockController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\ValidateStockRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-{
+    public function store(ValidateStockRequest $request)
+    {
         //belom nambah validas
-        Stock::create($request->all());
         
+        // validasi
+        // $validated = $request->validated();
+        Stock::create($request->validated());
+
         return redirect('stock_currency')->with('status1','Data berhasil ditambah!');
     }
 
@@ -71,6 +77,7 @@ class StockController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Stock  $stock
+     * @param \App\Services\ExchangeRate $ex_rate
      * @return \Illuminate\Http\Response
      */
     public function edit(Stock $stock, ExchangeRate $ex_rate)
@@ -109,7 +116,7 @@ class StockController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Stock $stocks
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Stock $stocks)
@@ -162,6 +169,11 @@ class StockController extends Controller
         return view('stocks_currencies.print', compact('siteAndStock'));
     }
 
+    /**
+     * 
+     * 
+     * take recommendations into stocks view
+     */
     public function showRecommendation(){
         $recommendations =  DB::table('recommendations')
         ->join('head_reports', 'recommendations.head_id', '=', 'head_reports.head_id')
