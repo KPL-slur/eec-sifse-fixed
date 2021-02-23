@@ -9,6 +9,8 @@ class ReportImage extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'image_id';
+
     protected $fillable = [
         'head_id',
         'image',

@@ -18,13 +18,13 @@ class CreateStocksTable extends Migration
             $table->foreignId('site_id');
             $table->string('nama_barang');
             $table->smallInteger('group');
-            $table->string('part_number');
-            $table->string('serial_number');
-            $table->date('tgl_masuk');
-            $table->date('expired');
-            $table->integer('kurs_beli');
-            $table->integer('jumlah_unit');
-            $table->smallInteger('status');
+            $table->string('part_number')->nullable();
+            $table->string('serial_number')->nullable();
+            $table->date('tgl_masuk')->nullable();
+            $table->date('expired')->nullable();
+            $table->integer('kurs_beli')->nullable();
+            $table->integer('jumlah_unit')->nullable();
+            $table->smallInteger('status')->nullable();
             $table->timestamps();
         });
     }

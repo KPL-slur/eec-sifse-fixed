@@ -112,34 +112,134 @@ class PmReport extends Component
 
     //METHODD
     //  Livewire lifecycle hook
-    public function mount($id)
+    public function mount($id = null)
     {
-        $this->headReport = HeadReport::Where('head_id', $id)->first();
-        $this->pmBodyReport = HeadReport::Where('head_id', $id)->first()->pmBodyReport;
-        $this->recommendations = HeadReport::Where('head_id', $id)->first()->recommendations;
-        $this->reportImages = HeadReport::Where('head_id', $id)->first()->reportImages;
+        if ($id) {
+            //INITIALIZE EDIT DATA
+            $this->headReport = HeadReport::Where('head_id', $id)->first();
+            $this->expertReports = HeadReport::Where('head_id', $id)->first()->experts;
+            $this->pmBodyReport = HeadReport::Where('head_id', $id)->first()->pmBodyReport;
+            $this->recommendations = HeadReport::Where('head_id', $id)->first()->recommendations;
+            $this->reportImages = HeadReport::Where('head_id', $id)->first()->reportImages;
 
-        $this->site_id = HeadReport::Where('head_id', $id)->first()->site_id;
+            //INITIALIZE EDIT DATA HEAD REPORT
+            $this->site_id = $this->headReport->site_id;
+            $this->report_date_start = $this->headReport->report_date_start;
+            $this->report_date_end = $this->headReport->report_date_end;
+        
+            //INITIALIZE EDIT DATA EXPERT REPORT
+            foreach ($this->expertReports as $expertReport) {
+                $this->experts[] = ['expert_id' => $expertReport->pivot->expert_id, 'expert_company' => $expertReport->expert_company, 'expert_nip' => $expertReport->nip];
+            }
+
+            //INITALIZE EDIT DATA PM BODY
+            $this->radio_general_visual = $this->pmBodyReport->radio_general_visual;
+            $this->radio_rcms = $this->pmBodyReport->radio_rcms;
+            $this->radio_wipe_down = $this->pmBodyReport->radio_wipe_down;
+            $this->radio_inspect_all = $this->pmBodyReport->radio_inspect_all;
+
+            $this->radio_compressor_visual = $this->pmBodyReport->radio_compressor_visual;
+            $this->radio_duty_cycle = $this->pmBodyReport->radio_duty_cycle;
+
+            $this->radio_transmitter_visual = $this->pmBodyReport->radio_transmitter_visual;
+
+            $this->radio_receiver_visual = $this->pmBodyReport->radio_receiver_visual;
+            $this->radio_stalo_check = $this->pmBodyReport->radio_stalo_check;
+            $this->radio_afc_check = $this->pmBodyReport->radio_afc_check;
+            $this->radio_mrp_check = $this->pmBodyReport->radio_mrp_check;
+            $this->radio_rcu_check = $this->pmBodyReport->radio_rcu_check;
+            $this->radio_iq2_check = $this->pmBodyReport->radio_iq2_check;
+
+            $this->radio_antenna_visual = $this->pmBodyReport->radio_antenna_visual;
+            $this->radio_inspect_motor = $this->pmBodyReport->radio_inspect_motor;
+            $this->radio_clean_slip = $this->pmBodyReport->radio_clean_slip;
+            $this->radio_grease_gear = $this->pmBodyReport->radio_grease_gear;
+
+            $this->radio_running_time = $this->pmBodyReport->radio_running_time;
+            $this->radio_radiate_time = $this->pmBodyReport->radio_radiate_time;
+            $this->radio_0_4us = $this->pmBodyReport->radio_0_4us;
+            $this->radio_0_8us = $this->pmBodyReport->radio_0_8us;
+            $this->radio_1_0us = $this->pmBodyReport->radio_1_0us;
+            $this->radio_2_0us = $this->pmBodyReport->radio_2_0us;
+            $this->radio_reverse_power = $this->pmBodyReport->radio_reverse_power;
+            $this->radio_forward_power = $this->pmBodyReport->radio_forward_power;
+            $this->radio_vswr = $this->pmBodyReport->radio_vswr;
+
+            $this->running_time = $this->pmBodyReport->running_time;
+            $this->radiate_time = $this->pmBodyReport->radiate_time;
+            $this->forward_power = $this->pmBodyReport->forward_power;
+            $this->reverse_power = $this->pmBodyReport->reverse_power;
+            $this->vswr = $this->pmBodyReport->vswr;
+
+            $this->hvps_v_0_4us = $this->pmBodyReport->hvps_v_0_4us;
+            $this->hvps_i_0_4us = $this->pmBodyReport->hvps_i_0_4us;
+            $this->mag_i_0_4us = $this->pmBodyReport->mag_i_0_4us;
+
+            $this->hvps_v_0_8us = $this->pmBodyReport->hvps_v_0_8us;
+            $this->hvps_i_0_8us = $this->pmBodyReport->hvps_i_0_8us;
+            $this->mag_i_0_8us = $this->pmBodyReport->mag_i_0_8us;
+
+            $this->hvps_v_1_0us = $this->pmBodyReport->hvps_v_1_0us;
+            $this->hvps_i_1_0us = $this->pmBodyReport->hvps_i_1_0us;
+            $this->mag_i_1_0us = $this->pmBodyReport->mag_i_1_0us;
+
+            $this->hvps_v_2_0us = $this->pmBodyReport->hvps_v_2_0us;
+            $this->hvps_i_2_0us = $this->pmBodyReport->hvps_i_2_0us;
+            $this->mag_i_2_0us = $this->pmBodyReport->mag_i_2_0us;
+
+            $this->general_visual = $this->pmBodyReport->general_visual;
+            $this->rcms = $this->pmBodyReport->rcms;
+            $this->wipe_down = $this->pmBodyReport->wipe_down;
+            $this->inspect_all = $this->pmBodyReport->inspect_all;
+
+            $this->compressor_visual = $this->pmBodyReport->compressor_visual;
+            $this->duty_cycle = $this->pmBodyReport->duty_cycle;
+
+            $this->transmitter_visual = $this->pmBodyReport->transmitter_visual;
+
+            $this->receiver_visual = $this->pmBodyReport->receiver_visual;
+            $this->stalo_check = $this->pmBodyReport->stalo_check;
+            $this->afc_check = $this->pmBodyReport->afc_check;
+            $this->mrp_check = $this->pmBodyReport->mrp_check;
+            $this->rcu_check = $this->pmBodyReport->rcu_check;
+            $this->iq2_check = $this->pmBodyReport->iq2_check;
+
+            $this->antenna_visual = $this->pmBodyReport->antenna_visual;
+            $this->inspect_motor = $this->pmBodyReport->inspect_motor;
+            $this->clean_slip = $this->pmBodyReport->clean_slip;
+            $this->grease_gear = $this->pmBodyReport->grease_gear;
+
+            $this->remark = $this->pmBodyReport->remark;
+
+            foreach ($this->recommendations as $recommendation) {
+                $this->recommends[] = ['stock_id' => $recommendation->pivot->stock_id, 'jumlah_unit_needed' => $recommendation->pivot->jumlah_unit_needed];
+            }
+
+            foreach ($this->reportImages as $reportImage) {
+                $this->attachments[] = ['image' => $reportImage->image, 'caption' => $reportImage->caption, 'uploaded' => 1];
+            }
+            // dd($this->attachments);
+        }
 
         $this->headId = HeadReport::select('head_id')->orderByDesc('head_id')->first()->head_id + 1;
 
         //expert mount
-        $this->experts = [
-            ['expert_id' => '', 'expert_company' => '', 'expert_nip' => '']
-        ];
+        // $this->experts = [
+        //     ['expert_id' => '', 'expert_company' => '', 'expert_nip' => '']
+        // ];
         $this->expertsData = Expert::all();
         $this->uniqueCompanies = $this->expertsData->unique('expert_company');
 
         //recomendation mount
         $this->stocks = Stock::all();
-        $this->recommends = [
-            ['stock_id' => '', 'jumlah_unit_needed' => 1]
-        ];
+        // $this->recommends = [
+        //     ['stock_id' => '', 'jumlah_unit_needed' => 1]
+        // ];
 
         // images mount
-        $this->attachments = [
-            ['caption' => '', 'image' => '', 'uploaded' => 0]
-        ];
+        // $this->attachments = [
+        //     ['caption' => '', 'image' => '', 'uploaded' => 0]
+        // ];
     }
 
     // EXXPERT METHOD

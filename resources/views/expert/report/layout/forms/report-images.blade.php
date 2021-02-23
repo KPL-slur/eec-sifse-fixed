@@ -50,17 +50,19 @@
                     </div>
                 </div>
                 <div wire:loading wire:target="photo">Uploading...</div>
-                <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"
+                <div>
+                    <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"
                     wire:click.prevent="removeAttachment({{ $index }})">
                     <i class="fa fa-times"></i>
                     Remove
                 </a>
+                </div>
                 @if ($attachments[$index]['image'])
                     <img class="fileinput-preview fileinput-exists thumbnail img-raised image-upload-preview"
-                        src="{{ $attachments[$index]['image']->temporaryUrl() }}">
+                        src="{{ asset('storage/'.$attachments[$index]['image']) ?? $attachments[$index]['image']->temporaryUrl() }}">
                     <div>
 
-                        <button class="btn btn-sm btn-primary"
+                    <button class="btn btn-sm btn-primary"
                             wire:click.prevent="fileUpload({{ $index }})">Upload</button>
                     </div>
                 @endif

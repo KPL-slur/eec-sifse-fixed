@@ -11,6 +11,7 @@ use App\Models\Expert;
 use App\Models\ExpertReport;
 use App\Models\PmBodyReport;
 use App\Models\Recommendation;
+use App\Models\Stock;
 
 class PmReportController extends Controller
 {
@@ -143,11 +144,11 @@ class PmReportController extends Controller
         if ($request->manualExperts) {
             foreach ($request->manualExperts as $manualExpert){
                 if ($manualExpert['expert_name']) {
-                Expert::create([
-                    'name' => $manualExpert['expert_name'],
-                    'nip' => $manualExpert['expert_nip'],
-                    'expert_company' => $manualExpert['expert_company'],
-                    ]);
+                    Expert::create([
+                        'name' => $manualExpert['expert_name'],
+                        'nip' => $manualExpert['expert_nip'],
+                        'expert_company' => $manualExpert['expert_company'],
+                        ]);
                     $expertId = Expert::select('expert_id')->orderByDesc('expert_id')->first()->expert_id; //used to determine the expert_id of this report
                     ExpertReport::create([
                         'head_id' => $request->head_id,
@@ -172,7 +173,22 @@ class PmReportController extends Controller
         }
 
         //INSERT MANUAL RECOMENDATION
-            //DISINI NUGGU @wicak
+        foreach ($request->manualRecommends as $manualRecommend){
+            if ($manualRecommend['stock_id']) {
+                Stock::create([
+                    'nama_barang' => $manualRecommend['nama_barang'],
+                    'group' => $manualRecommend['group'],
+                ]);
+
+                $stockId = Stock::select('stock_id')->orderByDesc('stock_id')->first()->stock_id; //used to determine the expert_id of this report
+
+                Recommendation::create([
+                    'head_id' => $request->head_id,
+                    'stock_id' => $stockId,
+                    'jumlah_unit_needed' => $recommend['jumlah_unit_needed'],
+                ]);
+            }
+        }
         
         //INSERT IMAGE
 

@@ -1,5 +1,8 @@
-<form method="post" action="{{ url('/expert/pm/create') }}" class="form-horizontal" enctype="multipart/form-data">
+<form method="post" action="{{ url('/expert/pm/') }}" class="form-horizontal" enctype="multipart/form-data">
     @csrf
+    {{-- @if ($id)
+        @method('put')
+    @endif --}}
     <input type="hidden" name="head_id" value="{{ $headId }}">
     
     <div class="row setup-content {{ $currentStep != 1 ? 'd-none' : '' }}" id="step-1">

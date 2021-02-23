@@ -30,8 +30,10 @@
                                             wire:model="experts.{{ $index }}.expert_id" wire:change="setCompanyAndNip({{ $index }})" class="form-control">
                                             <option value="">-- choose expert --</option>
                                             @foreach ($expertsData as $expertData)
-                                                <option value="{{ $expertData->expert_id }}">
-                                                    {{ $expertData->name }}
+                                                <option value="{{ $expertData->expert_id }}" 
+                                                    {{-- {{ $headReport->site_id == $expertData->expert_id ? 'selected' : '' }} --}}
+                                                    >
+                                                        {{ $expertData->name }}
                                                 </option>
                                             @endforeach
                                         </select>

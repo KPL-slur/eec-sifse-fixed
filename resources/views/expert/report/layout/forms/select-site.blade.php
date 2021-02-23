@@ -20,7 +20,7 @@
                 wire:model="site_id" class="form-control">
                 <option value="">-- choose station --</option>
                 @foreach ($stations as $station)
-                    <option value="{{ $station->site_id }}" {{ $headReport->site_id == $station->site_id ? 'selected' : '' }}>
+                    <option value="{{ $station->site_id }}">
                         {{ $station->station_id }}
                     </option>
                 @endforeach

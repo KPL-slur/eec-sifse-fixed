@@ -36,18 +36,42 @@
                                         wire:model="recommends.{{ $index }}.jumlah_unit_needed"
                                     >
                                 </td>
+                                <td></td>
                                 <td>
                                     <a href="#"
                                         wire:click.prevent="removeRecommend({{ $index }})">Delete</a>
                                 </td>
                             </tr>
                         @endforeach
+                    </tbody>
+                </table>
+                <table class="table" id="products_table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Group</th>
+                            <th>Quantity</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         @foreach ($manualRecommends as $index => $manualRecommend)
                             <tr>
                                 <td>
                                     <input type="text" class="form-control" 
                                         name="manualRecommends[{{ $index }}][nama_barang]" 
                                         wire:model.defer="manualRecommends.{{ $index }}.nama_barang">
+                                </td>
+                                <td>
+                                    <select name="manualRecommends[{{ $index }}][group]"
+                                        wire:model="manualRecommends.{{ $index }}.group"
+                                        class="form-control"
+                                    >
+                                        <option selected value="0">TAMBAHAN</option>
+                                        <option value="1">TRANSMITTER</option>
+                                        <option value="2">RECEIVER</option>
+                                        <option value="3">ANTENNA</option>
+                                    </select>
                                 </td>
                                 <td>
                                     <input type="number" class="form-control"
