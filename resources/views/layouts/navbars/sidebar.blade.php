@@ -33,7 +33,7 @@
               </a>
             </li>
             <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-              <a class="nav-link" href="{{ route('user.index') }}">
+              <a class="nav-link" href="{{ route('userManagement') }}">
                 <span class="sidebar-mini"> UM </span>
                 <span class="sidebar-normal"> {{ __('User Management') }} </span>
               </a>
@@ -49,12 +49,12 @@
       </li>
       <li class="nav-item{{ $activePage == 'site' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('site') }}">
-          <i class="material-icons">wifi_tethering</i>
+          <i class="material-icons">radar</i>
             <p>{{ __('Sites Monitor') }}</p>
         </a>
       </li>
       <li class="nav-item{{ $activePage == 'activity' ? ' active' : '' }}">
-        <a class="nav-link" href="{{ route('table') }}">
+        <a class="nav-link" href="{{ route('expertActivity') }}">
           <i class="material-icons">content_paste</i>
             <p>{{ __('Technisians Activity') }}</p>
         </a>

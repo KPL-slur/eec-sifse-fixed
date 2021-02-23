@@ -9,8 +9,8 @@ class Distribution extends Model
 {
     protected $table = 'distributions';
     protected $fillable = [
-        'name',
-        'lokasi',
+        'expert_id',
+        'site_id',
     ];
     use HasFactory;
 }

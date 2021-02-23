@@ -14,7 +14,7 @@
                             <h3 class="card-title">Preventive Maintenance</h3>
                         </div>
                         <div class="card-footer">
-                            <a class="btn btn-info" href="">VIEW</a>
+                            <a class="btn btn-info" href="pm">VIEW</a>
                         </div>
                     </div>
                 </div>
@@ -28,7 +28,7 @@
                             <h3 class="card-title">Corective Maintenance</h3>
                         </div>
                         <div class="card-footer">
-                            <a class="btn btn-info" href="">VIEW</a>
+                            <a class="btn btn-info" href="cm">VIEW</a>
                         </div>
                     </div>
                 </div>

@@ -16,6 +16,8 @@ class CreateTechnisiansTable extends Migration
         Schema::create('technisians', function (Blueprint $table) {
             $table->bigIncrements('tech_id');
             $table->string('name');
+            $table->string('nip');
+            $table->string('expertise_company');
             $table->timestamps();
         });
     }

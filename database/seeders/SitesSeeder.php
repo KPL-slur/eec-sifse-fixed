@@ -14,9 +14,14 @@ class SitesSeeder extends Seeder
     public function run()
     {
         DB::table('sites')->insert([
-            'site'=>'A',
+            'radar_name'=>'Radar Banjarmasin',
             'image'=>'027ce6f5bc035a08d207f0de97b23965.png',
-            'lokasi'=>'Banjarmasin'
+            'station_id'=>'Banjarmasin'
+        ]);
+        DB::table('sites')->insert([
+            'radar_name'=>'Radar Cengkareng',
+            'image'=>'027ce6f5bc035a08d207f0de97b23965.png',
+            'station_id'=>'Cengkareng'
         ]);
     }
 }

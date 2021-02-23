@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class StockSeeder extends Seeder
+class StocksSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -24,7 +24,8 @@ class StockSeeder extends Seeder
             'expired' => now(),
             'kurs_beli' => 1500000000,
             'jumlah_unit' => 2,
-            'status' => 1
+            'status' => 1,
+            'created_at'=>now()
         ]);
         DB::table('stocks')->insert([
             'site_id' => '2',
@@ -36,7 +37,8 @@ class StockSeeder extends Seeder
             'expired' => now(),
             'kurs_beli' =>  5376900,
             'jumlah_unit' => 2,
-            'status' => 1
+            'status' => 1,
+            'created_at'=>now()
         ]);
         DB::table('stocks')->insert([
             'site_id' => '2',
@@ -48,7 +50,8 @@ class StockSeeder extends Seeder
             'expired' => now(),
             'kurs_beli' =>  21801000,
             'jumlah_unit' => 2,
-            'status' => 1
+            'status' => 0,
+            'created_at'=>now()
         ]);
     }
 }

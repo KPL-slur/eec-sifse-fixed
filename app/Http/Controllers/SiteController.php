@@ -13,27 +13,34 @@ class SiteController extends Controller
     
         $sites = DB::table('sites')
         ->get();
-        //dd($sites);
         return view('site.site', ['sites' => $sites]);
     }
     
     public function show($id){
+        $sites = DB::table('sites')
+        ->select('radar_name')
+        ->where('sites.site_id', '=', $id)
+        ->first();
+        //dd($sites);
         
+
         $stocks = DB::table('stocks')
         ->join('sites', 'stocks.site_id', '=', 'sites.site_id')
-        ->where('sites.site_id', '=', $id  )
+        ->where('sites.site_id', '=', $id)
         ->get();
+        //dd($stocks);
 
-        return view('site.inventorie', ['stocks' => $stocks, 'id'=>$id]);
+        return view('site.inventorie', compact('sites', 'stocks'));
     }
 
     public function print($id){
         $stocks = DB::table('stocks')
         ->join('sites', 'stocks.site_id', '=', 'sites.site_id')
-        ->where('sites.site_id', '=', $id  )
+        ->where('sites.site_id', '=', $id)
         ->get();
+        //dd($stocks);
 
-        return view('pages.inventory_site', ['stocks' => $stocks]);
+        return view('pages.inventory_site', compact('stocks'));
     }
     
     public function add(){
@@ -43,11 +50,11 @@ class SiteController extends Controller
     public function addData(Request $request){
         $file = $request->file('image');
         $name = $file->getClientOriginalName();
-        $path = $file->storeAs('image', $name);
+        $path = $file->storeAs('public/image', $name);
         $sites =  new Site;
-        $sites->image = $path;
-        $sites->site = $request->site;
-        $sites->lokasi = $request->lokasi;
+        $sites->image = $name;
+        $sites->radar_name = $request->radar_name;
+        $sites->station_id = $request->station_id;
         $sites->save();
     
         return redirect('site')->with('success', 'Data Created!');

@@ -19,12 +19,12 @@ class StockController extends Controller
         // $stocks = DB::table('stocks')->get();
         $stocks = Stock::select()
                         ->leftJoin('sites', 'sites.site_id', '=', 'stocks.site_id')
-                        ->orderBy('group', 'asc')
+                        // ->orderBy('group', 'asc')
                         ->get();
 
-        $rates = $ex_rate->apiCall();
+        $rate_fix = $ex_rate->apiCall();
 
-        return view('stocks_currencies.index', compact('stocks', 'rates'));
+        return view('stocks_currencies.index', compact('stocks', 'rate_fix'));
     }
 
     /**
@@ -35,11 +35,11 @@ class StockController extends Controller
     public function create(ExchangeRate $ex_rate)
     {
         $sites = DB::table('sites')
-                    ->select('site_id','site')
+                    ->select('site_id','station_id')
                     ->get();
 
-        $rates = $ex_rate->apiCall();        
-        return view('stocks_currencies.create', compact('rates', 'sites'));
+        $rate_fix = $ex_rate->apiCall();        
+        return view('stocks_currencies.create', compact('rate_fix', 'sites'));
     }
 
     /**
@@ -49,7 +49,7 @@ class StockController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+{
         //belom nambah validas
         Stock::create($request->all());
         
@@ -76,7 +76,21 @@ class StockController extends Controller
     public function edit(Stock $stock, ExchangeRate $ex_rate)
     {
         // $stock_data = Stock::where('stock_id');
-        $rates = $ex_rate->apiCall();
+        $rate_fix = $ex_rate->apiCall();
+
+        $siteAndStock = DB::table('sites')
+                            ->select()
+                            ->rightJoin('stocks', 'sites.site_id', '=', 'stocks.site_id')
+                            ->where('sites.site_id', '=', $stock->site_id)
+                            ->where('stocks.stock_id', '=', $stock->stock_id)
+                            ->first();
+
+        $sites = DB::table('sites')
+                    ->select('site_id', 'station_id')
+                    ->get();
+
+        // dd($siteAndStock);
+
         // $stocks = [
         //     'site_id' => $stock->site_id,
         //     'nama_barang' => $stock->nama_barang,
@@ -88,7 +102,7 @@ class StockController extends Controller
         //     'jumlah_unit' => $stock->jumlah_unit,
         // ];
 
-        return view('stocks_currencies.edit', compact('stock', 'rates'));
+        return view('stocks_currencies.edit', compact('siteAndStock', 'sites' , 'rate_fix'));
     }
 
     /**
@@ -101,17 +115,19 @@ class StockController extends Controller
     public function update(Request $request, Stock $stocks)
     {
         //belom nambah validasi
-        dd($request);
+        // dd($request);
         $stock_where = Stock::where('stock_id', $stocks->stock_id)
-                    ->udpate([
+                    ->update([
                         'site_id'=>$request->site_id,
                         'nama_barang'=>$request->nama_barang,
+                        'group'=>$request->group,
                         'part_number'=>$request->part_number,
                         'serial_number'=>$request->serial_number,
                         'tgl_masuk'=>$request->tgl_masuk,
                         'expired'=>$request->expired,
                         'kurs_beli'=>$request->kurs_beli,
-                        'jumlah_unit'=>$request->jumlah_unit
+                        'jumlah_unit'=>$request->jumlah_unit,
+                        'status'=>$request->status
                     ]);
 
         return redirect('stock_currency')->with('status2', 'Data berhasil di update');
@@ -120,11 +136,40 @@ class StockController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Stock $stock
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Stock $stock)
     {
-        //
+        // dd($stock);
+        Stock::destroy($stock->stock_id);
+        return redirect('/stock_currency')->with('status0', 'Data '.$stock->nama.' berhasil di hapus');
+    }
+
+    /**
+     * for reports stocks according input start date & end date
+     * 
+     * 
+     */
+    public function report($date_start, $date_end){
+        $siteAndStock = DB::table('sites')
+                            ->rightJoin('stocks', 'sites.site_id', '=', 'stocks.site_id')
+                            ->whereBetween('tgl_masuk', [$date_start, $date_end])
+                            ->get();
+
+        // dd($siteAndStock);
+
+        return view('stocks_currencies.print', compact('siteAndStock'));
+    }
+
+    public function showRecommendation(){
+        $recommendations =  DB::table('recommendations')
+        ->join('head_reports', 'recommendations.head_id', '=', 'head_reports.head_id')
+        ->join('stocks', 'recommendations.stock_id', '=', 'stocks.stock_id')
+        ->join('sites', 'stocks.site_id', '=', 'sites.site_id')
+        ->get();
+        //dd($recommendations);
+
+        return view('stocks_currencies.recommendation', compact('recommendations'));
     }
 }

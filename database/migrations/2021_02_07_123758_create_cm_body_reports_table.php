@@ -13,16 +13,28 @@ class CreateCmBodyReportsTable extends Migration
      */
     public function up()
     {
+        // ===== bawaan dari letoy =====
+        // Schema::create('cm_body_reports', function (Blueprint $table) {
+        //     $table->id();
+
+        //     $table->bigInteger('head_id'); // id of the head of current report. ex: if the id is 5 it means this report has the head reports of 5
+        //     $table->longText('remark');
+        
+        //     $table->timestamps();
+        // });
+        // ===== bawaan dari letoy =====
+            
+        // ==== hasil rancangan erd =====
         Schema::create('cm_body_reports', function (Blueprint $table) {
-            $table->id();
-
-            $table->bigInteger('head_id'); // id of the head of current report. ex: if the id is 5 it means this report has the head reports of 5
+            $table->bigIncrements('cm_id');
+            $table->foreignId('head_id');
             $table->longText('remark');
-
+        
             $table->timestamps();
         });
+        // ==== hasil rancangan erd =====
     }
-
+    
     /**
      * Reverse the migrations.
      *
