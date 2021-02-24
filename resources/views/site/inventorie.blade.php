@@ -14,7 +14,7 @@
         <div class="card">
           {{-- header read plg luar --}}
           <div class="card-header card-header-primary">
-              <h4 class="card-title">Table Inventory {{$sites->radar_name}}</h4>
+              <h4 class="card-title">Table Inventory {{$stocks[0]->radar_name ?? ''}}</h4>
           </div>
 
           {{-- body paling luar --}}
@@ -33,7 +33,7 @@
             
             <div class="col-12 text-right">
                       
-              <a rel="tooltip" class="btn btn-success" type="button" href="{{ url('inventorySite') }}/{{$stocks[0]->site_id}}">
+              <a rel="tooltip" class="btn btn-success" type="button" href="{{ url('inventorySite') }}/{{$stocks[0]->site_id ?? ''}}">
                 <i class="material-icons">
                   local_printshop
                 </i> Print Data
@@ -63,19 +63,22 @@
                       <th>Expired</th>
                     </thead>
                       <tbody>
-                        @foreach ($stocks as $st)
-                          <tr>
-                            <input type="hidden" value="{{ $st->group }}">
-                            <td scope="row">{{$loop->iteration}}</td>
-                            <td>{{ $st->nama_barang }}</td>
-                            <td>{{ $st->part_number }}</td>
-                            <td>{{ $st->serial_number }}</td>
-                            <td>{{ $st->tgl_masuk }}</td>
-                            <td>{{ $st->expired }}</td>
-                              
-                            </td>
-                          </tr>
-                        @endforeach
+                        @if ($stocks)
+                          @foreach ($stocks as $st)
+                            <tr>
+                              <input type="hidden" value="{{ $st->group }}">
+                              <td scope="row">{{$loop->iteration}}</td>
+                              <td>{{ $st->nama_barang }}</td>
+                              <td>{{ $st->part_number }}</td>
+                              <td>{{ $st->serial_number }}</td>
+                              <td>{{ $st->tgl_masuk }}</td>
+                              <td>{{ $st->expired }}</td>
+                                
+                              </td>
+                            </tr>
+                          @endforeach
+                            
+                        @endif
                       </tbody>
                   </table>
                 </div>

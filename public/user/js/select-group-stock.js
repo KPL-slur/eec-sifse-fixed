@@ -22,7 +22,7 @@ function selectGroupIndexStocks(){
               header.innerHTML = "Receiver"
             } else if ( input == 3){
               header.innerHTML = "Antenna"
-            } else if (input == 4){
+            } else if (input == 0){
               header.innerHTML = "Tambahan"
             }
         } else {
