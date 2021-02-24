@@ -23,7 +23,6 @@ class SiteController extends Controller
         ->first();
         //dd($sites);
         
-
         $stocks = DB::table('stocks')
         ->join('sites', 'stocks.site_id', '=', 'sites.site_id')
         ->where('sites.site_id', '=', $id)

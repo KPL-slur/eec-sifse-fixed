@@ -22,7 +22,7 @@ class ValidateStockRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {     
+    {
         $rules = [
             'site_id' => ['required'],
             'nama_barang' => ['required'],

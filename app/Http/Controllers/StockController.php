@@ -41,7 +41,7 @@ class StockController extends Controller
                     ->select('site_id','station_id')
                     ->get();
 
-        $rate_fix = $ex_rate->apiCall();        
+        $rate_fix = $ex_rate->apiCall();
         return view('stocks_currencies.create', compact('rate_fix', 'sites'));
     }
 
