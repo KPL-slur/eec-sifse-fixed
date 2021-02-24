@@ -13,5 +13,6 @@ class Recommendation extends Model
         'head_id',
         'stock_id',
         'jumlah_unit_needed',
+        'year',
     ];
 }

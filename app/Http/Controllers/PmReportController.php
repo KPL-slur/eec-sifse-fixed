@@ -66,8 +66,8 @@ class PmReportController extends Controller
         $maintenance_type = "pm";
         $headReports = HeadReport::where('maintenance_type', $maintenance_type)
         //select eecid expertise only
-        ->with(array('experts'=>function($query){
-            $query->where('expert_company','Era Elektra Corpora Indonesia');
+        ->with(array('experts'=>function ($query) {
+            $query->where('expert_company', 'Era Elektra Corpora Indonesia');
         }))
         ->get();
 
@@ -96,10 +96,10 @@ class PmReportController extends Controller
     }
 
     /**
-     * Rawan akan kesalahan data, Semisal head sudah di store namun pmbodyreport gagal di store 
-     * akan menyebabkan itegeritas data menjadi rusak, sehingga data yg akan dimasukan setelahnya 
+     * Rawan akan kesalahan data, Semisal head sudah di store namun pmbodyreport gagal di store
+     * akan menyebabkan itegeritas data menjadi rusak, sehingga data yg akan dimasukan setelahnya
      * menjadi error semua. misal akan terjadi sebuah head yg tidak memiliki body.
-     * 
+     *
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -142,7 +142,7 @@ class PmReportController extends Controller
 
         //INSERT NEW EXPERT
         if ($request->manualExperts) {
-            foreach ($request->manualExperts as $manualExpert){
+            foreach ($request->manualExperts as $manualExpert) {
                 if ($manualExpert['expert_name']) {
                     Expert::create([
                         'name' => $manualExpert['expert_name'],
@@ -162,31 +162,37 @@ class PmReportController extends Controller
         PmBodyReport::create($request->all());
 
         //INSERT RECOMENDATION
-        foreach ($request->recommends as $recommend){
-            if ($recommend['stock_id']) {
-                Recommendation::create([
+        if ($request->recommends) {
+            foreach ($request->recommends as $recommend) {
+                if ($recommend['stock_id']) {
+                    Recommendation::create([
                     'head_id' => $request->head_id,
                     'stock_id' => $recommend['stock_id'],
                     'jumlah_unit_needed' => $recommend['jumlah_unit_needed'],
+                    'year' => now()->year
                 ]);
+                }
             }
         }
 
         //INSERT MANUAL RECOMENDATION
-        foreach ($request->manualRecommends as $manualRecommend){
-            if ($manualRecommend['stock_id']) {
-                Stock::create([
+        if ($request->manualRecommends) {
+            foreach ($request->manualRecommends as $manualRecommend) {
+                if ($manualRecommend['nama_barang']) {
+                    Stock::create([
                     'nama_barang' => $manualRecommend['nama_barang'],
                     'group' => $manualRecommend['group'],
                 ]);
 
-                $stockId = Stock::select('stock_id')->orderByDesc('stock_id')->first()->stock_id; //used to determine the expert_id of this report
+                    $stockId = Stock::select('stock_id')->orderByDesc('stock_id')->first()->stock_id; //used to determine the expert_id of this report
 
-                Recommendation::create([
+                    Recommendation::create([
                     'head_id' => $request->head_id,
                     'stock_id' => $stockId,
                     'jumlah_unit_needed' => $recommend['jumlah_unit_needed'],
+                    'year' => now()->year
                 ]);
+                }
             }
         }
         
@@ -236,7 +242,106 @@ class PmReportController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // $expert_report_id = ExpertReport::select('expert_report_id')->where('head_id', $request->head_id)->get()->toArray();
+        // dd($expert_report_id);
+
+        //INSERT HEADREPORT
+        Headreport::where('head_id', $request->head_id)
+        ->update([
+            'head_id' => $request->head_id,
+            'site_id' => $request->site_id,
+            'maintenance_type' => 'pm',
+            'report_date_start' => $request->report_date_start,
+            'report_date_end' => $request->report_date_end,
+        ]);
+
+
+        //INSERT EXPERTREPORT
+        $old_id = [];
+        foreach($request->old as $index => $old){
+            $old_id[$index] = $old;
+        }
+        foreach ($request->experts as $index => $expert) {
+            if ($expert['expert_id']) {
+                if($index < count($old_id)) {
+                    ExpertReport::where('head_id', $request->head_id)
+                    ->where('expert_report_id', $old_id[$index])
+                    ->update([
+                        'head_id' => $request->head_id,
+                        'expert_id' => $expert['expert_id']
+                    ]);
+                }
+                else{
+                    ExpertReport::create([
+                        'head_id' => $request->head_id,
+                        'expert_id' => $expert['expert_id']
+                    ]);
+                }
+            }
+        }
+
+        //INSERT NEW EXPERT
+        if ($request->manualExperts) {
+            foreach ($request->manualExperts as $manualExpert) {
+                if ($manualExpert['expert_name']) {
+                    Expert::create([
+                        'name' => $manualExpert['expert_name'],
+                        'nip' => $manualExpert['expert_nip'],
+                        'expert_company' => $manualExpert['expert_company'],
+                        ]);
+                    $expertId = Expert::select('expert_id')->orderByDesc('expert_id')->first()->expert_id; //used to determine the expert_id of this report
+                    ExpertReport::create([
+                        'head_id' => $request->head_id,
+                        'expert_id' => $expertId
+                    ]);
+                }
+            }
+        }
+
+        //INSERT BODY REPORT
+        // PmBodyReport::where('head_id', $request->head_id)
+        // ->update($request->all());
+        $input = $request->all();
+        $pmBodyReport = PmBodyReport::where('head_id', $request->head_id)->first();
+        $pmBodyReport->fill($input)->save();
+
+        $year = Recommendation::select('year')->where('head_id', $request->head_id)->first()->year; //used to determine the expert_id of this report
+
+        //INSERT RECOMENDATION
+        if ($request->recommends) {
+            foreach ($request->recommends as $recommend) {
+                if ($recommend['stock_id']) {
+                    Recommendation::where('head_id', $request->head_id)
+                    ->update([
+                        'head_id' => $request->head_id,
+                        'stock_id' => $recommend['stock_id'],
+                        'jumlah_unit_needed' => $recommend['jumlah_unit_needed'],
+                        'year' => $year
+                    ]);
+                }
+            }
+        }
+
+        //INSERT MANUAL RECOMENDATION
+        if ($request->manualRecommends) {
+            foreach ($request->manualRecommends as $manualRecommend) {
+                if ($manualRecommend['nama_barang']) {
+                    Stock::create([
+                        'nama_barang' => $manualRecommend['nama_barang'],
+                        'group' => $manualRecommend['group'],
+                    ]);
+
+                    $stockId = Stock::select('stock_id')->orderByDesc('stock_id')->first()->stock_id; //used to determine the expert_id of this report
+    
+                    Recommendation::create([
+                        'head_id' => $request->head_id,
+                        'stock_id' => $stockId,
+                        'jumlah_unit_needed' => $recommend['jumlah_unit_needed'],
+                        'year' => $year
+                    ]);
+                }
+            }
+        }
     }
 
     /**
@@ -248,16 +353,5 @@ class PmReportController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    /**
-     * Image upload view.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function reportImage($id)
-    {
-        return view('expert/report/layout/report-images', compact('id'));
     }
 }

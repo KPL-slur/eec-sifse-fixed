@@ -59,7 +59,7 @@
                 </div>
                 @if ($attachments[$index]['image'])
                     <img class="fileinput-preview fileinput-exists thumbnail img-raised image-upload-preview"
-                        src="{{ asset('storage/'.$attachments[$index]['image']) ?? $attachments[$index]['image']->temporaryUrl() }}">
+                        src="{{ ($edit) ? asset('storage/'.$attachments[$index]['image']) : $attachments[$index]['image']->temporaryUrl() }}">
                     <div>
 
                     <button class="btn btn-sm btn-primary"

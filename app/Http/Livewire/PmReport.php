@@ -8,6 +8,7 @@ use Livewire\WithFileUploads;
 
 use App\Models\HeadReport;
 use App\Models\Expert;
+use App\Models\ExpertReport;
 use App\Models\Site;
 
 use App\Models\Recommendation;
@@ -19,7 +20,9 @@ class PmReport extends Component
 {
     public $currentStep = 1;
 
-    public $headReport, $pmBodyReport, $recommendations, $reportImages;
+    public $edit;
+
+    public $headReport, $pmBodyReport, $recommendations, $reportImages, $expertReportId;
 
     public $headId;
 
@@ -121,7 +124,9 @@ class PmReport extends Component
             $this->pmBodyReport = HeadReport::Where('head_id', $id)->first()->pmBodyReport;
             $this->recommendations = HeadReport::Where('head_id', $id)->first()->recommendations;
             $this->reportImages = HeadReport::Where('head_id', $id)->first()->reportImages;
-
+            $this->expertReportId = ExpertReport::Where('head_id', $id)->get();
+            $this->headId = $this->headReport->head_id;
+            $this->edit = 1;
             //INITIALIZE EDIT DATA HEAD REPORT
             $this->site_id = $this->headReport->site_id;
             $this->report_date_start = $this->headReport->report_date_start;
@@ -219,27 +224,29 @@ class PmReport extends Component
                 $this->attachments[] = ['image' => $reportImage->image, 'caption' => $reportImage->caption, 'uploaded' => 1];
             }
             // dd($this->attachments);
+        } else {
+            
+            $this->headId = HeadReport::select('head_id')->orderByDesc('head_id')->first()->head_id + 1;
+
+            //expert mount
+            $this->experts = [
+                ['expert_id' => '', 'expert_company' => '', 'expert_nip' => '']
+            ];
+            
+            //recomendation mount
+            $this->recommends = [
+                ['stock_id' => '', 'jumlah_unit_needed' => 1]
+            ];
+
+            // images mount
+            $this->attachments = [
+                ['caption' => '', 'image' => '', 'uploaded' => 0]
+            ];
         }
 
-        $this->headId = HeadReport::select('head_id')->orderByDesc('head_id')->first()->head_id + 1;
-
-        //expert mount
-        // $this->experts = [
-        //     ['expert_id' => '', 'expert_company' => '', 'expert_nip' => '']
-        // ];
+        $this->stocks = Stock::all();
         $this->expertsData = Expert::all();
         $this->uniqueCompanies = $this->expertsData->unique('expert_company');
-
-        //recomendation mount
-        $this->stocks = Stock::all();
-        // $this->recommends = [
-        //     ['stock_id' => '', 'jumlah_unit_needed' => 1]
-        // ];
-
-        // images mount
-        // $this->attachments = [
-        //     ['caption' => '', 'image' => '', 'uploaded' => 0]
-        // ];
     }
 
     // EXXPERT METHOD
@@ -287,7 +294,7 @@ class PmReport extends Component
 
     public function addManualRecommends ()
     {
-        $this->manualRecommends[] = ['nama_barang' => '', 'jumlah_unit_needed' => 1];
+        $this->manualRecommends[] = ['nama_barang' => '','group' => '', 'jumlah_unit_needed' => 1];
     }
 
     public function removeManualRecommends($index)

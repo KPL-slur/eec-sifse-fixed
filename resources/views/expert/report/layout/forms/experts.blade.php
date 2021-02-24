@@ -17,6 +17,10 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <?php $id_report = []; ?>
+                        @foreach($expertReportId as $index => $er)
+                            <?php $id_report[$index] = $er->expert_report_id; ?>
+                        @endforeach
                         @foreach ($experts as $index => $expert)
                             <tr>
                                 <td>
@@ -37,6 +41,10 @@
                                                 </option>
                                             @endforeach
                                         </select>
+                                        <?php $count = count($id_report); ?>
+                                        @if($index < $count)
+                                        <input type="hidden" name="old[{{$index}}]" value="{{$id_report[$index]}}">
+                                        @endif
                                     </div>
                                 </td>
                                 <td>
