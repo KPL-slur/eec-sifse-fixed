@@ -17,10 +17,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $id_report = []; ?>
-                        @foreach($expertReportId as $index => $er)
-                            <?php $id_report[$index] = $er->expert_report_id; ?>
-                        @endforeach
                         @foreach ($experts as $index => $expert)
                             <tr>
                                 <td>
@@ -41,9 +37,14 @@
                                                 </option>
                                             @endforeach
                                         </select>
-                                        <?php $count = count($id_report); ?>
-                                        @if($index < $count)
-                                        <input type="hidden" name="old[{{$index}}]" value="{{$id_report[$index]}}">
+
+                                        {{-- Jika index masih dalam range count, maka index tersebut pernah diisi pada record sebelumnya.
+                                            Maka dari itu, kita harus mengetahui expert_report_id (primary key) dari record tersebut. --}}
+                                        @if($index < $countExpertReportId)
+                                            {{-- expert_report_id (primary key) dari record sebelumnya, disimpan dan dikirim kedalam
+                                                sebuah input hidden untuk selanjutnya digunakan sebagai penanda untuk melakukan update
+                                                pada kontroller --}}
+                                            <input type="hidden" name="old_expert_report_id[{{$index}}]" value="{{$expertReportId[$index]}}">
                                         @endif
                                     </div>
                                 </td>
@@ -61,7 +62,8 @@
                                             disabled type="text"
                                             name="experts[{{ $index }}][expert_company]" 
                                             placeholder="{{ ($selectedExpert[$index]->expert_company) ?? ''}}" 
-                                            value="{{ ($selectedExpert[$index]->expert_company) ?? '' }}" 
+                                            wire:model="experts.{{ $index }}.expert_company"
+                                            {{-- value="{{ ($selectedExpert[$index]->expert_company) ?? '' }}"  --}}
                                     />
                                 </td>
                                 <td>
@@ -78,7 +80,8 @@
                                             disabled type="text"
                                             name="experts[{{ $index }}][expert_nip]" 
                                             placeholder="{{ ($selectedExpert[$index]->nip) ?? ''}}" 
-                                            value="{{ ($selectedExpert[$index]->nip) ?? '' }}" 
+                                            wire:model="experts.{{ $index }}.expert_nip"
+                                            {{-- value="{{ ($selectedExpert[$index]->nip) ?? '' }}"  --}}
                                     />
                                 </td>
                                 <td>

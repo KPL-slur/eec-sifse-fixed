@@ -22,7 +22,8 @@ class PmReport extends Component
 
     public $edit;
 
-    public $headReport, $pmBodyReport, $recommendations, $reportImages, $expertReportId;
+    // Variabel untuk menampung model
+    public $headReport, $pmBodyReport, $recommendations, $reportImages, $expertReportsId;
 
     public $headId;
 
@@ -52,6 +53,10 @@ class PmReport extends Component
     public $expertsData;
     public $uniqueCompanies;
     public $selectedExpert = []; //queriedvalue
+
+    // variabel untuk edit dynamic expert form
+    public $countExpertReportId; // variabel menampung panjang array expertReportId
+    public $expertReportId = []; // array meanmpung export_report_id yg sudah di extract dari model
 
     // recomendation form
     public $stocks = [];
@@ -124,7 +129,7 @@ class PmReport extends Component
             $this->pmBodyReport = HeadReport::Where('head_id', $id)->first()->pmBodyReport;
             $this->recommendations = HeadReport::Where('head_id', $id)->first()->recommendations;
             $this->reportImages = HeadReport::Where('head_id', $id)->first()->reportImages;
-            $this->expertReportId = ExpertReport::Where('head_id', $id)->get();
+            $this->expertReportsId = ExpertReport::Where('head_id', $id)->get(); //mengambil id expert_report_id //masih dlm collection
             $this->headId = $this->headReport->head_id;
             $this->edit = 1;
             //INITIALIZE EDIT DATA HEAD REPORT
@@ -223,6 +228,16 @@ class PmReport extends Component
             foreach ($this->reportImages as $reportImage) {
                 $this->attachments[] = ['image' => $reportImage->image, 'caption' => $reportImage->caption, 'uploaded' => 1];
             }
+
+            /*
+             *  Bagian ini mengextrak model kedalam array dan 
+             *  menghitung jumlah record expert_report sebelumnya
+             */
+            foreach($this->expertReportsId as $index => $erId){
+                $this->expertReportId[$index] = $erId->expert_report_id;
+            }
+            $this->countExpertReportId = count($this->expertReportId);
+
             // dd($this->attachments);
         } else {
             
@@ -257,6 +272,9 @@ class PmReport extends Component
     
     public function removeExpert($index)
     {
+        if ($this->experts[$index]['expert_id']) {
+            ExpertReport::where('expert_report_id', $this->expertReportId[$index])->delete();
+        }
         unset($this->experts[$index]);
         array_values($this->experts);
     }
@@ -276,7 +294,8 @@ class PmReport extends Component
         // dd($this->experts[$index]['expert_id']);
         if(!empty($this->experts[$index]['expert_id'])){
             $this->selectedExpert[$index] = Expert::where('expert_id', $this->experts[$index]['expert_id'])->first();
-            // dd($this->selectedExpert);
+            $this->experts[$index]['expert_company'] = $this->selectedExpert[$index]->expert_company;
+            $this->experts[$index]['expert_nip'] = $this->selectedExpert[$index]->nip;
         }
     }
 

@@ -9,6 +9,8 @@ class PmBodyReport extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'pm_id';
+
     protected $fillable = [
         'head_id',
         'radio_general_visual',

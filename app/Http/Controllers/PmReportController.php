@@ -242,10 +242,7 @@ class PmReportController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $expert_report_id = ExpertReport::select('expert_report_id')->where('head_id', $request->head_id)->get()->toArray();
-        // dd($expert_report_id);
-
-        //INSERT HEADREPORT
+        //UPDATE HEADREPORT
         Headreport::where('head_id', $request->head_id)
         ->update([
             'head_id' => $request->head_id,
@@ -256,21 +253,24 @@ class PmReportController extends Controller
         ]);
 
 
-        //INSERT EXPERTREPORT
-        $old_id = [];
-        foreach($request->old as $index => $old){
-            $old_id[$index] = $old;
+        //UPDATE EXPERTREPORT
+        // cek apakah sudah ada record dengan id yg sama sebelumnya
+        $oldExpertReportId = [];
+        foreach($request->old_expert_report_id as $index => $old_expert_report_id){
+            $oldExpertReportId[$index] = $old_expert_report_id;
         }
         foreach ($request->experts as $index => $expert) {
             if ($expert['expert_id']) {
-                if($index < count($old_id)) {
+                //jika iya, maka lakukan update pada record tersebut
+                if($index < count($oldExpertReportId)) {
                     ExpertReport::where('head_id', $request->head_id)
-                    ->where('expert_report_id', $old_id[$index])
+                    ->where('expert_report_id', $oldExpertReportId[$index])
                     ->update([
                         'head_id' => $request->head_id,
                         'expert_id' => $expert['expert_id']
                     ]);
                 }
+                //jika tidak, buat record baru
                 else{
                     ExpertReport::create([
                         'head_id' => $request->head_id,
@@ -280,7 +280,7 @@ class PmReportController extends Controller
             }
         }
 
-        //INSERT NEW EXPERT
+        //INSERT NEW EXPERT, selalu buat baru
         if ($request->manualExperts) {
             foreach ($request->manualExperts as $manualExpert) {
                 if ($manualExpert['expert_name']) {
@@ -305,9 +305,10 @@ class PmReportController extends Controller
         $pmBodyReport = PmBodyReport::where('head_id', $request->head_id)->first();
         $pmBodyReport->fill($input)->save();
 
-        $year = Recommendation::select('year')->where('head_id', $request->head_id)->first()->year; //used to determine the expert_id of this report
+        //mengambil nilai tahun dari record sebelumnya
+        $year = Recommendation::select('year')->where('head_id', $request->head_id)->first()->year; 
 
-        //INSERT RECOMENDATION
+        //UPDATE RECOMENDATION
         if ($request->recommends) {
             foreach ($request->recommends as $recommend) {
                 if ($recommend['stock_id']) {
@@ -322,7 +323,7 @@ class PmReportController extends Controller
             }
         }
 
-        //INSERT MANUAL RECOMENDATION
+        //INSERT MANUAL RECOMENDATION, selalu buat baru
         if ($request->manualRecommends) {
             foreach ($request->manualRecommends as $manualRecommend) {
                 if ($manualRecommend['nama_barang']) {
