@@ -28,5 +28,6 @@
     <button class="btn btn-primary nextBtn btn-lg pull-right {{ $currentStep === 5 ? 'd-none' : '' }}" type="button" wire:click="nextStep">Next</button>
     <button class="btn btn-success nextBtn btn-lg pull-right {{ $currentStep !== 5 ? 'd-none' : '' }}" type="submit">Submit</button>
     <button class="btn btn-danger nextBtn btn-lg pull-right {{ $currentStep === 1 ? 'd-none' : '' }}" type="button" wire:click="back">Back</button>
+    <a class="btn btn-danger nextBtn btn-lg pull-right {{ $currentStep !== 1 ? 'd-none' : '' }}" type="button" href="{{ route('pm.index') }}">Cancel</a>
 </form>
 <script src="{{ asset('user') }}/js/report.js" type="text/javascript"></script>

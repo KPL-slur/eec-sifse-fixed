@@ -380,10 +380,10 @@ class PmReportController extends Controller
         }
 
         HeadReport::destroy($id);
-        PmBodyReport::where('head_id', $id)->delete();
-        Recommendation::where('head_id', $id)->delete();
-        ExpertReport::where('head_id', $id)->delete();
         ReportImage::where('head_id', $id)->delete();
+        // PmBodyReport::where('head_id', $id)->delete();
+        // Recommendation::where('head_id', $id)->delete();
+        // ExpertReport::where('head_id', $id)->delete();
 
         return redirect()->route('pm.index')->with('status', 'Data Dihapus');
     }
