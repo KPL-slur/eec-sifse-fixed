@@ -9,6 +9,8 @@ class Recommendation extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'rec_id';
+
     protected $fillable = [
         'head_id',
         'stock_id',

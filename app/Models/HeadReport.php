@@ -29,7 +29,7 @@ class HeadReport extends Model
     }
     public function recommendations()
     {
-        return $this->belongsToMany(Stock::class, 'recommendations', 'head_id', 'stock_id')->withPivot('jumlah_unit_needed');
+        return $this->belongsToMany(Stock::class, 'recommendations', 'head_id', 'stock_id')->withPivot('jumlah_unit_needed', 'rec_id');
     }
 
     //ONE TO ONE

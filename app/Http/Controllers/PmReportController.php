@@ -309,16 +309,33 @@ class PmReportController extends Controller
         $year = Recommendation::select('year')->where('head_id', $request->head_id)->first()->year; 
 
         //UPDATE RECOMENDATION
+        // cek apakah sudah ada record dengan id yg sama sebelumnya
+        $oldRecommendationId = [];
+        foreach($request->old_recommendation_id as $index => $old_recommendation_id){
+            $oldRecommendationId[$index] = $old_recommendation_id;
+        }
         if ($request->recommends) {
-            foreach ($request->recommends as $recommend) {
+            foreach ($request->recommends as $index => $recommend) {
                 if ($recommend['stock_id']) {
-                    Recommendation::where('head_id', $request->head_id)
-                    ->update([
-                        'head_id' => $request->head_id,
-                        'stock_id' => $recommend['stock_id'],
-                        'jumlah_unit_needed' => $recommend['jumlah_unit_needed'],
-                        'year' => $year
-                    ]);
+                    //jika iya, maka lakukan update pada record tersebut
+                    if($index < count($oldRecommendationId)) {
+                        Recommendation::where('rec_id', $oldRecommendationId[$index])
+                        ->update([
+                            'head_id' => $request->head_id,
+                            'stock_id' => $recommend['stock_id'],
+                            'jumlah_unit_needed' => $recommend['jumlah_unit_needed'],
+                            'year' => $year
+                        ]);
+                    }
+                    //jika tidak, buat record baru
+                    else{
+                        Recommendation::create([
+                            'head_id' => $request->head_id,
+                            'stock_id' => $recommend['stock_id'],
+                            'jumlah_unit_needed' => $recommend['jumlah_unit_needed'],
+                            'year' => $year
+                        ]);
+                    }
                 }
             }
         }

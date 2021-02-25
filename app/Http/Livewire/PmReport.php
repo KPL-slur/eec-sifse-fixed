@@ -63,6 +63,10 @@ class PmReport extends Component
     public $recommends = [];
     public $manualRecommends = [];
 
+    // variabel untuk edit dynamic recomend form
+    public $countRecommendationId; // variabel menampung panjang array expertReportId
+    public $recommendationId = []; // array meanmpung export_report_id yg sudah di extract dari model
+
     // report image form
     public $caption;
     public $image=[];
@@ -237,6 +241,15 @@ class PmReport extends Component
                 $this->expertReportId[$index] = $erId->pivot->expert_report_id;
             }
             $this->countExpertReportId = count($this->expertReportId);
+
+            /*
+             *  Bagian ini mengextrak model kedalam array dan 
+             *  menghitung jumlah record recomendation sebelumnya
+             */
+            foreach($this->recommendations as $index => $recommendation){
+                $this->recommendationId[$index] = $recommendation->pivot->rec_id;
+            }
+            $this->countRecommendationId = count($this->recommendationId);
 
             // dd($this->attachments);
         } else {
