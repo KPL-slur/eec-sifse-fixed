@@ -23,7 +23,7 @@ class PmReport extends Component
     public $edit;
 
     // Variabel untuk menampung model
-    public $headReport, $pmBodyReport, $recommendations, $reportImages, $expertReportsId;
+    public $headReport, $pmBodyReport, $recommendations, $reportImages;
 
     public $headId;
 
@@ -129,7 +129,7 @@ class PmReport extends Component
             $this->pmBodyReport = HeadReport::Where('head_id', $id)->first()->pmBodyReport;
             $this->recommendations = HeadReport::Where('head_id', $id)->first()->recommendations;
             $this->reportImages = HeadReport::Where('head_id', $id)->first()->reportImages;
-            $this->expertReportsId = ExpertReport::Where('head_id', $id)->get(); //mengambil id expert_report_id //masih dlm collection
+
             $this->headId = $this->headReport->head_id;
             $this->edit = 1;
             //INITIALIZE EDIT DATA HEAD REPORT
@@ -233,8 +233,8 @@ class PmReport extends Component
              *  Bagian ini mengextrak model kedalam array dan 
              *  menghitung jumlah record expert_report sebelumnya
              */
-            foreach($this->expertReportsId as $index => $erId){
-                $this->expertReportId[$index] = $erId->expert_report_id;
+            foreach($this->expertReports as $index => $erId){
+                $this->expertReportId[$index] = $erId->pivot->expert_report_id;
             }
             $this->countExpertReportId = count($this->expertReportId);
 
@@ -291,7 +291,6 @@ class PmReport extends Component
     }
 
     public function setCompanyAndNip($index){
-        // dd($this->experts[$index]['expert_id']);
         if(!empty($this->experts[$index]['expert_id'])){
             $this->selectedExpert[$index] = Expert::where('expert_id', $this->experts[$index]['expert_id'])->first();
             $this->experts[$index]['expert_company'] = $this->selectedExpert[$index]->expert_company;
