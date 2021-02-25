@@ -19,7 +19,7 @@
                   <select name="site_id" id="site_id" class="form-control @error('site_id') is-invalid @enderror">
                     <option value="">-- Pilih Site --</option>
                     @foreach ($sites as $st)
-                      <option value="{{ $st->site_id }}" {{ old('site') == $st->station_id ? 'selected' : '' }}>{{ $st->station_id }}</option>  
+                      <option value="{{ $st->site_id }}" {{ old('site_id') == $st->site_id ? 'selected' : '' }}>{{ $st->station_id }}</option>  
                     @endforeach
                   </select>
                   {{-- <input type="text" class="form-control" id="site_id" name="site_id"> --}}
@@ -95,7 +95,6 @@
                 <div class="form-group my-4">
                   <label for="kurs_beli">Kurs Beli</label>
                   <input type="text" class="form-control @error('kurs_beli') is-invalid @enderror" id="kurs_beli" name="kurs_beli" placeholder="Kurs Beli" value="{{ old('kurs_beli') }}">
-                  <button type="button" id="button_kurs_beli" class="btn btn-sm my-4">Ingin masukkan kurs sekarang?</button>
                   <script type="text/javascript">
                     document.getElementById("button_kurs_beli").addEventListener("click", (e) => {
                       document.getElementById("kurs_beli").value = '<?php echo $rate_fix ?>';
@@ -106,6 +105,7 @@
                       Kurs beli belum diisi
                     </div>
                   @enderror
+                  <button type="button" id="button_kurs_beli" class="btn btn-sm my-4">Ingin masukkan kurs sekarang?</button>
                 </div>
                 <div class="form-group my-4">
                   <label for="jumlah_unit">Jumlah Unit</label>
@@ -119,7 +119,7 @@
                 <div class="form-group my-4">
                   <label for="status">Status</label>
                   <select name="status" id="status" class="form-control @error('status') is-invalid @enderror">
-                    <option value="" {{ old('status') == '' ? 'selected' : '' }}>-- is it obsolete or not? --</option>
+                    <option value="" selected>-- is it obsolete or not? --</option>
                     <option value="0" {{ old('status') == 0 ? 'selected' : '' }}>Not Obsolete</option>
                     <option value="1" {{ old('group') == 1 ? 'selected' : '' }}>Obsolete</option>
                   </select>

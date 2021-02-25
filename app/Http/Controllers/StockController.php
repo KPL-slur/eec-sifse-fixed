@@ -52,9 +52,7 @@ class StockController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(ValidateStockRequest $request)
-    {
-        //belom nambah validas
-        
+    {        
         // validasi
         // $validated = $request->validated();
         Stock::create($request->validated());
@@ -85,18 +83,25 @@ class StockController extends Controller
         // $stock_data = Stock::where('stock_id');
         $rate_fix = $ex_rate->apiCall();
 
-        $siteAndStock = DB::table('sites')
-                            ->select()
-                            ->rightJoin('stocks', 'sites.site_id', '=', 'stocks.site_id')
-                            ->where('sites.site_id', '=', $stock->site_id)
-                            ->where('stocks.stock_id', '=', $stock->stock_id)
+        // $siteAndStock = DB::table('sites')
+        //                     ->select('station_id', 'stock_id', 'nama_barang', 'group', 'part_number', 'serial_number', 'tgl_masuk', 'expired', 'kurs_beli', 'jumlah_unit')
+        //                     ->rightJoin('stocks', 'sites.site_id', '=', 'stocks.site_id')
+        //                     ->where('sites.site_id', '=', $stock->site_id)
+        //                     ->where('stocks.stock_id', '=', $stock->stock_id)
+        //                     ->first();
+
+        $siteAndStock = DB::table('stocks')
+                            ->select('stocks.site_id', 'station_id', 'stock_id', 'nama_barang', 'group', 'part_number','serial_number', 'tgl_masuk', 'expired', 'kurs_beli', 'jumlah_unit', 'status')
+                            ->leftJoin('sites', 'stocks.site_id', '=', 'sites.site_id')
+                            ->where('stocks.stock_id', $stock->stock_id)
                             ->first();
+
+        // dd($siteAndStock);
 
         $sites = DB::table('sites')
                     ->select('site_id', 'station_id')
                     ->get();
-
-        // dd($siteAndStock);
+        // dd($sites);
 
         // $stocks = [
         //     'site_id' => $stock->site_id,

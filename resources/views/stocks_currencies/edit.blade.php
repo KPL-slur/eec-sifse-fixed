@@ -18,9 +18,13 @@
                     <div class="form-group my-4">
                       <label for="site_id">Pilih Site(?)</label>
                       <select name="site_id" id="site_id" class="form-control">
+                        @php
+                            $chosen_site = 0;
+                        @endphp
                         @foreach ($sites as $st)
-                            <option value="{{ $st->site_id }}" @if ($siteAndStock->site_id == $st->site_id) selected  @endif >{{ $st->station_id }}</option>
+                          <option value="{{ $st->site_id }}" @if ($siteAndStock->site_id == $st->site_id) selected @php $chosen_site = 1 @endphp @endif >{{ $st->station_id }}</option>
                         @endforeach
+                          <option value="{{ $siteAndStock->site_id }}" @if ($chosen_site == 0) selected  @endif >{{ $siteAndStock->station_id ?? 'Site ini masih belum ada namanya' }}</option>
                       </select>
                       {{-- <input type="text" class="form-control" id="site_id" name="site_id" placeholder="Site(?) nnt dropdown / checkbox" value="{{ $siteAndStock->site }}"> --}}
                     </div>
@@ -35,6 +39,7 @@
                         <option value="1" @if ($siteAndStock->group == 1) selected @endif >Transmitter</option>
                         <option value="2" @if ($siteAndStock->group == 2) selected @endif >Receiver</option>
                         <option value="3" @if ($siteAndStock->group == 3) selected @endif >Antenna</option>
+                        <option value="0" @if ($siteAndStock->group == 0) selected @endif >Tambahan</option>
                       </select>
                     </div>
                     <div class="form-group my-4">
