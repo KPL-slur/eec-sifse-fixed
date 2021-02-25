@@ -42,29 +42,29 @@
                     <tbody>
                         @foreach ($siteAndStock as $st)
                         <tr>
-                            <td scope="row">{{$loop->iteration}}</td>
-                            @if($st->group == 1)
-                                <td>Transmitter</td>
-                            @elseif($st->group == 2)
-                                <td>Receiver</td>
-                            @elseif($st->group == 3)
-                                <td>Antenna</td>
-                            @else
-                                <td>Tambahan</td>
-                            @endif
-                            <td>{{ $st->station_id }}</td>
-                            <td>{{ $st->nama_barang }}</td>
-                            <td>{{ $st->part_number }}</td>
-                            <td>{{ $st->serial_number }}</td>
-                            <td>{{ $st->tgl_masuk }}</td>
-                            <td>{{ $st->expired }}</td>
-                            <td>{{ $st->kurs_beli }}</td>
-                            <td>{{ $st->jumlah_unit }}</td>
-                            @if ($st->status == 1)
-                                <td>Obsolete</td>
-                            @else
-                                <td>Not Obsolete</td>
-                            @endif
+                          <td scope="row">{{$loop->iteration}}</td>
+                          @if($st->group == 1)
+                              <td>Transmitter</td>
+                          @elseif($st->group == 2)
+                              <td>Receiver</td>
+                          @elseif($st->group == 3)
+                              <td>Antenna</td>
+                          @else
+                              <td>Tambahan</td>
+                          @endif
+                          <td>{{ $st->station_id }}</td>
+                          <td>{{ $st->nama_barang }}</td>
+                          <td>{{ $st->part_number }}</td>
+                          <td>{{ $st->serial_number }}</td>
+                          <td>{{ $st->tgl_masuk }}</td>
+                          <td>{{ $st->expired }}</td>
+                          <td>{{ $st->kurs_beli }}</td>
+                          <td>{{ $st->jumlah_unit }}</td>
+                          @if ($st->status == 1)
+                              <td>Obsolete</td>
+                          @else
+                              <td>Not Obsolete</td>
+                          @endif
                         </tr>
                         @endforeach
                     </tbody>

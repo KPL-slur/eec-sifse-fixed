@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\ValidateStockRequest;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ExpiredStockNotificationEmail;
 use App\Models\Stock;
 use App\Services\ExchangeRate;
 
@@ -189,4 +191,20 @@ class StockController extends Controller
 
         return view('stocks_currencies.recommendation', compact('recommendations'));
     }
+
+    public function sendEmail(){
+        $to_email = "admineecid@protonmail.com";
+
+        Mail::to($to_email)
+            ->send(new ExpiredStockNotificationEmail);
+
+        if(Mail::failures() != 0) {
+            return "<p> Success! Your E-mail has been sent.</p>";
+        }
+
+        else {
+            return "<p> Failed! Your E-mail has not sent.</p>";
+        }
+    }
+
 }
