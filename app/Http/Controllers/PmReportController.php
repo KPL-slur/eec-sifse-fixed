@@ -12,6 +12,7 @@ use App\Models\ExpertReport;
 use App\Models\PmBodyReport;
 use App\Models\Recommendation;
 use App\Models\Stock;
+use App\Models\ReportImage;
 
 class PmReportController extends Controller
 {
@@ -360,6 +361,8 @@ class PmReportController extends Controller
                 }
             }
         }
+
+        return redirect()->route('pm.index')->with('status', 'Data Ditambahkan');
     }
 
     /**
@@ -370,6 +373,18 @@ class PmReportController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        $reportImageFiles = ReportImage::where('head_id', $id)->get();
+        foreach ($reportImageFiles as $reportImageFile) {
+            \Storage::delete('public/'.$reportImageFile->image);
+        }
+
+        HeadReport::destroy($id);
+        PmBodyReport::where('head_id', $id)->delete();
+        Recommendation::where('head_id', $id)->delete();
+        ExpertReport::where('head_id', $id)->delete();
+        ReportImage::where('head_id', $id)->delete();
+
+        return redirect()->route('pm.index')->with('status', 'Data Dihapus');
     }
 }
