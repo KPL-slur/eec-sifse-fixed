@@ -138,6 +138,7 @@ class PmReport extends Component
             $this->edit = 1;
             //INITIALIZE EDIT DATA HEAD REPORT
             $this->site_id = $this->headReport->site_id;
+            $this->radar = Site::where('site_id', $this->site_id)->first()->radar_name;
             $this->report_date_start = $this->headReport->report_date_start;
             $this->report_date_end = $this->headReport->report_date_end;
         
@@ -277,6 +278,14 @@ class PmReport extends Component
         $this->uniqueCompanies = $this->expertsData->unique('expert_company');
     }
 
+    // RADAR AND SITE
+    public function radarName()
+    {
+        if(!empty($this->site_id)) {
+            $this->radar = Site::where('site_id', $this->site_id)->first()->radar_name;
+        }
+    }
+
     // EXXPERT METHOD
     public function addExpert()
     {
@@ -319,6 +328,9 @@ class PmReport extends Component
     
     public function removeRecommend($index)
     {
+        if ($this->recommends[$index]['stock_id']) {
+            Recommendation::where('rec_id', $this->recommendationId[$index])->delete();
+        }
         unset($this->recommends[$index]);
         array_values($this->recommends);
     }
@@ -343,8 +355,8 @@ class PmReport extends Component
     public function removeAttachment($index)
     {
         if ($this->attachments[$index]['uploaded'] === 1) {
-            \Storage::delete('public/'.$this->image[$index]);
-            ReportImage::where('image', $this->image[$index])->delete();
+            \Storage::delete('public/'.$this->attachments[$index]['image']);
+            ReportImage::where('image', $this->attachments[$index]['image'])->delete();
             $this->attachments[$index]['uploaded'] = 0;
         }
 
@@ -414,10 +426,6 @@ class PmReport extends Component
     public function render()
     {
         // return view('livewire.pm-report');
-
-        if(!empty($this->site_id)) {
-            $this->radar = Site::where('site_id', $this->site_id)->first();
-        }
         return view('livewire.pm-report')
             ->withStations(Site::get());
     }

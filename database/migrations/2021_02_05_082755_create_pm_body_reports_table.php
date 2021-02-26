@@ -117,7 +117,8 @@ class CreatePmBodyReportsTable extends Migration
         // ===== hasil rancangan erd =====
         Schema::create('pm_body_reports', function (Blueprint $table) {
             $table->bigIncrements('pm_id');
-            $table->foreignId('head_id'); // id of the head of current report. ex: if the id is 5 it means this report has the head reports of 5
+            // id of the head of current report. ex: if the id is 5 it means this report has the head reports of 5
+            $table->foreignId('head_id')->constrained('head_reports', 'head_id')->onDelete('cascade');
         
             /* 
             *   RADIO

@@ -27,7 +27,7 @@ class CreateCmBodyReportsTable extends Migration
         // ==== hasil rancangan erd =====
         Schema::create('cm_body_reports', function (Blueprint $table) {
             $table->bigIncrements('cm_id');
-            $table->foreignId('head_id');
+            $table->foreignId('head_id')->constrained('head_reports', 'head_id')->onDelete('cascade');
             $table->longText('remark');
         
             $table->timestamps();

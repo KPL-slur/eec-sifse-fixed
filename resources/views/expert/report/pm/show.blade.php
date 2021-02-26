@@ -10,8 +10,17 @@
                 <div class="card-body ">
                     <a type="button" class="btn btn-info"
                         href="{{ url("expert/$headReport->maintenance_type") }}">BACK</a>
-                    <a type="button" class="btn btn-primary" href="{{ url('expert') }}">EDIT</a>
-                    <a type="button" class="btn btn-danger" href="{{ url('expert') }}">DELETE</a>
+                    <a type="button" class="btn btn-primary" href="{{ route('pm.edit', ['id' => $headReport->head_id]) }}">EDIT</a>
+
+                    <form action="{{ route('pm.delete', ['id' => $headReport->head_id]) }}" method="post"
+                        class="d-inline">
+                        @csrf
+                        @method('delete')
+                        <button type="submit" rel="tooltip" class="btn btn-danger">
+                            DELETE
+                        </button>
+                    </form>
+
                     <div class="card ">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title">{{ $headReport->site->radar_name }}</h4>
