@@ -16,8 +16,9 @@ class CreateRecommendationsTable extends Migration
         // ===== hasil rancangan erd =====
         Schema::create('recommendations', function (Blueprint $table) {
             $table->bigIncrements('rec_id');
-            $table->foreignId('head_id'); // id of the head of current report. ex: if the id is 5 it means this report has the head reports of 5
-            $table->foreignId('stock_id');
+            // id of the head of current report. ex: if the id is 5 it means this report has the head reports of 5
+            $table->foreignId('head_id')->constrained('head_reports', 'head_id')->onDelete('cascade');
+            $table->foreignId('stock_id');//->constrained('stocks', 'stock_id')->onDelete('cascade');
             $table->integer('jumlah_unit_needed');
             $table->integer('year');
             $table->timestamps();

@@ -23,5 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call([RecommendationsSeeder::class]);
         $this->call([ExpertReportsSeeder::class]);
         $this->call([DistributionsSeeder::class]);
+        $this->call([SitedStockSeeder::class]);
     }
 }

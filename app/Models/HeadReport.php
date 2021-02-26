@@ -25,11 +25,11 @@ class HeadReport extends Model
     //MANY TO MANY
     public function experts()
     {
-        return $this->belongsToMany(Expert::class, 'expert_reports', 'head_id', 'expert_id');
+        return $this->belongsToMany(Expert::class, 'expert_reports', 'head_id', 'expert_id')->withPivot('expert_report_id');;
     }
     public function recommendations()
     {
-        return $this->belongsToMany(Stock::class, 'recommendations', 'head_id', 'stock_id')->withPivot('jumlah_unit_needed');
+        return $this->belongsToMany(Stock::class, 'recommendations', 'head_id', 'stock_id')->withPivot('jumlah_unit_needed', 'rec_id');
     }
 
     //ONE TO ONE

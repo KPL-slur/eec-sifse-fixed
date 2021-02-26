@@ -16,8 +16,8 @@ class CreateExpertReportsTable extends Migration
         // ===== hasil rancangan erd =====
         Schema::create('expert_reports', function (Blueprint $table) {
             $table->bigIncrements('expert_report_id');
-            $table->foreignId('head_id');
-            $table->foreignId('expert_id');
+            $table->foreignId('head_id')->constrained('head_reports', 'head_id')->onDelete('cascade');
+            $table->foreignId('expert_id');//->constrained('experts', 'expert_id')->onDelete('cascade');
             $table->timestamps();
         });
         // ===== hasil rancangan erd =====

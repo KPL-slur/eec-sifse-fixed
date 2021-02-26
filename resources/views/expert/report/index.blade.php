@@ -48,7 +48,7 @@
                                                     >
                                                     <i class="material-icons">edit</i>
                                                 </a>
-                                                <form action="{{ url("report/$hr->id") }}" method="post"
+                                                <form action="{{ route('pm.delete', ['id' => $hr->head_id]) }}" method="post"
                                                     class="d-inline">
                                                     @csrf
                                                     @method('delete')

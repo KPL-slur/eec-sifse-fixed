@@ -6,7 +6,7 @@
         </div>
 
         <div class="card-body">
-            @if ($this->attachments[$index]['uploaded'] === 1)
+            @if ($attachments[$index]['uploaded'] === 1)
                 <div class="row">
                     <div class="col-10 alert alert-success">
                         UPLOADED
@@ -21,7 +21,7 @@
                 <div class="col-sm-8">
                     <div class="form-group">
                         <input class="form-control" type="text" name="attachments[{{ $index }}][caption]"
-                            id="inputCaption" placeholder="Caption..." value=""
+                            id="inputCaption{{ $index }}" placeholder="Caption..." value=""
                             wire:model.defer="attachments.{{ $index }}.caption" />
                     </div>
                 </div>
@@ -59,10 +59,10 @@
                 </div>
                 @if ($attachments[$index]['image'])
                     <img class="fileinput-preview fileinput-exists thumbnail img-raised image-upload-preview"
-                        src="{{ asset('storage/'.$attachments[$index]['image']) ?? $attachments[$index]['image']->temporaryUrl() }}">
+                        src="{{ is_string($attachments[$index]['image']) ? asset('storage/'.$attachments[$index]['image']) : $attachments[$index]['image']->temporaryUrl() }}">
                     <div>
 
-                    <button class="btn btn-sm btn-primary"
+                    <button class="btn btn-sm btn-primary {{ $attachments[$index]['uploaded'] === 1 ? 'd-none' : '' }}"
                             wire:click.prevent="fileUpload({{ $index }})">Upload</button>
                     </div>
                 @endif

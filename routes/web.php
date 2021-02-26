@@ -37,8 +37,9 @@ Route::group(['middleware' => 'auth', 'prefix' => 'expert'], function () {
         Route::get('/create', [App\Http\Controllers\PmReportController::class, 'create'])->name('create');
         Route::post('/', [App\Http\Controllers\PmReportController::class, 'store'])->name('store');
         Route::get('/{id}/edit', [App\Http\Controllers\PmReportController::class, 'edit'])->name('edit');
-        Route::put('/{id}', [App\Http\Controllers\PmReportController::class, 'edit'])->name('update');
+        Route::put('/{id}', [App\Http\Controllers\PmReportController::class, 'update'])->name('update');
         Route::get('/{id}', [App\Http\Controllers\PmReportController::class, 'show'])->name('show');
+        Route::delete('/{id}', [App\Http\Controllers\PmReportController::class, 'destroy'])->name('delete');
     });
 
     // Route::get('report/pm/create/{headId}', ['App\Http\Controllers\PmBodyReportsController', 'create'])->name('pm.custom.create'); //custom create routing

@@ -16,7 +16,7 @@ class CreateReportImagesTable extends Migration
         // ===== hasil rancangan erd =====
         Schema::create('report_images', function (Blueprint $table) {
             $table->bigIncrements('image_id');
-            $table->foreignId('head_id');
+            $table->foreignId('head_id')->onDelete('cascade');
             $table->string('image');
             $table->string('caption');
             $table->timestamps();

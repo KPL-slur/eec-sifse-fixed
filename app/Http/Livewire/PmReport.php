@@ -8,6 +8,7 @@ use Livewire\WithFileUploads;
 
 use App\Models\HeadReport;
 use App\Models\Expert;
+use App\Models\ExpertReport;
 use App\Models\Site;
 
 use App\Models\Recommendation;
@@ -19,6 +20,9 @@ class PmReport extends Component
 {
     public $currentStep = 1;
 
+    public $edit;
+
+    // Variabel untuk menampung model
     public $headReport, $pmBodyReport, $recommendations, $reportImages;
 
     public $headId;
@@ -50,10 +54,18 @@ class PmReport extends Component
     public $uniqueCompanies;
     public $selectedExpert = []; //queriedvalue
 
+    // variabel untuk edit dynamic expert form
+    public $countExpertReportId; // variabel menampung panjang array expertReportId
+    public $expertReportId = []; // array meanmpung export_report_id yg sudah di extract dari model
+
     // recomendation form
     public $stocks = [];
     public $recommends = [];
     public $manualRecommends = [];
+
+    // variabel untuk edit dynamic recomend form
+    public $countRecommendationId; // variabel menampung panjang array expertReportId
+    public $recommendationId = []; // array meanmpung export_report_id yg sudah di extract dari model
 
     // report image form
     public $caption;
@@ -122,8 +134,11 @@ class PmReport extends Component
             $this->recommendations = HeadReport::Where('head_id', $id)->first()->recommendations;
             $this->reportImages = HeadReport::Where('head_id', $id)->first()->reportImages;
 
+            $this->headId = $this->headReport->head_id;
+            $this->edit = 1;
             //INITIALIZE EDIT DATA HEAD REPORT
             $this->site_id = $this->headReport->site_id;
+            $this->radar = Site::where('site_id', $this->site_id)->first()->radar_name;
             $this->report_date_start = $this->headReport->report_date_start;
             $this->report_date_end = $this->headReport->report_date_end;
         
@@ -218,28 +233,57 @@ class PmReport extends Component
             foreach ($this->reportImages as $reportImage) {
                 $this->attachments[] = ['image' => $reportImage->image, 'caption' => $reportImage->caption, 'uploaded' => 1];
             }
+
+            /*
+             *  Bagian ini mengextrak model kedalam array dan 
+             *  menghitung jumlah record expert_report sebelumnya
+             */
+            foreach($this->expertReports as $index => $erId){
+                $this->expertReportId[$index] = $erId->pivot->expert_report_id;
+            }
+            $this->countExpertReportId = count($this->expertReportId);
+
+            /*
+             *  Bagian ini mengextrak model kedalam array dan 
+             *  menghitung jumlah record recomendation sebelumnya
+             */
+            foreach($this->recommendations as $index => $recommendation){
+                $this->recommendationId[$index] = $recommendation->pivot->rec_id;
+            }
+            $this->countRecommendationId = count($this->recommendationId);
+
             // dd($this->attachments);
+        } else {
+            
+            $this->headId = HeadReport::select('head_id')->orderByDesc('head_id')->first()->head_id + 1;
+
+            //expert mount
+            $this->experts = [
+                ['expert_id' => '', 'expert_company' => '', 'expert_nip' => '']
+            ];
+            
+            //recomendation mount
+            $this->recommends = [
+                ['stock_id' => '', 'jumlah_unit_needed' => 1]
+            ];
+
+            // images mount
+            $this->attachments = [
+                ['caption' => '', 'image' => '', 'uploaded' => 0]
+            ];
         }
 
-        $this->headId = HeadReport::select('head_id')->orderByDesc('head_id')->first()->head_id + 1;
-
-        //expert mount
-        // $this->experts = [
-        //     ['expert_id' => '', 'expert_company' => '', 'expert_nip' => '']
-        // ];
+        $this->stocks = Stock::all();
         $this->expertsData = Expert::all();
         $this->uniqueCompanies = $this->expertsData->unique('expert_company');
+    }
 
-        //recomendation mount
-        $this->stocks = Stock::all();
-        // $this->recommends = [
-        //     ['stock_id' => '', 'jumlah_unit_needed' => 1]
-        // ];
-
-        // images mount
-        // $this->attachments = [
-        //     ['caption' => '', 'image' => '', 'uploaded' => 0]
-        // ];
+    // RADAR AND SITE
+    public function radarName()
+    {
+        if(!empty($this->site_id)) {
+            $this->radar = Site::where('site_id', $this->site_id)->first()->radar_name;
+        }
     }
 
     // EXXPERT METHOD
@@ -250,6 +294,9 @@ class PmReport extends Component
     
     public function removeExpert($index)
     {
+        if ($this->experts[$index]['expert_id']) {
+            ExpertReport::where('expert_report_id', $this->expertReportId[$index])->delete();
+        }
         unset($this->experts[$index]);
         array_values($this->experts);
     }
@@ -266,10 +313,10 @@ class PmReport extends Component
     }
 
     public function setCompanyAndNip($index){
-        // dd($this->experts[$index]['expert_id']);
         if(!empty($this->experts[$index]['expert_id'])){
             $this->selectedExpert[$index] = Expert::where('expert_id', $this->experts[$index]['expert_id'])->first();
-            // dd($this->selectedExpert);
+            $this->experts[$index]['expert_company'] = $this->selectedExpert[$index]->expert_company;
+            $this->experts[$index]['expert_nip'] = $this->selectedExpert[$index]->nip;
         }
     }
 
@@ -281,13 +328,16 @@ class PmReport extends Component
     
     public function removeRecommend($index)
     {
+        if ($this->recommends[$index]['stock_id']) {
+            Recommendation::where('rec_id', $this->recommendationId[$index])->delete();
+        }
         unset($this->recommends[$index]);
         array_values($this->recommends);
     }
 
     public function addManualRecommends ()
     {
-        $this->manualRecommends[] = ['nama_barang' => '', 'jumlah_unit_needed' => 1];
+        $this->manualRecommends[] = ['nama_barang' => '','group' => '', 'jumlah_unit_needed' => 1];
     }
 
     public function removeManualRecommends($index)
@@ -305,8 +355,8 @@ class PmReport extends Component
     public function removeAttachment($index)
     {
         if ($this->attachments[$index]['uploaded'] === 1) {
-            \Storage::delete('public/'.$this->image[$index]);
-            ReportImage::where('image', $this->image[$index])->delete();
+            \Storage::delete('public/'.$this->attachments[$index]['image']);
+            ReportImage::where('image', $this->attachments[$index]['image'])->delete();
             $this->attachments[$index]['uploaded'] = 0;
         }
 
@@ -376,10 +426,6 @@ class PmReport extends Component
     public function render()
     {
         // return view('livewire.pm-report');
-
-        if(!empty($this->site_id)) {
-            $this->radar = Site::where('site_id', $this->site_id)->first();
-        }
         return view('livewire.pm-report')
             ->withStations(Site::get());
     }
