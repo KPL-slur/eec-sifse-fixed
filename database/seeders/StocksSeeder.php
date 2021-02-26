@@ -15,7 +15,7 @@ class StocksSeeder extends Seeder
     public function run()
     {
         DB::table('stocks')->insert([
-            'site_id' => '2',
+            
             'nama_barang' => 'STALO',
             'group' => '2',
             'part_number' => 'RA01',
@@ -28,7 +28,7 @@ class StocksSeeder extends Seeder
             'created_at'=>now()
         ]);
         DB::table('stocks')->insert([
-            'site_id' => '2',
+            
             'nama_barang' => 'Moxa',
             'group' => '1',
             'part_number' => 'Mo01',
@@ -41,7 +41,7 @@ class StocksSeeder extends Seeder
             'created_at'=>now()
         ]);
         DB::table('stocks')->insert([
-            'site_id' => '2',
+            
             'nama_barang' => 'Waveguide',
             'group' => '3',
             'part_number' => 'WA01',

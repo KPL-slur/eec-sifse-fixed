@@ -58,6 +58,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Radar Name</th>
                     <th scope="col">Station ID</th>
+                    <th scope="col">Nama Barang</th>
                     <th scope="col">Part Number</th>
                     <th scope="col">Serial Number</th>
                     <th scope="col">Stock Quantity</th>
@@ -74,6 +75,7 @@
                         <td scope="row">{{$loop->iteration}}</td>
                         <td>{{$rcm->radar_name}}</td>
                         <td>{{$rcm->station_id}}</td>
+                        <td>{{$rcm->nama_barang}}</td>
                         <td>{{$rcm->part_number}}</td>
                         <td>{{$rcm->serial_number}}</td>
                         <td>{{$rcm->jumlah_unit}}</td>
