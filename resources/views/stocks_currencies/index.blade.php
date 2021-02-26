@@ -19,7 +19,7 @@
             <p class="text-center">Harga Kurs Sekarang : <div class="text-primary text-center display-4">Rp {{ $rate_fix }}</div></p>
             <div class="text-right">
               {{-- button modal trigger  --}}
-              <button type="button" rel="tooltip" title="print data" class="btn btn-outline-primary " data-toggle="modal" data-target="#modal_input_stocks_report">
+              <button type="button" rel="tooltip" title="print data" class="btn btn-outline-primary" data-toggle="modal" data-target="#modal_input_stocks_report">
                 <i class="material-icons">print</i>
               </button>
               {{-- for create button --}}
