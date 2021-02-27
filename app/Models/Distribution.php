@@ -12,5 +12,6 @@ class Distribution extends Model
         'expert_id',
         'site_id',
     ];
+    protected $primaryKey = 'dist_id';
     use HasFactory;
 }

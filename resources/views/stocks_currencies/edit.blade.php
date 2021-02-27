@@ -27,7 +27,7 @@
                     <div class="form-group my-4">
                       <label for="nama_barang">Nama Barang</label>
                       <input type="text" class="form-control" id="nama_barang" name="nama_barang" placeholder="Masukkan nama barang" value="{{ $siteAndStock->nama_barang }}" >
-                      <small class="form-text text-muted">We'll never share your email with anyone else.</small>
+                      {{-- <small class="form-text text-muted">We'll never share your email with anyone else.</small> --}}
                     </div>
                     <div class="form-group my-4">
                       <label for="group">Group nya</label>

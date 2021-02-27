@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreSiteRequest;
 use Illuminate\Support\Facades\DB;
 use App\Models\Site;
 
@@ -46,7 +47,9 @@ class SiteController extends Controller
         return view('site.addSite');
     } 
 
-    public function addData(Request $request){
+    public function addData(StoreSiteRequest $request){
+        $validated = $request->validated();
+
         $file = $request->file('image');
         $name = $file->getClientOriginalName();
         $path = $file->storeAs('public/image', $name);
@@ -55,7 +58,8 @@ class SiteController extends Controller
         $sites->radar_name = $request->radar_name;
         $sites->station_id = $request->station_id;
         $sites->save();
-    
+        
+
         return redirect('site')->with('success', 'Data Created!');
     }
 }

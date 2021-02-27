@@ -14,7 +14,7 @@
         <div class="card">
           {{-- header read plg luar --}}
           <div class="card-header card-header-primary">
-              <h4 class="card-title">Table Inventory {{$stocks[0]->radar_name ?? ''}}</h4>
+              <h4 class="card-title">Table Inventory {{$sites->radar_name}}</h4>
           </div>
 
           {{-- body paling luar --}}

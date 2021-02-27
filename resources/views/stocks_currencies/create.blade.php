@@ -19,7 +19,7 @@
                   <select name="site_id" id="site_id" class="form-control @error('site_id') is-invalid @enderror">
                     <option value="">-- Pilih Site --</option>
                     @foreach ($sites as $st)
-                      <option value="{{ $st->site_id }}" {{ old('site') == $st->station_id ? 'selected' : '' }}>{{ $st->station_id }}</option>  
+                      <option value="{{ $st->site_id }}" {{ old('station_id') == $st->station_id ? 'selected' : '' }}>{{ $st->station_id }}</option>  
                     @endforeach
                   </select>
                   {{-- <input type="text" class="form-control" id="site_id" name="site_id"> --}}

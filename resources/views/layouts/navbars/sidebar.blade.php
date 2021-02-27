@@ -56,7 +56,7 @@
       <li class="nav-item{{ $activePage == 'activity' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('expertActivity') }}">
           <i class="material-icons">content_paste</i>
-            <p>{{ __('Technisians Activity') }}</p>
+            <p>{{ __('Expert Activity') }}</p>
         </a>
       </li>
       <li class="nav-item{{ $activePage == 'stock_currency' ? ' active' : '' }}">

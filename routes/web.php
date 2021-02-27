@@ -120,10 +120,11 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
 
     //distribusi
     Route::get('distribution', [App\Http\Controllers\DistributionController::class, 'index'])->name('distribution');
-    Route::get('editDistribution/{id}', [App\Http\Controllers\DistributionController::class, 'edit']);
+    Route::get('viewDistribution/{id}', [App\Http\Controllers\DistributionController::class, 'show']);
+    Route::get('/editDistribution/{distribution}', [App\Http\Controllers\DistributionController::class, 'edit']);
     Route::post('edit', [App\Http\Controllers\DistributionController::class, 'editData']);
     Route::delete('deleteDistribution/{id}', [App\Http\Controllers\DistributionController::class, 'deleteData']);
-    Route::get('addDistribution', [App\Http\Controllers\DistributionController::class, 'add']);
+    Route::get('/addDistribution', [App\Http\Controllers\DistributionController::class, 'add']);
     Route::post('addDst', [App\Http\Controllers\DistributionController::class, 'addData']);
 
     //site

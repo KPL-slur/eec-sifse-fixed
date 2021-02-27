@@ -18,32 +18,51 @@
           </div>
           <div class="card-body text-center">
             <div class="table-responsive">
-              
+              {{$errors}}
               <form method="POST" action="/add" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group-site">
                   <label for="inputSite">Nama Site</label>
-                  <input type="text" class="form-control" id="radar_name" name="radar_name" placeholder="Masukan Radar Name">
+                  <input type="text" class="form-control @error('radar_name') is-invalid @enderror" id="radar_name" name="radar_name" value="{{ old('radar_name') }}" placeholder="Masukan Radar Name">
+
+                  @error('radar_name')
+                      <div class="invalid-feedback">
+                        {{$message}}
+                      </div>
+                  @enderror
+
                 </div>
 
                 <div class="form-group-site">
                   <label for="inputSite">Lokasi Site</label>
-                  <input type="text" class="form-control" id="station_id" name="station_id" placeholder="Masukan Station ID">
+                  <input type="text" class="form-control @error('station_id') is-invalid @enderror" id="station_id" name="station_id" value="{{ old('station_id') }}" placeholder="Masukan Station ID">
+
+                  @error('station_id')
+                      <div class="invalid-feedback">
+                        {{$message}}
+                      </div>
+                  @enderror
+
                 </div>
                 
                 <div class="form-group-site">
                   <label for="inputSite">Tambahkan Foto</label>
                   <div class="fileinput fileinput-new text-center" data-provides="fileinput">
-                    <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
+                    <div class="fileinput-preview fileinput-exists thumbnail img-raised image-upload-preview"></div>
                     <div>
                         <span class="btn btn-raised btn-round btn-default btn-file">
-                            {{-- <span class="fileinput-new">Select image</span> --}}
-                            {{-- <span class="fileinput-exists">Change</span> --}}
-                            <input type="file" name="image" id="image" onchange="validateImage()"/>
+                            <input class="@error('image') is-invalid @enderror" type="file" name="image" id="image" onchange="validateImage()">
+                            
+                            @error('image')
+                              <div class="invalid-feedback">
+                                {{$message}}
+                              </div>
+                            @enderror
+                            
                         </span>
                         
                         {{--js image validation--}}
-                        <script type="text/javascript">
+                        {{-- <script type="text/javascript">
                           function validateImage() {
                               var formData = new FormData();
                               var file = document.getElementById("image").files[0];
@@ -61,12 +80,13 @@
                               }
                               return true;
                           }
-                          </script>
+                          </script> --}}
 
                         <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
                     </div>
+                  </div>
                 </div>
-                </div>
+
                 <br>
                 <button type="submit" onclick="return confirm('Apakah yakin ingin menambahkan data?')" class="btn btn-primary">Tambah</button>
                 <a href="/site" class="btn btn-primary">Kembali</a>
