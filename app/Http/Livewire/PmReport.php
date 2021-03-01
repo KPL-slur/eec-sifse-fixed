@@ -62,6 +62,8 @@ class PmReport extends Component
     public $stocks = [];
     public $recommends = [];
     public $manualRecommends = [];
+    // recomendation form edit
+    private $siteRecommendations = [];
 
     // variabel untuk edit dynamic recomend form
     public $countRecommendationId; // variabel menampung panjang array expertReportId
@@ -131,7 +133,13 @@ class PmReport extends Component
             $this->headReport = HeadReport::Where('head_id', $id)->first();
             $this->expertReports = HeadReport::Where('head_id', $id)->first()->experts;
             $this->pmBodyReport = HeadReport::Where('head_id', $id)->first()->pmBodyReport;
-            $this->recommendations = HeadReport::Where('head_id', $id)->first()->recommendations;
+            // $this->recommendations = HeadReport::Where('head_id', $id)->first()->recommendations;
+            $this->recommendations = HeadReport::Where('site_id', $this->headReport->site_id)->get();
+            foreach ($this->recommendations as $rcm){ //headreport
+                foreach ($rcm->recommendations as $rcmItem){ //stocks with pivot recommendation
+                    $this->siteRecommendations[] = $rcmItem;
+                }
+            }
             $this->reportImages = HeadReport::Where('head_id', $id)->first()->reportImages;
 
             $this->headId = $this->headReport->head_id;
@@ -226,7 +234,8 @@ class PmReport extends Component
 
             $this->remark = $this->pmBodyReport->remark;
 
-            foreach ($this->recommendations as $recommendation) {
+            // INTISIALISASI REKOMENDASI EDIT 
+            foreach ($this->siteRecommendations as $recommendation) {
                 $this->recommends[] = ['stock_id' => $recommendation->pivot->stock_id, 'jumlah_unit_needed' => $recommendation->pivot->jumlah_unit_needed];
             }
 
@@ -247,7 +256,7 @@ class PmReport extends Component
              *  Bagian ini mengextrak model kedalam array dan 
              *  menghitung jumlah record recomendation sebelumnya
              */
-            foreach($this->recommendations as $index => $recommendation){
+            foreach($this->siteRecommendations as $index => $recommendation){
                 $this->recommendationId[$index] = $recommendation->pivot->rec_id;
             }
             $this->countRecommendationId = count($this->recommendationId);
@@ -328,11 +337,15 @@ class PmReport extends Component
     
     public function removeRecommend($index)
     {
-        if ($this->recommends[$index]['stock_id']) {
+        if (array_key_exists($index, $this->recommendationId)) {
             Recommendation::where('rec_id', $this->recommendationId[$index])->delete();
         }
+        
         unset($this->recommends[$index]);
         array_values($this->recommends);
+
+        //decrement the count, if not the data will be dupe
+        $this->countRecommendationId--;
     }
 
     public function addManualRecommends ()

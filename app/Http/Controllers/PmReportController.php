@@ -307,7 +307,11 @@ class PmReportController extends Controller
         $pmBodyReport->fill($input)->save();
 
         //mengambil nilai tahun dari record sebelumnya
-        $year = Recommendation::select('year')->where('head_id', $request->head_id)->first()->year; 
+        if (Recommendation::select('year')->where('head_id', $request->head_id)->first()) {
+            $year = Recommendation::select('year')->where('head_id', $request->head_id)->first()->year;
+        } else {
+            $year = now()->year;
+        }
 
         //UPDATE RECOMENDATION
         // cek apakah sudah ada record dengan id yg sama sebelumnya
@@ -322,7 +326,6 @@ class PmReportController extends Controller
                     if($index < count($oldRecommendationId)) {
                         Recommendation::where('rec_id', $oldRecommendationId[$index])
                         ->update([
-                            'head_id' => $request->head_id,
                             'stock_id' => $recommend['stock_id'],
                             'jumlah_unit_needed' => $recommend['jumlah_unit_needed'],
                             'year' => $year
@@ -362,7 +365,7 @@ class PmReportController extends Controller
             }
         }
 
-        return redirect()->route('pm.index')->with('status', 'Data Ditambahkan');
+        return redirect()->route('pm.index')->with('status', 'Data Diubah');
     }
 
     /**
