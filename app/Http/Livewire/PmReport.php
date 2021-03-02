@@ -308,6 +308,9 @@ class PmReport extends Component
         }
         unset($this->experts[$index]);
         array_values($this->experts);
+
+        //decrement the count, if not the data will be dupe
+        $this->countExpertReportId--;
     }
 
     public function addManualExpert ()
@@ -375,6 +378,15 @@ class PmReport extends Component
 
         unset($this->attachments[$index]);
         array_values($this->attachments);
+    }
+
+    public function uploadAll()
+    {
+        foreach ($this->attachments as $index => $attachment) {
+            if ($this->attachments[$index]['uploaded'] == 0) {
+                $this->fileUpload($index);
+            }
+        }
     }
 
     public function fileUpload($index)

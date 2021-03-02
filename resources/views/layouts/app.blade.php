@@ -98,10 +98,5 @@
         <!-- js for headreport expert coloumn -->
         @stack('js')
         @livewireScripts
-        <script>
-            window.livewire.on('fileUploaded'), () => {
-                $('input[name=image').val('');
-            };
-        </script>
     </body>
 </html>

@@ -108,16 +108,6 @@ class PmReportController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate($this->rules);
-        
-        // foreach ($request->recommends as $recommend){
-        //     if ($recommend['stock_id']) {
-        //         dd($recommend);
-        //     }
-        // }
-        // dd('die');
-        // dd($request->all());
-
         //INSERT HEADREPORT
         Headreport::create([
             'head_id' => $request->head_id,
@@ -126,10 +116,6 @@ class PmReportController extends Controller
             'report_date_start' => $request->report_date_start,
             'report_date_end' => $request->report_date_end,
         ]);
-        // $headId = HeadReport::select('head_id')->orderByDesc('head_id')->first()->head_id; //used to determine the head id of this report
-        // $request->merge([
-        //     'head_id' => $headId
-        // ]);
 
         //INSERT EXPERTREPORT
         foreach ($request->experts as $expert) {

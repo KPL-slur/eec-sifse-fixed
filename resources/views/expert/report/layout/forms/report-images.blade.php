@@ -50,6 +50,14 @@
                     </div>
                 </div>
                 <div wire:loading wire:target="photo">Uploading...</div>
+                @if ($attachments[$index]['image'])
+                    <img class="fileinput-preview fileinput-exists thumbnail img-raised image-upload-preview"
+                        src="{{ is_string($attachments[$index]['image']) ? asset('storage/'.$attachments[$index]['image']) : $attachments[$index]['image']->temporaryUrl() }}">
+                    {{-- <div>
+                        <button class="btn btn-sm btn-primary {{ $attachments[$index]['uploaded'] === 1 ? 'd-none' : '' }}"
+                            wire:click.prevent="fileUpload({{ $index }})">Upload</button>
+                    </div> --}}
+                @endif
                 <div>
                     <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"
                     wire:click.prevent="removeAttachment({{ $index }})">
@@ -57,15 +65,6 @@
                     Remove
                 </a>
                 </div>
-                @if ($attachments[$index]['image'])
-                    <img class="fileinput-preview fileinput-exists thumbnail img-raised image-upload-preview"
-                        src="{{ is_string($attachments[$index]['image']) ? asset('storage/'.$attachments[$index]['image']) : $attachments[$index]['image']->temporaryUrl() }}">
-                    <div>
-
-                    <button class="btn btn-sm btn-primary {{ $attachments[$index]['uploaded'] === 1 ? 'd-none' : '' }}"
-                            wire:click.prevent="fileUpload({{ $index }})">Upload</button>
-                    </div>
-                @endif
             </div>
 
         </div>
