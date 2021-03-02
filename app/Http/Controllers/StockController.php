@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ExpiredStockNotificationEmail;
 use App\Models\Stock;
+use App\Models\Recommendation;
 use App\Services\ExchangeRate;
 
 class StockController extends Controller
@@ -22,7 +23,7 @@ class StockController extends Controller
     {
         // $stocks = DB::table('stocks')->get();
         $stocks = Stock::select()
-                        ->leftJoin('sites', 'sites.site_id', '=', 'stocks.site_id')
+                        // ->leftJoin('sites', 'sites.site_id', '=', 'stocks.site_id')
                         // ->orderBy('group', 'asc')
                         ->get();
 
@@ -39,12 +40,12 @@ class StockController extends Controller
      */
     public function create(ExchangeRate $ex_rate)
     {
-        $sites = DB::table('sites')
-                    ->select('site_id','station_id')
-                    ->get();
+        // $sites = DB::table('sites')
+        //             ->select('site_id','station_id')
+        //             ->get();
 
         $rate_fix = $ex_rate->apiCall();
-        return view('stocks_currencies.create', compact('rate_fix', 'sites'));
+        return view('stocks_currencies.create', compact('rate_fix',));
     }
 
     /**
@@ -85,17 +86,12 @@ class StockController extends Controller
         // $stock_data = Stock::where('stock_id');
         $rate_fix = $ex_rate->apiCall();
 
-        // $siteAndStock = DB::table('sites')
-        //                     ->select('station_id', 'stock_id', 'nama_barang', 'group', 'part_number', 'serial_number', 'tgl_masuk', 'expired', 'kurs_beli', 'jumlah_unit')
-        //                     ->rightJoin('stocks', 'sites.site_id', '=', 'stocks.site_id')
-        //                     ->where('sites.site_id', '=', $stock->site_id)
-        //                     ->where('stocks.stock_id', '=', $stock->stock_id)
+        // $siteAndStock = DB::table('stocks')
+        //                     // ->select('stocks.site_id', 'station_id', 'stock_id', 'nama_barang', 'group', 'part_number','serial_number', 'tgl_masuk', 'expired', 'kurs_beli', 'jumlah_unit', 'status')
+        //                     // ->leftJoin('sites', 'stocks.site_id', '=', 'sites.site_id')
+        //                     ->where('stocks.stock_id', $stock->stock_id)
         //                     ->first();
-
-        $siteAndStock = DB::table('stocks')
-                            ->select('stocks.site_id', 'station_id', 'stock_id', 'nama_barang', 'group', 'part_number','serial_number', 'tgl_masuk', 'expired', 'kurs_beli', 'jumlah_unit', 'status')
-                            ->leftJoin('sites', 'stocks.site_id', '=', 'sites.site_id')
-                            ->where('stocks.stock_id', $stock->stock_id)
+        $siteAndStock = Stock::where('stocks.stock_id', $stock->stock_id)
                             ->first();
 
         // dd($siteAndStock);
@@ -123,26 +119,28 @@ class StockController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Stock $stocks
+     * @param  \App\Models\Stock $stock
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Stock $stocks)
+    public function update(ValidateStockRequest $request, Stock $stock)
     {
         //belom nambah validasi
         // dd($request);
-        $stock_where = Stock::where('stock_id', $stocks->stock_id)
-                    ->update([
-                        'site_id'=>$request->site_id,
-                        'nama_barang'=>$request->nama_barang,
-                        'group'=>$request->group,
-                        'part_number'=>$request->part_number,
-                        'serial_number'=>$request->serial_number,
-                        'tgl_masuk'=>$request->tgl_masuk,
-                        'expired'=>$request->expired,
-                        'kurs_beli'=>$request->kurs_beli,
-                        'jumlah_unit'=>$request->jumlah_unit,
-                        'status'=>$request->status
-                    ]);
+
+        Stock::find($stock->stock_id)->update($request->validated());
+
+        // $stock_where = Stock::where('stock_id', $stocks->stock_id)
+        //             ->update([
+        //                 'nama_barang'=>$request->nama_barang,
+        //                 'group'=>$request->group,
+        //                 'part_number'=>$request->part_number,
+        //                 'serial_number'=>$request->serial_number,
+        //                 'tgl_masuk'=>$request->tgl_masuk,
+        //                 'expired'=>$request->expired,
+        //                 'kurs_beli'=>$request->kurs_beli,
+        //                 'jumlah_unit'=>$request->jumlah_unit,
+        //                 'status'=>$request->status
+        //             ]);
 
         return redirect('stock_currency')->with('status2', 'Data berhasil di update');
     }
@@ -182,12 +180,21 @@ class StockController extends Controller
      * take recommendations into stocks view
      */
     public function showRecommendation(){
-        $recommendations =  DB::table('recommendations')
-        ->join('head_reports', 'recommendations.head_id', '=', 'head_reports.head_id')
-        ->join('stocks', 'recommendations.stock_id', '=', 'stocks.stock_id')
-        ->join('sites', 'stocks.site_id', '=', 'sites.site_id')
-        ->get();
-        //dd($recommendations);
+        // $recommendations =  DB::table('recommendations')
+        // ->join('head_reports', 'recommendations.head_id', '=', 'head_reports.head_id')
+        // ->join('stocks', 'recommendations.stock_id', '=', 'stocks.stock_id')
+        // ->join('sites', 'stocks.site_id', '=', 'sites.site_id')
+        // ->get();
+
+        $recommendations = Recommendation::select()
+                                        ->join('head_reports', 'head_reports.head_id', '=', 'recommendations.head_id')
+                                        ->join('sites', 'sites.site_id' , '=', 'head_reports.site_id')
+                                        ->join('stocks', 'stocks.stock_id' , '=', 'recommendations.stock_id')
+                                        ->get()
+                                            
+                                        ;
+
+        // dd($recommendations);
 
         return view('stocks_currencies.recommendation', compact('recommendations'));
     }

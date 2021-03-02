@@ -16,21 +16,6 @@
           {{-- body paling luar --}}
           <div class="card-body">
 
-            @if (session('status2'))
-              <script>
-                window.onload = () => {
-                  showNotification('top', 'right', 'warning' ,'<?php echo session('status2') ?>');
-                };
-              </script>
-            {{-- success deleted sparepart --}}
-            @elseif (session('status0'))
-              <script>
-                window.onload = () => {
-                  showNotification('top', 'right', 'danger' ,'<?php echo session('status0') ?>');
-                };
-              </script>
-            @endif
-
             <div>
               <select name="selectYearStock" class="form-control m-3" id="selectYearStock" onchange="selectYearIndexStocks()" style="max-width:15%;">
                 <option selected value="">Semua</option>
@@ -39,6 +24,10 @@
                 <option value="2022" >2022</option>
                 <option value="2023" >2023</option>
               </select>
+            </div>
+            
+            <div>
+              <a href="{{ url('stock_currency/') }}" class="btn btn-info ml-3 d-inline">Kembali</a>
             </div>
 
             {{-- card kedua --}}
