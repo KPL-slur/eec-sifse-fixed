@@ -48,7 +48,7 @@
                                 <td></td>
                                 <td>
                                     <a href="#"
-                                        wire:click.prevent="removeRecommend({{ $index }})">Delete</a>
+                                        wire:click.prevent="selectItem({{ $index }}, 'recommendation')">Delete</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -90,7 +90,7 @@
                                 </td>
                                 <td>
                                     <a href="#"
-                                        wire:click.prevent="removeManualRecommends({{ $index }})">Delete</a>
+                                        wire:click.prevent="selectItem({{ $index }}, 'manualRecommendation')">Delete</a>
                                 </td>
                             </tr>
                         @endforeach

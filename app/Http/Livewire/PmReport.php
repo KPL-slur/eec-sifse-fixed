@@ -74,6 +74,10 @@ class PmReport extends Component
     public $image=[];
     public $attachments = [];
 
+    //  MODAL DELETE
+    public $selectedItem;
+    public $selectedForm;
+
     use WithFileUploads;
 
     //validation
@@ -303,7 +307,7 @@ class PmReport extends Component
     
     public function removeExpert($index)
     {
-        if ($this->experts[$index]['expert_id']) {
+        if (in_array($index , $this->experts)) {
             ExpertReport::where('expert_report_id', $this->expertReportId[$index])->delete();
         }
         unset($this->experts[$index]);
@@ -446,6 +450,47 @@ class PmReport extends Component
     public function back()
     {
         $this->currentStep--;
+    }
+
+    public function selectItem($itemId, $formType)
+    {
+        $this->selectedItem = $itemId;
+        $this->selectedForm = $formType;
+        $this->dispatchBrowserEvent('openModalDelete');
+    }
+
+    public function deleteDynamicForm()
+    {
+        switch ($this->selectedForm) {
+            case 'expert':
+                $this->removeExpert($this->selectedItem);
+                $this->dispatchBrowserEvent('closeModalDelete');
+                break;
+
+            case 'manualExpert':
+                $this->removeManualExpert($this->selectedItem);
+                $this->dispatchBrowserEvent('closeModalDelete');
+                break;
+
+            case 'recommendation':
+                $this->removeRecommend($this->selectedItem);
+                $this->dispatchBrowserEvent('closeModalDelete');
+                break;
+
+            case 'manualRecommendation':
+                $this->removeManualRecommends($this->selectedItem);
+                $this->dispatchBrowserEvent('closeModalDelete');
+                break;
+
+            case 'attachment':
+                $this->removeAttachment($this->selectedItem);
+                $this->dispatchBrowserEvent('closeModalDelete');
+                break;
+        
+            default:
+                # code...
+                break;
+        }
     }
 
     public function render()

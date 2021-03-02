@@ -98,5 +98,14 @@
         <!-- js for headreport expert coloumn -->
         @stack('js')
         @livewireScripts
+        <script>
+            window.addEventListener('openModalDelete', event => {
+                $('#modalDelete').modal('show');
+            });
+
+            window.addEventListener('closeModalDelete', event => {
+                $('#modalDelete').modal('hide');
+            });
+        </script>
     </body>
 </html>
