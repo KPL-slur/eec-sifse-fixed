@@ -8,9 +8,12 @@
                     <h4 class="card-title">{{ __('Weather Radar Service Report') }}</h4>
                 </div>
                 <div class="card-body ">
-                    <a type="button" class="btn btn-info" href="{{ url('expert') }}">BACK</a>
-                    <a type="button" class="btn btn-primary"
-                        href="{{ route($maintenance_type.".create") }}">ADD NEW</a>
+                    <div class="sticky-top">
+                        <a type="button" class="btn btn-info" href="{{ url('expert') }}">BACK</a>
+                        <a type="button" class="btn btn-primary"
+                            href="{{ route($maintenance_type.".create") }}">ADD NEW</a>
+                    </div>
+                    
                     <div class="row">
                         <div class="col table-responsive">
                             <table class="table">
@@ -86,7 +89,7 @@
                 <div class="modal-footer">
                     <form action="{{ route('pm.delete', ['id' => $hr->head_id]) }}" method="post"
                         class="d-inline">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                         @csrf
                         @method('delete')
                         <button type="submit" rel="tooltip" class="btn btn-secondary">Yes</button>

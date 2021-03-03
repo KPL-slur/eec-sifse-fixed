@@ -149,15 +149,23 @@ class PmReportController extends Controller
         PmBodyReport::create($request->all());
 
         //INSERT RECOMENDATION
+        // cek apakah sudah ada record dengan id yg sama sebelumnya
+        $oldRecommendationId = [];
+        foreach($request->old_recommendation_id as $index => $old_recommendation_id){
+            $oldRecommendationId[$index] = $old_recommendation_id;
+        }
         if ($request->recommends) {
-            foreach ($request->recommends as $recommend) {
+            foreach ($request->recommends as $index => $recommend) {
                 if ($recommend['stock_id']) {
-                    Recommendation::create([
-                    'head_id' => $request->head_id,
-                    'stock_id' => $recommend['stock_id'],
-                    'jumlah_unit_needed' => $recommend['jumlah_unit_needed'],
-                    'year' => now()->year
-                ]);
+                    //jika iya, maka lakukan update pada record tersebut
+                    if($index > count($oldRecommendationId)) {
+                        Recommendation::create([
+                            'head_id' => $request->head_id,
+                            'stock_id' => $recommend['stock_id'],
+                            'jumlah_unit_needed' => $recommend['jumlah_unit_needed'],
+                            'year' => now()->year
+                        ]);
+                    }
                 }
             }
         }
