@@ -21,11 +21,7 @@ class StockController extends Controller
      */
     public function index(ExchangeRate $ex_rate)
     {
-        // $stocks = DB::table('stocks')->get();
-        $stocks = Stock::select()
-                        // ->leftJoin('sites', 'sites.site_id', '=', 'stocks.site_id')
-                        // ->orderBy('group', 'asc')
-                        ->get();
+        $stocks = Stock::get();
 
         $rate_fix = $ex_rate->apiCall();
 
@@ -40,10 +36,6 @@ class StockController extends Controller
      */
     public function create(ExchangeRate $ex_rate)
     {
-        // $sites = DB::table('sites')
-        //             ->select('site_id','station_id')
-        //             ->get();
-
         $rate_fix = $ex_rate->apiCall();
         return view('stocks_currencies.create', compact('rate_fix',));
     }
@@ -56,8 +48,6 @@ class StockController extends Controller
      */
     public function store(ValidateStockRequest $request)
     {        
-        // validasi
-        // $validated = $request->validated();
         Stock::create($request->validated());
 
         return redirect('stock_currency')->with('status1','Data berhasil ditambah!');
@@ -100,17 +90,6 @@ class StockController extends Controller
                     ->select('site_id', 'station_id')
                     ->get();
         // dd($sites);
-
-        // $stocks = [
-        //     'site_id' => $stock->site_id,
-        //     'nama_barang' => $stock->nama_barang,
-        //     'part_number' => $stock->part_number,
-        //     'serial_number' => $stock->serial_number,
-        //     'tgl_masuk' => $stock->tgl_masuk,
-        //     'expired' => $stock->expired,
-        //     'kurs_beli' => $stock->kurs_beli,
-        //     'jumlah_unit' => $stock->jumlah_unit,
-        // ];
 
         return view('stocks_currencies.edit', compact('siteAndStock', 'sites' , 'rate_fix'));
     }
