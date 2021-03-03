@@ -19,6 +19,7 @@ use App\Models\ReportImage;
 class PmReport extends Component
 {
     public $currentStep = 1;
+    public $modalType;
 
     public $edit;
 
@@ -130,6 +131,41 @@ class PmReport extends Component
 
     //METHODD
     //  Livewire lifecycle hook
+    public function updatedSiteId($value)
+    {
+        // Clear Array
+        unset($this->siteRecommendations);
+        unset($this->recommends);
+        unset($this->recommendationId);
+        // Init Array
+        $this->siteRecommendations = [];
+        $this->recommends = [];
+        $this->recommendationId = [];
+
+        $this->recommendations = HeadReport::Where('site_id', $value)->get();
+        foreach ($this->recommendations as $rcm){ //headreport
+            foreach ($rcm->recommendations as $rcmItem){ //stocks with pivot recommendation
+                $this->siteRecommendations[] = $rcmItem;
+            }
+        }
+
+        foreach ($this->siteRecommendations as $recommendation) {
+            $this->recommends[] = [
+                'stock_id' => $recommendation->pivot->stock_id, 
+                'group' => $recommendation->group,
+                'jumlah_unit_needed' => $recommendation->pivot->jumlah_unit_needed];
+        }
+
+        /*
+        *  Bagian ini mengextrak model kedalam array dan 
+        *  menghitung jumlah record recomendation sebelumnya
+        */
+        foreach($this->siteRecommendations as $index => $recommendation){
+            $this->recommendationId[$index] = $recommendation->pivot->rec_id;
+        }
+        $this->countRecommendationId = count($this->recommendationId);
+    }
+
     public function mount($id = null)
     {
         if ($id) {
@@ -240,7 +276,11 @@ class PmReport extends Component
 
             // INTISIALISASI REKOMENDASI EDIT 
             foreach ($this->siteRecommendations as $recommendation) {
-                $this->recommends[] = ['stock_id' => $recommendation->pivot->stock_id, 'jumlah_unit_needed' => $recommendation->pivot->jumlah_unit_needed];
+                $this->recommends[] = [
+                    'stock_id' => $recommendation->pivot->stock_id, 
+                    'group' => $recommendation->group,
+                    'jumlah_unit_needed' => $recommendation->pivot->jumlah_unit_needed
+                ];
             }
 
             foreach ($this->reportImages as $reportImage) {
@@ -276,9 +316,9 @@ class PmReport extends Component
             ];
             
             //recomendation mount
-            $this->recommends = [
-                ['stock_id' => '', 'jumlah_unit_needed' => 1]
-            ];
+            // $this->recommends = [
+            //     ['stock_id' => '', 'jumlah_unit_needed' => 1]
+            // ];
 
             // images mount
             $this->attachments = [
@@ -292,7 +332,7 @@ class PmReport extends Component
     }
 
     // RADAR AND SITE
-    public function radarName()
+    public function setRadarName()
     {
         if(!empty($this->site_id)) {
             $this->radar = Site::where('site_id', $this->site_id)->first()->radar_name;
@@ -339,7 +379,7 @@ class PmReport extends Component
     // RECOMENDATION FORMS
     public function addRecommend()
     {
-        $this->recommends[] = ['stock_id' => '', 'jumlah_unit_needed' => 1];
+        $this->recommends[] = ['stock_id' => '','group' => '', 'jumlah_unit_needed' => 1];
     }
     
     public function removeRecommend($index)
@@ -364,6 +404,14 @@ class PmReport extends Component
     {
         unset($this->manualRecommends[$index]);
         array_values($this->manualRecommends);
+    }
+
+    public function setStockGroup($index)
+    {
+        if(!empty($this->recommends[$index]['stock_id'])) {
+            $this->recommends[$index]['group'] = Stock::Where('stock_id', $this->recommends[$index]['stock_id'])
+                                                    ->first()->group;
+        }
     }
 
     // ATTACHMENT
@@ -436,15 +484,19 @@ class PmReport extends Component
                 // $this->validate($this->remarkRules);
                 break;
 
-            case 4:
-                // $this->validate($this->remarkRules);
+            case 5:
+                $this->uploadAll();
+                $this->modalType = 'submit';
+                $this->dispatchBrowserEvent('openModalConfirm');
                 break;
             
             default:
                 # code...
                 break;
         }
-        $this->currentStep++;
+        if ($this->currentStep < 5) {
+            $this->currentStep++;
+        }
     }
 
     public function back()
@@ -456,7 +508,8 @@ class PmReport extends Component
     {
         $this->selectedItem = $itemId;
         $this->selectedForm = $formType;
-        $this->dispatchBrowserEvent('openModalDelete');
+        $this->modalType = 'delete';
+        $this->dispatchBrowserEvent('openModalConfirm');
     }
 
     public function deleteDynamicForm()
@@ -464,27 +517,27 @@ class PmReport extends Component
         switch ($this->selectedForm) {
             case 'expert':
                 $this->removeExpert($this->selectedItem);
-                $this->dispatchBrowserEvent('closeModalDelete');
+                $this->dispatchBrowserEvent('closeModalConfirm');
                 break;
 
             case 'manualExpert':
                 $this->removeManualExpert($this->selectedItem);
-                $this->dispatchBrowserEvent('closeModalDelete');
+                $this->dispatchBrowserEvent('closeModalConfirm');
                 break;
 
             case 'recommendation':
                 $this->removeRecommend($this->selectedItem);
-                $this->dispatchBrowserEvent('closeModalDelete');
+                $this->dispatchBrowserEvent('closeModalConfirm');
                 break;
 
             case 'manualRecommendation':
                 $this->removeManualRecommends($this->selectedItem);
-                $this->dispatchBrowserEvent('closeModalDelete');
+                $this->dispatchBrowserEvent('closeModalConfirm');
                 break;
 
             case 'attachment':
                 $this->removeAttachment($this->selectedItem);
-                $this->dispatchBrowserEvent('closeModalDelete');
+                $this->dispatchBrowserEvent('closeModalConfirm');
                 break;
         
             default:

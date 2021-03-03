@@ -1,3 +1,13 @@
+@if (empty($attachments))
+    <div class="card ">
+        <div class="card-header card-header-primary">
+            <h4 class="card-title">{{ __('Attachments') }}</h4>
+        </div>
+        <div class="card-body ">
+            <h5 class="text-danger">There are no attachment(s) yet. You can add a new one or click submit to skip</h5>
+        </div>
+    </div>
+@endif
 @foreach ($attachments as $index => $attachment)
 
     <div class="card ">

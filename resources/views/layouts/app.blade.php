@@ -99,12 +99,12 @@
         @stack('js')
         @livewireScripts
         <script>
-            window.addEventListener('openModalDelete', event => {
-                $('#modalDelete').modal('show');
+            window.addEventListener('openModalConfirm', event => {
+                $('#modalConfirm').modal('show');
             });
 
-            window.addEventListener('closeModalDelete', event => {
-                $('#modalDelete').modal('hide');
+            window.addEventListener('closeModalConfirm', event => {
+                $('#modalConfirm').modal('hide');
             });
         </script>
     </body>

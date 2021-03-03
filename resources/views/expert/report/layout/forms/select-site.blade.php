@@ -15,7 +15,7 @@
                 <label class="control-label force-has-danger">{{ $message }}</label>
                 <span class="material-icons form-control-feedback">clear</span>
             @enderror
-            <select name="site_id" wire:change="radarName"
+            <select name="site_id" wire:change="setRadarName"
                 id="inputsite_id"
                 wire:model="site_id" class="form-control">
                 <option value="">-- choose station --</option>
