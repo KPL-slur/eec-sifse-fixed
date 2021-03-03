@@ -48,14 +48,17 @@
                                                     >
                                                     <i class="material-icons">edit</i>
                                                 </a>
-                                                <form action="{{ route('pm.delete', ['id' => $hr->head_id]) }}" method="post"
+                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete">
+                                                    <i class="material-icons">close</i>
+                                                </button>
+                                                {{-- <form action="{{ route('pm.delete', ['id' => $hr->head_id]) }}" method="post"
                                                     class="d-inline">
                                                     @csrf
                                                     @method('delete')
                                                     <button type="submit" rel="tooltip" class="btn btn-danger">
                                                         <i class="material-icons">close</i>
                                                     </button>
-                                                </form>
+                                                </form> --}}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -63,6 +66,31 @@
                             </table>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal" id="modalDelete" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalDeleteHeader">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are You Sure Want To Delete This Rerport?</p>
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ route('pm.delete', ['id' => $hr->head_id]) }}" method="post"
+                        class="d-inline">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        @csrf
+                        @method('delete')
+                        <button type="submit" rel="tooltip" class="btn btn-secondary">Yes</button>
+                    </form>
                 </div>
             </div>
         </div>

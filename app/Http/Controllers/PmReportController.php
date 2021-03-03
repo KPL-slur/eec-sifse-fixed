@@ -176,7 +176,7 @@ class PmReportController extends Controller
                     Recommendation::create([
                     'head_id' => $request->head_id,
                     'stock_id' => $stockId,
-                    'jumlah_unit_needed' => $recommend['jumlah_unit_needed'],
+                    'jumlah_unit_needed' => $manualRecommend['jumlah_unit_needed'],
                     'year' => now()->year
                 ]);
                 }
@@ -185,7 +185,7 @@ class PmReportController extends Controller
         
         //INSERT IMAGE
 
-        return redirect()->route('pm.index')->with('status', 'Data Ditambahkan');
+        return redirect()->route('pm.index')->with('status_success', 'Data Ditambahkan');
     }
 
     /**
@@ -344,14 +344,14 @@ class PmReportController extends Controller
                     Recommendation::create([
                         'head_id' => $request->head_id,
                         'stock_id' => $stockId,
-                        'jumlah_unit_needed' => $recommend['jumlah_unit_needed'],
+                        'jumlah_unit_needed' => $manualRecommend['jumlah_unit_needed'],
                         'year' => $year
                     ]);
                 }
             }
         }
 
-        return redirect()->route('pm.index')->with('status', 'Data Diubah');
+        return redirect()->route('pm.index')->with('status_edit', 'Data Diubah');
     }
 
     /**
@@ -374,6 +374,6 @@ class PmReportController extends Controller
         // Recommendation::where('head_id', $id)->delete();
         // ExpertReport::where('head_id', $id)->delete();
 
-        return redirect()->route('pm.index')->with('status', 'Data Dihapus');
+        return redirect()->route('pm.index')->with('status_delete', 'Data Dihapus');
     }
 }

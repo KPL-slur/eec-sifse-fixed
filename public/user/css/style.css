@@ -59,3 +59,12 @@
     width: 35vw !important;
     height: auto !important;
 }
+/*
+ * Try to fix modal adding padding to the right
+ * If this code cause problem remove fade class
+ * from modal or delete this code
+ */
+.modal-open{
+    overflow: auto;
+    padding-right:0 !important;
+}
