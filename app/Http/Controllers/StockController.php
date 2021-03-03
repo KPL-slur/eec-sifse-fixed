@@ -190,9 +190,7 @@ class StockController extends Controller
                                         ->join('head_reports', 'head_reports.head_id', '=', 'recommendations.head_id')
                                         ->join('sites', 'sites.site_id' , '=', 'head_reports.site_id')
                                         ->join('stocks', 'stocks.stock_id' , '=', 'recommendations.stock_id')
-                                        ->get()
-                                            
-                                        ;
+                                        ->get();
 
         // dd($recommendations);
 
