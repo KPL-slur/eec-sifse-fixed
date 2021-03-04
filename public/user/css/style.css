@@ -8,17 +8,6 @@
     float: none;
 }
 
-/* NANTI CKEDITOR DIBUAT RESPONSIVE */
-.ck-editor__editable {
-    min-height: auto !important;
-    min-width: auto !important;
-}
-
-.ck.ck-editor__editable > .ck-placeholder::before {
-    color: #f44336;
-    font-weight: 400;
-}
-
 /* 
   * Digunakan pada tabel rekomendasi sparepart
   * pada form create pm/cm untuk mengoveride 
@@ -67,4 +56,23 @@
 .modal-open{
     overflow: auto;
     padding-right:0 !important;
+}
+
+/* 
+ *  CK EDITOR STYLING
+ */ 
+.editor__editable,
+/* Classic build. */
+main .ck-editor[role='application'] .ck.ck-content
+/* Decoupled document build. */
+.ck.editor__editable[role='textbox'],
+.ck.ck-editor__editable[role='textbox'] {
+	line-height: 1.6em !important;
+    width: 90vw;
+	min-height: 400px;
+}
+
+.ck.ck-editor__editable > .ck-placeholder::before {
+    color: #f44336;
+    font-weight: 400;
 }

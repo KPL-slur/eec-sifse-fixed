@@ -484,8 +484,7 @@ class PmReport extends Component
                 break;
                 
             case 3:
-                // dd($this->remark);
-                // $this->validate($this->remarkRules);
+                $this->validate($this->remarkRules);
                 break;
 
             case 5:
@@ -550,6 +549,12 @@ class PmReport extends Component
         }
     }
 
+    public function cancel()
+    {
+        $this->modalType = 'cancel';
+        $this->dispatchBrowserEvent('openModalConfirm');
+    }
+
     public function render()
     {
         // return view('livewire.pm-report');
@@ -557,3 +562,8 @@ class PmReport extends Component
             ->withStations(Site::get());
     }
 }
+/*  This class is to complex, we need to split it up.
+ *  Split it into smaller part and send request from there
+ *  By doing so we already send the request piece by piece and
+ *  not sending a huge request at the end of the form.
+ */ 
