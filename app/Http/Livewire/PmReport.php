@@ -432,6 +432,18 @@ class PmReport extends Component
         array_values($this->attachments);
     }
 
+    public function validateUploads()
+    {
+        foreach ($this->attachments as $index => $attachment) {
+            if ($this->attachments[$index]['uploaded'] == 0) {
+                $this->validate([
+                    'attachments.'.$index.'.caption' => 'required',
+                    'attachments.'.$index.'.image' => 'required|image'
+                ]);
+            }
+        }
+    }
+
     public function uploadAll()
     {
         foreach ($this->attachments as $index => $attachment) {
@@ -443,17 +455,9 @@ class PmReport extends Component
 
     public function fileUpload($index)
     {
-        // dd($this->attachments);
-        $this->validate([
-            'attachments.'.$index.'.caption' => 'required',
-            'attachments.'.$index.'.image' => 'required|image'
-        ]);
-
-        $this->image[$index] = $this->attachments[$index]['image']->storePublicly('files', 'public');
-        // dd($image);
-        // $validatedData['attachments.'.$index.'.image'] = $image;
+        $this->image[$index] = $this->attachments[$index]['image']->storePublicly('files', 'public');\
         
-        ReportImage::create([
+        App\Models\ReportImage::create([
             'head_id' => $this->headId,
             'image' => $this->image[$index],
             'caption' => $this->attachments[$index]['caption']
@@ -485,7 +489,7 @@ class PmReport extends Component
                 break;
 
             case 5:
-                $this->uploadAll();
+                $this->validateUploads();
                 $this->modalType = 'submit';
                 $this->dispatchBrowserEvent('openModalConfirm');
                 break;

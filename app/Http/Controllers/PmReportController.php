@@ -151,8 +151,10 @@ class PmReportController extends Controller
         //INSERT RECOMENDATION
         // cek apakah sudah ada record dengan id yg sama sebelumnya
         $oldRecommendationId = [];
-        foreach($request->old_recommendation_id as $index => $old_recommendation_id){
-            $oldRecommendationId[$index] = $old_recommendation_id;
+        if ($request->old_recommendation_id) {
+            foreach($request->old_recommendation_id as $index => $old_recommendation_id){
+                $oldRecommendationId[$index] = $old_recommendation_id;
+            }
         }
         if ($request->recommends) {
             foreach ($request->recommends as $index => $recommend) {
@@ -240,9 +242,7 @@ class PmReportController extends Controller
         //UPDATE HEADREPORT
         Headreport::where('head_id', $request->head_id)
         ->update([
-            'head_id' => $request->head_id,
             'site_id' => $request->site_id,
-            'maintenance_type' => 'pm',
             'report_date_start' => $request->report_date_start,
             'report_date_end' => $request->report_date_end,
         ]);
@@ -251,8 +251,10 @@ class PmReportController extends Controller
         //UPDATE EXPERTREPORT
         // cek apakah sudah ada record dengan id yg sama sebelumnya
         $oldExpertReportId = [];
-        foreach($request->old_expert_report_id as $index => $old_expert_report_id){
-            $oldExpertReportId[$index] = $old_expert_report_id;
+        if ($request->old_expert_report_id) {
+            foreach($request->old_expert_report_id as $index => $old_expert_report_id){
+                $oldExpertReportId[$index] = $old_expert_report_id;
+            }
         }
         foreach ($request->experts as $index => $expert) {
             if ($expert['expert_id']) {
@@ -310,8 +312,10 @@ class PmReportController extends Controller
         //UPDATE RECOMENDATION
         // cek apakah sudah ada record dengan id yg sama sebelumnya
         $oldRecommendationId = [];
-        foreach($request->old_recommendation_id as $index => $old_recommendation_id){
-            $oldRecommendationId[$index] = $old_recommendation_id;
+        if ($request->old_recommendation_id) {
+            foreach($request->old_recommendation_id as $index => $old_recommendation_id){
+                $oldRecommendationId[$index] = $old_recommendation_id;
+            }
         }
         if ($request->recommends) {
             foreach ($request->recommends as $index => $recommend) {
