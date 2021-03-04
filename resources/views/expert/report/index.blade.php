@@ -8,11 +8,11 @@
                     <h4 class="card-title">{{ __('Weather Radar Service Report') }}</h4>
                 </div>
                 <div class="card-body ">
-                    <div class="sticky-top">
-                        <a type="button" class="btn btn-info" href="{{ url('expert') }}">BACK</a>
+                    {{-- <div class="sticky-top"> --}}
+                        <a type="button" class="btn btn-info" href="{{ route('expert') }}">BACK</a>
                         <a type="button" class="btn btn-primary"
                             href="{{ route($maintenance_type.".create") }}">ADD NEW</a>
-                    </div>
+                    {{-- </div> --}}
                     
                     <div class="row">
                         <div class="col table-responsive">
@@ -73,6 +73,26 @@
             </div>
         </div>
     </div>
+
+    {{-- FLOATING MENU --}}
+    <div class="">
+        <button href="#" class="btn btn-primary btn-fab btn-lg btn-float" id="menu-share">
+            <i class="material-icons">menu</i>
+        </button>
+        <ul class="btn-float-list">
+            <li>   
+                <a href="{{ route($maintenance_type.'.create') }}" class="btn btn-primary btn-fab btn-round">
+                    <i class="material-icons">create</i>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('expert') }}" class="btn btn-info btn-fab btn-round">
+                    <i class="material-icons">arrow_back</i>
+                </a>
+            </li>
+        </ul>
+    </div>
+
     <!-- Modal -->
     <div class="modal" id="modalDelete" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
