@@ -31,7 +31,40 @@
     <a class="btn btn-secondary nextBtn btn-lg pull-right" type="button" href="{{ route('pm.index') }}">Cancel</a>
 
     <!-- Modal -->
-    <div class="modal" id="modalConfirm" tabindex="-1" role="dialog" aria-hidden="true">
+    <x-ui.modal-confirm id="modalConfirm">
+        <x-slot name="body">
+            @switch($modalType)
+                @case('submit')
+                    <p>Are You Sure Want to Submit This Form ?</p>
+                    @break
+                @case('delete')
+                    <p>Are You Sure Want to Delete This Item ?</p>
+                    @break
+                @default
+                    <p>Are You Sure ?</p> 
+            @endswitch
+        </x-slot>
+        <x-slot name="footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            @switch($modalType)
+                @case('submit')
+                    <div>
+                        <button id="submitPmForm" type="submit" class="btn btn-success">Yes</button>
+                    </div>
+                    @break
+                @case('delete')
+                    <div>
+                        <button id="deleteDynamicForm" type="button" wire:click="deleteDynamicForm" class="btn btn-secondary">Yes</button>
+                    </div>
+                    @break
+                @default
+                    </div>
+                        <button type="button" class="btn btn-primary">Yes</button>
+                    </div>
+            @endswitch
+        </x-slot>
+    </x-ui.modal-confirm>
+    {{-- <div class="modal" id="modalConfirm" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -73,7 +106,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 </form>
 <script src="{{ asset('user') }}/js/report.js" type="text/javascript"></script>

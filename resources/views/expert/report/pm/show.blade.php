@@ -296,52 +296,32 @@
     </div>
     
     {{-- FLOATING MENU --}}
-    <div class="">
-        <button href="#" class="btn btn-primary btn-fab btn-lg btn-float" id="menu-share">
-            <i class="material-icons">menu</i>
-        </button>
-        <ul class="btn-float-list">
-            <li>
-                <button class="btn btn-danger btn-fab btn-round" data-toggle="modal" data-target="#modalDelete">
-                    <i class="material-icons">close</i>
-                </button>
-            </li>
-            <li>   
-                <a href="{{ route('pm.edit', ['id' => $headReport->head_id]) }}" class="btn btn-warning btn-fab btn-round">
-                    <i class="material-icons">edit</i>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route("$headReport->maintenance_type.index") }}" class="btn btn-info btn-fab btn-round">
-                    <i class="material-icons">arrow_back</i>
-                </a>
-            </li>
-        </ul>
-    </div>
+    <x-ui.btn-float-group>
+        <li>
+            <button class="btn btn-danger btn-fab btn-round" data-toggle="modal" data-target="#modalDelete">
+                <i class="material-icons">close</i>
+            </button>
+        </li>
+        <li>   
+            <a href="{{ route('pm.edit', ['id' => $headReport->head_id]) }}" class="btn btn-warning btn-fab btn-round">
+                <i class="material-icons">edit</i>
+            </a>
+        </li>
+    </x-ui.btn-float-group>
 
-    <!-- Modal -->
-    <div class="modal" id="modalDelete" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalDeleteHeader">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Are You Sure Want To Delete This Rerport?</p>
-                </div>
-                <div class="modal-footer">
-                    <form action="{{ route('pm.delete', ['id' => $headReport->head_id]) }}" method="post"
-                        class="d-inline">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                        @csrf
-                        @method('delete')
-                        <button type="submit" rel="tooltip" class="btn btn-secondary">Yes</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    {{-- Modal Delete --}}
+    <x-ui.modal-confirm id="modalDelete">
+        <x-slot name="body">
+            <p>Are You Sure Want To Delete This Rerport?</p>
+        </x-slot>
+        <x-slot name="footer">
+            <form action="{{ route('pm.delete', ['id' => $headReport->head_id]) }}" method="post"
+                class="d-inline">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                @csrf
+                @method('delete')
+                <button type="submit" rel="tooltip" class="btn btn-secondary">Yes</button>
+            </form>
+        </x-slot>
+    </x-ui.modal-confirm>
 @endsection
