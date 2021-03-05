@@ -108,16 +108,6 @@ class PmReportController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate($this->rules);
-        
-        // foreach ($request->recommends as $recommend){
-        //     if ($recommend['stock_id']) {
-        //         dd($recommend);
-        //     }
-        // }
-        // dd('die');
-        // dd($request->all());
-
         //INSERT HEADREPORT
         Headreport::create([
             'head_id' => $request->head_id,
@@ -126,10 +116,6 @@ class PmReportController extends Controller
             'report_date_start' => $request->report_date_start,
             'report_date_end' => $request->report_date_end,
         ]);
-        // $headId = HeadReport::select('head_id')->orderByDesc('head_id')->first()->head_id; //used to determine the head id of this report
-        // $request->merge([
-        //     'head_id' => $headId
-        // ]);
 
         //INSERT EXPERTREPORT
         foreach ($request->experts as $expert) {
@@ -163,15 +149,25 @@ class PmReportController extends Controller
         PmBodyReport::create($request->all());
 
         //INSERT RECOMENDATION
+        // cek apakah sudah ada record dengan id yg sama sebelumnya
+        $oldRecommendationId = [];
+        if ($request->old_recommendation_id) {
+            foreach($request->old_recommendation_id as $index => $old_recommendation_id){
+                $oldRecommendationId[$index] = $old_recommendation_id;
+            }
+        }
         if ($request->recommends) {
-            foreach ($request->recommends as $recommend) {
+            foreach ($request->recommends as $index => $recommend) {
                 if ($recommend['stock_id']) {
-                    Recommendation::create([
-                    'head_id' => $request->head_id,
-                    'stock_id' => $recommend['stock_id'],
-                    'jumlah_unit_needed' => $recommend['jumlah_unit_needed'],
-                    'year' => now()->year
-                ]);
+                    //jika iya, maka lakukan update pada record tersebut
+                    if($index > count($oldRecommendationId)) {
+                        Recommendation::create([
+                            'head_id' => $request->head_id,
+                            'stock_id' => $recommend['stock_id'],
+                            'jumlah_unit_needed' => $recommend['jumlah_unit_needed'],
+                            'year' => now()->year
+                        ]);
+                    }
                 }
             }
         }
@@ -190,7 +186,7 @@ class PmReportController extends Controller
                     Recommendation::create([
                     'head_id' => $request->head_id,
                     'stock_id' => $stockId,
-                    'jumlah_unit_needed' => $recommend['jumlah_unit_needed'],
+                    'jumlah_unit_needed' => $manualRecommend['jumlah_unit_needed'],
                     'year' => now()->year
                 ]);
                 }
@@ -199,7 +195,7 @@ class PmReportController extends Controller
         
         //INSERT IMAGE
 
-        return redirect()->route('pm.index')->with('status', 'Data Ditambahkan');
+        return redirect()->route('pm.index')->with('status_success', 'Data Ditambahkan');
     }
 
     /**
@@ -246,9 +242,7 @@ class PmReportController extends Controller
         //UPDATE HEADREPORT
         Headreport::where('head_id', $request->head_id)
         ->update([
-            'head_id' => $request->head_id,
             'site_id' => $request->site_id,
-            'maintenance_type' => 'pm',
             'report_date_start' => $request->report_date_start,
             'report_date_end' => $request->report_date_end,
         ]);
@@ -257,8 +251,10 @@ class PmReportController extends Controller
         //UPDATE EXPERTREPORT
         // cek apakah sudah ada record dengan id yg sama sebelumnya
         $oldExpertReportId = [];
-        foreach($request->old_expert_report_id as $index => $old_expert_report_id){
-            $oldExpertReportId[$index] = $old_expert_report_id;
+        if ($request->old_expert_report_id) {
+            foreach($request->old_expert_report_id as $index => $old_expert_report_id){
+                $oldExpertReportId[$index] = $old_expert_report_id;
+            }
         }
         foreach ($request->experts as $index => $expert) {
             if ($expert['expert_id']) {
@@ -307,13 +303,19 @@ class PmReportController extends Controller
         $pmBodyReport->fill($input)->save();
 
         //mengambil nilai tahun dari record sebelumnya
-        $year = Recommendation::select('year')->where('head_id', $request->head_id)->first()->year; 
+        if (Recommendation::select('year')->where('head_id', $request->head_id)->first()) {
+            $year = Recommendation::select('year')->where('head_id', $request->head_id)->first()->year;
+        } else {
+            $year = now()->year;
+        }
 
         //UPDATE RECOMENDATION
         // cek apakah sudah ada record dengan id yg sama sebelumnya
         $oldRecommendationId = [];
-        foreach($request->old_recommendation_id as $index => $old_recommendation_id){
-            $oldRecommendationId[$index] = $old_recommendation_id;
+        if ($request->old_recommendation_id) {
+            foreach($request->old_recommendation_id as $index => $old_recommendation_id){
+                $oldRecommendationId[$index] = $old_recommendation_id;
+            }
         }
         if ($request->recommends) {
             foreach ($request->recommends as $index => $recommend) {
@@ -322,7 +324,6 @@ class PmReportController extends Controller
                     if($index < count($oldRecommendationId)) {
                         Recommendation::where('rec_id', $oldRecommendationId[$index])
                         ->update([
-                            'head_id' => $request->head_id,
                             'stock_id' => $recommend['stock_id'],
                             'jumlah_unit_needed' => $recommend['jumlah_unit_needed'],
                             'year' => $year
@@ -355,14 +356,14 @@ class PmReportController extends Controller
                     Recommendation::create([
                         'head_id' => $request->head_id,
                         'stock_id' => $stockId,
-                        'jumlah_unit_needed' => $recommend['jumlah_unit_needed'],
+                        'jumlah_unit_needed' => $manualRecommend['jumlah_unit_needed'],
                         'year' => $year
                     ]);
                 }
             }
         }
 
-        return redirect()->route('pm.index')->with('status', 'Data Ditambahkan');
+        return redirect()->route('pm.index')->with('status_edit', 'Data Diubah');
     }
 
     /**
@@ -385,6 +386,6 @@ class PmReportController extends Controller
         // Recommendation::where('head_id', $id)->delete();
         // ExpertReport::where('head_id', $id)->delete();
 
-        return redirect()->route('pm.index')->with('status', 'Data Dihapus');
+        return redirect()->route('pm.index')->with('status_delete', 'Data Dihapus');
     }
 }

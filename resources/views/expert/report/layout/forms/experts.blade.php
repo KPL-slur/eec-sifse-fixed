@@ -85,7 +85,7 @@
                                     />
                                 </td>
                                 <td>
-                                    <a href="#" wire:click.prevent="removeExpert({{ $index }})">Delete</a>
+                                    <a href="#" wire:click.prevent="selectItem({{ $index }}, 'expert')">Delete</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -106,7 +106,7 @@
                                         wire:model.defer="manualExperts.{{ $index }}.expert_nip">
                                 </td>
                                 <td>
-                                    <a href="#" wire:click.prevent="removeManualExpert({{ $index }})">Delete</a>
+                                    <a href="#" wire:click.prevent="selectItem({{ $index }}, 'manualExpert')">Delete</a>
                                 </td>
                             </tr>
                         @endforeach

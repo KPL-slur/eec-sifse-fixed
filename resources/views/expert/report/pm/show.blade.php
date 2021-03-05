@@ -8,18 +8,15 @@
                     <h4 class="card-title">{{ __('Preventive Maintenance Report') }}</h4>
                 </div>
                 <div class="card-body ">
-                    <a type="button" class="btn btn-info"
-                        href="{{ url("expert/$headReport->maintenance_type") }}">BACK</a>
-                    <a type="button" class="btn btn-primary" href="{{ route('pm.edit', ['id' => $headReport->head_id]) }}">EDIT</a>
+                    {{-- <div class="sticky-top"> --}}
+                        <a type="button" class="btn btn-info"
+                            href="{{ route("$headReport->maintenance_type.index") }}">BACK</a>
+                        <a type="button" class="btn btn-warning" href="{{ route('pm.edit', ['id' => $headReport->head_id]) }}">EDIT</a>
 
-                    <form action="{{ route('pm.delete', ['id' => $headReport->head_id]) }}" method="post"
-                        class="d-inline">
-                        @csrf
-                        @method('delete')
-                        <button type="submit" rel="tooltip" class="btn btn-danger">
-                            DELETE
-                        </button>
-                    </form>
+                        <button type="submit" rel="tooltip" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete">
+                            DELETE</button>
+                        </form>
+                    {{-- </div> --}}
 
                     <div class="card ">
                         <div class="card-header card-header-primary">
@@ -297,4 +294,34 @@
             </div>
         </div>
     </div>
+    
+    {{-- FLOATING MENU --}}
+    <x-ui.btn-float-group>
+        <li>
+            <button class="btn btn-danger btn-fab btn-round" data-toggle="modal" data-target="#modalDelete">
+                <i class="material-icons">close</i>
+            </button>
+        </li>
+        <li>   
+            <a href="{{ route('pm.edit', ['id' => $headReport->head_id]) }}" class="btn btn-warning btn-fab btn-round">
+                <i class="material-icons">edit</i>
+            </a>
+        </li>
+    </x-ui.btn-float-group>
+
+    {{-- Modal Delete --}}
+    <x-ui.modal-confirm id="modalDelete">
+        <x-slot name="body">
+            <p>Are You Sure Want To Delete This Rerport?</p>
+        </x-slot>
+        <x-slot name="footer">
+            <form action="{{ route('pm.delete', ['id' => $headReport->head_id]) }}" method="post"
+                class="d-inline">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                @csrf
+                @method('delete')
+                <button type="submit" rel="tooltip" class="btn btn-secondary">Yes</button>
+            </form>
+        </x-slot>
+    </x-ui.modal-confirm>
 @endsection
