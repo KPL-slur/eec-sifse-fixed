@@ -158,7 +158,6 @@
                   <table class="table" id="indexStocksTable">
                     <thead class=" text-primary text-middle">
                       <th>No</th>
-                      <th>Lokasi Site</th>
                       <th>Nama Barang</th>
                       <th>Part Number</th>
                       <th>Serial Number</th>
@@ -174,7 +173,6 @@
                           <tr>
                             <input type="hidden" value="{{ $st->group }}">
                             <td scope="row">{{$loop->iteration}}</td>
-                            <td>{{ $st->station_id }}</td>
                             <td>{{ $st->nama_barang }}</td>
                             <td>{{ $st->part_number }}</td>
                             <td>{{ $st->serial_number }}</td>
