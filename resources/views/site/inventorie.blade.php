@@ -14,32 +14,41 @@
         <div class="card">
           {{-- header read plg luar --}}
           <div class="card-header card-header-primary">
-              <h4 class="card-title">Table Inventory {{$stocks[0]->radar_name ?? ''}}</h4>
+              <h4 class="card-title">Table Inventory {{$sites->radar_name}}</h4>
           </div>
 
           {{-- body paling luar --}}
           <div class="card-body">
             
-                      
-            <div class="col-12 text-left">
-              <select class="btn btn-primary" name="selectGroupStock" class="form-control m-3" id="selectGroupStock" onchange="selectGroupIndexStocks()" style="max-width:15%;">
+
+              <div class="text_left">
+                <a title="back" class="btn btn-sm btn-primary m-2" href="/site">
+                  <i class="material-icons">arrow_back</i>
+                  <div class="ripple-container"></div>
+                </a>
+              </div>
+              
+              <div class="text-right">
+                {{-- button modal trigger  --}}
+                <a type="button" rel="tooltip" title="print data" class="btn btn-outline-primary" href="{{ url('inventorySite') }}/{{$sites->site_id ?? ''}}" >
+                  <i class="material-icons">print</i>
+                </a>
+                {{-- for create button --}}
+                <a type="button" rel="tooltip" title="add item" class="btn btn-md btn-outline-primary text-right m-4 " href="/addInventorySite/{{$sites->site_id ?? ''}}">
+                  <i class="material-icons">note_add</i>
+                </a>
+              </div>
+            
+
+            <div>
+              <select name="selectGroupStock" class="form-control m-3" id="selectGroupStock" onchange="selectGroupIndexStocks()" style="max-width:15%;">
                 <option selected value="">Semua</option>
                 <option value="1" >Transmitter</option>
                 <option value="2" >Receiver</option>
                 <option value="3" >Antenna</option>
                 <option value="0" >Tambahan</option>
-              </select>
+            </select>
             </div>
-            
-            <div class="col-12 text-right">
-                      
-              <a rel="tooltip" class="btn btn-success" type="button" href="{{ url('inventorySite') }}/{{$stocks[0]->site_id ?? ''}}">
-                <i class="material-icons">
-                  local_printshop
-                </i> Print Data
-              </a>
-      
-          </div>
 
             {{-- card kedua --}}
             <div class="card m-3 my-5">
@@ -53,7 +62,7 @@
               {{-- card body kedua --}}
               <div class="card-body">
                 <div class="table-responsive">
-                  <table class="table table-bordered" id="indexStocksTable">
+                  <table class="table table-striped" id="indexStocksTable">
                     <thead class=" text-primary text-middle">
                       <th>#</th>
                       <th>Nama Barang</th>
@@ -61,6 +70,7 @@
                       <th>Serial Number</th>
                       <th>Tanggal Masuk</th>
                       <th>Expired</th>
+                      <th class="text-center">Update or Delete</th>
                     </thead>
                       <tbody>
                         @if ($stocks)
@@ -73,8 +83,23 @@
                               <td>{{ $st->serial_number }}</td>
                               <td>{{ $st->tgl_masuk }}</td>
                               <td>{{ $st->expired }}</td>
+                              <td class="td-actions text-center">
+                                <a title="edit" class="btn btn-lg btn-warning m-2" href="/editInventorySite/{{$st->sited_stock_id}}" type="submit">
+                                  <i class="material-icons">edit</i>
+                                  <div class="ripple-container"></div>
+                                </a>
                                 
-                              </td>
+                                <form action="/deleteInventorySite/{{$st->sited_stock_id}}" class="d-inline" method="POST">
+                                  @method('DELETE')
+                                  @csrf
+                                  <button type="submit" class="btn btn-lg btn-danger m-2" title="delete" onclick="return confirm('Are you sure you want to delete '+ '{{ $st->nama_barang }}' +'?')">
+                                    <i class="material-icons">delete</i>
+                                    <div class="ripple-container"></div>
+                                    </button>
+                
+                                </form>
+                              </td> 
+                              
                             </tr>
                           @endforeach
                             
@@ -87,12 +112,30 @@
               {{-- card body kedua --}}
             </div>
             {{-- card kedua --}}
-
           </div>
           {{-- body paling luar --}}
         </div>
         {{-- card paling luar --}}
       </div>
+      @if (session('status1'))
+      <script>
+        window.onload = () => {
+          showNotification('top', 'right', 'success' ,'<?php echo session('status1') ?>');
+        };
+      </script>
+      @elseif (session('status2'))
+      <script>
+        window.onload = () => {
+          showNotification('top', 'right', 'warning' ,'<?php echo session('status2') ?>');
+        };
+      </script>
+      @elseif (session('status3'))
+      <script>
+        window.onload = () => {
+          showNotification('top', 'right', 'danger' ,'<?php echo session('status3') ?>');
+        };
+      </script>
+      @endif
       {{-- col --}}
     </div>
     {{-- row --}}
@@ -101,70 +144,3 @@
 </div>
 {{-- content --}}
 @endsection
-
-{{-- @section('content')
-<div class="content">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-              <div class="card-header card-header-primary">
-                <h4 class="card-title ">Inventory</h4>
-                <p class="card-category"> Here you can manage inventory</p>
-              </div>
-              <div class="card-body">
-                  <div class="row">
-                    <div class="col-12 text-left">
-                        <div class="dropdown">
-                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Item Utama
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <button class="btn btn-primary dropdown-item" type="button">ITEM PENDUKUNG</a>
-                            </div>
-                          </div>
-                    </div>
-                    <div class="col-12 text-right">
-                      
-                        <a rel="tooltip" class="btn btn-success" type="button" href="{{ url('inventorySite') }}/{{ $id }}">
-                          <i class="material-icons">
-                            local_printshop
-                          </i> Print Data
-                        </a>
-                
-                    </div>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="table-stk">
-                        <thead>
-                          <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Sparepart</th>
-                            <th scope="col">Part Number</th>
-                            <th scope="col">Serial Number</th>
-                            <th scope="col">Installed Date</th>
-                            <th scope="col">Expired Date</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          @foreach ($stocks as $stk)
-                            <tr>
-                              <th scope="row">{{$loop->iteration}}</th>
-                              <td>{{$stk->nama_barang}}</td>
-                              <td>{{$stk->part_number}}</td>
-                              <td>{{$stk->serial_number}}</td>
-                              <td>{{$stk->tgl_masuk}}</td>
-                              <td>{{$stk->expired}}</td>
-                            </tr>
-                          @endforeach
-                        </tbody>
-                      </table>
-                </div>
-              </div>
-            </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-@endsection --}}

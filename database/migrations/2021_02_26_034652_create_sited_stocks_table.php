@@ -15,8 +15,8 @@ class CreateSitedStocksTable extends Migration
     {
         Schema::create('sited_stocks', function (Blueprint $table) {
             $table->bigIncrements('sited_stock_id');
-            $table->foreignId('site_id')->constrained('sites', 'site_id');
-            $table->foreignId('stock_id')->constrained('stocks', 'stock_id');
+            $table->foreignId('site_id');
+            $table->foreignId('stock_id');  
 
             $table->timestamps();
         });

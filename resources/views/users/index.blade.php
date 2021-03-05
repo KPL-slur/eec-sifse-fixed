@@ -29,23 +29,61 @@
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
+                      
                       <form method="POST" action="/addUser">
                         @csrf
                         <div class="modal-body">
-        
+                          {{-- {{$errors}} --}}
                             <div class="form-group-site">
                               <label for="inputName">Name</label>
-                              <input type="text" class="form-control" name="name" placeholder="Input Name">
+                              <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Input Name">
+                                @error('name')
+                                <div style="color: red">
+                                  {{$message}}
+                                </div>
+                                  <script type="text/javascript">
+                                    
+                                    window.onload = () => {
+                                      $('#modalAddUser').modal('show');
+                                    }
+                                  </script>
+                                @enderror
                             </div>
 
                             <div class="form-group-site">
                               <label for="inputEmail">Email</label>
-                              <input type="email" class="form-control" name="email" placeholder="Input Email">
+                              <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Input Email">
+                              <span>
+                                @error('email')
+                                <div style="color: red">
+                                  {{$message}}
+                                </div>
+                                  <script type="text/javascript">
+                                    
+                                    window.onload = () => {
+                                      $('#modalAddUser').modal('show');
+                                    }
+                                  </script>
+                                @enderror
+                              </span>
                             </div>
 
                             <div class="form-group-site">
                               <label for="inputPassword">Password</label>
-                              <input type="text" class="form-control" name="password" placeholder="Input Name">
+                              <input type="text" class="form-control @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}" placeholder="Input Name">
+                              <span>
+                                @error('password')
+                                <div style="color: red">
+                                  {{$message}}
+                                </div>
+                                  <script type="text/javascript">
+                                    
+                                    window.onload = () => {
+                                      $('#modalAddUser').modal('show');
+                                    }
+                                  </script>
+                                @enderror
+                              </span>
                             </div>
 
                         </div>
@@ -62,7 +100,7 @@
 
               </div>
               <div class="table-responsive">
-                <table class="table">
+                <table class="table table-striped">
                   <thead class=" text-primary">
                     <tr>
                     <th scope="col">#</th>
@@ -70,7 +108,7 @@
                     <th scope="col">Email</th>
                     <th scope="col">Password</th>
                     <th scope="col">Creation Date</th>
-                    <th class="text-right">Actions</th>
+                    <th class="text-center">Delete</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -83,7 +121,7 @@
                         <td>{{$user->password}}</td>
                         <td>{{$user->created_at}}</td>
 
-                        <td class="td-actions text-right">
+                        <td class="td-actions text-center">
 
                               <form method="POST" action="/deleteUser/{{$user->id}}" class="d-inline">
                                 @csrf
@@ -95,47 +133,6 @@
                               </form>
                         </td>
 
-                        <!-- Modal Edit User -->
-                          <div class="modal fade" id="modalEditUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLongTitle">Add New User</h5>
-                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                  </button>
-                                </div>
-                                <form method="POST" action="/editUser">
-                                  @csrf
-                                  <div class="modal-body">
-                  
-                                      <div class="form-group-site">
-                                        <label for="inputName">Name</label>
-                                        <input type="text" class="form-control" name="name" placeholder="Input Name">
-                                      </div>
-
-                                      <div class="form-group-site">
-                                        <label for="inputEmail">Email</label>
-                                        <input type="email" class="form-control" name="email" placeholder="Input Email">
-                                      </div>
-
-                                      <div class="form-group-site">
-                                        <label for="inputPassword">Password</label>
-                                        <input type="text" class="form-control" name="password" placeholder="Input Name">
-                                      </div>
-
-                                  </div>
-
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" onclick="return confirm('Aapakah anda yakin ingin mengubah data ini?')" class="btn btn-primary">Edit</button>
-                                  </div>
-
-                                </form> 
-                              </div>
-                            </div>
-                          </div>
-
                     @endforeach
 
                   </tbody>
@@ -146,12 +143,6 @@
               <script>
                 window.onload = () => {
                   showNotification('top', 'right', 'success' ,'<?php echo session('status1') ?>');
-                };
-              </script>
-              @elseif (session('status2'))
-              <script>
-                window.onload = () => {
-                  showNotification('top', 'right', 'warning' ,'<?php echo session('status2') ?>');
                 };
               </script>
               @elseif (session('status3'))
