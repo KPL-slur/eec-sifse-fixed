@@ -15,15 +15,18 @@
                 <form action="{{ url('stock_currency/') }}/{{ $siteAndStock->stock_id }}/update" method="POST">
                   @method('PUT')
                   @csrf
-                    <div class="form-group my-4">
+                    {{-- <div class="form-group my-4">
                       <label for="site_id">Pilih Site(?)</label>
                       <select name="site_id" id="site_id" class="form-control">
+                        @php
+                            $chosen_site = 0;
+                        @endphp
                         @foreach ($sites as $st)
-                            <option value="{{ $st->site_id }}" @if ($siteAndStock->site_id == $st->site_id) selected  @endif >{{ $st->station_id }}</option>
+                          <option value="{{ $st->site_id }}" @if ($siteAndStock->site_id == $st->site_id) selected @php $chosen_site = 1 @endphp @endif >{{ $st->station_id }}</option>
                         @endforeach
+                          <option value="{{ $siteAndStock->site_id }}" @if ($chosen_site == 0) selected  @endif >{{ $siteAndStock->station_id ?? 'Site ini masih belum ada namanya' }}</option>
                       </select>
-                      {{-- <input type="text" class="form-control" id="site_id" name="site_id" placeholder="Site(?) nnt dropdown / checkbox" value="{{ $siteAndStock->site }}"> --}}
-                    </div>
+                    </div> --}}
                     <div class="form-group my-4">
                       <label for="nama_barang">Nama Barang</label>
                       <input type="text" class="form-control" id="nama_barang" name="nama_barang" placeholder="Masukkan nama barang" value="{{ $siteAndStock->nama_barang }}" >
@@ -32,9 +35,10 @@
                     <div class="form-group my-4">
                       <label for="group">Group nya</label>
                       <select name="group" id="group" class="form-control">
-                        <option value="1" @if ($siteAndStock->group == 1) selected @endif >Transmitter</option>
-                        <option value="2" @if ($siteAndStock->group == 2) selected @endif >Receiver</option>
-                        <option value="3" @if ($siteAndStock->group == 3) selected @endif >Antenna</option>
+                        <option value="1" @if ($siteAndStock->group === 1) selected @endif >Transmitter</option>
+                        <option value="2" @if ($siteAndStock->group === 2) selected @endif >Receiver</option>
+                        <option value="3" @if ($siteAndStock->group === 3) selected @endif >Antenna</option>
+                        <option value="0" @if ($siteAndStock->group === 0) selected @endif >Tambahan</option>
                       </select>
                     </div>
                     <div class="form-group my-4">
@@ -64,8 +68,8 @@
                     <div class="form-group my-4">
                       <label for="status">Status</label>
                       <select name="status" id="status" class="form-control">
-                        <option value="0" @if ($siteAndStock->status == 0) @endif>Not Obsolete</option>
-                        <option value="1" @if ($siteAndStock->status == 1) @endif>Obsolete</option>
+                        <option value="0" @if ($siteAndStock->status === 0) selected @endif>Not Obsolete</option>
+                        <option value="1" @if ($siteAndStock->status === 1) selected @endif>Obsolete</option>
                       </select>
                     </div>                    
                     <button type="submit" class="btn btn-primary">Submit</button>

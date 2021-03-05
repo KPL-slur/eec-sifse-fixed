@@ -19,7 +19,7 @@
             <p class="text-center">Harga Kurs Sekarang : <div class="text-primary text-center display-4">Rp {{ $rate_fix }}</div></p>
             <div class="text-right">
               {{-- button modal trigger  --}}
-              <button type="button" rel="tooltip" title="print data" class="btn btn-outline-primary " data-toggle="modal" data-target="#modal_input_stocks_report">
+              <button type="button" rel="tooltip" title="print data" class="btn btn-outline-primary" data-toggle="modal" data-target="#modal_input_stocks_report">
                 <i class="material-icons">print</i>
               </button>
               {{-- for create button --}}
@@ -158,7 +158,6 @@
                   <table class="table" id="indexStocksTable">
                     <thead class=" text-primary text-middle">
                       <th>No</th>
-                      <th>Lokasi Site</th>
                       <th>Nama Barang</th>
                       <th>Part Number</th>
                       <th>Serial Number</th>
@@ -174,7 +173,6 @@
                           <tr>
                             <input type="hidden" value="{{ $st->group }}">
                             <td scope="row">{{$loop->iteration}}</td>
-                            <td>{{ $st->station_id }}</td>
                             <td>{{ $st->nama_barang }}</td>
                             <td>{{ $st->part_number }}</td>
                             <td>{{ $st->serial_number }}</td>

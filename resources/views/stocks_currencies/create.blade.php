@@ -14,22 +14,22 @@
             <p class="mb-4 text-center h3">Harga Kurs Sekarang : <span class="text-primary text-center display-4">Rp {{ $rate_fix }}</span> ke USD</p>
             <form action="{{ url('stock_currency/') }}" method="POST">
               @csrf
-                <div class="form-group my-4">
+                {{-- <div class="form-group my-4">
                   <label for="site_id">Pilih Site</label>
                   <select name="site_id" id="site_id" class="form-control @error('site_id') is-invalid @enderror">
                     <option value="">-- Pilih Site --</option>
                     @foreach ($sites as $st)
-                      <option value="{{ $st->site_id }}" {{ old('site') == $st->station_id ? 'selected' : '' }}>{{ $st->station_id }}</option>  
+                      <option value="{{ $st->site_id }}" {{ old('site_id') == $st->site_id ? 'selected' : '' }}>{{ $st->station_id }}</option>  
                     @endforeach
                   </select>
-                  {{-- <input type="text" class="form-control" id="site_id" name="site_id"> --}}
+                  <input type="text" class="form-control" id="site_id" name="site_id"> DISINI TADINYA KE-KOMEN
                   <small class="form-text text-muted">Apabila site tidak ada, berarti tambah dahulu di fitur site</small>
                   @error('site_id')
                     <div class="invalid-feedback">
                       Lokasi site belum diisi
                     </div>
                   @enderror
-                </div>
+                </div> --}}
 
                 <div class="form-group my-4">
                   <label for="nama_barang">Nama Barang</label>
@@ -100,7 +100,7 @@
                     document.getElementById("button_kurs_beli").addEventListener("click", (e) => {
                       document.getElementById("kurs_beli").value = '<?php echo $rate_fix ?>';
                     });
-                    </script>
+                  </script>
                   @error('kurs_beli')
                     <div class="invalid-feedback">
                       Kurs beli belum diisi
@@ -119,9 +119,9 @@
                 <div class="form-group my-4">
                   <label for="status">Status</label>
                   <select name="status" id="status" class="form-control @error('status') is-invalid @enderror">
-                    <option value="" {{ old('status') == '' ? 'selected' : '' }}>-- is it obsolete or not? --</option>
-                    <option value="0" {{ old('status') == 0 ? 'selected' : '' }}>Not Obsolete</option>
-                    <option value="1" {{ old('group') == 1 ? 'selected' : '' }}>Obsolete</option>
+                    <option value="" disabled selected>-- is it obsolete or not? --</option>
+                    <option value="0" {{ old('status') === 0 ? 'selected' : '' }}>Not Obsolete</option>
+                    <option value="1" {{ old('group') === 1 ? 'selected' : '' }}>Obsolete</option>
                   </select>
                   @error('status')
                     <div class="invalid-feedback">
