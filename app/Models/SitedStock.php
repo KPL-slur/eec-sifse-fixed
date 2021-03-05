@@ -5,14 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Distribution extends Model
+class SitedStock extends Model
 {
-    protected $primaryKey = 'dist_id';
+    use HasFactory;
+    protected $table = 'sited_stocks';
     
-    protected $table = 'distributions';
+    protected $primaryKey = 'sited_stock_id';
+
     protected $fillable = [
-        'expert_id',
+        'stock_id',
         'site_id',
     ];
-    use HasFactory;
 }

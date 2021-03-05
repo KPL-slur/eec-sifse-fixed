@@ -13,7 +13,6 @@ class Stock extends Model
     protected $primaryKey = 'stock_id';
 
     protected $fillable = [
-        'site_id',
         'nama_barang',
         'group',
         'part_number',

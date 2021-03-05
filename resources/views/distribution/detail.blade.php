@@ -8,18 +8,26 @@
       <div class="col-md-12">
           <div class="card">
             <div class="card-header card-header-primary">
-              <h4 class="card-title ">Expert Distribution </h4>
+              <h4 class="card-title ">Expert Distribution of {{$sites->radar_name}} </h4>
             </div>
             <div class="card-body">
-                <div class="row">
+              
+              <div class="row">
+                  <div class="col-12 text-left">
+                    <a title="back" class="btn btn-sm btn-primary m-2" href="/distribution">
+                      <i class="material-icons">arrow_back</i>
+                      <div class="ripple-container"></div>
+                    </a>
+                  </div>
                   <div class="col-12 text-right">
-                    <a href="/addDistribution" class="btn btn-sm btn-primary">
+                    <a rel="tooltip" title="Adding Distribution" href="/addDistribution/{{$sites->site_id}}" class="btn btn-sm btn-primary">
                       <i class="material-icons">
                         add
                       </i>Add Distribution
                     </a>
                   </div>
               </div>
+              
               <div class="table-responsive">
                 <table class="table table-striped">
                   <thead class=" text-primary">
@@ -28,7 +36,7 @@
                       <th scope="col">Nama Teknisi</th>
                       <th scope="col">Expert Company</th>
                       <th scope="col">Station ID</th>
-                      <th class="text-right">Action</th>
+                      <th class="text-center">Update or Delete</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -38,8 +46,8 @@
                         <td>{{$dst->name}}</td>
                         <td>{{$dst->expert_company}}</td>
                         <td>{{$dst->station_id}}</td>
-                        <td class="td-actions text-right">
-                              <a rel="tooltip" class="btn btn-warning " href="/editDistribution/{{$dst->dist_id}}">
+                        <td class="td-actions text-center">
+                              <a title="edit" class="btn btn-warning m-2" href="/editDistribution/{{$dst->dist_id}}">
                                 <i class="material-icons">edit</i>
                                 <div class="ripple-container"></div>
                               </a>
@@ -47,7 +55,7 @@
                               <form method="POST" action="/deleteDistribution/{{$dst->dist_id}}" class="d-inline">
                                 @csrf
                                 @method('delete')
-                                <button class="btn btn-danger" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')" >
+                                <button class="btn btn-danger m-2" title="delete" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')" >
                                   <i class="material-icons">delete</i>
                                   <div class="ripple-container"></div>
                                 </button>

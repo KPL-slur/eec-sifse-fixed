@@ -108,7 +108,7 @@
                     <th scope="col">Email</th>
                     <th scope="col">Password</th>
                     <th scope="col">Creation Date</th>
-                    <th class="text-right">Actions</th>
+                    <th class="text-center">Delete</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -121,7 +121,7 @@
                         <td>{{$user->password}}</td>
                         <td>{{$user->created_at}}</td>
 
-                        <td class="td-actions text-right">
+                        <td class="td-actions text-center">
 
                               <form method="POST" action="/deleteUser/{{$user->id}}" class="d-inline">
                                 @csrf

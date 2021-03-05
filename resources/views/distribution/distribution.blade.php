@@ -20,7 +20,7 @@
                       <th scope="col">#</th>
                       <th scope="col">Radar Name</th>
                       <th scope="col">Station ID</th>
-                      <th class="text-right">Detail</th>
+                      <th class="text-center">Detail</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -29,7 +29,7 @@
                         <td scope="row">{{$loop->iteration}}</td>
                         <td>{{$st->radar_name}}</td>
                         <td>{{$st->station_id}}</td>
-                        <td class="td-actions text-right">
+                        <td class="td-actions text-center">
                               <a rel="tooltip" class="btn btn-success" href="viewDistribution/{{$st->site_id}}">
                                 <i class="material-icons">visibility</i>
                                 <div class="ripple-container"></div>
@@ -40,25 +40,6 @@
                   </tbody>
                 </table>
               </div>
-              @if (session('status1'))
-              <script>
-                window.onload = () => {
-                  showNotification('top', 'right', 'success' ,'<?php echo session('status1') ?>');
-                };
-              </script>
-              @elseif (session('status2'))
-              <script>
-                window.onload = () => {
-                  showNotification('top', 'right', 'warning' ,'<?php echo session('status2') ?>');
-                };
-              </script>
-              @elseif (session('status3'))
-              <script>
-                window.onload = () => {
-                  showNotification('top', 'right', 'danger' ,'<?php echo session('status3') ?>');
-                };
-              </script>
-              @endif
             </div>
           </div>
       </div>

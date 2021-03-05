@@ -136,7 +136,7 @@ class StockController extends Controller
                         'jumlah_unit'=>$request->jumlah_unit,
                         'status'=>$request->status
                     ]);
-
+                        
         return redirect('stock_currency')->with('status2', 'Data berhasil di update');
     }
 

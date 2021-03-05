@@ -23,23 +23,6 @@
                 <form method="POST" action="/addDst">
                   @csrf
                   <div class="form-group">
-                    <label >Nama Teknisi</label>
-                    <select name="expert_id" id="expert_id" class="form-control @error('expert_id') is-invalid @enderror ">
-                        <option selected disabled value="">--Pilih Teknisi--</option>
-                        @foreach ($experts as $exp)
-                          <option value={{$exp->expert_id}} {{old('expert_id') == $exp->expert_id ? 'selected' : '' }}>{{$exp->name}}</option>
-                        @endforeach                        
-                    </select>
-
-                    @error('expert_id')
-                      <div class="invalid-feedback">
-                        {{$message}}
-                      </div>
-                    @enderror
-
-                  </div>
-
-                  <div class="form-group">
                     <label>Station ID</label>
                     <select name="site_id" id="site_id" class="form-control @error('site_id') is-invalid @enderror ">
                       <option selected disabled value="">--Pilih Station ID--</option>
@@ -53,6 +36,23 @@
                         <div class="invalid-feedback">
                           {{$message}}
                         </div>
+                    @enderror
+
+                  </div>
+                  
+                  <div class="form-group">
+                    <label >Nama Teknisi</label>
+                    <select name="expert_id" id="expert_id" class="form-control @error('expert_id') is-invalid @enderror ">
+                        <option selected disabled value="">--Pilih Teknisi--</option>
+                        @foreach ($experts as $exp)
+                          <option value={{$exp->expert_id}} {{old('expert_id') == $exp->expert_id ? 'selected' : '' }}>{{$exp->name}}</option>
+                        @endforeach                        
+                    </select>
+
+                    @error('expert_id')
+                      <div class="invalid-feedback">
+                        {{$message}}
+                      </div>
                     @enderror
 
                   </div>
