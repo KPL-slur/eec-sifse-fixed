@@ -16,6 +16,8 @@ use App\Models\Stock;
 
 use App\Models\ReportImage;
 
+use App\Rules\NumberOrNa;
+
 class PmReport extends Component
 {
     public $currentStep = 1;
@@ -80,54 +82,6 @@ class PmReport extends Component
     public $selectedForm;
 
     use WithFileUploads;
-
-    //validation
-    private $headRules = ([
-        'site_id' => 'required',
-        'report_date_start' => 'required',
-        'report_date_end' => 'required',
-        'experts.0.expert_id' => 'required',
-    ]);
-    private $pmRules = ([
-        'radio_general_visual' => 'required',
-        'radio_rcms' => 'required',
-        'radio_wipe_down' => 'required',
-        'radio_inspect_all' => 'required',
-        'radio_compressor_visual' => 'required',
-        'radio_duty_cycle' => 'required',
-        'radio_transmitter_visual' => 'required',
-        'radio_receiver_visual' => 'required',
-        'radio_stalo_check' => 'required',
-        'radio_afc_check' => 'required',
-        'radio_mrp_check' => 'required',
-        'radio_rcu_check' => 'required',
-        'radio_iq2_check' => 'required',
-        'radio_antenna_visual' => 'required',
-        'radio_inspect_motor' => 'required',
-        'radio_clean_slip' => 'required',
-        'radio_grease_gear' => 'required',
-        'running_time' => 'required',
-        'radiate_time' => 'required',
-        'hvps_v_0_4us' => 'required',
-        'hvps_i_0_4us' => 'required',
-        'mag_i_0_4us' => 'required',
-        'hvps_v_0_8us' => 'required',
-        'hvps_i_0_8us' => 'required',
-        'mag_i_0_8us' => 'required',
-        'hvps_v_1_0us' => 'required',
-        'hvps_i_1_0us' => 'required',
-        'mag_i_1_0us' => 'required',
-        'hvps_v_2_0us' => 'required',
-        'hvps_i_2_0us' => 'required',
-        'mag_i_2_0us' => 'required',
-        'forward_power' => 'required',
-        'reverse_power' => 'required',
-        'vswr' => 'required',
-    ]);
-
-    private $remarkRules = ([
-        'remark' => 'required',
-    ]);
 
     //METHODD
     //  Livewire lifecycle hook
@@ -476,15 +430,57 @@ class PmReport extends Component
     {
         switch ($this->currentStep) {
             case 1:
-                $this->validate($this->headRules);
+                $this->validate(([
+                    'site_id' => 'required',
+                    'report_date_start' => 'required',
+                    'report_date_end' => 'required',
+                    'experts.0.expert_id' => 'required',
+                ]));
                 break;
 
             case 2:
-                $this->validate($this->pmRules);
+                $this->validate(([
+                    'radio_general_visual' => 'required',
+                    'radio_rcms' => 'required',
+                    'radio_wipe_down' => 'required',
+                    'radio_inspect_all' => 'required',
+                    'radio_compressor_visual' => 'required',
+                    'radio_duty_cycle' => 'required',
+                    'radio_transmitter_visual' => 'required',
+                    'radio_receiver_visual' => 'required',
+                    'radio_stalo_check' => 'required',
+                    'radio_afc_check' => 'required',
+                    'radio_mrp_check' => 'required',
+                    'radio_rcu_check' => 'required',
+                    'radio_iq2_check' => 'required',
+                    'radio_antenna_visual' => 'required',
+                    'radio_inspect_motor' => 'required',
+                    'radio_clean_slip' => 'required',
+                    'radio_grease_gear' => 'required',
+                    'running_time' => ['required', new NumberOrNa],
+                    'radiate_time' => ['required', new NumberOrNa],
+                    'hvps_v_0_4us' => ['required', new NumberOrNa],
+                    'hvps_i_0_4us' => ['required', new NumberOrNa],
+                    'mag_i_0_4us' => ['required', new NumberOrNa],
+                    'hvps_v_0_8us' => ['required', new NumberOrNa],
+                    'hvps_i_0_8us' => ['required', new NumberOrNa],
+                    'mag_i_0_8us' => ['required', new NumberOrNa],
+                    'hvps_v_1_0us' => ['required', new NumberOrNa],
+                    'hvps_i_1_0us' => ['required', new NumberOrNa],
+                    'mag_i_1_0us' => ['required', new NumberOrNa],
+                    'hvps_v_2_0us' => ['required', new NumberOrNa],
+                    'hvps_i_2_0us' => ['required', new NumberOrNa],
+                    'mag_i_2_0us' => ['required', new NumberOrNa],
+                    'forward_power' => ['required', new NumberOrNa],
+                    'reverse_power' => ['required', new NumberOrNa],
+                    'vswr' => ['required', new NumberOrNa],
+                ]));
                 break;
                 
             case 3:
-                $this->validate($this->remarkRules);
+                $this->validate(([
+                    'remark' => 'required',
+                ]));
                 break;
 
             case 5:
