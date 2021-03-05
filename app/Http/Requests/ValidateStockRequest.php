@@ -24,7 +24,6 @@ class ValidateStockRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'site_id' => ['required'],
             'nama_barang' => ['required'],
             'group' => ['required'],
             'part_number' => ['required'],

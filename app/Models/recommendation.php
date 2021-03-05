@@ -9,6 +9,8 @@ class Recommendation extends Model
 {
     use HasFactory;
 
+    protected $table = 'recommendations';
+
     protected $primaryKey = 'rec_id';
 
     protected $fillable = [

@@ -10,17 +10,24 @@
                     <thead>
                         <tr>
                             <th>Product</th>
+                            <th>Group</th>
                             <th>Quantity</th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
+                        @if (empty($recommends) && empty($manualRecommends))
+                            <tr>
+                                <td colspan="3">
+                                    <p class="text-danger">There are no recommendation(s) yet. You can add a new one or click next to skip</p>
+                                </td>
+                            </tr>
+                        @endif
                         @foreach ($recommends as $index => $recommend)
                             <tr>
                                 <td>
                                     <select name="recommends[{{ $index }}][stock_id]"
                                         wire:model="recommends.{{ $index }}.stock_id"
-                                        class="form-control"
+                                        class="form-control" wire:change="setStockGroup({{ $index }})"
                                     >
                                         <option value="">-- choose product --</option>
                                         @foreach ($stocks as $stock)
@@ -40,30 +47,28 @@
                                     @endif
                                 </td>
                                 <td>
+                                    <select name="recommends[{{ $index }}][group]"
+                                        wire:model="recommends.{{ $index }}.group"
+                                        class="form-control" disabled
+                                    >
+                                        <option selected value="0">TAMBAHAN</option>
+                                        <option value="1">TRANSMITTER</option>
+                                        <option value="2">RECEIVER</option>
+                                        <option value="3">ANTENNA</option>
+                                    </select>
+                                </td>
+                                <td>
                                     <input type="number" class="form-control"
-                                        name="recommends[{{ $index }}][jumlah_unit_needed]" 
-                                        wire:model="recommends.{{ $index }}.jumlah_unit_needed"
+                                    name="recommends[{{ $index }}][jumlah_unit_needed]" 
+                                    wire:model="recommends.{{ $index }}.jumlah_unit_needed"
                                     >
                                 </td>
-                                <td></td>
                                 <td>
                                     <a href="#"
-                                        wire:click.prevent="removeRecommend({{ $index }})">Delete</a>
+                                        wire:click.prevent="selectItem({{ $index }}, 'recommendation')">Delete</a>
                                 </td>
                             </tr>
                         @endforeach
-                    </tbody>
-                </table>
-                <table class="table" id="products_table">
-                    <thead>
-                        <tr>
-                            <th>Product</th>
-                            <th>Group</th>
-                            <th>Quantity</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
                         @foreach ($manualRecommends as $index => $manualRecommend)
                             <tr>
                                 <td>
@@ -90,7 +95,7 @@
                                 </td>
                                 <td>
                                     <a href="#"
-                                        wire:click.prevent="removeManualRecommends({{ $index }})">Delete</a>
+                                        wire:click.prevent="selectItem({{ $index }}, 'manualRecommendation')">Delete</a>
                                 </td>
                             </tr>
                         @endforeach

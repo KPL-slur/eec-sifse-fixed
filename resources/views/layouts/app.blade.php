@@ -16,6 +16,8 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="{{ asset('material') }}/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
     <link href="{{ asset('user') }}/css/style.css" rel="stylesheet" />
+    <link href="{{ asset('user') }}/css/btn-float.css" rel="stylesheet" />
+    <link href="{{ asset('user') }}/css/spinner.css" rel="stylesheet" />
     @livewireStyles
     {{-- <link href="{{ asset('resources/css/app.css') }}" rel="stylesheet" /> --}}
     </head>
@@ -92,16 +94,21 @@
         <!-- Material Dashboard DEMO methods, don't include it in your project! -->
         {{-- <script src="{{ asset('material') }}/js/settings.js"></script> --}}
         {{-- IMPORT CKEDITOR, NANTI DI DOWNLOAD JGN DARI CDN --}}
-        <script src="https://cdn.ckeditor.com/ckeditor5/25.0.0/classic/ckeditor.js"></script>
+        <script src="{{ asset('user') }}/js/plugins/ckeditor.js"></script>
         <!-- SELECT2 IMPORT -->
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <!-- js for headreport expert coloumn -->
         @stack('js')
         @livewireScripts
-        {{-- <script>
-            window.livewire.on('fileUploaded'), () => {
-                $('input[name=image').val('');
-            };
-        </script> --}}
+        <script>
+            window.addEventListener('openModalConfirm', event => {
+                $('#modalConfirm').modal('show');
+            });
+
+            window.addEventListener('closeModalConfirm', event => {
+                $('#modalConfirm').modal('hide');
+            });
+        </script>
+        @stack('scripts')
     </body>
 </html>

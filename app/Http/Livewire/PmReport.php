@@ -19,6 +19,7 @@ use App\Models\ReportImage;
 class PmReport extends Component
 {
     public $currentStep = 1;
+    public $modalType;
 
     public $edit;
 
@@ -62,6 +63,8 @@ class PmReport extends Component
     public $stocks = [];
     public $recommends = [];
     public $manualRecommends = [];
+    // recomendation form edit
+    private $siteRecommendations = [];
 
     // variabel untuk edit dynamic recomend form
     public $countRecommendationId; // variabel menampung panjang array expertReportId
@@ -71,6 +74,10 @@ class PmReport extends Component
     public $caption;
     public $image=[];
     public $attachments = [];
+
+    //  MODAL DELETE
+    public $selectedItem;
+    public $selectedForm;
 
     use WithFileUploads;
 
@@ -124,6 +131,41 @@ class PmReport extends Component
 
     //METHODD
     //  Livewire lifecycle hook
+    public function updatedSiteId($value)
+    {
+        // Clear Array
+        unset($this->siteRecommendations);
+        unset($this->recommends);
+        unset($this->recommendationId);
+        // Init Array
+        $this->siteRecommendations = [];
+        $this->recommends = [];
+        $this->recommendationId = [];
+
+        $this->recommendations = HeadReport::Where('site_id', $value)->get();
+        foreach ($this->recommendations as $rcm){ //headreport
+            foreach ($rcm->recommendations as $rcmItem){ //stocks with pivot recommendation
+                $this->siteRecommendations[] = $rcmItem;
+            }
+        }
+
+        foreach ($this->siteRecommendations as $recommendation) {
+            $this->recommends[] = [
+                'stock_id' => $recommendation->pivot->stock_id, 
+                'group' => $recommendation->group,
+                'jumlah_unit_needed' => $recommendation->pivot->jumlah_unit_needed];
+        }
+
+        /*
+        *  Bagian ini mengextrak model kedalam array dan 
+        *  menghitung jumlah record recomendation sebelumnya
+        */
+        foreach($this->siteRecommendations as $index => $recommendation){
+            $this->recommendationId[$index] = $recommendation->pivot->rec_id;
+        }
+        $this->countRecommendationId = count($this->recommendationId);
+    }
+
     public function mount($id = null)
     {
         if ($id) {
@@ -131,7 +173,13 @@ class PmReport extends Component
             $this->headReport = HeadReport::Where('head_id', $id)->first();
             $this->expertReports = HeadReport::Where('head_id', $id)->first()->experts;
             $this->pmBodyReport = HeadReport::Where('head_id', $id)->first()->pmBodyReport;
-            $this->recommendations = HeadReport::Where('head_id', $id)->first()->recommendations;
+            // $this->recommendations = HeadReport::Where('head_id', $id)->first()->recommendations;
+            $this->recommendations = HeadReport::Where('site_id', $this->headReport->site_id)->get();
+            foreach ($this->recommendations as $rcm){ //headreport
+                foreach ($rcm->recommendations as $rcmItem){ //stocks with pivot recommendation
+                    $this->siteRecommendations[] = $rcmItem;
+                }
+            }
             $this->reportImages = HeadReport::Where('head_id', $id)->first()->reportImages;
 
             $this->headId = $this->headReport->head_id;
@@ -226,8 +274,13 @@ class PmReport extends Component
 
             $this->remark = $this->pmBodyReport->remark;
 
-            foreach ($this->recommendations as $recommendation) {
-                $this->recommends[] = ['stock_id' => $recommendation->pivot->stock_id, 'jumlah_unit_needed' => $recommendation->pivot->jumlah_unit_needed];
+            // INTISIALISASI REKOMENDASI EDIT 
+            foreach ($this->siteRecommendations as $recommendation) {
+                $this->recommends[] = [
+                    'stock_id' => $recommendation->pivot->stock_id, 
+                    'group' => $recommendation->group,
+                    'jumlah_unit_needed' => $recommendation->pivot->jumlah_unit_needed
+                ];
             }
 
             foreach ($this->reportImages as $reportImage) {
@@ -247,7 +300,7 @@ class PmReport extends Component
              *  Bagian ini mengextrak model kedalam array dan 
              *  menghitung jumlah record recomendation sebelumnya
              */
-            foreach($this->recommendations as $index => $recommendation){
+            foreach($this->siteRecommendations as $index => $recommendation){
                 $this->recommendationId[$index] = $recommendation->pivot->rec_id;
             }
             $this->countRecommendationId = count($this->recommendationId);
@@ -263,9 +316,9 @@ class PmReport extends Component
             ];
             
             //recomendation mount
-            $this->recommends = [
-                ['stock_id' => '', 'jumlah_unit_needed' => 1]
-            ];
+            // $this->recommends = [
+            //     ['stock_id' => '', 'jumlah_unit_needed' => 1]
+            // ];
 
             // images mount
             $this->attachments = [
@@ -279,7 +332,7 @@ class PmReport extends Component
     }
 
     // RADAR AND SITE
-    public function radarName()
+    public function setRadarName()
     {
         if(!empty($this->site_id)) {
             $this->radar = Site::where('site_id', $this->site_id)->first()->radar_name;
@@ -294,11 +347,14 @@ class PmReport extends Component
     
     public function removeExpert($index)
     {
-        if ($this->experts[$index]['expert_id']) {
+        if (in_array($index , $this->experts)) {
             ExpertReport::where('expert_report_id', $this->expertReportId[$index])->delete();
         }
         unset($this->experts[$index]);
         array_values($this->experts);
+
+        //decrement the count, if not the data will be dupe
+        $this->countExpertReportId--;
     }
 
     public function addManualExpert ()
@@ -323,16 +379,20 @@ class PmReport extends Component
     // RECOMENDATION FORMS
     public function addRecommend()
     {
-        $this->recommends[] = ['stock_id' => '', 'jumlah_unit_needed' => 1];
+        $this->recommends[] = ['stock_id' => '','group' => '', 'jumlah_unit_needed' => 1];
     }
     
     public function removeRecommend($index)
     {
-        if ($this->recommends[$index]['stock_id']) {
+        if (array_key_exists($index, $this->recommendationId)) {
             Recommendation::where('rec_id', $this->recommendationId[$index])->delete();
         }
+        
         unset($this->recommends[$index]);
         array_values($this->recommends);
+
+        //decrement the count, if not the data will be dupe
+        $this->countRecommendationId--;
     }
 
     public function addManualRecommends ()
@@ -344,6 +404,14 @@ class PmReport extends Component
     {
         unset($this->manualRecommends[$index]);
         array_values($this->manualRecommends);
+    }
+
+    public function setStockGroup($index)
+    {
+        if(!empty($this->recommends[$index]['stock_id'])) {
+            $this->recommends[$index]['group'] = Stock::Where('stock_id', $this->recommends[$index]['stock_id'])
+                                                    ->first()->group;
+        }
     }
 
     // ATTACHMENT
@@ -364,19 +432,32 @@ class PmReport extends Component
         array_values($this->attachments);
     }
 
+    public function validateUploads()
+    {
+        foreach ($this->attachments as $index => $attachment) {
+            if ($this->attachments[$index]['uploaded'] == 0) {
+                $this->validate([
+                    'attachments.'.$index.'.caption' => 'required',
+                    'attachments.'.$index.'.image' => 'required|image'
+                ]);
+            }
+        }
+    }
+
+    public function uploadAll()
+    {
+        foreach ($this->attachments as $index => $attachment) {
+            if ($this->attachments[$index]['uploaded'] == 0) {
+                $this->fileUpload($index);
+            }
+        }
+    }
+
     public function fileUpload($index)
     {
-        // dd($this->attachments);
-        $this->validate([
-            'attachments.'.$index.'.caption' => 'required',
-            'attachments.'.$index.'.image' => 'required|image'
-        ]);
-
-        $this->image[$index] = $this->attachments[$index]['image']->storePublicly('files', 'public');
-        // dd($image);
-        // $validatedData['attachments.'.$index.'.image'] = $image;
+        $this->image[$index] = $this->attachments[$index]['image']->storePublicly('files', 'public');\
         
-        ReportImage::create([
+        App\Models\ReportImage::create([
             'head_id' => $this->headId,
             'image' => $this->image[$index],
             'caption' => $this->attachments[$index]['caption']
@@ -403,24 +484,75 @@ class PmReport extends Component
                 break;
                 
             case 3:
-                // dd($this->remark);
-                // $this->validate($this->remarkRules);
+                $this->validate($this->remarkRules);
                 break;
 
-            case 4:
-                // $this->validate($this->remarkRules);
+            case 5:
+                $this->validateUploads();
+                $this->modalType = 'submit';
+                $this->dispatchBrowserEvent('openModalConfirm');
                 break;
             
             default:
                 # code...
                 break;
         }
-        $this->currentStep++;
+        if ($this->currentStep < 5) {
+            $this->currentStep++;
+        }
     }
 
     public function back()
     {
         $this->currentStep--;
+    }
+
+    public function selectItem($itemId, $formType)
+    {
+        $this->selectedItem = $itemId;
+        $this->selectedForm = $formType;
+        $this->modalType = 'delete';
+        $this->dispatchBrowserEvent('openModalConfirm');
+    }
+
+    public function deleteDynamicForm()
+    {
+        switch ($this->selectedForm) {
+            case 'expert':
+                $this->removeExpert($this->selectedItem);
+                $this->dispatchBrowserEvent('closeModalConfirm');
+                break;
+
+            case 'manualExpert':
+                $this->removeManualExpert($this->selectedItem);
+                $this->dispatchBrowserEvent('closeModalConfirm');
+                break;
+
+            case 'recommendation':
+                $this->removeRecommend($this->selectedItem);
+                $this->dispatchBrowserEvent('closeModalConfirm');
+                break;
+
+            case 'manualRecommendation':
+                $this->removeManualRecommends($this->selectedItem);
+                $this->dispatchBrowserEvent('closeModalConfirm');
+                break;
+
+            case 'attachment':
+                $this->removeAttachment($this->selectedItem);
+                $this->dispatchBrowserEvent('closeModalConfirm');
+                break;
+        
+            default:
+                # code...
+                break;
+        }
+    }
+
+    public function cancel()
+    {
+        $this->modalType = 'cancel';
+        $this->dispatchBrowserEvent('openModalConfirm');
     }
 
     public function render()
@@ -430,3 +562,8 @@ class PmReport extends Component
             ->withStations(Site::get());
     }
 }
+/*  This class is to complex, we need to split it up.
+ *  Split it into smaller part and send request from there
+ *  By doing so we already send the request piece by piece and
+ *  not sending a huge request at the end of the form.
+ */ 

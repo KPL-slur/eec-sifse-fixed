@@ -28,7 +28,7 @@ class Stock extends Model
         'stock_id'
     ];
 
-    protected $attributes = [
-        'status' => 0
-    ];
+    // protected $attributes = [
+    //     'status' => 0 //not obsolete
+    // ];
 }
