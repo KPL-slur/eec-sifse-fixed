@@ -57,6 +57,7 @@ class CreateHeadReportsTable extends Migration
             $table->date('report_date_end');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -65,7 +65,7 @@
                     @break
                 @case('cancel')
                     <div>
-                        <a class="btn btn-secondary" type="button" href="{{ route('pm.index') }}">Cancel</a>
+                        <a class="btn btn-secondary" type="button" href="{{ route('pm.index') }}">Yes</a>
                     </div>
                 @break
                 @default

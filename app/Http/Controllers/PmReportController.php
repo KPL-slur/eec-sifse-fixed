@@ -207,14 +207,13 @@ class PmReportController extends Controller
     public function show($id)
     {
         $headReport = HeadReport::Where('head_id', $id)->first();
+        abort_unless($headReport, 404, 'Report not found');
+
         $pmBodyReport = HeadReport::Where('head_id', $id)->first()->pmBodyReport;
+        abort_unless($pmBodyReport, 404, 'Report not found');
+
         $recommendations = HeadReport::Where('head_id', $id)->first()->recommendations;
         $reportImages = HeadReport::Where('head_id', $id)->first()->reportImages;
-        // dd($reportImages);
-
-        if (!$pmBodyReport) {
-            return  'uhoh body not found, please delete this report';
-        }
 
         return view('expert.report.pm.show', compact('pmBodyReport', 'headReport', 'recommendations', 'reportImages'));
     }
@@ -375,13 +374,13 @@ class PmReportController extends Controller
     public function destroy($id)
     {
 
-        $reportImageFiles = ReportImage::where('head_id', $id)->get();
-        foreach ($reportImageFiles as $reportImageFile) {
-            \Storage::delete('public/'.$reportImageFile->image);
-        }
+        // $reportImageFiles = ReportImage::where('head_id', $id)->get();
+        // foreach ($reportImageFiles as $reportImageFile) {
+        //     \Storage::delete('public/'.$reportImageFile->image);
+        // }
 
         HeadReport::destroy($id);
-        ReportImage::where('head_id', $id)->delete();
+        // ReportImage::where('head_id', $id)->delete();
         // PmBodyReport::where('head_id', $id)->delete();
         // Recommendation::where('head_id', $id)->delete();
         // ExpertReport::where('head_id', $id)->delete();

@@ -125,8 +125,11 @@ class PmReport extends Component
         if ($id) {
             //INITIALIZE EDIT DATA
             $this->headReport = HeadReport::Where('head_id', $id)->first();
+            abort_unless($this->headReport, 404, 'Report not found');
+
             $this->expertReports = HeadReport::Where('head_id', $id)->first()->experts;
             $this->pmBodyReport = HeadReport::Where('head_id', $id)->first()->pmBodyReport;
+            abort_unless($this->pmBodyReport, 404, 'Report not found');
             // $this->recommendations = HeadReport::Where('head_id', $id)->first()->recommendations;
             $this->recommendations = HeadReport::Where('site_id', $this->headReport->site_id)->get();
             foreach ($this->recommendations as $rcm){ //headreport

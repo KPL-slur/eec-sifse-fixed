@@ -33,6 +33,13 @@ Route::group(['middleware' => 'auth', 'prefix' => 'expert'], function () {
     
     // PM REPORT ROUTES
     Route::group(['prefix' => 'pm', 'as' => 'pm.'], function () {
+        Route::group(['prefix' => 'trash', 'as' => 'trash.'], function () {
+            Route::get('/', [App\Http\Controllers\PmTrashController::class, 'index'])->name('index');
+            Route::get('/{id}', [App\Http\Controllers\PmTrashController::class, 'show'])->name('show');
+            Route::post('/{id}', [App\Http\Controllers\PmTrashController::class, 'restore'])->name('restore');
+            Route::delete('/{id}', [App\Http\Controllers\PmTrashController::class, 'permDelete'])->name('perm_delete');
+        });
+
         Route::get('/', [App\Http\Controllers\PmReportController::class, 'index'])->name('index');
         Route::get('/create', [App\Http\Controllers\PmReportController::class, 'create'])->name('create');
         Route::post('/', [App\Http\Controllers\PmReportController::class, 'store'])->name('store');

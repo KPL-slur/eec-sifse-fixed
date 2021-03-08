@@ -8,11 +8,7 @@
                     <h4 class="card-title">{{ __('Weather Radar Service Report') }}</h4>
                 </div>
                 <div class="card-body ">
-                    {{-- <div class="sticky-top"> --}}
-                        <a type="button" class="btn btn-info" href="{{ route('expert') }}">BACK</a>
-                        <a type="button" class="btn btn-primary"
-                            href="{{ route($maintenance_type.".create") }}">ADD NEW</a>
-                    {{-- </div> --}}
+                    <a type="button" class="btn btn-info" href="{{ route('expert') }}">BACK</a>
                     
                     <div class="row">
                         <div class="col table-responsive">
@@ -31,7 +27,7 @@
                                     @if ($headReports->isEmpty())
                                         <tr>
                                             <td colspan="6">
-                                                <p class="text-danger">No Report(s) Yet</p>
+                                                <p class="text-danger">There Is Nothing In The Trash Right Now</p>
                                             </td>
                                         </tr>
                                     @endif
@@ -48,27 +44,15 @@
                                             </td>
                                             <td class="td-actions text-right">
                                                 <a type="button" rel="tooltip" class="btn btn-info"
-                                                    {{-- href="{{ url('/expert/' . $maintenance_type . '/' . $hr->head_id) }}"> --}}
-                                                    href="{{ route($maintenance_type.".show", ['id' => $hr->head_id]) }}">
+                                                    href="{{ route($maintenance_type.".trash.show", ['id' => $hr->head_id]) }}">
                                                     <i class="material-icons">visibility</i>
                                                 </a>
-                                                <a type="button" rel="tooltip" class="btn btn-warning"
-                                                    {{-- href="{{ url('/report/' . $hr->id . '/edit') }}" --}}
-                                                    href="{{ route($maintenance_type.".edit", ['id' => $hr->head_id]) }}"
-                                                    >
-                                                    <i class="material-icons">edit</i>
-                                                </a>
+                                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalRestore">
+                                                    <i class="material-icons">restore</i>
+                                                </button>
                                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete">
                                                     <i class="material-icons">close</i>
                                                 </button>
-                                                {{-- <form action="{{ route('pm.delete', ['id' => $hr->head_id]) }}" method="post"
-                                                    class="d-inline">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button type="submit" rel="tooltip" class="btn btn-danger">
-                                                        <i class="material-icons">close</i>
-                                                    </button>
-                                                </form> --}}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -82,22 +66,30 @@
     </div>
 
     {{-- Floating Menu --}}
-    <x-ui.btn-float-group>
-        <li>   
-            <a href="{{ route($maintenance_type.'.create') }}" class="btn btn-primary btn-fab btn-round">
-                <i class="material-icons">create</i>
-            </a>
-        </li>
-    </x-ui.btn-float-group>
+    <x-ui.btn-float-group></x-ui.btn-float-group>
 
     @if ($headReports->isNotEmpty())
         {{-- Modal Delete --}}
-        <x-ui.modal-confirm id="modalDelete">
+        <x-ui.modal-confirm id="modalRestore">
             <x-slot name="body">
-                <p>Are You Sure Want To Delete This Rerport?</p>
+                <p>Are You Sure Want To Restore This Report?</p>
             </x-slot>
             <x-slot name="footer">
-                <form action="{{ route('pm.delete', ['id' => $hr->head_id]) }}" method="post"
+                <form action="{{ route('pm.trash.restore', ['id' => $hr->head_id]) }}" method="post"
+                    class="d-inline">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    @csrf
+                    <button type="submit" rel="tooltip" class="btn btn-secondary">Yes</button>
+                </form>  
+            </x-slot>
+        </x-ui.modal-confirm>
+
+        <x-ui.modal-confirm id="modalDelete">
+            <x-slot name="body">
+                <p>Are You Sure Want To Permanently Delete This Report?</p>
+            </x-slot>
+            <x-slot name="footer">
+                <form action="{{ route('pm.trash.perm_delete', ['id' => $hr->head_id]) }}" method="post"
                     class="d-inline">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                     @csrf
@@ -108,24 +100,17 @@
         </x-ui.modal-confirm>
     @endif
     
-    @if (session('status_success'))
+    @if (session('status_restore'))
         <script>
             window.onload = () => {
-                showNotification('top', 'right', 'success', "<?php echo session('status_success'); ?>");
+                showNotification('top', 'right', 'success', "<?php echo session('status_restore'); ?>");
             };
         </script>
     @endif
-    @if (session('status_edit'))
+    @if (session('status_perm_delete'))
         <script>
             window.onload = () => {
-                showNotification('top', 'right', 'warning', "<?php echo session('status_edit'); ?>");
-            };
-        </script>
-    @endif
-    @if (session('status_delete'))
-        <script>
-            window.onload = () => {
-                showNotification('top', 'right', 'danger', "<?php echo session('status_delete'); ?>");
+                showNotification('top', 'right', 'danger', "<?php echo session('status_perm_delete'); ?>");
             };
         </script>
     @endif
