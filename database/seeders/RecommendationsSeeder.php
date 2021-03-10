@@ -17,7 +17,7 @@ class RecommendationsSeeder extends Seeder
         // ===== hasil rancangan erd =====
         DB::table('recommendations')->insert([
             'head_id' => 1,
-            'name' => 'Stalo',
+            'name' => 'STALO',
             'jumlah_unit_needed' => '1 units',
             'year' => 2021,
 
@@ -25,7 +25,7 @@ class RecommendationsSeeder extends Seeder
         ]);
         DB::table('recommendations')->insert([
             'head_id' => 2,
-            'name' => 'MOXA',
+            'name' => 'Moxa',
             'jumlah_unit_needed' => '1 units',
             'year' => 2021,
 

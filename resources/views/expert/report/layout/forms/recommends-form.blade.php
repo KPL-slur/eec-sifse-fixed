@@ -10,7 +10,7 @@
                     <thead>
                         <tr>
                             <th>Product</th>
-                            <th>Group</th>
+                            {{-- <th>Group</th> --}}
                             <th>Quantity</th>
                         </tr>
                     </thead>
@@ -25,15 +25,15 @@
                         @foreach ($recommends as $index => $recommend)
                             <tr>
                                 <td>
-                                    <select name="recommends[{{ $index }}][stock_id]"
-                                        wire:model="recommends.{{ $index }}.stock_id"
-                                        class="form-control" wire:change="setStockGroup({{ $index }})"
+                                    <select name="recommends[{{ $index }}][name]"
+                                        wire:model="recommends.{{ $index }}.name"
+                                        class="form-control"
                                     >
                                         <option value="">-- choose product --</option>
                                         @foreach ($stocks as $stock)
-                                            <option value="{{ $stock->stock_id }}">
-                                                {{ $stock->nama_barang }}
-                                            </option>
+                                        <option value="{{ $stock['name'] }}">
+                                            {{ $stock['name'] }}
+                                        </option>
                                         @endforeach
                                     </select>
 
@@ -46,7 +46,7 @@
                                         <input type="hidden" name="old_recommendation_id[{{$index}}]" value="{{$recommendationId[$index]}}">
                                     @endif
                                 </td>
-                                <td>
+                                {{-- <td>
                                     <select name="recommends[{{ $index }}][group]"
                                         wire:model="recommends.{{ $index }}.group"
                                         class="form-control" disabled
@@ -56,7 +56,7 @@
                                         <option value="2">RECEIVER</option>
                                         <option value="3">ANTENNA</option>
                                     </select>
-                                </td>
+                                </td> --}}
                                 <td>
                                     <input type="text" class="form-control recommends-qty"
                                     name="recommends[{{ $index }}][jumlah_unit_needed]" 
@@ -73,10 +73,10 @@
                             <tr>
                                 <td>
                                     <input type="text" class="form-control" 
-                                        name="manualRecommends[{{ $index }}][nama_barang]" 
-                                        wire:model.defer="manualRecommends.{{ $index }}.nama_barang">
+                                        name="manualRecommends[{{ $index }}][name]" 
+                                        wire:model.defer="manualRecommends.{{ $index }}.name">
                                 </td>
-                                <td>
+                                {{-- <td>
                                     <select name="manualRecommends[{{ $index }}][group]"
                                         wire:model="manualRecommends.{{ $index }}.group"
                                         class="form-control"
@@ -86,7 +86,7 @@
                                         <option value="2">RECEIVER</option>
                                         <option value="3">ANTENNA</option>
                                     </select>
-                                </td>
+                                </td> --}}
                                 <td>
                                     <input type="text" class="form-control recommends-qty"
                                         name="manualRecommends[{{ $index }}][jumlah_unit_needed]" 

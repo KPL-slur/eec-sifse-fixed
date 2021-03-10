@@ -108,6 +108,8 @@ class PmReportController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
+
         //INSERT HEADREPORT
         Headreport::create([
             'head_id' => $request->head_id,
@@ -158,12 +160,12 @@ class PmReportController extends Controller
         }
         if ($request->recommends) {
             foreach ($request->recommends as $index => $recommend) {
-                if ($recommend['stock_id']) {
+                if ($recommend['name']) {
                     //jika iya, maka lakukan update pada record tersebut
-                    if($index > count($oldRecommendationId)) {
+                    if($index >= count($oldRecommendationId)) {
                         Recommendation::create([
                             'head_id' => $request->head_id,
-                            'stock_id' => $recommend['stock_id'],
+                            'name' => $recommend['name'],
                             'jumlah_unit_needed' => $recommend['jumlah_unit_needed'],
                             'year' => now()->year
                         ]);
@@ -175,17 +177,10 @@ class PmReportController extends Controller
         //INSERT MANUAL RECOMENDATION
         if ($request->manualRecommends) {
             foreach ($request->manualRecommends as $manualRecommend) {
-                if ($manualRecommend['nama_barang']) {
-                    Stock::create([
-                    'nama_barang' => $manualRecommend['nama_barang'],
-                    'group' => $manualRecommend['group'],
-                ]);
-
-                    $stockId = Stock::select('stock_id')->orderByDesc('stock_id')->first()->stock_id; //used to determine the expert_id of this report
-
+                if ($manualRecommend['name']) {
                     Recommendation::create([
                     'head_id' => $request->head_id,
-                    'stock_id' => $stockId,
+                    'name' => $manualRecommend['name'],
                     'jumlah_unit_needed' => $manualRecommend['jumlah_unit_needed'],
                     'year' => now()->year
                 ]);
@@ -318,12 +313,12 @@ class PmReportController extends Controller
         }
         if ($request->recommends) {
             foreach ($request->recommends as $index => $recommend) {
-                if ($recommend['stock_id']) {
+                if ($recommend['name']) {
                     //jika iya, maka lakukan update pada record tersebut
                     if($index < count($oldRecommendationId)) {
                         Recommendation::where('rec_id', $oldRecommendationId[$index])
                         ->update([
-                            'stock_id' => $recommend['stock_id'],
+                            'name' => $recommend['name'],
                             'jumlah_unit_needed' => $recommend['jumlah_unit_needed'],
                             'year' => $year
                         ]);
@@ -332,7 +327,7 @@ class PmReportController extends Controller
                     else{
                         Recommendation::create([
                             'head_id' => $request->head_id,
-                            'stock_id' => $recommend['stock_id'],
+                            'name' => $recommend['name'],
                             'jumlah_unit_needed' => $recommend['jumlah_unit_needed'],
                             'year' => $year
                         ]);
@@ -344,17 +339,10 @@ class PmReportController extends Controller
         //INSERT MANUAL RECOMENDATION, selalu buat baru
         if ($request->manualRecommends) {
             foreach ($request->manualRecommends as $manualRecommend) {
-                if ($manualRecommend['nama_barang']) {
-                    Stock::create([
-                        'nama_barang' => $manualRecommend['nama_barang'],
-                        'group' => $manualRecommend['group'],
-                    ]);
-
-                    $stockId = Stock::select('stock_id')->orderByDesc('stock_id')->first()->stock_id; //used to determine the expert_id of this report
-    
+                if ($manualRecommend['name']) {
                     Recommendation::create([
                         'head_id' => $request->head_id,
-                        'stock_id' => $stockId,
+                        'name' => $manualRecommend['name'],
                         'jumlah_unit_needed' => $manualRecommend['jumlah_unit_needed'],
                         'year' => $year
                     ]);
