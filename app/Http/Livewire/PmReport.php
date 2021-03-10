@@ -18,6 +18,8 @@ use App\Models\ReportImage;
 
 use App\Rules\NumberOrNa;
 
+use App\Services\Utility;
+
 class PmReport extends Component
 {
     public $currentStep = 1;
@@ -98,16 +100,15 @@ class PmReport extends Component
 
         $this->recommendations = HeadReport::Where('site_id', $value)->get();
         foreach ($this->recommendations as $rcm){ //headreport
-            foreach ($rcm->recommendations as $rcmItem){ //stocks with pivot recommendation
+            foreach ($rcm->recommendations as $rcmItem){ //one to many relation with recomendation
                 $this->siteRecommendations[] = $rcmItem;
             }
         }
 
         foreach ($this->siteRecommendations as $recommendation) {
             $this->recommends[] = [
-                'stock_id' => $recommendation->pivot->stock_id, 
-                'group' => $recommendation->group,
-                'jumlah_unit_needed' => $recommendation->pivot->jumlah_unit_needed];
+                'name' => $recommendation->name,
+                'jumlah_unit_needed' => $recommendation->jumlah_unit_needed];
         }
 
         /*
@@ -115,7 +116,7 @@ class PmReport extends Component
         *  menghitung jumlah record recomendation sebelumnya
         */
         foreach($this->siteRecommendations as $index => $recommendation){
-            $this->recommendationId[$index] = $recommendation->pivot->rec_id;
+            $this->recommendationId[$index] = $recommendation->rec_id;
         }
         $this->countRecommendationId = count($this->recommendationId);
     }
@@ -125,12 +126,15 @@ class PmReport extends Component
         if ($id) {
             //INITIALIZE EDIT DATA
             $this->headReport = HeadReport::Where('head_id', $id)->first();
+            abort_unless($this->headReport, 404, 'Report not found');
+
             $this->expertReports = HeadReport::Where('head_id', $id)->first()->experts;
             $this->pmBodyReport = HeadReport::Where('head_id', $id)->first()->pmBodyReport;
+            abort_unless($this->pmBodyReport, 404, 'Report not found');
             // $this->recommendations = HeadReport::Where('head_id', $id)->first()->recommendations;
             $this->recommendations = HeadReport::Where('site_id', $this->headReport->site_id)->get();
             foreach ($this->recommendations as $rcm){ //headreport
-                foreach ($rcm->recommendations as $rcmItem){ //stocks with pivot recommendation
+                foreach ($rcm->recommendations as $rcmItem){ //one to many relation with recomendation
                     $this->siteRecommendations[] = $rcmItem;
                 }
             }
@@ -231,9 +235,8 @@ class PmReport extends Component
             // INTISIALISASI REKOMENDASI EDIT 
             foreach ($this->siteRecommendations as $recommendation) {
                 $this->recommends[] = [
-                    'stock_id' => $recommendation->pivot->stock_id, 
-                    'group' => $recommendation->group,
-                    'jumlah_unit_needed' => $recommendation->pivot->jumlah_unit_needed
+                    'name' => $recommendation->name,
+                    'jumlah_unit_needed' => $recommendation->jumlah_unit_needed
                 ];
             }
 
@@ -255,7 +258,7 @@ class PmReport extends Component
              *  menghitung jumlah record recomendation sebelumnya
              */
             foreach($this->siteRecommendations as $index => $recommendation){
-                $this->recommendationId[$index] = $recommendation->pivot->rec_id;
+                $this->recommendationId[$index] = $recommendation->rec_id;
             }
             $this->countRecommendationId = count($this->recommendationId);
 
@@ -271,7 +274,7 @@ class PmReport extends Component
             
             //recomendation mount
             // $this->recommends = [
-            //     ['stock_id' => '', 'jumlah_unit_needed' => 1]
+            //     ['name' => '', 'jumlah_unit_needed' => 1]
             // ];
 
             // images mount
@@ -280,7 +283,18 @@ class PmReport extends Component
             ];
         }
 
-        $this->stocks = Stock::all();
+        $utility = new Utility;
+
+        // preparing for recommend dropdown option
+        $this->stocks = Stock::select('nama_barang AS name')
+                            ->get()
+                            ->toArray();
+        foreach ($this->siteRecommendations as $siteRecommendation){
+            if (!($utility->in_array_r($siteRecommendation['name'], $this->stocks))) {
+                $this->stocks[] = $siteRecommendation;
+            }
+        }
+
         $this->expertsData = Expert::all();
         $this->uniqueCompanies = $this->expertsData->unique('expert_company');
     }
@@ -333,7 +347,8 @@ class PmReport extends Component
     // RECOMENDATION FORMS
     public function addRecommend()
     {
-        $this->recommends[] = ['stock_id' => '','group' => '', 'jumlah_unit_needed' => 1];
+        $this->recommends[] = ['name' => '', 'jumlah_unit_needed' => "1 units"];
+        $this->dispatchBrowserEvent('list-added');
     }
     
     public function removeRecommend($index)
@@ -351,7 +366,8 @@ class PmReport extends Component
 
     public function addManualRecommends ()
     {
-        $this->manualRecommends[] = ['nama_barang' => '','group' => '', 'jumlah_unit_needed' => 1];
+        $this->manualRecommends[] = ['name' => '', 'jumlah_unit_needed' => "1 units"];
+        $this->dispatchBrowserEvent('list-added');
     }
 
     public function removeManualRecommends($index)
@@ -360,13 +376,13 @@ class PmReport extends Component
         array_values($this->manualRecommends);
     }
 
-    public function setStockGroup($index)
-    {
-        if(!empty($this->recommends[$index]['stock_id'])) {
-            $this->recommends[$index]['group'] = Stock::Where('stock_id', $this->recommends[$index]['stock_id'])
-                                                    ->first()->group;
-        }
-    }
+    // public function setStockGroup($index)
+    // {
+    //     if(!empty($this->recommends[$index]['stock_id'])) {
+    //         $this->recommends[$index]['group'] = Stock::Where('stock_id', $this->recommends[$index]['stock_id'])
+    //                                                 ->first()->group;
+    //     }
+    // }
 
     // ATTACHMENT
     public function addAttachment()
@@ -481,6 +497,7 @@ class PmReport extends Component
                 $this->validate(([
                     'remark' => 'required',
                 ]));
+                $this->dispatchBrowserEvent('list-added');
                 break;
 
             case 5:

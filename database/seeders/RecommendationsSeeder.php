@@ -17,16 +17,16 @@ class RecommendationsSeeder extends Seeder
         // ===== hasil rancangan erd =====
         DB::table('recommendations')->insert([
             'head_id' => 1,
-            'name' => 'Stalo',
-            'jumlah_unit_needed' => 5,
+            'name' => 'STALO',
+            'jumlah_unit_needed' => '1 units',
             'year' => 2021,
 
             'created_at' => now()
         ]);
         DB::table('recommendations')->insert([
             'head_id' => 2,
-            'name' => 'MOXA',
-            'jumlah_unit_needed' => 2,
+            'name' => 'Moxa',
+            'jumlah_unit_needed' => '1 units',
             'year' => 2021,
 
             'created_at' => now()

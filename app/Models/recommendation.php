@@ -15,7 +15,7 @@ class Recommendation extends Model
 
     protected $fillable = [
         'head_id',
-        'stock_id',
+        'name',
         'jumlah_unit_needed',
         'year',
     ];

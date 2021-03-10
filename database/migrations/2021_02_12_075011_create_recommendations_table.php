@@ -19,7 +19,7 @@ class CreateRecommendationsTable extends Migration
             // id of the head of current report. ex: if the id is 5 it means this report has the head reports of 5
             $table->foreignId('head_id')->constrained('head_reports', 'head_id')->onDelete('cascade');
             $table->string('name');
-            $table->integer('jumlah_unit_needed');
+            $table->string('jumlah_unit_needed');
             $table->integer('year');
             $table->timestamps();
         });

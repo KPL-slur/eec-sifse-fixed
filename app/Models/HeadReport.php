@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class HeadReport extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $primaryKey = 'head_id';
 
@@ -27,10 +29,6 @@ class HeadReport extends Model
     {
         return $this->belongsToMany(Expert::class, 'expert_reports', 'head_id', 'expert_id')->withPivot('expert_report_id');;
     }
-    public function recommendations()
-    {
-        return $this->belongsToMany(Stock::class, 'recommendations', 'head_id', 'stock_id')->withPivot('jumlah_unit_needed', 'rec_id');
-    }
 
     //ONE TO ONE
     public function pmBodyReport()
@@ -39,6 +37,11 @@ class HeadReport extends Model
     }
 
     //ONE TO MANY
+    public function recommendations()
+    {
+        return $this->hasMany(Recommendation::class, 'head_id');
+    }
+
     public function reportImages()
     {
         return $this->hasMany(ReportImage::class, 'head_id');

@@ -10,11 +10,15 @@
                 <div class="card-body ">
                     {{-- <div class="sticky-top"> --}}
                         <a type="button" class="btn btn-info"
-                            href="{{ route("$headReport->maintenance_type.index") }}">BACK</a>
-                        <a type="button" class="btn btn-warning" href="{{ route('pm.edit', ['id' => $headReport->head_id]) }}">EDIT</a>
+                            href="{{ route("$headReport->maintenance_type.trash.index") }}">BACK</a>
 
-                        <button type="submit" rel="tooltip" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete">
-                            DELETE</button>
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalRestore">
+                            RESTORE
+                        </button>
+
+                        <button type="button" rel="tooltip" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete">
+                            DELETE
+                        </button>
                     {{-- </div> --}}
 
                     <div class="card ">
@@ -254,8 +258,8 @@
                                         <tbody>
                                             @foreach ($recommendations as $recommendation)
                                                 <tr>
-                                                    <td>{{ $recommendation->name }}</td>
-                                                    <td>{{ $recommendation->jumlah_unit_needed }}</td>
+                                                    <td>{{ $recommendation->nama_barang }}</td>
+                                                    <td>{{ $recommendation->pivot->jumlah_unit_needed }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -301,20 +305,34 @@
                 <i class="material-icons">close</i>
             </button>
         </li>
-        <li>   
-            <a href="{{ route('pm.edit', ['id' => $headReport->head_id]) }}" class="btn btn-warning btn-fab btn-round">
-                <i class="material-icons">edit</i>
-            </a>
+        <li>
+            <button class="btn btn-warning btn-fab btn-round" data-toggle="modal" data-target="#modalRestore">
+                <i class="material-icons">restore</i>
+            </button>
         </li>
     </x-ui.btn-float-group>
 
     {{-- Modal Delete --}}
-    <x-ui.modal-confirm id="modalDelete">
+    <x-ui.modal-confirm id="modalRestore">
         <x-slot name="body">
-            <p>Are You Sure Want To Delete This Rerport?</p>
+            <p>Are You Sure Want To Restore This Report?</p>
         </x-slot>
         <x-slot name="footer">
-            <form action="{{ route('pm.delete', ['id' => $headReport->head_id]) }}" method="post"
+            <form action="{{ route('pm.trash.restore', ['id' => $headReport->head_id]) }}" method="post"
+                class="d-inline">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                @csrf
+                <button type="submit" rel="tooltip" class="btn btn-secondary">Yes</button>
+            </form>  
+        </x-slot>
+    </x-ui.modal-confirm>
+
+    <x-ui.modal-confirm id="modalDelete">
+        <x-slot name="body">
+            <p>Are You Sure Want To Permanently Delete This Report?</p>
+        </x-slot>
+        <x-slot name="footer">
+            <form action="{{ route('pm.trash.perm_delete', ['id' => $headReport->head_id]) }}" method="post"
                 class="d-inline">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                 @csrf
