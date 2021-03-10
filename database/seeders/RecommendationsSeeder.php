@@ -19,7 +19,7 @@ class RecommendationsSeeder extends Seeder
             'rec_id' => 1,
             'head_id' => 1,
             'stock_id' => 1,
-            'jumlah_unit_needed' => 5,
+            'jumlah_unit_needed' => '5 units',
             'year' => 2021,
 
             'created_at' => now()

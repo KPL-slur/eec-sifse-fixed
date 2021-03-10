@@ -336,7 +336,8 @@ class PmReport extends Component
     // RECOMENDATION FORMS
     public function addRecommend()
     {
-        $this->recommends[] = ['stock_id' => '','group' => '', 'jumlah_unit_needed' => 1];
+        $this->recommends[] = ['stock_id' => '','group' => '', 'jumlah_unit_needed' => "1 units"];
+        $this->dispatchBrowserEvent('list-added');
     }
     
     public function removeRecommend($index)
@@ -354,7 +355,8 @@ class PmReport extends Component
 
     public function addManualRecommends ()
     {
-        $this->manualRecommends[] = ['nama_barang' => '','group' => '', 'jumlah_unit_needed' => 1];
+        $this->manualRecommends[] = ['nama_barang' => '','group' => '', 'jumlah_unit_needed' => "1 units"];
+        $this->dispatchBrowserEvent('list-added');
     }
 
     public function removeManualRecommends($index)

@@ -58,9 +58,9 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="number" class="form-control"
+                                    <input type="text" class="form-control recommends-qty"
                                     name="recommends[{{ $index }}][jumlah_unit_needed]" 
-                                    wire:model="recommends.{{ $index }}.jumlah_unit_needed"
+                                    wire:model.defer="recommends.{{ $index }}.jumlah_unit_needed"
                                     >
                                 </td>
                                 <td>
@@ -88,7 +88,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="number" class="form-control"
+                                    <input type="text" class="form-control recommends-qty"
                                         name="manualRecommends[{{ $index }}][jumlah_unit_needed]" 
                                         wire:model.defer="manualRecommends.{{ $index }}.jumlah_unit_needed"
                                     >
