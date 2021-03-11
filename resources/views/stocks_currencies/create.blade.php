@@ -120,8 +120,9 @@
                   <label for="status">Status</label>
                   <select name="status" id="status" class="form-control @error('status') is-invalid @enderror">
                     <option value="" disabled selected>-- is it obsolete or not? --</option>
-                    <option value="0" {{ old('status') === 0 ? 'selected' : '' }}>Not Obsolete</option>
-                    <option value="1" {{ old('group') === 1 ? 'selected' : '' }}>Obsolete</option>
+                    <option value="Not Obsolete" {{ old('status') === "Not Obsolete" ? 'selected' : '' }}>Not Obsolete</option>
+                    <option value="Obsolete" {{ old('group') === "Obsolete" ? 'selected' : '' }}>Obsolete</option>
+                    <option value="Dummy" {{ old('group') === "Dummy" ? 'selected' : '' }}>Dummy</option>
                   </select>
                   @error('status')
                     <div class="invalid-feedback">

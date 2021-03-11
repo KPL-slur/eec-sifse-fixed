@@ -23,7 +23,7 @@ class StocksSeeder extends Seeder
             'expired' => '2021-03-01',
             'kurs_beli' => 1500000000.11,
             'jumlah_unit' => 2,
-            'status' => 1,
+            'status' => 'Obsolete',
             'created_at'=>now()
         ]);
         DB::table('stocks')->insert([
@@ -35,7 +35,7 @@ class StocksSeeder extends Seeder
             'expired' => '2021-03-01',
             'kurs_beli' =>  5376900.11,
             'jumlah_unit' => 2,
-            'status' => 1,
+            'status' => 'Obsolete',
             'created_at'=>now()
         ]);
         DB::table('stocks')->insert([
@@ -48,7 +48,7 @@ class StocksSeeder extends Seeder
             'expired' => '2021-03-01',
             'kurs_beli' =>  21801000.81,
             'jumlah_unit' => 2,
-            'status' => 0,
+            'status' => 'Not Obsolete',
             'created_at'=>now()
         ]);
     }

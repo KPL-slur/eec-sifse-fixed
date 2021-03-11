@@ -68,8 +68,9 @@
                     <div class="form-group my-4">
                       <label for="status">Status</label>
                       <select name="status" id="status" class="form-control">
-                        <option value="0" @if ($siteAndStock->status === 0) selected @endif>Not Obsolete</option>
-                        <option value="1" @if ($siteAndStock->status === 1) selected @endif>Obsolete</option>
+                        <option value="Not Obsolete" @if ($siteAndStock->status === "Not Obsolete") selected @endif>Not Obsolete</option>
+                        <option value="Obsolete" @if ($siteAndStock->status === "Obsolete") selected @endif>Obsolete</option>
+                        <option value="Dummy" @if ($siteAndStock->status === "Dummy") selected @endif>Dummy</option>
                       </select>
                     </div>                    
                     <button type="submit" class="btn btn-primary">Submit</button>

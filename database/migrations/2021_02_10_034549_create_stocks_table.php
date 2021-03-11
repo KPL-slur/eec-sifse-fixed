@@ -23,7 +23,7 @@ class CreateStocksTable extends Migration
             $table->date('expired')->nullable();
             $table->float('kurs_beli', 24, 2)->nullable();
             $table->integer('jumlah_unit')->nullable();
-            $table->smallInteger('status')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }
