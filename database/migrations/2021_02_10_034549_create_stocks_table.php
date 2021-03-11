@@ -21,7 +21,7 @@ class CreateStocksTable extends Migration
             $table->string('serial_number')->nullable();
             $table->date('tgl_masuk')->nullable();
             $table->date('expired')->nullable();
-            $table->float('kurs_beli', 12, 2)->nullable();
+            $table->float('kurs_beli', 24, 2)->nullable();
             $table->integer('jumlah_unit')->nullable();
             $table->smallInteger('status')->nullable();
             $table->timestamps();
