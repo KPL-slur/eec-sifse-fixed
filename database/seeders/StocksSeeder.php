@@ -21,7 +21,7 @@ class StocksSeeder extends Seeder
             'serial_number' => 'RA0102',
             'tgl_masuk' => '2021-03-01',
             'expired' => '2021-03-01',
-            'kurs_beli' => 1500000000,
+            'kurs_beli' => 1500000000.11,
             'jumlah_unit' => 2,
             'status' => 1,
             'created_at'=>now()
@@ -33,7 +33,7 @@ class StocksSeeder extends Seeder
             'serial_number' => 'Mo0102',
             'tgl_masuk' => '2021-03-01',
             'expired' => '2021-03-01',
-            'kurs_beli' =>  5376900,
+            'kurs_beli' =>  5376900.11,
             'jumlah_unit' => 2,
             'status' => 1,
             'created_at'=>now()
@@ -46,7 +46,7 @@ class StocksSeeder extends Seeder
             'serial_number' => 'WA0102',
             'tgl_masuk' => '2021-03-01',
             'expired' => '2021-03-01',
-            'kurs_beli' =>  21801000,
+            'kurs_beli' =>  21801000.81,
             'jumlah_unit' => 2,
             'status' => 0,
             'created_at'=>now()
