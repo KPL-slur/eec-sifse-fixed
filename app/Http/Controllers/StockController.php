@@ -143,14 +143,13 @@ class StockController extends Controller
      * 
      */
     public function report($date_start, $date_end){
-        $siteAndStock = DB::table('sites')
-                            ->rightJoin('stocks', 'sites.site_id', '=', 'stocks.site_id')
-                            ->whereBetween('tgl_masuk', [$date_start, $date_end])
-                            ->get();
+        $stocks = DB::table('stocks')
+                    ->whereBetween('tgl_masuk', [$date_start, $date_end])
+                    ->get();
 
         // dd($siteAndStock);
 
-        return view('stocks_currencies.print', compact('siteAndStock'));
+        return view('stocks_currencies.print', compact('stocks'));
     }
 
     /**

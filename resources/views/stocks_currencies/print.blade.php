@@ -29,7 +29,6 @@
                     <thead class=" text-primary">
                         <th>No</th>
                         <th>Jenis</th>
-                        <th>Lokasi Site</th>
                         <th>Nama Barang</th>
                         <th>Part Number</th>
                         <th>Serial Number</th>
@@ -40,7 +39,7 @@
                         <th>Status</th>
                     </thead>
                     <tbody>
-                        @foreach ($siteAndStock as $st)
+                        @foreach ($stocks as $st)
                         <tr>
                           <td scope="row">{{$loop->iteration}}</td>
                           @if($st->group == 1)
@@ -52,7 +51,6 @@
                           @else
                               <td>Tambahan</td>
                           @endif
-                          <td>{{ $st->station_id }}</td>
                           <td>{{ $st->nama_barang }}</td>
                           <td>{{ $st->part_number }}</td>
                           <td>{{ $st->serial_number }}</td>
