@@ -164,12 +164,10 @@ class StockController extends Controller
         // ->join('sites', 'stocks.site_id', '=', 'sites.site_id')
         // ->get();
 
-        $recommendations = Recommendation::select()
-                                        ->join('head_reports', 'head_reports.head_id', '=', 'recommendations.head_id')
-                                        ->join('sites', 'sites.site_id' , '=', 'head_reports.site_id')
-                                        ->join('stocks', 'stocks.stock_id' , '=', 'recommendations.stock_id')
-                                        ->get();
-
+        $recommendations = Recommendation::select('sites.radar_name', 'sites.station_id', 'recommendations.name', 'recommendations.jumlah_unit_needed')
+                                            ->join('head_reports', 'recommendations.head_id', 'head_reports.head_id')
+                                            ->join('sites', 'head_reports.site_id', 'sites.site_id')
+                                            ->get();
         // dd($recommendations);
 
         return view('stocks_currencies.recommendation', compact('recommendations'));
