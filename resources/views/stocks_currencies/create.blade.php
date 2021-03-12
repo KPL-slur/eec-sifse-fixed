@@ -44,11 +44,17 @@
                 </div>
                 <div class="form-group my-4">
                   <label for="group">Group nya</label>
-                  <select name="group" id="group" class="form-control @error('group') is-invalid @enderror">
+                  {{-- <select name="group" id="group" class="form-control @error('group') is-invalid @enderror">
                     <option value="" {{ old('group') == '' ? 'selected' : '' }} >-- Pilih jenis barang --</option>
                     <option value="1" {{ old('group') == 1 ? 'selected' : '' }} >Transmitter</option>
                     <option value="2" {{ old('group') == 2 ? 'selected' : '' }}>Receiver</option>
                     <option value="3" {{ old('group') == 3 ? 'selected' : '' }}>Antenna</option>
+                  </select> --}}
+                  <select name="group" id="group" class="form-control @error('group') is-invalid @enderror">
+                    <option value="" {{ old('group') == '' ? 'selected' : '' }} >-- Pilih jenis barang --</option>
+                    @foreach ($stocks_group as $sg)
+                      <option value="{{$sg}}" {{ old('group') == $sg ? 'selected' : '' }}>{{ $sg }}</option>
+                    @endforeach
                   </select>
                   @error('group')
                     <div class="invalid-feedback">
@@ -120,8 +126,9 @@
                   <label for="status">Status</label>
                   <select name="status" id="status" class="form-control @error('status') is-invalid @enderror">
                     <option value="" disabled selected>-- is it obsolete or not? --</option>
-                    <option value="0" {{ old('status') === 0 ? 'selected' : '' }}>Not Obsolete</option>
-                    <option value="1" {{ old('group') === 1 ? 'selected' : '' }}>Obsolete</option>
+                    <option value="Not Obsolete" {{ old('status') === "Not Obsolete" ? 'selected' : '' }}>Not Obsolete</option>
+                    <option value="Obsolete" {{ old('group') === "Obsolete" ? 'selected' : '' }}>Obsolete</option>
+                    <option value="Dummy" {{ old('group') === "Dummy" ? 'selected' : '' }}>Dummy</option>
                   </select>
                   @error('status')
                     <div class="invalid-feedback">
@@ -138,4 +145,13 @@
     </div>
   </div>
 </div>
+
+<script>
+  window.onload = () => {
+    $('#group').select2({
+      tags: true
+    });
+  };
+</script>
+
 @endsection

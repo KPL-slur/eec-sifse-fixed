@@ -23,7 +23,8 @@ class StockController extends Controller
     {
         $stocks = Stock::get();
 
-        $rate_fix = $ex_rate->apiCall();
+        // $rate_fix = $ex_rate->apiCall();
+        $rate_fix = 1000;
 
         return view('stocks_currencies.index', compact('stocks', 'rate_fix'));
     }
@@ -36,8 +37,21 @@ class StockController extends Controller
      */
     public function create(ExchangeRate $ex_rate)
     {
-        $rate_fix = $ex_rate->apiCall();
-        return view('stocks_currencies.create', compact('rate_fix',));
+        // $rate_fix = $ex_rate->apiCall();
+        $rate_fix = 1000;
+
+        // BUAT GROUP DARI STOCKS YANG SELECT NYA
+        $stocks_group = []; //inisiasi empty array stocks_group
+
+        $stocks_group_db = DB::table('stocks')->pluck('group'); //buat ngambil 1 isi column group
+
+        foreach($stocks_group_db as $sgb){
+            if(!in_array($sgb, $stocks_group)){
+                array_push($stocks_group, $sgb);
+            }
+        }
+
+        return view('stocks_currencies.create', compact('rate_fix','stocks_group'));
     }
 
     /**
@@ -47,7 +61,8 @@ class StockController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(ValidateStockRequest $request)
-    {        
+    {
+        // dd($request);
         Stock::create($request->validated());
 
         return redirect('stock_currency')->with('status1','Data berhasil ditambah!');
@@ -74,14 +89,15 @@ class StockController extends Controller
     public function edit(Stock $stock, ExchangeRate $ex_rate)
     {
         // $stock_data = Stock::where('stock_id');
-        $rate_fix = $ex_rate->apiCall();
+        // $rate_fix = $ex_rate->apiCall();
+        $rate_fix = 1000;
 
         // $siteAndStock = DB::table('stocks')
         //                     // ->select('stocks.site_id', 'station_id', 'stock_id', 'nama_barang', 'group', 'part_number','serial_number', 'tgl_masuk', 'expired', 'kurs_beli', 'jumlah_unit', 'status')
         //                     // ->leftJoin('sites', 'stocks.site_id', '=', 'sites.site_id')
         //                     ->where('stocks.stock_id', $stock->stock_id)
         //                     ->first();
-        $siteAndStock = Stock::where('stocks.stock_id', $stock->stock_id)
+        $stock = Stock::where('stocks.stock_id', $stock->stock_id)
                             ->first();
 
         // dd($siteAndStock);
@@ -91,7 +107,18 @@ class StockController extends Controller
                     ->get();
         // dd($sites);
 
-        return view('stocks_currencies.edit', compact('siteAndStock', 'sites' , 'rate_fix'));
+        // BUAT GROUP DARI STOCKS YANG BAGIAN SELECT
+        $stocks_group = []; //inisiasi empty array stocks_group
+
+        $stocks_group_db = DB::table('stocks')->pluck('group'); //buat ngambil 1 isi column group
+
+        foreach($stocks_group_db as $sgb){
+            if(!in_array($sgb, $stocks_group)){
+                array_push($stocks_group, $sgb);
+            }            
+        }
+        
+        return view('stocks_currencies.edit', compact('stock', 'sites' , 'rate_fix', 'stocks_group'));
     }
 
     /**
@@ -143,14 +170,13 @@ class StockController extends Controller
      * 
      */
     public function report($date_start, $date_end){
-        $siteAndStock = DB::table('sites')
-                            ->rightJoin('stocks', 'sites.site_id', '=', 'stocks.site_id')
-                            ->whereBetween('tgl_masuk', [$date_start, $date_end])
-                            ->get();
+        $stocks = DB::table('stocks')
+                    ->whereBetween('tgl_masuk', [$date_start, $date_end])
+                    ->get();
 
         // dd($siteAndStock);
 
-        return view('stocks_currencies.print', compact('siteAndStock'));
+        return view('stocks_currencies.print', compact('stocks'));
     }
 
     /**
@@ -165,12 +191,10 @@ class StockController extends Controller
         // ->join('sites', 'stocks.site_id', '=', 'sites.site_id')
         // ->get();
 
-        $recommendations = Recommendation::select()
-                                        ->join('head_reports', 'head_reports.head_id', '=', 'recommendations.head_id')
-                                        ->join('sites', 'sites.site_id' , '=', 'head_reports.site_id')
-                                        ->join('stocks', 'stocks.stock_id' , '=', 'recommendations.stock_id')
-                                        ->get();
-
+        $recommendations = Recommendation::select('sites.radar_name', 'sites.station_id', 'recommendations.name', 'recommendations.jumlah_unit_needed')
+                                            ->join('head_reports', 'recommendations.head_id', 'head_reports.head_id')
+                                            ->join('sites', 'head_reports.site_id', 'sites.site_id')
+                                            ->get();
         // dd($recommendations);
 
         return view('stocks_currencies.recommendation', compact('recommendations'));

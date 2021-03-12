@@ -41,52 +41,49 @@
 
               {{-- card body kedua --}}
               <div class="table-responsive">
-                <table class="table table-striped" id="indexStocksTable">
+                <table class="table table-striped" >
                   <thead class=" text-primary text-middle">
                     <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Radar Name</th>
-                    <th scope="col">Station ID</th>
-                    <th scope="col">Nama Barang</th>
-                    <th scope="col">Part Number</th>
-                    <th scope="col">Serial Number</th>
-                    <th scope="col">Stock Quantity</th>
-                    <th scope="col">Amount Required</th>
-                    <th scope="col">Status</th>
-                    <th class="text-right">Actions</th>
-                  </tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Radar Name</th>
+                      <th scope="col">Station ID</th>
+                      <th scope="col">Nama Barang</th>
+                      {{-- <th scope="col">Part Number</th>
+                      <th scope="col">Serial Number</th> --}}
+                      {{-- <th scope="col">Stock Quantity</th> --}}
+                      <th scope="col">Amount Required</th>
+                      {{-- <th scope="col">Status</th> --}}
+                      <th class="text-right">Actions</th>
+                    </tr>
                   </thead>
                   <tbody>
                     @foreach ($recommendations as $rcm)
-                        
                       <tr>
                         <input type="hidden" value="{{ $rcm->year }}">
                         <td scope="row">{{$loop->iteration}}</td>
                         <td>{{$rcm->radar_name}}</td>
                         <td>{{$rcm->station_id}}</td>
-                        <td>{{$rcm->nama_barang}}</td>
-                        <td>{{$rcm->part_number}}</td>
-                        <td>{{$rcm->serial_number}}</td>
-                        <td>{{$rcm->jumlah_unit}}</td>
+                        <td>{{$rcm->name}}</td>
+                        {{-- <td>{{$rcm->part_number}}</td>
+                        <td>{{$rcm->serial_number}}</td> --}}
+                        {{-- <td>{{$rcm->jumlah_unit}}</td> --}}
                         <td>{{$rcm->jumlah_unit_needed}}</td>
-                        <td>{{$rcm->status}}</td>
-                          
+                        {{-- <td>{{$rcm->status}}</td> --}}
                         <td class="td-actions text-right">
-                                
-                            <a rel="tooltip" class="btn btn-lg btn-warning m-2" href="" type="submit">
-                                <i class="material-icons">edit</i>
-                                <div class="ripple-container"></div>
-                            </a>
-
-                              <form method="POST" action=" " class="d-inline">
-                                @csrf
-                                @method('delete')
-                                <button class="btn btn-danger" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">
-                                  <i class="material-icons">delete</i>
-                                  <div class="ripple-container"></div>
-                                </button>
-                              </form>
+                          <a rel="tooltip" class="btn btn-lg btn-warning m-2" href="" type="submit">
+                              <i class="material-icons">edit</i>
+                              <div class="ripple-container"></div>
+                          </a>
+                          <form method="POST" action=" " class="d-inline">
+                            @csrf
+                            @method('delete')
+                            <button class="btn btn-danger" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">
+                              <i class="material-icons">delete</i>
+                              <div class="ripple-container"></div>
+                            </button>
+                          </form>
                         </td>
+                      </tr>
                     @endforeach
                   </tbody>
                 </table>

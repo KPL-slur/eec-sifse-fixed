@@ -16,14 +16,14 @@ class CreateStocksTable extends Migration
         Schema::create('stocks', function (Blueprint $table) {
             $table->bigIncrements('stock_id');
             $table->string('nama_barang');
-            $table->smallInteger('group');
+            $table->string('group');
             $table->string('part_number')->nullable();
             $table->string('serial_number')->nullable();
             $table->date('tgl_masuk')->nullable();
             $table->date('expired')->nullable();
-            $table->integer('kurs_beli')->nullable();
+            $table->float('kurs_beli', 24, 2)->nullable();
             $table->integer('jumlah_unit')->nullable();
-            $table->smallInteger('status')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

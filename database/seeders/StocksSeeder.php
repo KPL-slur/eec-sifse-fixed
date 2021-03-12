@@ -15,42 +15,40 @@ class StocksSeeder extends Seeder
     public function run()
     {
         DB::table('stocks')->insert([
-            
             'nama_barang' => 'STALO',
-            'group' => '2',
+            'group' => 'Receiver',
             'part_number' => 'RA01',
             'serial_number' => 'RA0102',
-            'tgl_masuk' => now(),
-            'expired' => now(),
-            'kurs_beli' => 1500000000,
+            'tgl_masuk' => '2021-03-01',
+            'expired' => '2021-03-01',
+            'kurs_beli' => 1500000000.11,
             'jumlah_unit' => 2,
-            'status' => 1,
+            'status' => 'Obsolete',
             'created_at'=>now()
         ]);
         DB::table('stocks')->insert([
-            
             'nama_barang' => 'Moxa',
-            'group' => '1',
+            'group' => 'Transmitter',
             'part_number' => 'Mo01',
             'serial_number' => 'Mo0102',
-            'tgl_masuk' => now(),
-            'expired' => now(),
-            'kurs_beli' =>  5376900,
+            'tgl_masuk' => '2021-03-01',
+            'expired' => '2021-03-01',
+            'kurs_beli' =>  5376900.11,
             'jumlah_unit' => 2,
-            'status' => 1,
+            'status' => 'Obsolete',
             'created_at'=>now()
         ]);
         DB::table('stocks')->insert([
             
             'nama_barang' => 'Waveguide',
-            'group' => '3',
+            'group' => 'Antenna',
             'part_number' => 'WA01',
             'serial_number' => 'WA0102',
-            'tgl_masuk' => now(),
-            'expired' => now(),
-            'kurs_beli' =>  21801000,
+            'tgl_masuk' => '2021-03-01',
+            'expired' => '2021-03-01',
+            'kurs_beli' =>  21801000.81,
             'jumlah_unit' => 2,
-            'status' => 0,
+            'status' => 'Not Obsolete',
             'created_at'=>now()
         ]);
     }

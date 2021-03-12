@@ -32,6 +32,8 @@ function selectGroupIndexStocks(){
     }
   }
 
+  // for recommendation inside stocks
+  // select by year
   function selectYearIndexStocks(){
     var input, header, table, tr, td, i;
     // nama dropdown gua
