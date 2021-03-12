@@ -135,13 +135,16 @@
             @endif
 
             <div>
-              <select name="selectGroupStock" class="form-control m-3" id="selectGroupStock" onchange="selectGroupIndexStocks()" style="max-width:15%;">
+              {{-- <select name="selectGroupStock" class="form-control m-3" id="selectGroupStock" onchange="selectGroupIndexStocks()" style="max-width:15%;">
                 <option selected value="">Semua</option>
                 <option value="1" >Transmitter</option>
                 <option value="2" >Receiver</option>
                 <option value="3" >Antenna</option>
                 <option value="0" >Tambahan</option>
-            </select>
+              </select> --}}
+              <select name="selectGroupStock" class="form-control m-3" id="selectGroupStock" onchange="selectGroupIndexStocks()" style="max-width:15%;">
+                
+              </select>
             </div>
             {{-- card kedua --}}
             <div class="card m-3 my-5">

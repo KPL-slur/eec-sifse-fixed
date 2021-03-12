@@ -53,7 +53,7 @@
                   <select name="group" id="group" class="form-control @error('group') is-invalid @enderror">
                     <option value="" {{ old('group') == '' ? 'selected' : '' }} >-- Pilih jenis barang --</option>
                     @foreach ($stocks_group as $sg)
-                      <option value="{{$sg->group}}" {{ old('group') == $sg->group ? 'selected' : '' }}>{{ $sg->group }}</option>
+                      <option value="{{$sg}}" {{ old('group') == $sg ? 'selected' : '' }}>{{ $sg }}</option>
                     @endforeach
                   </select>
                   @error('group')

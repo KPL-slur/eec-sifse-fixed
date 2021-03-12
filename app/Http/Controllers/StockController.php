@@ -33,14 +33,24 @@ class StockController extends Controller
      * Show the form for creating a new resource.
      *
      * @param \App\Services\ExchangeRate $ex_rate
-     * @param \App\Models\Stock $stocks_group
      * @return \Illuminate\Http\Response
      */
     public function create(ExchangeRate $ex_rate)
     {
         // $rate_fix = $ex_rate->apiCall();
         $rate_fix = 1000;
-        $stocks_group = Stock::select('group')->get();
+
+        // BUAT GROUP DARI STOCKS YANG SELECT NYA
+        $stocks_group = []; //inisiasi empty array stocks_group
+
+        $stocks_group_db = DB::table('stocks')->pluck('group'); //buat ngambil 1 isi column group
+
+        foreach($stocks_group_db as $sgb){
+            if(!in_array($sgb, $stocks_group)){
+                array_push($stocks_group, $sgb);
+            }
+        }
+
         return view('stocks_currencies.create', compact('rate_fix','stocks_group'));
     }
 
@@ -97,8 +107,17 @@ class StockController extends Controller
                     ->get();
         // dd($sites);
 
-        $stocks_group = Stock::select('group')->get();
+        // BUAT GROUP DARI STOCKS YANG BAGIAN SELECT
+        $stocks_group = []; //inisiasi empty array stocks_group
 
+        $stocks_group_db = DB::table('stocks')->pluck('group'); //buat ngambil 1 isi column group
+
+        foreach($stocks_group_db as $sgb){
+            if(!in_array($sgb, $stocks_group)){
+                array_push($stocks_group, $sgb);
+            }            
+        }
+        
         return view('stocks_currencies.edit', compact('stock', 'sites' , 'rate_fix', 'stocks_group'));
     }
 
