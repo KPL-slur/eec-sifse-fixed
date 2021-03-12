@@ -11,8 +11,9 @@
                     {{-- <div class="sticky-top"> --}}
                         <a type="button" class="btn btn-info"
                             href="{{ route("$headReport->maintenance_type.index") }}">BACK</a>
+                        <button type="button" rel="tooltip" class="btn btn-primary" data-toggle="modal" data-target="#modalPrint">
+                            PRINT</button>
                         <a type="button" class="btn btn-warning" href="{{ route('pm.edit', ['id' => $headReport->head_id]) }}">EDIT</a>
-
                         <button type="submit" rel="tooltip" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete">
                             DELETE</button>
                     {{-- </div> --}}
@@ -306,6 +307,11 @@
                 <i class="material-icons">edit</i>
             </a>
         </li>
+        <li>
+            <button class="btn btn-primary btn-fab btn-round" data-toggle="modal" data-target="#modalPrint">
+                <i class="material-icons">print</i>
+            </button>
+        </li>
     </x-ui.btn-float-group>
 
     {{-- Modal Delete --}}
@@ -323,4 +329,43 @@
             </form>
         </x-slot>
     </x-ui.modal-confirm>
+
+    <x-ui.modal-confirm id="modalPrint">
+        <x-slot name="title">
+            Print PM REPORT to PDF
+        </x-slot>
+        <x-slot name="body">
+            <P>Silahkan masukan nama dan nip dari kepala statsiun untuk diisikan pada kolom tanda tangan</P>
+            <br>
+            <form action="{{ route("pm.print.show", ["id" => $headReport->head_id]) }}" method="GET">
+            <div class="form-group">
+                <label for="kasatName">Nama Kepala Statsiun</label>
+                <input class="form-control" type="text" name="kasatName" id="kasatName" placeholder="Nama Kepala Statsiun">
+            </div>
+            <div class="form-group">
+                <label for="kasatName">Nip Kepala Statsiun</label>
+                <input class="form-control" type="text" name="kasatNip" id="kasatNip" placeholder="Nip Kepala Statsiun">
+            </div>
+        </x-slot>
+        <x-slot name="footer">
+            <button class="btn btn-success" type="submit">Print</button>
+        </form>
+        </x-slot>
+    </x-ui.modal-confirm>
+
+    @error('kasatNip')
+        <script>
+            window.onload = () => {
+                showNotification('top', 'right', 'danger', "Nip Kepala Statsiun Wajib Diisi");
+            };
+        </script>
+    @enderror
+    @error('kasatName')
+        <script>
+            window.onload = () => {
+                showNotification('top', 'right', 'danger', "Nama Kepala Statsiun Wajib Diisi");
+            };
+        </script>
+    @enderror
+
 @endsection

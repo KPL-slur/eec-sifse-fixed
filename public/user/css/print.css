@@ -28,6 +28,11 @@
 
 /* PERSONAL STYLING */
 
+.header td {
+    border-left: 31px solid white;
+    border-right: 32px solid white;
+}
+
 .report {
     width: 100%;
     border: 1px solid #000000;

@@ -52,6 +52,9 @@
                                                     href="{{ route($maintenance_type.".show", ['id' => $hr->head_id]) }}">
                                                     <i class="material-icons">visibility</i>
                                                 </a>
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPrint">
+                                                    <i class="material-icons">print</i>
+                                                </button>
                                                 <a type="button" rel="tooltip" class="btn btn-warning"
                                                     {{-- href="{{ url('/report/' . $hr->id . '/edit') }}" --}}
                                                     href="{{ route($maintenance_type.".edit", ['id' => $hr->head_id]) }}"
@@ -106,6 +109,29 @@
                 </form>
             </x-slot>
         </x-ui.modal-confirm>
+
+        <x-ui.modal-confirm id="modalPrint">
+            <x-slot name="title">
+                Print PM REPORT to PDF
+            </x-slot>
+            <x-slot name="body">
+                <P>Silahkan masukan nama dan nip dari kepala statsiun untuk diisikan pada kolom tanda tangan</P>
+                <br>
+                <form action="{{ route("pm.print.show", ["id" => $hr->head_id]) }}" method="GET">
+                <div class="form-group">
+                    <label for="kasatName">Nama Kepala Statsiun</label>
+                    <input class="form-control" type="text" name="kasatName" id="kasatName" placeholder="Nama Kepala Statsiun">
+                </div>
+                <div class="form-group">
+                    <label for="kasatName">Nip Kepala Statsiun</label>
+                    <input class="form-control" type="text" name="kasatNip" id="kasatNip" placeholder="Nip Kepala Statsiun">
+                </div>
+            </x-slot>
+            <x-slot name="footer">
+                <button class="btn btn-success" type="submit">Print</button>
+            </form>
+            </x-slot>
+        </x-ui.modal-confirm>
     @endif
     
     @if (session('status_success'))
@@ -129,5 +155,20 @@
             };
         </script>
     @endif
+    
+    @error('kasatNip')
+        <script>
+            window.onload = () => {
+                showNotification('top', 'right', 'danger', "Nip Kepala Statsiun Wajib Diisi");
+            };
+        </script>
+    @enderror
+    @error('kasatName')
+        <script>
+            window.onload = () => {
+                showNotification('top', 'right', 'danger', "Nama Kepala Statsiun Wajib Diisi");
+            };
+        </script>
+    @enderror
 
 @endsection

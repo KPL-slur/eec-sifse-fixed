@@ -18,7 +18,7 @@
 <body>
     <table>
 
-        <thead>
+        <thead class="header">
             <tr>
                 <td>
                     <!--place holder for the fixed-position header-->
@@ -318,12 +318,12 @@
                             <div class="m-center text-center">
                                 <p>
                                     Mengetahui,<br>
-                                    Kepala Statsiun Meteorologi Timika
+                                    Kepala Statsiun Meteorologi {{ $headReport->site->site_id }}
                                 </p>
                                 <div>&nbsp;</div>
                                 <p>
-                                    <strong><u>Okto Firdaus F.R, ST</u></strong><br>
-                                    NIP. 12345678990
+                                    <strong><u>{{ $kasat['name'] }}</u></strong><br>
+                                    NIP. {{ $kasat['nip'] }}
                                 </p>
                             </div>
                         </div>
@@ -333,8 +333,8 @@
                             <tr>
                                 @foreach ($headReport->reportImages as $reportImage)
                                     <td colspan="{{ $loop->last ? 2 : 1 }}">
-                                        <img src="{{ asset('storage/' . $reportImage->image) }}"
-                                            width="350" height="200" class="m-center" alt="">
+                                        <img src="{{ asset('storage/' . $reportImage->image) }}" width="350"
+                                            height="200" class="m-center" alt="">
                                         <p class="text-center">
                                             {{ $reportImage->caption }}
                                         </p>
@@ -376,6 +376,9 @@
 
     </table>
 
+    <script type="text/javascript">
+        window.print();
+    </script>
 </body>
 
 </html>
