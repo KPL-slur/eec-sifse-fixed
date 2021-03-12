@@ -23,7 +23,8 @@ class StockController extends Controller
     {
         $stocks = Stock::get();
 
-        $rate_fix = $ex_rate->apiCall();
+        // $rate_fix = $ex_rate->apiCall();
+        $rate_fix = 1000;
 
         return view('stocks_currencies.index', compact('stocks', 'rate_fix'));
     }
@@ -32,12 +33,15 @@ class StockController extends Controller
      * Show the form for creating a new resource.
      *
      * @param \App\Services\ExchangeRate $ex_rate
+     * @param \App\Models\Stock $stocks_group
      * @return \Illuminate\Http\Response
      */
     public function create(ExchangeRate $ex_rate)
     {
-        $rate_fix = $ex_rate->apiCall();
-        return view('stocks_currencies.create', compact('rate_fix',));
+        // $rate_fix = $ex_rate->apiCall();
+        $rate_fix = 1000;
+        $stocks_group = Stock::select('group')->get();
+        return view('stocks_currencies.create', compact('rate_fix','stocks_group'));
     }
 
     /**
@@ -47,7 +51,8 @@ class StockController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(ValidateStockRequest $request)
-    {        
+    {
+        // dd($request);
         Stock::create($request->validated());
 
         return redirect('stock_currency')->with('status1','Data berhasil ditambah!');
@@ -74,14 +79,15 @@ class StockController extends Controller
     public function edit(Stock $stock, ExchangeRate $ex_rate)
     {
         // $stock_data = Stock::where('stock_id');
-        $rate_fix = $ex_rate->apiCall();
+        // $rate_fix = $ex_rate->apiCall();
+        $rate_fix = 1000;
 
         // $siteAndStock = DB::table('stocks')
         //                     // ->select('stocks.site_id', 'station_id', 'stock_id', 'nama_barang', 'group', 'part_number','serial_number', 'tgl_masuk', 'expired', 'kurs_beli', 'jumlah_unit', 'status')
         //                     // ->leftJoin('sites', 'stocks.site_id', '=', 'sites.site_id')
         //                     ->where('stocks.stock_id', $stock->stock_id)
         //                     ->first();
-        $siteAndStock = Stock::where('stocks.stock_id', $stock->stock_id)
+        $stock = Stock::where('stocks.stock_id', $stock->stock_id)
                             ->first();
 
         // dd($siteAndStock);
@@ -91,7 +97,9 @@ class StockController extends Controller
                     ->get();
         // dd($sites);
 
-        return view('stocks_currencies.edit', compact('siteAndStock', 'sites' , 'rate_fix'));
+        $stocks_group = Stock::select('group')->get();
+
+        return view('stocks_currencies.edit', compact('stock', 'sites' , 'rate_fix', 'stocks_group'));
     }
 
     /**

@@ -16,7 +16,7 @@ class CreateStocksTable extends Migration
         Schema::create('stocks', function (Blueprint $table) {
             $table->bigIncrements('stock_id');
             $table->string('nama_barang');
-            $table->smallInteger('group');
+            $table->string('group');
             $table->string('part_number')->nullable();
             $table->string('serial_number')->nullable();
             $table->date('tgl_masuk')->nullable();

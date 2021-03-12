@@ -16,7 +16,7 @@ class StocksSeeder extends Seeder
     {
         DB::table('stocks')->insert([
             'nama_barang' => 'STALO',
-            'group' => '2',
+            'group' => 'Receiver',
             'part_number' => 'RA01',
             'serial_number' => 'RA0102',
             'tgl_masuk' => '2021-03-01',
@@ -28,7 +28,7 @@ class StocksSeeder extends Seeder
         ]);
         DB::table('stocks')->insert([
             'nama_barang' => 'Moxa',
-            'group' => '1',
+            'group' => 'Transmitter',
             'part_number' => 'Mo01',
             'serial_number' => 'Mo0102',
             'tgl_masuk' => '2021-03-01',
@@ -41,7 +41,7 @@ class StocksSeeder extends Seeder
         DB::table('stocks')->insert([
             
             'nama_barang' => 'Waveguide',
-            'group' => '3',
+            'group' => 'Antenna',
             'part_number' => 'WA01',
             'serial_number' => 'WA0102',
             'tgl_masuk' => '2021-03-01',
