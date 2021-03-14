@@ -14,5 +14,6 @@ class ExpertReport extends Model
     protected $fillable = [
         'head_id',
         'expert_id',
+        'role',
     ];
 }
