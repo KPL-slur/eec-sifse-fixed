@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Headreport;
-use App\Models\ReportImage;
 
 class PmTrashController extends Controller
 {
@@ -50,16 +49,16 @@ class PmTrashController extends Controller
      */
     public function permDelete($id)
     {
-        HeadReport::onlyTrashed()
-                    ->where('head_id', $id)
-                    ->first()
-                    ->forceDelete();
+        // The other table except report image will cascade on delete
+        $headReport = HeadReport::onlyTrashed()->where('head_id', $id)->first();
 
-        $reportImageFiles = ReportImage::where('head_id', $id)->get();
+        $reportImageFiles = $headReport->reportImages;
         foreach ($reportImageFiles as $reportImageFile) {
             \Storage::delete('public/'.$reportImageFile->image);
         }
-        ReportImage::where('head_id', $id)->delete();
+
+        $headReport->reportImages()->delete();
+        $headReport->forceDelete();
 
         return redirect()->route('pm.trash.index')->with('status_perm_delete', 'Data Dihapus Permanent');
     }
@@ -72,14 +71,14 @@ class PmTrashController extends Controller
      */
     public function show($id)
     {
-        $headReport = HeadReport::Where('head_id', $id)->onlyTrashed()->first();
+        $headReport = HeadReport::onlyTrashed()->Where('head_id', $id)->first();
         abort_unless($headReport, 404, 'Report not found');
 
-        $pmBodyReport = HeadReport::Where('head_id', $id)->onlyTrashed()->first()->pmBodyReport;
+        $pmBodyReport = $headReport->pmBodyReport;
         abort_unless($pmBodyReport, 404, 'Report not found');
 
-        $recommendations = HeadReport::Where('head_id', $id)->onlyTrashed()->first()->recommendations;
-        $reportImages = HeadReport::Where('head_id', $id)->onlyTrashed()->first()->reportImages;
+        $recommendations = $headReport->recommendations()->get();
+        $reportImages = $headReport->reportImages;
 
         return view('expert.report.trash.show', compact('pmBodyReport', 'headReport', 'recommendations', 'reportImages'));
     }

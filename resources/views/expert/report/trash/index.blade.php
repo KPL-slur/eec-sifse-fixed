@@ -47,12 +47,21 @@
                                                     href="{{ route($maintenance_type.".trash.show", ['id' => $hr->head_id]) }}">
                                                     <i class="material-icons">visibility</i>
                                                 </a>
-                                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalRestore">
-                                                    <i class="material-icons">restore</i>
-                                                </button>
-                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete">
-                                                    <i class="material-icons">close</i>
-                                                </button>
+                                                <form action="{{ route('pm.trash.restore', ['id' => $hr->head_id]) }}" method="post"
+                                                    class="d-inline">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-warning" onclick="return confirm('Apakah yakin ingin merestore data?')">
+                                                        <i class="material-icons">restore</i>
+                                                    </button>
+                                                </form>
+                                                <form action="{{ route('pm.trash.perm_delete', ['id' => $hr->head_id]) }}" method="post"
+                                                    class="d-inline">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah yakin ingin menghapus data secara permanent? Perlu diingat, aksi ini tidak dapat di kembalikan')">
+                                                        <i class="material-icons">close</i>
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -68,8 +77,7 @@
     {{-- Floating Menu --}}
     <x-ui.btn-float-group></x-ui.btn-float-group>
 
-    @if ($headReports->isNotEmpty())
-        {{-- Modal Delete --}}
+    {{-- @if ($headReports->isNotEmpty())
         <x-ui.modal-confirm id="modalRestore">
             <x-slot name="body">
                 <p>Are You Sure Want To Restore This Report?</p>
@@ -98,7 +106,7 @@
                 </form>
             </x-slot>
         </x-ui.modal-confirm>
-    @endif
+    @endif --}}
     
     @if (session('status_restore'))
         <script>
