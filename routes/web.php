@@ -39,6 +39,10 @@ Route::group(['middleware' => 'auth', 'prefix' => 'expert'], function () {
             Route::post('/{id}', [App\Http\Controllers\PmTrashController::class, 'restore'])->name('restore');
             Route::delete('/{id}', [App\Http\Controllers\PmTrashController::class, 'permDelete'])->name('perm_delete');
         });
+        Route::group(['prefix' => 'print', 'as' => 'print.'], function () {
+            Route::get('/', [App\Http\Controllers\PmPrintController::class, 'index'])->name('index');
+            Route::get('/{id}', [App\Http\Controllers\PmPrintController::class, 'show'])->name('show');
+        });
 
         Route::get('/', [App\Http\Controllers\PmReportController::class, 'index'])->name('index');
         Route::get('/create', [App\Http\Controllers\PmReportController::class, 'create'])->name('create');

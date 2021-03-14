@@ -150,7 +150,7 @@ class PmReport extends Component
         
             //INITIALIZE EDIT DATA EXPERT REPORT
             foreach ($this->expertReports as $expertReport) {
-                $this->experts[] = ['expert_id' => $expertReport->pivot->expert_id, 'expert_company' => $expertReport->expert_company, 'expert_nip' => $expertReport->nip];
+                $this->experts[] = ['expert_id' => $expertReport->pivot->expert_id, 'expert_company' => $expertReport->expert_company, 'expert_nip' => $expertReport->nip, 'expert_role' => $expertReport->pivot->role];
             }
 
             //INITALIZE EDIT DATA PM BODY
@@ -269,7 +269,7 @@ class PmReport extends Component
 
             //expert mount
             $this->experts = [
-                ['expert_id' => '', 'expert_company' => '', 'expert_nip' => '']
+                ['expert_id' => '', 'expert_company' => '', 'expert_nip' => '', 'expert_role' => '']
             ];
             
             //recomendation mount
@@ -310,7 +310,7 @@ class PmReport extends Component
     // EXXPERT METHOD
     public function addExpert()
     {
-        $this->experts[] = ['expert_id' => '', 'expert_company' => '', 'expert_nip' => ''];
+        $this->experts[] = ['expert_id' => '', 'expert_company' => '', 'expert_nip' => '', 'expert_role' => ''];
     }
     
     public function removeExpert($index)
@@ -327,7 +327,7 @@ class PmReport extends Component
 
     public function addManualExpert ()
     {
-        $this->manualExperts[] = ['expert_name' => '', 'expert_company' => '', 'expert_nip' => ''];
+        $this->manualExperts[] = ['expert_name' => '', 'expert_company' => '', 'expert_nip' => '', 'expert_role' => ''];
     }
 
     public function removeManualExpert($index)
@@ -450,8 +450,21 @@ class PmReport extends Component
                     'site_id' => 'required',
                     'report_date_start' => 'required',
                     'report_date_end' => 'required',
-                    'experts.0.expert_id' => 'required',
                 ]));
+                foreach ($this->experts as $index => $expert){
+                    $this->validate([
+                        'experts.'.$index.'.expert_id' => 'required',
+                        'experts.'.$index.'.expert_role' => 'required',
+                    ]);
+                };
+                foreach ($this->manualExperts as $index => $manualExpert){
+                    $this->validate([
+                        'manualExperts.'.$index.'.expert_name' => 'required',
+                        'manualExperts.'.$index.'.expert_company' => 'required',
+                        'manualExperts.'.$index.'.expert_nip' => 'required',
+                        'manualExperts.'.$index.'.expert_role' => 'required',
+                    ]);
+                };
                 break;
 
             case 2:

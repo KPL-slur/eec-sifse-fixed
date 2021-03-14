@@ -13,6 +13,7 @@
                             <th>Name</th>
                             <th>Company</th>
                             <th>Nip</th>
+                            <th>Role</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -20,8 +21,8 @@
                         @foreach ($experts as $index => $expert)
                             <tr>
                                 <td>
-                                    <div class='@error(' experts.0.expert_id') label-floating has-danger @enderror'>
-                                        @error('experts.0.expert_id')
+                                    <div class='@error(' experts.'.$index.'.expert_id') label-floating has-danger @enderror'>
+                                        @error('experts.'.$index.'.expert_id')
                                             <label class="control-label force-has-danger">{{ $message }}</label>
                                             <span class="material-icons form-control-feedback">clear</span>
                                         @enderror
@@ -58,10 +59,9 @@
                                             </option>
                                         @endforeach
                                     </select> --}}
-                                    <input class="form-control " wire:model="experts.{{ $index }}.expert_company" 
+                                    <input class="form-control "
                                             disabled type="text"
-                                            name="experts[{{ $index }}][expert_company]" 
-                                            placeholder="{{ ($selectedExpert[$index]->expert_company) ?? ''}}" 
+                                            name="experts[{{ $index }}][expert_company]"  
                                             wire:model="experts.{{ $index }}.expert_company"
                                             {{-- value="{{ ($selectedExpert[$index]->expert_company) ?? '' }}"  --}}
                                     />
@@ -76,13 +76,25 @@
                                             </option>
                                         @endforeach
                                     </select> --}}
-                                    <input class="form-control " wire:model="experts.{{ $index }}.expert_nip" 
+                                    <input class="form-control "
                                             disabled type="text"
                                             name="experts[{{ $index }}][expert_nip]" 
-                                            placeholder="{{ ($selectedExpert[$index]->nip) ?? ''}}" 
                                             wire:model="experts.{{ $index }}.expert_nip"
                                             {{-- value="{{ ($selectedExpert[$index]->nip) ?? '' }}"  --}}
                                     />
+                                </td>
+                                <td>
+                                    <div class="@error('experts.'.$index.'.expert_role') label-floating has-danger @enderror">
+                                        @error('experts.'.$index.'.expert_role')
+                                            <label class="control-label force-has-danger">{{ $message }}</label>
+                                            <span class="material-icons form-control-feedback">clear</span>
+                                        @enderror
+                                        <input class="form-control"
+                                                type="text"
+                                                name="experts[{{ $index }}][expert_role]" 
+                                                wire:model.defer="experts.{{ $index }}.expert_role" 
+                                        />
+                                    </div>
                                 </td>
                                 <td>
                                     <a href="#" wire:click.prevent="selectItem({{ $index }}, 'expert')">Delete</a>
@@ -93,17 +105,48 @@
                         @foreach ($manualExperts as $index => $manualExpert)
                             <tr>
                                 <td>
-                                    <input type="text" class="form-control" name="manualExperts[{{ $index }}][expert_name]"
-                                        wire:model.defer="manualExperts.{{ $index }}.expert_name">
+                                    <div class="@error('manualExperts.'.$index.'.expert_name') label-floating has-danger @enderror">
+                                        @error('manualExperts.'.$index.'.expert_name')
+                                            <label class="control-label force-has-danger">{{ $message }}</label>
+                                            <span class="material-icons form-control-feedback">clear</span>
+                                        @enderror
+                                        <input type="text" class="form-control" name="manualExperts[{{ $index }}][expert_name]"
+                                            wire:model.defer="manualExperts.{{ $index }}.expert_name">
+                                    </div>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control"
-                                        name="manualExperts[{{ $index }}][expert_company]"
-                                        wire:model.defer="manualExperts.{{ $index }}.expert_company">
+                                    <div class="@error('manualExperts.'.$index.'.expert_company') label-floating has-danger @enderror">
+                                        @error('manualExperts.'.$index.'.expert_company')
+                                            <label class="control-label force-has-danger">{{ $message }}</label>
+                                            <span class="material-icons form-control-feedback">clear</span>
+                                        @enderror
+                                        <input type="text" class="form-control"
+                                            name="manualExperts[{{ $index }}][expert_company]"
+                                            wire:model.defer="manualExperts.{{ $index }}.expert_company">
+                                    </div>
                                 </td>
                                 <td>
-                                    <input type="number" class="form-control" name="manualExperts[{{ $index }}][expert_nip]"
-                                        wire:model.defer="manualExperts.{{ $index }}.expert_nip">
+                                    <div class="@error('manualExperts.'.$index.'.expert_nip') label-floating has-danger @enderror">
+                                        @error('manualExperts.'.$index.'.expert_nip')
+                                            <label class="control-label force-has-danger">{{ $message }}</label>
+                                            <span class="material-icons form-control-feedback">clear</span>
+                                        @enderror
+                                        <input type="number" class="form-control" name="manualExperts[{{ $index }}][expert_nip]"
+                                            wire:model.defer="manualExperts.{{ $index }}.expert_nip">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="@error('manualExperts.'.$index.'.expert_role') label-floating has-danger @enderror">
+                                        @error('manualExperts.'.$index.'.expert_role')
+                                            <label class="control-label force-has-danger">{{ $message }}</label>
+                                            <span class="material-icons form-control-feedback">clear</span>
+                                        @enderror
+                                        <input class="form-control"
+                                                type="text"
+                                                name="manualExperts[{{ $index }}][expert_role]" 
+                                                wire:model.defer="manualExperts.{{ $index }}.expert_role" 
+                                            />
+                                    </div>
                                 </td>
                                 <td>
                                     <a href="#" wire:click.prevent="selectItem({{ $index }}, 'manualExpert')">Delete</a>
