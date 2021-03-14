@@ -56,6 +56,7 @@
                                                 <th>Name</th>
                                                 <th>Company</th>
                                                 <th>Nip</th>
+                                                <th>Role</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -64,6 +65,7 @@
                                                     <td>{{ $expert->name }}</td>
                                                     <td>{{ $expert->expert_company }}</td>
                                                     <td>{{ $expert->nip }}</td>
+                                                    <td>{{ $expert->pivot->role }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -160,9 +162,9 @@
                                             ['namaKolom'=>'2_0us'])
 
                                             @include('expert.report.layout.report-row', ['namaKolom'=>'forward_power',
-                                            'satuan'=>'mBm'])
+                                            'satuan'=>'dBm'])
                                             @include('expert.report.layout.report-row', ['namaKolom'=>'reverse_power',
-                                            'satuan'=>'mBm'])
+                                            'satuan'=>'dBm'])
                                             @include('expert.report.layout.report-row', ['namaKolom'=>'vswr',
                                             'satuan'=>':1'])
                                         </tbody>

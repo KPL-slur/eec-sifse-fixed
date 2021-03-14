@@ -73,7 +73,7 @@
                                             </strong>
                                         </td>
                                         <td>
-                                            <table class="nested-table">
+                                            <table class="nested-table table-borderless">
                                                 <td>{{ $expert->name }}</td>
                                                 <td class="text-right">{{ $expert->expert_company }}</td>
                                             </table>
@@ -82,7 +82,7 @@
                                 @else
                                     <tr>
                                         <td>
-                                            <table class="nested-table">
+                                            <table class="nested-table table-borderless">
                                                 <td>{{ $expert->name }}</td>
                                                 <td class="text-right">{{ $expert->expert_company }}</td>
                                             </table>
@@ -309,7 +309,10 @@
                                             {{ $expert->name }}<br>
                                             {{ $expert->nip }}
                                         </td>
-                                        <td>{{ $expert->expert_company }}</td>
+                                        <td>
+                                            {{ $expert->pivot->role }}<br>
+                                            {{ $expert->expert_company }}
+                                        </td>
                                         <td>&nbsp;</td>
                                     </tr>
                                 @endforeach
@@ -318,7 +321,7 @@
                             <div class="m-center text-center">
                                 <p>
                                     Mengetahui,<br>
-                                    Kepala Statsiun Meteorologi {{ $headReport->site->site_id }}
+                                    Kepala Statsiun Meteorologi {{ $headReport->site->station_id }}
                                 </p>
                                 <div>&nbsp;</div>
                                 <p>

@@ -85,6 +85,11 @@
     border-right: 0;
 }
 
+.table-borderless th,
+.table-borderless td {
+    border: 0 !important;
+}
+
 .text-right {
     text-align: right;
 }
