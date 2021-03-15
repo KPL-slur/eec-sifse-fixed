@@ -30,7 +30,7 @@
                                         <tbody>
                                             <tr>
                                                 <td>File Name</td>
-                                                <td>{{ $headReport->printedReports->file }}</td>
+                                                <td>{{ $fileName }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Action</td>
