@@ -206,13 +206,15 @@ class PmReportController extends Controller
         $headReport = HeadReport::Where('head_id', $id)->first();
         abort_unless($headReport, 404, 'Report not found');
 
-        $pmBodyReport = HeadReport::Where('head_id', $id)->first()->pmBodyReport;
+        $pmBodyReport = $headReport->pmBodyReport;
         abort_unless($pmBodyReport, 404, 'Report not found');
 
-        $recommendations = HeadReport::Where('head_id', $id)->first()->recommendations;
-        $reportImages = HeadReport::Where('head_id', $id)->first()->reportImages;
+        $recommendations = $headReport->recommendations;
+        $reportImages = $headReport->reportImages;
 
-        return view('expert.report.pm.show', compact('pmBodyReport', 'headReport', 'recommendations', 'reportImages'));
+        $fileName = explode("/", $headReport->printedReports->file)[1]; // return "namafile.pdf" without "pm/"
+
+        return view('expert.report.pm.show', compact('pmBodyReport', 'headReport', 'recommendations', 'reportImages', 'fileName'));
     }
 
     /**
