@@ -8,11 +8,12 @@
                     <h4 class="card-title">{{ __('Weather Radar Service Report') }}</h4>
                 </div>
                 <div class="card-body ">
-                    {{-- <div class="sticky-top"> --}}
+                    <div class="d-flex">
                         <a type="button" class="btn btn-info" href="{{ route('expert') }}">BACK</a>
                         <a type="button" class="btn btn-primary"
                             href="{{ route($maintenance_type.".create") }}">ADD NEW</a>
-                    {{-- </div> --}}
+                        <a type="button" class="btn btn-secondary ml-auto" href="{{ route('pm.trash.index') }}">Trash</a>
+                    </div>
                     
                     <div class="row">
                         <div class="col table-responsive">
@@ -116,7 +117,7 @@
             <x-slot name="body">
                 <P>Silahkan masukan nama dan nip dari kepala statsiun untuk diisikan pada kolom tanda tangan</P>
                 <br>
-                <form action="{{ route("pm.print.show", ["id" => $hr->head_id]) }}" method="GET">
+                <form action="{{ route("pm.pdf.print", ["id" => $hr->head_id]) }}" method="GET">
                 <div class="form-group">
                     <label for="kasatName">Nama Kepala Statsiun</label>
                     <input class="form-control" type="text" name="kasatName" id="kasatName" placeholder="Nama Kepala Statsiun">

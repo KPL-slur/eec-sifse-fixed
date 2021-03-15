@@ -12,12 +12,46 @@
                         <a type="button" class="btn btn-info"
                             href="{{ route("$headReport->maintenance_type.index") }}">BACK</a>
                         <button type="button" rel="tooltip" class="btn btn-primary" data-toggle="modal" data-target="#modalPrint">
-                            PRINT</button>
+                            GENERATE PDF</button>
                         <a type="button" class="btn btn-warning" href="{{ route('pm.edit', ['id' => $headReport->head_id]) }}">EDIT</a>
                         <button type="submit" rel="tooltip" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete">
                             DELETE</button>
                     {{-- </div> --}}
 
+                    <div class="card ">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title">Scanned Hard File</h4>
+                        </div>
+                        <div class="card-body ">
+                            @if ($headReport->printedReports)
+                            <div class="row">
+                                <div class="col table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td>File Name</td>
+                                                <td>{{ $fileName }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Action</td>
+                                                <td>
+                                                    <a type="button" href="{{ route('pm.pdf.download', ['id' => $headReport->head_id]) }}" class="btn btn-success">Download</a>
+                                                    <a type="button" href="{{ route('pm.pdf.show', ['id' => $headReport->head_id]) }}" target="_blank" class="btn btn-info">View</a>
+                                                    <button type="button" rel="tooltip" class="btn btn-warning" data-toggle="modal" data-target="#modalUpload">Change File</button>
+                                                    <button type="button" rel="tooltip" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteUpload">Remove File</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            @else
+                            <button type="button" rel="tooltip" class="btn btn-default" data-toggle="modal" data-target="#modalUpload">
+                                UPLOAD</button>
+                            @endif
+                        </div>
+                    </div>
+                    <div>
                     <div class="card ">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title">{{ $headReport->site->radar_name }}</h4>
@@ -332,6 +366,20 @@
         </x-slot>
     </x-ui.modal-confirm>
 
+    <x-ui.modal-confirm id="modalDeleteUpload">
+        <x-slot name="body">
+            <p>Are You Sure Want To Remove This File?</p>
+        </x-slot>
+        <x-slot name="footer">
+            <form action="{{ route("pm.pdf.delete", ["id" => $headReport->head_id]) }}" method="POST">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                @csrf
+                @method('delete')
+                <button type="submit" class="btn btn-secondary">Yes</button>
+            </form>
+        </x-slot>
+    </x-ui.modal-confirm>
+
     <x-ui.modal-confirm id="modalPrint">
         <x-slot name="title">
             Print PM REPORT to PDF
@@ -339,7 +387,7 @@
         <x-slot name="body">
             <P>Silahkan masukan nama dan nip dari kepala statsiun untuk diisikan pada kolom tanda tangan</P>
             <br>
-            <form action="{{ route("pm.print.show", ["id" => $headReport->head_id]) }}" method="GET">
+            <form action="{{ route("pm.pdf.print", ["id" => $headReport->head_id]) }}" method="GET">
             <div class="form-group">
                 <label for="kasatName">Nama Kepala Statsiun</label>
                 <input class="form-control" type="text" name="kasatName" id="kasatName" placeholder="Nama Kepala Statsiun">
@@ -350,11 +398,58 @@
             </div>
         </x-slot>
         <x-slot name="footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
             <button class="btn btn-success" type="submit">Print</button>
         </form>
         </x-slot>
     </x-ui.modal-confirm>
 
+    <x-ui.modal-confirm id="modalUpload">
+        <x-slot name="title">
+            Upload PM REPORT to PDF
+        </x-slot>
+        <x-slot name="body">
+            <form action="{{ route("pm.pdf.store", ["id" => $headReport->head_id]) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="container">
+                    <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                        <div class="">
+                            <span class="btn btn-raised btn-round btn-default btn-file">
+                                <input type="file" name="uploadedPdf" class="fileinput-new"/>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+        </x-slot>
+        <x-slot name="footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-success" type="submit">Upload</button>
+        </form>
+        </x-slot>
+    </x-ui.modal-confirm>
+
+    @if (session('upload_success'))
+        <script>
+            window.onload = () => {
+                showNotification('top', 'right', 'success', "<?php echo session('upload_success'); ?>");
+            };
+        </script>
+    @endif
+    @if (session('delete_success'))
+        <script>
+            window.onload = () => {
+                showNotification('top', 'right', 'danger', "<?php echo session('delete_success'); ?>");
+            };
+        </script>
+    @endif
+
+    @error('uploadedPdf')
+        <script>
+            window.onload = () => {
+                showNotification('top', 'right', 'danger', "<?php echo $message; ?>");
+            };
+        </script>
+    @enderror
     @error('kasatNip')
         <script>
             window.onload = () => {

@@ -39,9 +39,12 @@ Route::group(['middleware' => 'auth', 'prefix' => 'expert'], function () {
             Route::post('/{id}', [App\Http\Controllers\PmTrashController::class, 'restore'])->name('restore');
             Route::delete('/{id}', [App\Http\Controllers\PmTrashController::class, 'permDelete'])->name('perm_delete');
         });
-        Route::group(['prefix' => 'print', 'as' => 'print.'], function () {
-            Route::get('/', [App\Http\Controllers\PmPrintController::class, 'index'])->name('index');
-            Route::get('/{id}', [App\Http\Controllers\PmPrintController::class, 'show'])->name('show');
+        Route::group(['prefix' => 'pdf', 'as' => 'pdf.'], function () {
+            Route::get('/{id}/view', [App\Http\Controllers\PmPdfController::class, 'show'])->name('show');
+            Route::get('/{id}/download', [App\Http\Controllers\PmPdfController::class, 'download'])->name('download');
+            Route::get('/{id}', [App\Http\Controllers\PmPdfController::class, 'print'])->name('print');
+            Route::post('/{id}', [App\Http\Controllers\PmPdfController::class, 'store'])->name('store');
+            Route::delete('/{id}', [App\Http\Controllers\PmPdfController::class, 'destroy'])->name('delete');
         });
 
         Route::get('/', [App\Http\Controllers\PmReportController::class, 'index'])->name('index');
