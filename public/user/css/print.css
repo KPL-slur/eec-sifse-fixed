@@ -1,0 +1,112 @@
+/* STYLE FOR HEADER AND FOOTER */
+
+.page-header,
+.page-header-space {
+    height: 180px;
+}
+
+.page-footer,
+.page-footer-space {
+    height: 50px;
+}
+
+.page-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.page-header {
+    position: fixed;
+    top: 0mm;
+    width: 100%;
+}
+
+.page {
+    page-break-after: always;
+}
+
+/* PERSONAL STYLING */
+
+.header td {
+    border-left: 31px solid white;
+    border-right: 32px solid white;
+}
+
+.report {
+    width: 100%;
+    border: 1px solid #000000;
+    border-collapse: collapse;
+    padding: 5px;
+}
+
+.report th {
+    border: 1px solid #000000;
+    padding: 5px;
+}
+
+.report td {
+    border: 1px solid #000000;
+    padding: 5px;
+}
+
+.report.body-report td:nth-child(2),
+.report.body-report td:nth-child(3) {
+    text-align: center;
+}
+
+.nested-table {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+/*
+ *  TABLE INNER BORDER ONLY
+ */
+.nested-table td,
+.nested-table th {
+    border: 1px solid #000000;
+}
+.nested-table tr:first-child td,
+.nested-table tr:first-child th {
+    border-top: 0;
+}
+.nested-table tr td:first-child,
+.nested-table tr th:first-child {
+    border-left: 0;
+}
+.nested-table tr:last-child td,
+.nested-table th:last-child td {
+    border-bottom: 0;
+}
+.nested-table tr td:last-child,
+.nested-table tr th:last-child {
+    border-right: 0;
+}
+
+.table-borderless th,
+.table-borderless td {
+    border: 0 !important;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-left {
+    text-align: left !important;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-tiny {
+    font-size: 10px;
+}
+
+.m-center {
+    display: block;
+    margin: 0 auto;
+}

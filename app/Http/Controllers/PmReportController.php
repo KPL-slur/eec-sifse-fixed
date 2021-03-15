@@ -124,7 +124,8 @@ class PmReportController extends Controller
             if ($expert['expert_id']) {
                 ExpertReport::create([
                     'head_id' => $request->head_id,
-                    'expert_id' => $expert['expert_id']
+                    'expert_id' => $expert['expert_id'],
+                    'role' => $expert['expert_role']
                 ]);
             }
         }
@@ -141,7 +142,8 @@ class PmReportController extends Controller
                     $expertId = Expert::select('expert_id')->orderByDesc('expert_id')->first()->expert_id; //used to determine the expert_id of this report
                     ExpertReport::create([
                         'head_id' => $request->head_id,
-                        'expert_id' => $expertId
+                        'expert_id' => $expertId,
+                        'role' => $manualExpert['expert_role']
                     ]);
                 }
             }
@@ -258,14 +260,16 @@ class PmReportController extends Controller
                     ->where('expert_report_id', $oldExpertReportId[$index])
                     ->update([
                         'head_id' => $request->head_id,
-                        'expert_id' => $expert['expert_id']
+                        'expert_id' => $expert['expert_id'],
+                        'role' => $expert['expert_role']
                     ]);
                 }
                 //jika tidak, buat record baru
                 else{
                     ExpertReport::create([
                         'head_id' => $request->head_id,
-                        'expert_id' => $expert['expert_id']
+                        'expert_id' => $expert['expert_id'],
+                        'role' => $expert['expert_role']
                     ]);
                 }
             }
@@ -283,7 +287,8 @@ class PmReportController extends Controller
                     $expertId = Expert::select('expert_id')->orderByDesc('expert_id')->first()->expert_id; //used to determine the expert_id of this report
                     ExpertReport::create([
                         'head_id' => $request->head_id,
-                        'expert_id' => $expertId
+                        'expert_id' => $expertId,
+                        'role' => $manualExpert['expert_role']
                     ]);
                 }
             }

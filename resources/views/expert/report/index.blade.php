@@ -52,23 +52,26 @@
                                                     href="{{ route($maintenance_type.".show", ['id' => $hr->head_id]) }}">
                                                     <i class="material-icons">visibility</i>
                                                 </a>
+                                                {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPrint">
+                                                    <i class="material-icons">print</i>
+                                                </button> --}}
                                                 <a type="button" rel="tooltip" class="btn btn-warning"
                                                     {{-- href="{{ url('/report/' . $hr->id . '/edit') }}" --}}
                                                     href="{{ route($maintenance_type.".edit", ['id' => $hr->head_id]) }}"
                                                     >
                                                     <i class="material-icons">edit</i>
                                                 </a>
-                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete">
+                                                {{-- <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete">
                                                     <i class="material-icons">close</i>
-                                                </button>
-                                                {{-- <form action="{{ route('pm.delete', ['id' => $hr->head_id]) }}" method="post"
+                                                </button> --}}
+                                                <form action="{{ route('pm.delete', ['id' => $hr->head_id]) }}" method="post"
                                                     class="d-inline">
                                                     @csrf
                                                     @method('delete')
-                                                    <button type="submit" rel="tooltip" class="btn btn-danger">
+                                                    <button type="submit" rel="tooltip" class="btn btn-danger" onclick="return confirm('Apakah yakin ingin menghapus data?')">
                                                         <i class="material-icons">close</i>
                                                     </button>
-                                                </form> --}}
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -90,8 +93,7 @@
         </li>
     </x-ui.btn-float-group>
 
-    @if ($headReports->isNotEmpty())
-        {{-- Modal Delete --}}
+    {{-- @if ($headReports->isNotEmpty())
         <x-ui.modal-confirm id="modalDelete">
             <x-slot name="body">
                 <p>Are You Sure Want To Delete This Rerport?</p>
@@ -106,7 +108,30 @@
                 </form>
             </x-slot>
         </x-ui.modal-confirm>
-    @endif
+
+        <x-ui.modal-confirm id="modalPrint">
+            <x-slot name="title">
+                Print PM REPORT to PDF
+            </x-slot>
+            <x-slot name="body">
+                <P>Silahkan masukan nama dan nip dari kepala statsiun untuk diisikan pada kolom tanda tangan</P>
+                <br>
+                <form action="{{ route("pm.print.show", ["id" => $hr->head_id]) }}" method="GET">
+                <div class="form-group">
+                    <label for="kasatName">Nama Kepala Statsiun</label>
+                    <input class="form-control" type="text" name="kasatName" id="kasatName" placeholder="Nama Kepala Statsiun">
+                </div>
+                <div class="form-group">
+                    <label for="kasatName">Nip Kepala Statsiun</label>
+                    <input class="form-control" type="text" name="kasatNip" id="kasatNip" placeholder="Nip Kepala Statsiun">
+                </div>
+            </x-slot>
+            <x-slot name="footer">
+                <button class="btn btn-success" type="submit">Print</button>
+            </form>
+            </x-slot>
+        </x-ui.modal-confirm>
+    @endif --}}
     
     @if (session('status_success'))
         <script>
@@ -129,5 +154,20 @@
             };
         </script>
     @endif
+    
+    {{-- @error('kasatNip')
+        <script>
+            window.onload = () => {
+                showNotification('top', 'right', 'danger', "Nip Kepala Statsiun Wajib Diisi");
+            };
+        </script>
+    @enderror
+    @error('kasatName')
+        <script>
+            window.onload = () => {
+                showNotification('top', 'right', 'danger', "Nama Kepala Statsiun Wajib Diisi");
+            };
+        </script>
+    @enderror --}}
 
 @endsection
