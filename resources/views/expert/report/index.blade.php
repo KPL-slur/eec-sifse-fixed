@@ -116,7 +116,7 @@
             <x-slot name="body">
                 <P>Silahkan masukan nama dan nip dari kepala statsiun untuk diisikan pada kolom tanda tangan</P>
                 <br>
-                <form action="{{ route("pm.print.show", ["id" => $hr->head_id]) }}" method="GET">
+                <form action="{{ route("pm.pdf.print", ["id" => $hr->head_id]) }}" method="GET">
                 <div class="form-group">
                     <label for="kasatName">Nama Kepala Statsiun</label>
                     <input class="form-control" type="text" name="kasatName" id="kasatName" placeholder="Nama Kepala Statsiun">

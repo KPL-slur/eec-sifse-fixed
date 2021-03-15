@@ -425,9 +425,9 @@ class PmReport extends Component
 
     public function fileUpload($index)
     {
-        $this->image[$index] = $this->attachments[$index]['image']->storePublicly('files', 'public');\
+        $this->image[$index] = $this->attachments[$index]['image']->storePublicly('files', 'public');
         
-        App\Models\ReportImage::create([
+        \App\Models\ReportImage::create([
             'head_id' => $this->headId,
             'image' => $this->image[$index],
             'caption' => $this->attachments[$index]['caption']

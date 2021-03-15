@@ -35,6 +35,10 @@ class HeadReport extends Model
     {
         return $this->hasOne(PmBodyReport::class, 'head_id');
     }
+    public function printedReports()
+    {
+        return $this->hasOne(PrintedReport::class, 'head_id');
+    }
 
     //ONE TO MANY
     public function recommendations()

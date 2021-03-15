@@ -39,9 +39,9 @@ Route::group(['middleware' => 'auth', 'prefix' => 'expert'], function () {
             Route::post('/{id}', [App\Http\Controllers\PmTrashController::class, 'restore'])->name('restore');
             Route::delete('/{id}', [App\Http\Controllers\PmTrashController::class, 'permDelete'])->name('perm_delete');
         });
-        Route::group(['prefix' => 'print', 'as' => 'print.'], function () {
-            Route::get('/', [App\Http\Controllers\PmPrintController::class, 'index'])->name('index');
-            Route::get('/{id}', [App\Http\Controllers\PmPrintController::class, 'show'])->name('show');
+        Route::group(['prefix' => 'pdf', 'as' => 'pdf.'], function () {
+            Route::get('/{id}', [App\Http\Controllers\PmPdfController::class, 'print'])->name('print');
+            Route::post('/{id}', [App\Http\Controllers\PmPdfController::class, 'store'])->name('store');
         });
 
         Route::get('/', [App\Http\Controllers\PmReportController::class, 'index'])->name('index');

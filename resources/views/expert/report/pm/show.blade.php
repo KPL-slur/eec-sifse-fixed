@@ -11,6 +11,8 @@
                     {{-- <div class="sticky-top"> --}}
                         <a type="button" class="btn btn-info"
                             href="{{ route("$headReport->maintenance_type.index") }}">BACK</a>
+                        <button type="button" rel="tooltip" class="btn btn-default" data-toggle="modal" data-target="#modalUpload">
+                            UPLOAD</button>
                         <button type="button" rel="tooltip" class="btn btn-primary" data-toggle="modal" data-target="#modalPrint">
                             PRINT</button>
                         <a type="button" class="btn btn-warning" href="{{ route('pm.edit', ['id' => $headReport->head_id]) }}">EDIT</a>
@@ -339,7 +341,7 @@
         <x-slot name="body">
             <P>Silahkan masukan nama dan nip dari kepala statsiun untuk diisikan pada kolom tanda tangan</P>
             <br>
-            <form action="{{ route("pm.print.show", ["id" => $headReport->head_id]) }}" method="GET">
+            <form action="{{ route("pm.pdf.print", ["id" => $headReport->head_id]) }}" method="GET">
             <div class="form-group">
                 <label for="kasatName">Nama Kepala Statsiun</label>
                 <input class="form-control" type="text" name="kasatName" id="kasatName" placeholder="Nama Kepala Statsiun">
@@ -350,11 +352,51 @@
             </div>
         </x-slot>
         <x-slot name="footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
             <button class="btn btn-success" type="submit">Print</button>
         </form>
         </x-slot>
     </x-ui.modal-confirm>
 
+    <x-ui.modal-confirm id="modalUpload">
+        <x-slot name="title">
+            Upload PM REPORT to PDF
+        </x-slot>
+        <x-slot name="body">
+            <form action="{{ route("pm.pdf.store", ["id" => $headReport->head_id]) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="row">
+                    <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                        <div class="">
+                            <span class="btn btn-raised btn-round btn-default btn-file">
+                                <input type="file" name="uploadedPdf" class="fileinput-new"/>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+        </x-slot>
+        <x-slot name="footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-success" type="submit">Upload</button>
+        </form>
+        </x-slot>
+    </x-ui.modal-confirm>
+
+    @if (session('upload_success'))
+        <script>
+            window.onload = () => {
+                showNotification('top', 'right', 'success', "<?php echo session('upload_success'); ?>");
+            };
+        </script>
+    @endif
+
+    @error('uploadedPdf')
+        <script>
+            window.onload = () => {
+                showNotification('top', 'right', 'danger', "<?php echo $message; ?>");
+            };
+        </script>
+    @enderror
     @error('kasatNip')
         <script>
             window.onload = () => {
