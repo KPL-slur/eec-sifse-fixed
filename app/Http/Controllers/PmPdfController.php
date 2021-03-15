@@ -18,6 +18,8 @@ class PmPdfController extends Controller
             'kasatNip' => 'required',
         ]);
 
+        $headReport = HeadReport::Where('head_id', $id)->first();
+
         $kasat = ['name' => $request->kasatName, 'nip' => $request->kasatNip];
         abort_unless($headReport, 404, 'Report not found');
 
@@ -59,5 +61,35 @@ class PmPdfController extends Controller
     
             return back()->with('upload_success', 'File has been uploaded.');
         }
+    }
+
+    /**
+     * 
+     */
+    public function show($id)
+    {
+        $filePath = HeadReport::Where('head_id', $id)->first()->printedReports->file; // pm/nama_file.pdf
+        return response()->file(('storage/'.$filePath));
+    }
+    
+    /**
+     * 
+     */
+    public function download($id)
+    {
+        $filePath = HeadReport::Where('head_id', $id)->first()->printedReports->file; // pm/nama_file.pdf
+        return response()->download(('storage/'.$filePath));
+    }
+
+    /**
+     * 
+     */
+    public function destroy($id) {
+        $headReport = HeadReport::Where('head_id', $id)->first();
+
+        \Storage::delete('public/'.$headReport->printedReports->file);
+        $headReport->printedReports()->delete();
+
+        return back()->with('delete_success', 'File has been deleted.');
     }
 }
