@@ -8,11 +8,12 @@
                     <h4 class="card-title">{{ __('Weather Radar Service Report') }}</h4>
                 </div>
                 <div class="card-body ">
-                    {{-- <div class="sticky-top"> --}}
+                    <div class="d-flex">
                         <a type="button" class="btn btn-info" href="{{ route('expert') }}">BACK</a>
                         <a type="button" class="btn btn-primary"
                             href="{{ route($maintenance_type.".create") }}">ADD NEW</a>
-                    {{-- </div> --}}
+                        <a type="button" class="btn btn-secondary ml-auto" href="{{ route('pm.trash.index') }}">Trash</a>
+                    </div>
                     
                     <div class="row">
                         <div class="col table-responsive">
