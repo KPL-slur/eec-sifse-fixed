@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Expert;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreUserRequest;
 use Illuminate\Support\Facades\DB;
@@ -19,27 +20,25 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::where('is_admin', '!=', 1)
+        $users = User::where('is_admin', '!=', 1)
         ->orWhere('is_admin', '=', null)
         ->get();
-        return view('users.index', compact('user'));
+
+        $experts = Expert::where('expert_company', 'Era Elektra Corpora Indonesia')
+        ->get();
+        // dd($expert);
+
+        return view('users.index', compact('users', 'experts'));
     }
      
     public function addData(StoreUserRequest $request){
-
-        // $request->validate([
-        //     'name'=>'required',
-        //     'email'=>'required',
-        //     'password'=>'required',
-        // ]);
-        
-        // return $request->input();
 
         $users = new User;
         $users->name = $request->name;
         $users->email = $request->email;
         $users->password = bcrypt($request->password);
         $users->save();
+        
         $validated = $request->validated();
         // User::create($request->validated());
 

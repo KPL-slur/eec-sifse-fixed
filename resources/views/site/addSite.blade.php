@@ -18,7 +18,7 @@
           </div>
           <div class="card-body text-center">
             <div class="table-responsive">
-              {{$errors}}
+              {{-- {{$errors}} --}}
               <form method="POST" action="/add" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group-site">
@@ -44,6 +44,10 @@
                   @enderror
 
                 </div>
+
+                <div class="form-group-site">
+                  @livewire('inventory-site', ['stocks' => $stocks])
+                </div>
                 
                 <div class="form-group-site">
                   <label for="inputSite">Tambahkan Foto</label>
@@ -61,27 +65,6 @@
                             
                         </span>
                         
-                        {{--js image validation--}}
-                        {{-- <script type="text/javascript">
-                          function validateImage() {
-                              var formData = new FormData();
-                              var file = document.getElementById("image").files[0];
-                              formData.append("Filedata", file);
-                              var t = file.type.split('/').pop().toLowerCase();
-                              if (t != "jpeg" && t != "jpg" && t != "png") {
-                                  alert('Please select a valid image file');
-                                  document.getElementById("image").value = '';
-                                  return false;
-                              }
-                              if (file.size > 1024000) {
-                                  alert('Max Upload size is 1MB only');
-                                  document.getElementById("image").value = '';
-                                  return false;
-                              }
-                              return true;
-                          }
-                          </script> --}}
-
                         <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
                     </div>
                   </div>

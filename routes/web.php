@@ -128,8 +128,9 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
 
     //site
     Route::get('site', [App\Http\Controllers\SiteController::class, 'index'])->name('site');
-    Route::get('addSite', [App\Http\Controllers\SiteController::class, 'add']);
     Route::post('add', [App\Http\Controllers\SiteController::class, 'addData']);
+    Route::get('addSite', [App\Http\Controllers\SiteController::class, 'add']);
+    Route::delete('deleteSite/{id}', [App\Http\Controllers\SiteController::class, 'destroySite']);
     //inventory site
     Route::get('inventory/{id}', [App\Http\Controllers\SiteController::class, 'show']);
     Route::get('addInventorySite/{id}', [App\Http\Controllers\SiteController::class, 'addInventorySite']);
@@ -141,10 +142,11 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
 
     //expertActivity
     Route::get('expertActivity', [App\Http\Controllers\ExpertActivityController::class, 'index'])->name('expertActivity'); 
+    Route::get('showPm/{id}', [App\Http\Controllers\ExpertActivityController::class, 'showPm']); 
     Route::get('pm', [App\Http\Controllers\ExpertActivityController::class, 'indexPM']); 
     Route::get('addPm', [App\Http\Controllers\ExpertActivityController::class, 'add']); 
     Route::post('addPM', [App\Http\Controllers\ExpertActivityController::class, 'addData']); 
-    Route::delete('deletePm/{id}', [App\Http\Controllers\ExpertActivityController::class, 'deleteData']);
+    Route::delete('deletePm/{id}', [App\Http\Controllers\ExpertActivityController::class, 'destroyPm']);
     Route::get('editPm/{id}', [App\Http\Controllers\ExpertActivityController::class, 'editPm']);
     Route::post('editPM', [App\Http\Controllers\ExpertActivityController::class, 'editDataPm']);
 
