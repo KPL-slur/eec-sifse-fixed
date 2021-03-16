@@ -48,6 +48,9 @@ class DistributionController extends Controller
         //dd($distributions);
 
         $experts = DB::table('experts')
+        // ->leftJoin('distributions', 'experts.expert_id', '=', 'distributions.expert_id')
+        ->where('expert_company', '=', 'Era Elektra Corpora Indonesia')
+        // ->whereNull('site_id')
         ->get();
         //dd($experts);
 
@@ -63,11 +66,8 @@ class DistributionController extends Controller
     public function editData(StoreDistributionRequest $request){
         $distributions = DB::table('distributions')
         ->where('site_id', '=', $request->site_id)
-        ->update($request->validated()(
-            [
-            'expert_id' => $request->expert_id
-        ])
-    );
+        ->update($request->validated());
+        
         return redirect('viewDistribution/'.$request->site_id)->with('status2', 'Data Updated!');
     }
 
@@ -80,16 +80,16 @@ class DistributionController extends Controller
 
     public function add($id){
         $experts = DB::table('experts')
+        ->leftJoin('distributions', 'experts.expert_id', '=', 'distributions.expert_id')
+        ->where('expert_company', '=', 'Era Elektra Corpora Indonesia')
+        ->whereNull('site_id')
         ->get();
+        // dd($experts);
 
         $sites = DB::table('sites')
         ->where('site_id', '=', $id)
         ->get();
-        // dd($sites);
-        //->leftJoin('sites', 'sites.site_id', '=', 'distributions.site_id')
-        //->whereNull('expert_id')
-        //->get();
-        // dd($sites);
+
         return view('distribution.add', compact('experts', 'sites'));
     }
 

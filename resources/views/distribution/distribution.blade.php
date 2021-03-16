@@ -30,10 +30,10 @@
                         <td>{{$st->radar_name}}</td>
                         <td>{{$st->station_id}}</td>
                         <td class="td-actions text-center">
-                              <a rel="tooltip" class="btn btn-success" href="viewDistribution/{{$st->site_id}}">
-                                <i class="material-icons">visibility</i>
-                                <div class="ripple-container"></div>
-                              </a>
+                          <a rel="tooltip" class="btn btn-info" href="viewDistribution/{{$st->site_id}}">
+                            <i class="material-icons">visibility</i>
+                            <div class="ripple-container"></div>
+                          </a>
                         </td>
                       </tr>
                     @endforeach
