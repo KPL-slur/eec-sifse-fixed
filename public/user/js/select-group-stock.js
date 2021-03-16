@@ -1,36 +1,37 @@
 function selectGroupIndexStocks(){
-    var input, header, table, tr, td, i;
-    // dropdown name
-    input = document.getElementById("selectGroupStock").value;
-    // dynamic header
-    header = document.getElementById("groupStocksCardHeader");
-    // table id
-    table = document.getElementById("indexStocksTable");
-    // import row
-    tr = table.getElementsByTagName("tr");
-    // mulai dari 1 karena tr yg pertama tuh cuma no, namabarang dll
-    for (i = 1; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("input")[0].value;
-      if (td){
-        if (input == td || input == ""){
-          tr[i].style.display = "";
-            if (input == ""){
-              header.innerHTML = "Semua"
-            } else if(input == 1){
-              header.innerHTML = "Transmitter";
-            } else if (input == 2){
-              header.innerHTML = "Receiver"
-            } else if ( input == 3){
-              header.innerHTML = "Antenna"
-            } else if (input == 0){
-              header.innerHTML = "Tambahan"
-            }
-        } else {
-          tr[i].style.display = "none";
-        }
-      } 
-    }
+
+  var input, header, table, tr, td, i;
+  // dropdown name
+  input = document.getElementById("selectGroupStock").value;
+  // dynamic header
+  header = document.getElementById("groupStocksCardHeader");
+  // table id
+  table = document.getElementById("indexStocksTable");
+  // import row
+  tr = table.getElementsByTagName("tr");
+  // mulai dari 1 karena tr yg pertama tuh cuma no, namabarang dll
+  for (i = 1; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("input")[0].value;
+    if (td){
+      if (input == td || input == ""){
+        tr[i].style.display = "";
+          if (input == ""){
+            header.innerHTML = "Semua"
+          } else if(input == 1){
+            header.innerHTML = "Transmitter";
+          } else if (input == 2){
+            header.innerHTML = "Receiver"
+          } else if ( input == 3){
+            header.innerHTML = "Antenna"
+          } else if (input == 0){
+            header.innerHTML = "Tambahan"
+          }
+      } else {
+        tr[i].style.display = "none";
+      }
+    } 
   }
+}
 
   // for recommendation inside stocks
   // select by year

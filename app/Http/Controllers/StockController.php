@@ -21,12 +21,22 @@ class StockController extends Controller
      */
     public function index(ExchangeRate $ex_rate)
     {
-        $stocks = Stock::get();
+        $stocks = Stock::all();
 
         // $rate_fix = $ex_rate->apiCall();
         $rate_fix = 1000;
 
-        return view('stocks_currencies.index', compact('stocks', 'rate_fix'));
+        // BUAT GROUP DARI STOCKS YANG SELECT NYA
+        $stocks_group = []; //inisiasi empty array stocks_group
+
+        $stocks_group_db = DB::table('stocks')->pluck('group'); //buat ngambil semua isi column group
+        foreach($stocks_group_db as $sgb){
+            if(!in_array($sgb, $stocks_group)){
+                array_push($stocks_group, $sgb);
+            }
+        }
+        
+        return view('stocks_currencies.index', compact('stocks', 'rate_fix', 'stocks_group'));
     }
 
     /**

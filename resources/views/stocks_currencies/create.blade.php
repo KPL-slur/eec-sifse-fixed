@@ -50,6 +50,7 @@
                     <option value="2" {{ old('group') == 2 ? 'selected' : '' }}>Receiver</option>
                     <option value="3" {{ old('group') == 3 ? 'selected' : '' }}>Antenna</option>
                   </select> --}}
+                  <br>
                   <select name="group" id="group" class="form-control @error('group') is-invalid @enderror">
                     <option value="" {{ old('group') == '' ? 'selected' : '' }} >-- Pilih jenis barang --</option>
                     @foreach ($stocks_group as $sg)
