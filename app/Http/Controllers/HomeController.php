@@ -2,6 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Stock;
+use App\Models\Recommendation;
+use App\Models\PmBodyReport;
+use App\Models\CmBodyReport;
+use App\Models\HeadReport;
+
 class HomeController extends Controller
 {
     /**
@@ -22,6 +28,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        $pm = PmBodyReport::all();
+
+        $cm = CmBodyReport::all();
+
+
+        return view('dashboard', compact('pm', 'cm'));
     }
 }

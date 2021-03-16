@@ -153,7 +153,7 @@
 
               {{-- card body kedua --}}
               <div class="card-body">
-                <div class="table-responsive">
+                <div class="table-responsive-lg">
                   <table class="table" id="indexStocksTable">
                     <thead class=" text-primary text-middle">
                       <th>No</th>
