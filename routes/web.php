@@ -56,6 +56,12 @@ Route::group(['middleware' => 'auth', 'prefix' => 'expert'], function () {
         Route::delete('/{id}', [App\Http\Controllers\PmReportController::class, 'destroy'])->name('delete');
     });
 
+    Route::group(['prefix' => 'cm', 'as' => 'cm.'], function () {
+        Route::get('/', [App\Http\Controllers\CmReportController::class, 'index'])->name('index');
+        Route::get('/create', [App\Http\Controllers\CmReportController::class, 'create'])->name('create');
+        Route::post('/', [App\Http\Controllers\CmReportController::class, 'store'])->name('store');
+    });
+
     // Route::get('report/pm/create/{headId}', ['App\Http\Controllers\PmBodyReportsController', 'create'])->name('pm.custom.create'); //custom create routing
     // Route::get('report/pm/{pmBodyReport}/{headId}/edit', ['App\Http\Controllers\PmBodyReportsController', 'edit'])->name('pm.custom.edit'); //custom create routing
     // Route::resource('report/pm', 'App\Http\Controllers\PmBodyReportsController', ['except' => ['create', 'edit'], 'parameters' => ['pm' => 'pmBodyReport:head_id',]]);

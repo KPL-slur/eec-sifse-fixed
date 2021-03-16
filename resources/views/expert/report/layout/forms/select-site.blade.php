@@ -15,13 +15,13 @@
                 <label class="control-label force-has-danger">{{ $message }}</label>
                 <span class="material-icons form-control-feedback">clear</span>
             @enderror
-            <select name="site_id" wire:change="setRadarName"
+            <select name="site_id" wire:change="setRecommendation"
                 id="inputsite_id"
                 wire:model="site_id" class="form-control">
                 <option value="">-- choose station --</option>
-                @foreach ($stations as $station)
-                    <option value="{{ $station->site_id }}">
-                        {{ $station->station_id }}
+                @foreach ($sites as $site)
+                    <option value="{{ $site->site_id }}">
+                        {{ $site->station_id }}
                     </option>
                 @endforeach
             </select>
