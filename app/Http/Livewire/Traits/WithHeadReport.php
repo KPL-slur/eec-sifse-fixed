@@ -13,8 +13,11 @@ trait WithHeadReport
     public $sites; // list of all site id
     public $experts = []; // user inputs
     public $expertsData; // list of all experts
-    public $countExpertReportId; // old user inputs count
     public $manualExperts = []; //user inputs
+
+    // variabel untuk edit dynamic expert form
+    public $countExpertReportId; // variabel menampung panjang array expertReportId
+    public $expertReportId = []; // array meanmpung export_report_id yg sudah di extract dari model
 
     public $radar, $site_id, $report_date_start, $report_date_end; //user inputs
 

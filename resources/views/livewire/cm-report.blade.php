@@ -50,7 +50,7 @@
             @switch($modalType)
                 @case('submit')
                     <div>
-                        <button id="submitCmForm" type="submit" wire:click="uploadAll" class="btn btn-success">Yes</button>
+                        <button id="submitCmForm" type="button" wire:click.prevent="upstore" class="btn btn-success">Yes</button>
                     </div>
                     @break
                 @case('delete')
