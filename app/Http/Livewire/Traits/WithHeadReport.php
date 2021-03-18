@@ -169,14 +169,16 @@ trait WithHeadReport
      * update or store value in db, and
      * *set the value of head_id to the lastest record if create new record
      * if it only updating then it wont set a new head_id
+     * 
+     * @param $maintenance_type string (pm|cm)
      */
-    public function upstoreHead()
+    public function upstoreHead($maintenance_type)
     {
         HeadReport::updateOrCreate(
             ['head_id' => $this->head_id],
             [
                 'site_id' => $this->site_id,
-                'maintenance_type' => "cm",
+                'maintenance_type' => $maintenance_type,
                 'report_date_start' => $this->report_date_start,
                 'report_date_end' => $this->report_date_end,
             ]

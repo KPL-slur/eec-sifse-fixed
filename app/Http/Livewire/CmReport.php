@@ -69,7 +69,7 @@ class CmReport extends Component
     {
         $this->upstoreHead();
         //INSERT EXPERTREPORT
-        $this->upstoreExpert();
+        $this->upstoreExpert('cm');
         //INSERT MANUALEXPERTREPORT
         $this->upstoreManualExpert();
         //INSERT CMBODYREPORT
@@ -89,7 +89,7 @@ class CmReport extends Component
         return redirect()->route('cm.index');
     }
 
-    /*
+    /**
      *  Increment the currentStep Variable by one.
      *  at some step, do validation on the given forms.
      *  some step may do some step specific function calls.
