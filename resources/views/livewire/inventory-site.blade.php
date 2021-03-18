@@ -2,16 +2,12 @@
     {{-- Knowing others is intelligence; knowing yourself is true wisdom. --}}
     @csrf
 
-    <table class="table" id="products_table">
-        <thead>
-            <tr>
-                <th>Stock</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="form-group-site" id="products_table">
+        <label>Stock</label>
+        <div class="d-flex">
             @foreach ($sitedStock as $index => $sitedStock)
                 <tr>
-                    <td>
+                    <td style="width: 20%">
                         <select name="stocks[{{ $index }}][stock_id]"
                             wire:model="sitedStock.{{ $index }}.stock_id"
                             class="form-control">
@@ -23,17 +19,15 @@
                                 </option>
                             @endforeach
                         </select>
-                    </td>
-
-                    <td>
-                        <a href="#"
-                            wire:click.prevent="removeStock({{ $index }})">Delete</a>
+                        <a class="d-inline mt-4 ml-1" href="#" 
+                            wire:click.prevent="removeStock({{ $index }})">Delete
+                        </a>
                     </td>
                 </tr>
             @endforeach
 
-        </tbody>
-    </table>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <button class="btn btn-sm btn-secondary" wire:click.prevent="addStock">+ Add Another Product</button>

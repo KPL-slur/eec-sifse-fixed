@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'activity', 'titlePage' => __('Technisians Activity')])
+@extends('layouts.app', ['activePage' => 'activity', 'titlePage' => __('Experts Activity (PM)')])
 
 @section('content')
     <div class="content">
@@ -247,7 +247,7 @@
                                             @foreach ($recommendations as $recommendation)
                                                 <tr>
                                                     <td>{{ $recommendation->nama_barang }}</td>
-                                                    <td>{{ $recommendation->pivot->jumlah_unit_needed }}</td>
+                                                    <td>{{ $recommendation->jumlah_unit_needed }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>

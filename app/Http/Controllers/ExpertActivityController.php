@@ -21,10 +21,6 @@ class ExpertActivityController extends Controller
             $query->where('expert_company', 'Era Elektra Corpora Indonesia');
         }))
         ->get();
-        // ->join('sites', 'head_reports.site_id', '=', 'sites.site_id')
-        // ->where('maintenance_type', 'pm')
-        // ->get();
-        // dd($pm);
         
         return view('Activity.pm_activity.pm_activity', compact('pm'));
     }

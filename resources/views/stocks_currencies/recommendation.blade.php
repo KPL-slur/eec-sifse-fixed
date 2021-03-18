@@ -16,19 +16,23 @@
           {{-- body paling luar --}}
           <div class="card-body">
 
-            <div>
-              <select name="selectYearStock" class="form-control m-3" id="selectYearStock" onchange="selectYearIndexStocks()" style="max-width:15%;">
+            <div class="d-flex ">
+              <a href="{{ url('stock_currency/') }}" class="btn btn-info ml-3 d-inline">Kembali</a>
+              <select name="selectYearStock" class="form-control ml-auto d-inline" id="selectYearStock" style="max-width:15%;">
+                <option selected value="">Semua</option>
+                @foreach ($rcm_year as $rcm)
+                    <option value="{{$rcm}}">{{$rcm}}</option>
+                @endforeach
+              </select>
+              {{-- <select name="selectYearStock" class="form-control ml-auto d-inline" id="selectYearStock" onchange="selectYearIndexStocks()" style="max-width:15%;">
                 <option selected value="">Semua</option>
                 <option value="2020" >2020</option>
                 <option value="2021" >2021</option>
                 <option value="2022" >2022</option>
                 <option value="2023" >2023</option>
-              </select>
+              </select> --}}
             </div>
             
-            <div>
-              <a href="{{ url('stock_currency/') }}" class="btn btn-info ml-3 d-inline">Kembali</a>
-            </div>
 
             {{-- card kedua --}}
             <div class="card m-3 my-5">
@@ -36,12 +40,13 @@
               {{-- header kedua --}}
               <div class="card-header card-header-rose">
                 {{-- <h4 class="card-title">2020 year</h4> --}}
-                <p class="card-category" id="yearStocksCardHeader">Semua</p>
+                <p class="card-category" id="yearRecommendsCardHeader">Semua</p>
               </div>
 
               {{-- card body kedua --}}
               <div class="table-responsive">
-                <table class="table table-striped" >
+                <table class="table table-striped" id="indexRecommendsTable" >
+
                   <thead class=" text-primary text-middle">
                     <tr>
                       <th scope="col">#</th>
@@ -53,9 +58,10 @@
                       {{-- <th scope="col">Stock Quantity</th> --}}
                       <th scope="col">Amount Required</th>
                       {{-- <th scope="col">Status</th> --}}
-                      <th class="text-right">Actions</th>
+                      <th class="text-center">Actions</th>
                     </tr>
                   </thead>
+
                   <tbody>
                     @foreach ($recommendations as $rcm)
                       <tr>
@@ -69,23 +75,27 @@
                         {{-- <td>{{$rcm->jumlah_unit}}</td> --}}
                         <td>{{$rcm->jumlah_unit_needed}}</td>
                         {{-- <td>{{$rcm->status}}</td> --}}
-                        <td class="td-actions text-right">
-                          <a rel="tooltip" class="btn btn-lg btn-warning m-2" href="" type="submit">
+                        <td class="td-actions text-center">
+
+                          <a title="edit" class="btn btn-lg btn-warning m-2" href="" type="submit">
                               <i class="material-icons">edit</i>
                               <div class="ripple-container"></div>
                           </a>
+
                           <form method="POST" action=" " class="d-inline">
                             @csrf
                             @method('delete')
-                            <button class="btn btn-danger" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">
+                            <button class="btn btn-danger" title="delete" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">
                               <i class="material-icons">delete</i>
                               <div class="ripple-container"></div>
                             </button>
                           </form>
+
                         </td>
                       </tr>
                     @endforeach
                   </tbody>
+
                 </table>
               </div>
               {{-- card body kedua --}}
@@ -103,6 +113,47 @@
   {{-- container-fluid --}}
 </div>
 {{-- content --}}
+
+{{-- script for dynamic table from select year --}}
+<script>
+  window.onload = () => {
+    $("#selectYearStock").change(()=>{
+
+      var rcm_years = JSON.parse('<?php echo json_encode($rcm_year)?>');
+      var input, header, table, tr, td, i, j;
+      // dropdown name
+      input = document.getElementById("selectYearStock").value;
+      // dynamic header
+      header = document.getElementById("yearRecommendsCardHeader");
+      // table id
+      table = document.getElementById("indexRecommendsTable");
+      // import row
+      tr = table.getElementsByTagName("tr");
+      // mulai dari 1 karena tr yg pertama tuh cuma no, radarname dll
+      for (i = 1; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("input")[0].value;
+        console.log(td);
+        if (td){
+          // console.log("test");
+          if (input == td || input == ""){
+            tr[i].style.display = "";
+              rcm_years.forEach((year) => {
+                if (input == ""){
+                  header.innerHTML = "Semua";
+                } else if (input == year){
+                  header.innerHTML = year;
+                }
+              });
+          } 
+          else {
+            tr[i].style.display = "none";
+          }
+        } 
+      }
+    });
+  };
+</script>
+
 @endsection
 {{-- @section('content')
     

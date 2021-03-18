@@ -25,17 +25,19 @@
 
               {{-- <div class="card card-row"> --}}
 
-                <div class="card-footer">
+                <div class="card-footer d-flex">
                     <a rel="tooltip" href="inventory/{{$sts->site_id}}" class="btn btn-sm btn-info" >VIEW</a>
+
+                    <form action="/deleteSite/{{$sts->site_id}}" class="" method="POST">
+                      @method('DELETE')
+                      @csrf
+                      <button type="submit" class="btn btn-sm btn-danger m-2" title="delete" onclick="return confirm('Are you sure you want to delete')">
+                        DELETE
+                      </button>
+                    </form>
+                    
                 </div>
   
-                <form action="/deleteSite/{{$sts->site_id}}" class="" method="POST">
-                  @method('DELETE')
-                  @csrf
-                  <button type="submit" class="btn btn-sm btn-danger m-2" title="delete" onclick="return confirm('Are you sure you want to delete')">
-                    DELETE
-                  </button>
-                </form>
 
               {{-- </div> --}}
 
