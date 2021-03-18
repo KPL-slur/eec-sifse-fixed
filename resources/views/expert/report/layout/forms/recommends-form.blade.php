@@ -36,15 +36,6 @@
                                         </option>
                                         @endforeach
                                     </select>
-
-                                    {{-- Jika index masih dalam range count, maka index tersebut pernah diisi pada record sebelumnya.
-                                        Maka dari itu, kita harus mengetahui expert_report_id (primary key) dari record tersebut. --}}
-                                    @if($index < $countRecommendationId)
-                                        {{-- expert_report_id (primary key) dari record sebelumnya, disimpan dan dikirim kedalam
-                                            sebuah input hidden untuk selanjutnya digunakan sebagai penanda untuk melakukan update
-                                            pada kontroller --}}
-                                        <input type="hidden" name="old_recommendation_id[{{$index}}]" value="{{$recommendationId[$index]}}">
-                                    @endif
                                 </td>
                                 {{-- <td>
                                     <select name="recommends[{{ $index }}][group]"

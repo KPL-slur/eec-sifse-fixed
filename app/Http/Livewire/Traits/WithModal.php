@@ -7,9 +7,16 @@ namespace App\Http\Livewire\Traits;
  */
 trait WithModal
 {
-    public $selectedItem;
-    public $selectedForm;
+    public $modalType; // to determine which type of modal (submit, delete, cancel)
+    public $selectedForm; // to determine which dynamic form it is 
+    public $selectedItem; // to determine which item indeces of dynamic field it is
 
+    /**
+     * setter
+     * 
+     * @param $itemId which item index
+     * @param $formType which dynamic form
+     */
     public function selectItem($itemId, $formType)
     {
         $this->selectedItem = $itemId;
@@ -20,6 +27,9 @@ trait WithModal
 
     public function deleteDynamicForm()
     {
+        /**
+         * mostly dynamic form item deleting confirmation
+         */
         switch ($this->selectedForm) {
             case 'expert':
                 $this->removeExpert($this->selectedItem);
@@ -52,6 +62,9 @@ trait WithModal
         }
     }
 
+    /**
+     * form input cancelation
+     */
     public function cancel()
     {
         $this->modalType = 'cancel';

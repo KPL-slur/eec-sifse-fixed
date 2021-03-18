@@ -9,23 +9,46 @@ use App\Models\ReportImage;
  */
 trait WithReportImage
 {
-    // report image form
-    public $caption;
-    public $attachments = [];
+    //* user input
+    public $attachments = []; //user input
 
-    public function mountWithReportImage()
+    /**
+     * run after class mount method.
+     * if $id exist, then it must be an edit form.
+     * init data if edit, init from class variable.
+     * or else init expert arr key with empty value.
+     * 
+     * @param $id OPTIONAL head_id of the current record
+     */
+    public function mountWithReportImage($id=null)
     {
-        // images mount
-        // $this->attachments = [
-        //     ['caption' => '', 'image' => '', 'uploaded' => 0]
-        // ];
+        if ($id) {
+            foreach ($this->reportImages as $reportImage) {
+                $this->attachments[] = ['image' => $reportImage->image, 'caption' => $reportImage->caption, 'uploaded' => 1];
+            }
+        } else {
+            //images mount
+            $this->attachments = [
+                ['caption' => '', 'image' => '', 'uploaded' => 0]
+            ];
+        }
     }
 
+    /**
+     * 
+     */
     public function addAttachment()
     {
         $this->attachments[] = ['caption' => '', 'image' => '', 'uploaded' => 0];
     }
     
+    /**
+     * if file already uploaded, first delete it from storage.
+     * secondly, delete it from db record, and finaly set the upload
+     * to zero. and regardless if it uploaded or not, delete the arr index.
+     * 
+     * @param $index index of the current item
+     */
     public function removeAttachment($index)
     {
         if ($this->attachments[$index]['uploaded'] === 1) {
@@ -38,6 +61,9 @@ trait WithReportImage
         array_values($this->attachments);
     }
 
+    /**
+     * validate every single file that are not uplaoded
+     */
     public function validateUploads()
     {
         foreach ($this->attachments as $index => $attachment) {
@@ -50,26 +76,25 @@ trait WithReportImage
         }
     }
 
-    public function uploadAll()
+    /**
+     * if it is not uploaded, store the file in 
+     * storage with default laravel file naming. then,
+     * save the record to db and set teh uploaded value to one.
+     */
+    public function upstoreReportImage()
     {
         foreach ($this->attachments as $index => $attachment) {
             if ($this->attachments[$index]['uploaded'] == 0) {
-                $this->fileUpload($index);
+                $image[$index] = $this->attachments[$index]['image']->storePublicly('files', 'public');
+        
+                ReportImage::create([
+                    'head_id' => $this->head_id,
+                    'image' => $image[$index],
+                    'caption' => $this->attachments[$index]['caption']
+                ]);
+
+                $this->attachments[$index]['uploaded'] = 1;
             }
         }
     }
-
-    public function fileUpload($index)
-    {
-        $this->image[$index] = $this->attachments[$index]['image']->storePublicly('files', 'public');
-        
-        ReportImage::create([
-            'head_id' => $this->headId,
-            'image' => $this->image[$index],
-            'caption' => $this->attachments[$index]['caption']
-        ]);
-
-        $this->attachments[$index]['uploaded'] = 1;
-    }
-
 }
