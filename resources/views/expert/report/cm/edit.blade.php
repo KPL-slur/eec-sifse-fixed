@@ -3,10 +3,10 @@
 @section('content')
     <div class="content">
         <div class="container-fluid">
-            <h1>Create New Corrective Maintenance Report</h1>
+            <h1>Edit Corrective Maintenance Report</h1>
             <div class="row">
                 <div class="col-md-12">
-                    @livewire('cm-report')
+                    @livewire('cm-report', ['id' => $id])
                 </div>
             </div>
         </div>

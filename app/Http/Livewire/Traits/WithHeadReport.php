@@ -25,9 +25,9 @@ trait WithHeadReport
     {
         $this->sites = Site::all();
         //expert mount
-        $this->experts = [
-            ['expert_id' => '', 'expert_company' => '', 'expert_nip' => '', 'expert_role' => '']
-        ];
+        // $this->experts = [
+        //     ['expert_id' => '', 'expert_company' => '', 'expert_nip' => '', 'expert_role' => '']
+        // ];
 
         $this->expertsData = Expert::all(); 
         $this->uniqueCompanies = $this->expertsData->unique('expert_company');
@@ -49,9 +49,9 @@ trait WithHeadReport
     
     public function removeExpert($index)
     {
-        // if (in_array($index , $this->experts)) {
-        //     $this->expertsData->where('expert_report_id', $this->expertReportId[$index])->delete();
-        // }
+        if (in_array($index , $this->experts)) {
+            $this->expertsData->where('expert_report_id', $this->expertReportId[$index])->delete();
+        }
         unset($this->experts[$index]);
         array_values($this->experts);
 

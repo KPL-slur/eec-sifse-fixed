@@ -1,6 +1,6 @@
-<form method="post" action="{{ ($edit) ? route('cm.update', ['id' => $headId]) : route('cm.store') }}" class="form-horizontal" enctype="multipart/form-data">
+<form method="post" class="form-horizontal" enctype="multipart/form-data">
     @csrf
-    @if ($edit)
+    @if (isset($id))
         @method('put')
     @endif
     

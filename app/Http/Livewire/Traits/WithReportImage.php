@@ -16,9 +16,9 @@ trait WithReportImage
     public function mountWithReportImage()
     {
         // images mount
-        $this->attachments = [
-            ['caption' => '', 'image' => '', 'uploaded' => 0]
-        ];
+        // $this->attachments = [
+        //     ['caption' => '', 'image' => '', 'uploaded' => 0]
+        // ];
     }
 
     public function addAttachment()

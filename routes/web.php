@@ -59,7 +59,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'expert'], function () {
     Route::group(['prefix' => 'cm', 'as' => 'cm.'], function () {
         Route::get('/', [App\Http\Controllers\CmReportController::class, 'index'])->name('index');
         Route::get('/create', [App\Http\Controllers\CmReportController::class, 'create'])->name('create');
-        Route::post('/', [App\Http\Controllers\CmReportController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [App\Http\Controllers\CmReportController::class, 'edit'])->name('edit');
     });
 
     // Route::get('report/pm/create/{headId}', ['App\Http\Controllers\PmBodyReportsController', 'create'])->name('pm.custom.create'); //custom create routing

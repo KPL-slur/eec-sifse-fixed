@@ -56,7 +56,7 @@ class CmReportController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('expert.report.cm.edit', compact('id'));
     }
 
     /**
