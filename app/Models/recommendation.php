@@ -19,4 +19,11 @@ class Recommendation extends Model
         'jumlah_unit_needed',
         'year',
     ];
+
+    //ONE TO MANY INVERSE
+    public function headReports()
+    {
+        return $this->belongsTo(HeadReport::class, 'head_id', 'head_id');
+    }
+
 }

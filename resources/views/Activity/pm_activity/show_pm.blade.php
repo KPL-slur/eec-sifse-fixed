@@ -247,7 +247,7 @@
                                             @foreach ($recommendations as $recommendation)
                                                 <tr>
                                                     <td>{{ $recommendation->nama_barang }}</td>
-                                                    <td>{{ $recommendation->pivot->jumlah_unit_needed }}</td>
+                                                    <td>{{ $recommendation->jumlah_unit_needed }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
