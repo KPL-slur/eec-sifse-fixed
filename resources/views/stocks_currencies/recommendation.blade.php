@@ -24,13 +24,6 @@
                     <option value="{{$rcm}}">{{$rcm}}</option>
                 @endforeach
               </select>
-              {{-- <select name="selectYearStock" class="form-control ml-auto d-inline" id="selectYearStock" onchange="selectYearIndexStocks()" style="max-width:15%;">
-                <option selected value="">Semua</option>
-                <option value="2020" >2020</option>
-                <option value="2021" >2021</option>
-                <option value="2022" >2022</option>
-                <option value="2023" >2023</option>
-              </select> --}}
             </div>
             
 
