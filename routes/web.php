@@ -167,13 +167,13 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('cm', [App\Http\Controllers\ExpertActivityController::class, 'indexCM']); 
     
     //stock with currencies
-    Route::get('stock_currency', [App\Http\Controllers\StockController::class, 'index'])->name('stock_currency'); // index stocks
-    Route::get('stock_currency/{stock}/edit', [App\Http\Controllers\StockController::class, 'edit']); //edit specific stock
-    Route::post('stock_currency/', [App\Http\Controllers\StockController::class, 'store']); // save new sparepart
-    Route::get('stock_currency/create', [App\Http\Controllers\StockController::class, 'create'])->name('stock_currency_create'); // input new spare part
-    Route::put('stock_currency/{stock}/update', [App\Http\Controllers\StockController::class, 'update']); // save the edited stock
-    Route::delete('stock_currency/{stock}', [App\Http\Controllers\StockController::class, 'destroy']); // delete specific spare part
-    Route::get('stock_currency/{date_start}/{date_end}/', [App\Http\Controllers\StockController::class, 'report']);
-    Route::get('stock_currency/send-email', [App\Http\Controllers\StockController::class, 'sendEmail']);
-    Route::get('stock_currency/recommendation', [App\Http\Controllers\StockController::class, 'showRecommendation'])->name('recommendation'); //recommendation item
+    Route::get('stocks', [App\Http\Controllers\StockController::class, 'index'])->name('stocks'); // index stocks
+    Route::get('stocks/{stock}/edit', [App\Http\Controllers\StockController::class, 'edit']); //edit specific stock
+    Route::post('stocks/', [App\Http\Controllers\StockController::class, 'store']); // save new sparepart
+    Route::get('stocks/create', [App\Http\Controllers\StockController::class, 'create'])->name('stocks-create'); // input new spare part
+    Route::put('stocks/{stock}/update', [App\Http\Controllers\StockController::class, 'update']); // save the edited stock
+    Route::delete('stocks/{stock}', [App\Http\Controllers\StockController::class, 'destroy']); // delete specific spare part
+    Route::get('stocks/{date_start}/{date_end}/', [App\Http\Controllers\StockController::class, 'report']);
+    Route::get('stocks/send-email', [App\Http\Controllers\StockController::class, 'sendEmail']);
+    Route::get('stocks/recommendation', [App\Http\Controllers\StockController::class, 'showRecommendation'])->name('recommendation'); //recommendation item
 });
