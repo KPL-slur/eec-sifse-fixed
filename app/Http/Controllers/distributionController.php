@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreDistributionRequest;
 use Illuminate\Support\Facades\DB;
 use App\Models\Site;
+use App\Models\Expert;
 use App\Models\Distribution;
 
 class DistributionController extends Controller
@@ -79,18 +80,35 @@ class DistributionController extends Controller
     }
 
     public function add($id){
+
+        // $selected = DB::table('distributions')
+        // ->where('site_id',  $id)
+        // ->distinct()
+        // ->pluck('site_id');
+
+        // return($selected);
+
         $experts = DB::table('experts')
-        ->leftJoin('distributions', 'experts.expert_id', '=', 'distributions.expert_id')
+        ->select('experts.name', 'experts.expert_id')
+        ->leftJoin('distributions', 'experts.expert_id', 'distributions.expert_id')
         ->where('expert_company', '=', 'Era Elektra Corpora Indonesia')
-        ->whereNull('site_id')
+        // ->union($selected)
+        ->where(function($query){
+            $query->where('site_id', '=', null);
+        //     $query->DB::table('distributions')
+        // ->where('site_id',  $id)
+        // ->distinct()
+        // ->pluck('site_id');
+        })
         ->get();
-        // dd($experts);
+       
+        return($experts);
 
         $sites = DB::table('sites')
         ->where('site_id', '=', $id)
         ->get();
 
-        return view('distribution.add', compact('experts', 'sites'));
+        return view('distribution.add', compact('selected', 'experts', 'sites'));
     }
 
     public function addData(StoreDistributionRequest $request){
