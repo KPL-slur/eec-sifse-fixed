@@ -108,7 +108,9 @@
                             </div>
                         </div>
                     </div>
-                    @include('expert.report.layout.pm-show', ['pmBodyReport' => $bodyReport])
+                    @if ($headReport->maintenance_type == 'pm')
+                        @include('expert.report.layout.pm-show', ['pmBodyReport' => $bodyReport])
+                    @endif
                     <div class="card ">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title">{{ __('REMARK') }}</h4>
