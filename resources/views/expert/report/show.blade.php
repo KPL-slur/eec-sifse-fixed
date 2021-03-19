@@ -108,6 +108,7 @@
                             </div>
                         </div>
                     </div>
+                    @include('expert.report.layout.pm-show', ['pmBodyReport' => $bodyReport])
                     <div class="card ">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title">{{ __('REMARK') }}</h4>
@@ -115,7 +116,7 @@
                         <div class="card-body ">
                             <div class="row">
                                 <div class="container">
-                                    <?php echo $cmBodyReport->remark; ?>
+                                    <?php echo $bodyReport->remark; ?>
                                 </div>
                             </div>
                         </div>

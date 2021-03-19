@@ -15,8 +15,8 @@
                             <h3 class="card-title">Preventive Maintenance</h3>
                         </div>
                         <div class="card-footer">
-                            <a class="btn btn-success" data-id="1" href="{{ route("pm.create") }}">NEW</a>
-                            <a class="btn btn-info" href="{{ route("pm.index") }}">VIEW</a>
+                            <a class="btn btn-success" data-id="1" href="{{ route("report.create", ['maintenance_type' => 'pm']) }}">NEW</a>
+                            <a class="btn btn-info" href="{{ route("report.index", ['maintenance_type' => 'pm']) }}">VIEW</a>
                         </div>
                     </div>
                 </div>
@@ -30,8 +30,8 @@
                             <h3 class="card-title">Corective Maintenance</h3>
                         </div>
                         <div class="card-footer">
-                            <a class="btn btn-success" href="{{ route("cm.create") }}">NEW</a>
-                            <a class="btn btn-info" href="{{ route("cm.index") }}">VIEW</a>
+                            <a class="btn btn-success" href="{{ route("report.create", ['maintenance_type' => 'cm']) }}">NEW</a>
+                            <a class="btn btn-info" href="{{ route("report.index", ['maintenance_type' => 'cm']) }}">VIEW</a>
                         </div>
                     </div>
                 </div>

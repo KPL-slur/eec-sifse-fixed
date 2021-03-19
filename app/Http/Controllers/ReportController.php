@@ -13,9 +13,8 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($maintenance_type)
     {
-        $maintenance_type = "cm";
         $headReports = HeadReport::where('maintenance_type', $maintenance_type)
         //select eecid expertise only
         ->with(array('experts'=>function ($query) {
@@ -47,8 +46,20 @@ class ReportController extends Controller
         $headReport = HeadReport::Where('head_id', $id)->first();
         abort_unless($headReport, 404, 'Report not found');
 
-        $cmBodyReport = $headReport->cmBodyReport;
-        abort_unless($cmBodyReport, 404, 'Report not found');
+        switch ($maintenance_type) {
+            case 'pm':
+                $bodyReport = $headReport->pmBodyReport;
+                abort_unless($bodyReport, 404, 'Report not found');
+                break;
+            
+            case 'cm':
+                $bodyReport = $headReport->cmBodyReport;
+                abort_unless($bodyReport, 404, 'Report not found');
+                break;
+
+            default:
+                break;
+        }
 
         $recommendations = $headReport->recommendations;
         $reportImages = $headReport->reportImages;
@@ -59,7 +70,7 @@ class ReportController extends Controller
             $fileName = '';
         }
 
-        return view('expert.report.show', compact('cmBodyReport', 'headReport', 'recommendations', 'reportImages', 'fileName', 'maintenance_type'));
+        return view('expert.report.show', compact('bodyReport', 'headReport', 'recommendations', 'reportImages', 'fileName', 'maintenance_type'));
     }
 
     /**
