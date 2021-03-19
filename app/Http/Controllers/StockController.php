@@ -24,7 +24,7 @@ class StockController extends Controller
         $stocks = Stock::all();
 
         // $rate_fix = $ex_rate->apiCall();
-        $rate_fix = 1000;
+        $rate_fix = 1000.11;
 
         // BUAT GROUP DARI STOCKS YANG SELECT NYA
         $stocks_group = []; //inisiasi empty array stocks_group
@@ -35,7 +35,8 @@ class StockController extends Controller
                 array_push($stocks_group, $sgb);
             }
         }
-        return view('stocks_currencies.index', compact('stocks', 'rate_fix', 'stocks_group'));
+        
+        return view('stocks.index', compact('stocks', 'rate_fix', 'stocks_group'));
     }
 
     /**
@@ -47,7 +48,7 @@ class StockController extends Controller
     public function create(ExchangeRate $ex_rate)
     {
         // $rate_fix = $ex_rate->apiCall();
-        $rate_fix = 1000;
+        $rate_fix = 1000.11;
 
         // BUAT GROUP DARI STOCKS YANG SELECT NYA
         $stocks_group = []; //inisiasi empty array stocks_group
@@ -60,7 +61,7 @@ class StockController extends Controller
             }
         }
 
-        return view('stocks_currencies.create', compact('rate_fix','stocks_group'));
+        return view('stocks.create', compact('rate_fix','stocks_group'));
     }
 
     /**
@@ -74,7 +75,7 @@ class StockController extends Controller
         // dd($request);
         Stock::create($request->validated());
 
-        return redirect('stock_currency')->with('status1','Data berhasil ditambah!');
+        return redirect('stocks')->with('status1','Data berhasil ditambah!');
     }
 
     /**
@@ -99,7 +100,7 @@ class StockController extends Controller
     {
         // $stock_data = Stock::where('stock_id');
         // $rate_fix = $ex_rate->apiCall();
-        $rate_fix = 1000;
+        $rate_fix = 1000.11;
 
         // $siteAndStock = DB::table('stocks')
         //                     // ->select('stocks.site_id', 'station_id', 'stock_id', 'nama_barang', 'group', 'part_number','serial_number', 'tgl_masuk', 'expired', 'kurs_beli', 'jumlah_unit', 'status')
@@ -127,7 +128,7 @@ class StockController extends Controller
             }            
         }
         
-        return view('stocks_currencies.edit', compact('stock', 'sites' , 'rate_fix', 'stocks_group'));
+        return view('stocks.edit', compact('stock', 'sites' , 'rate_fix', 'stocks_group'));
     }
 
     /**
@@ -157,7 +158,7 @@ class StockController extends Controller
         //                 'status'=>$request->status
         //             ]);
 
-        return redirect('stock_currency')->with('status2', 'Data berhasil di update');
+        return redirect('stocks')->with('status2', 'Data berhasil di update');
     }
 
     /**
@@ -170,7 +171,7 @@ class StockController extends Controller
     {
         // dd($stock);
         Stock::destroy($stock->stock_id);
-        return redirect('/stock_currency')->with('status0', 'Data '.$stock->nama.' berhasil di hapus');
+        return redirect('/stocks')->with('status0', 'Data '.$stock->nama.' berhasil di hapus');
     }
 
     /**
@@ -185,7 +186,7 @@ class StockController extends Controller
 
         // dd($siteAndStock);
 
-        return view('stocks_currencies.print', compact('stocks'));
+        return view('stocks.print', compact('stocks'));
     }
 
     /**
@@ -218,7 +219,7 @@ class StockController extends Controller
         }
         // dd($years);
 
-        return view('stocks_currencies.recommendation', compact('recommendations', 'rcm_year', 'years'));
+        return view('stocks.recommendation', compact('recommendations'));
     }
 
     public function sendEmail(){

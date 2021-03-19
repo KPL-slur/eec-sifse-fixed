@@ -26,6 +26,9 @@
               </select>
             </div>
             
+            <div>
+              <a href="{{ url('stocks/') }}" class="btn btn-info ml-3 d-inline">Kembali</a>
+            </div>
 
             {{-- card kedua --}}
             <div class="card m-3 my-5">
