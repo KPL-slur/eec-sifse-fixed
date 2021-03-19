@@ -23,4 +23,10 @@ class Site extends Model
     {
         return $this->hasMany(HeadReport::class, 'site_id');
     }
+
+    //MANY TO MANY
+    public function stocks()
+    {
+        return $this->belongsToMany(Stock::class, 'sited_stocks', 'site_id', 'stock_id');
+    }
 }

@@ -43,7 +43,7 @@
                   <div class="form-group">
                     <label >Nama Teknisi</label>
                     <select name="expert_id" id="expert_id" class="form-control @error('expert_id') is-invalid @enderror ">
-                        <option selected disabled value="">--Pilih Teknisi--</option>
+                        <option value="" selected disabled>--Pilih Teknisi--</option>
                         @foreach ($experts as $exp)
                           <option value={{$exp->expert_id}} {{old('expert_id') == $exp->expert_id ? 'selected' : '' }}>{{$exp->name}}</option>
                         @endforeach                        
@@ -62,25 +62,6 @@
                 </form>
               </div>
             </div>
-            @if (session('status1'))
-              <script>
-                window.onload = () => {
-                  showNotification('top', 'right', 'success' ,'<?php echo session('status1') ?>');
-                };
-              </script>
-              @elseif (session('status2'))
-              <script>
-                window.onload = () => {
-                  showNotification('top', 'right', 'warning' ,'<?php echo session('status2') ?>');
-                };
-              </script>
-              @elseif (session('status3'))
-              <script>
-                window.onload = () => {
-                  showNotification('top', 'right', 'danger' ,'<?php echo session('status3') ?>');
-                };
-              </script>
-              @endif
           </div>
         </div>
       </div>

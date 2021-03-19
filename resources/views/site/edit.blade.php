@@ -6,7 +6,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header card-header-info">
+          <div class="card-header card-header-warning">
             <h4 class="card-title ">Edit Inventory {{$sites->radar_name}}</h4>
           </div>
           <div class="card-body">
@@ -27,13 +27,20 @@
                 </div>
                 <div class="form-group my-4">
                   <label for="group">Group nya</label>
-                  <select name="group" id="group" class="form-control @error('group') is-invalid @enderror">
+                  <select name="group" class="form-control @error('group') is-invalid @enderror">
+                    <option value="" disabled @if($stocks->group === "") selected @endif {{ old('group') == '' }}>--Pilih jenis group--</option>
+                    @foreach ($stocks_group as $group)
+                        <option value="{{$group}}" @if($group === $stocks->group) selected @endif {{ old('group') == $group ? 'selected' : '' }}>{{$group}}</option>
+                    @endforeach
+                  </select> 
+        
+                  {{-- <select name="group" id="group" class="form-control @error('group') is-invalid @enderror">
                     <option disabled value="" {{ old('group') == '' ? 'selected' : '' }} >-- Pilih jenis barang --</option>
                     <option value="1" {{ old('group') === 1 ? 'selected' : '' }} @if ($stocks->group === 1) selected @endif>Transmitter</option>
                     <option value="2" {{ old('group') === 2 ? 'selected' : '' }} @if ($stocks->group === 2) selected @endif >Receiver</option>
                     <option value="3" {{ old('group') === 3 ? 'selected' : '' }} @if ($stocks->group === 3) selected @endif>Antenna</option>
-                    <option value="3" {{ old('group') === 0 ? 'selected' : '' }} @if ($stocks->group === 0) selected @endif>Tambahan</option>
-                  </select>
+                    <option value="0" {{ old('group') === 0 ? 'selected' : '' }} @if ($stocks->group === 0) selected @endif>Tambahan</option>
+                  </select> --}}
                   @error('group')
                     <div class="invalid-feedback">
                       {{$message}}

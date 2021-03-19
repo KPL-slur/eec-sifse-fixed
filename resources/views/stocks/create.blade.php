@@ -12,7 +12,7 @@
           </div>
           <div class="card-body">
             <p class="mb-4 text-center h3">Harga Kurs Sekarang : <span class="text-primary text-center display-4">Rp {{ $rate_fix }}</span> ke USD</p>
-            <form action="{{ url('stock_currency/') }}" method="POST">
+            <form action="{{ url('stocks/') }}" method="POST">
               @csrf
                 {{-- <div class="form-group my-4">
                   <label for="site_id">Pilih Site</label>
@@ -37,7 +37,7 @@
                   
                   @error('nama_barang')
                     <div class="invalid-feedback">
-                      Nama barang harus diisi
+                      {{ $message }}
                     </div>
                   @enderror
                       
@@ -50,6 +50,7 @@
                     <option value="2" {{ old('group') == 2 ? 'selected' : '' }}>Receiver</option>
                     <option value="3" {{ old('group') == 3 ? 'selected' : '' }}>Antenna</option>
                   </select> --}}
+                  <br>
                   <select name="group" id="group" class="form-control @error('group') is-invalid @enderror">
                     <option value="" {{ old('group') == '' ? 'selected' : '' }} >-- Pilih jenis barang --</option>
                     @foreach ($stocks_group as $sg)
@@ -58,7 +59,7 @@
                   </select>
                   @error('group')
                     <div class="invalid-feedback">
-                      Jenis barang (group) belum diisi
+                      {{ $message }}
                     </div>
                   @enderror
                 </div>
@@ -67,7 +68,7 @@
                   <input type="text" class="form-control @error('part_number') is-invalid @enderror" id="part_number" name="part_number" placeholder="Masukkan part number" value="{{ old('part_number') }}">
                   @error('part_number')
                     <div class="invalid-feedback">
-                      Part Number belum diisi
+                      {{ $message }}
                     </div>
                   @enderror
                 </div>
@@ -76,7 +77,7 @@
                   <input type="text" class="form-control @error('serial_number') is-invalid @enderror" id="serial_number" name="serial_number" placeholder="Masukkan part number" value="{{ old('serial_number') }}">
                   @error('serial_number')
                     <div class="invalid-feedback">
-                      Serial Number belum diisi
+                      {{ $message }}
                     </div>
                   @enderror
                 </div>
@@ -85,7 +86,7 @@
                   <input type="date" class="form-control @error('tgl_masuk') is-invalid @enderror" id="tgl_masuk" name="tgl_masuk" placeholder="Tanggal Input" value="{{ old('tgl_masuk') }}">
                   @error('tgl_masuk')
                     <div class="invalid-feedback">
-                      Tanggal masuk belum diisi
+                      {{ $message }}
                     </div>
                   @enderror
                 </div>
@@ -94,7 +95,7 @@
                   <input type="date" class="form-control @error('expired') is-invalid @enderror" id="expired" name="expired" placeholder="Expected lifetime" value="{{ old('expired') }}">
                   @error('expired')
                     <div class="invalid-feedback">
-                      Life expectancy belum diisi
+                      {{ $message }}
                     </div>
                   @enderror
                 </div>
@@ -109,7 +110,7 @@
                   </script>
                   @error('kurs_beli')
                     <div class="invalid-feedback">
-                      Kurs beli belum diisi
+                      {{ $message }}
                     </div>
                   @enderror
                 </div>
@@ -118,7 +119,7 @@
                   <input type="text" class="form-control @error('jumlah_unit') is-invalid @enderror" id="jumlah_unit" name="jumlah_unit" placeholder="Mau berapa banyak unit yang ingin dimasukkan?" value="{{ old('jumlah_unit') }}" >
                   @error('jumlah_unit')
                     <div class="invalid-feedback">
-                      Jumlah unit belum diisi
+                      {{ $message }}
                     </div>
                   @enderror                  
                 </div>
@@ -132,12 +133,12 @@
                   </select>
                   @error('status')
                     <div class="invalid-feedback">
-                      Status item belum diisi
+                      {{ $message }}
                     </div>
                   @enderror
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
-                <a href="{{ url('stock_currency/') }}" class="btn btn-info ml-3 d-inline">Kembali</a>
+                <a href="{{ url('stocks/') }}" class="btn btn-info ml-3 d-inline">Kembali</a>
             </form>
           </div>
         </div>

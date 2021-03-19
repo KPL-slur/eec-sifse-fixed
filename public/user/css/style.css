@@ -29,6 +29,7 @@
 
 .form-group-site {
     position: relative;
+    margin-top: auto;
 }
 
 .hidden {
@@ -75,4 +76,8 @@ main .ck-editor[role='application'] .ck.ck-content
 .ck.ck-editor__editable > .ck-placeholder::before {
     color: #f44336;
     font-weight: 400;
+}
+
+select.form-control:not([size]):not([multiple]) {
+    width: 50% !important;
 }

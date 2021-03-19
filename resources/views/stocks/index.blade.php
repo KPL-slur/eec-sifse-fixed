@@ -23,7 +23,7 @@
                 <i class="material-icons">print</i>
               </button>
               {{-- for create button --}}
-              <a type="button" rel="tooltip" title="add item" class="btn btn-md btn-outline-primary text-right m-4 " href="{{ route('stock_currency_create') }}">
+              <a type="button" rel="tooltip" title="add item" class="btn btn-md btn-outline-primary text-right m-4 " href="{{ route('stocks-create') }}">
                 <i class="material-icons">note_add</i>
               </a>
               {{-- for recommendatio item --}}
@@ -64,7 +64,7 @@
                     const id_input_date_end = document.getElementById("input_date_end_stocks_report");
                     var button_input = document.getElementById("link_stocks_report");
                     var href_input_js = button_input.href;
-                    href_input_js = "stock_currency/";
+                    href_input_js = "stocks/";
                     var href_input_start, href_input_end;
 
                     const input_date_start = id_input_date_start.addEventListener("input", (e) => {
@@ -99,7 +99,7 @@
                           $('#link_stocks_report').css('pointer-events', 'none');
                           $('#input_date_end_stocks_report').prop("disabled", true);
                           $('#link_stocks_report').html("Input tanggal awal dan akhir!");
-                          href_input_js = "stock_currency/";
+                          href_input_js = "stocks/";
                         }
                       });
                     }
@@ -135,15 +135,11 @@
             @endif
 
             <div>
-              {{-- <select name="selectGroupStock" class="form-control m-3" id="selectGroupStock" onchange="selectGroupIndexStocks()" style="max-width:15%;">
+              <select name="selectGroupStock" class="form-control m-3" id="selectGroupStock" style="max-width:15%;">
                 <option selected value="">Semua</option>
-                <option value="1" >Transmitter</option>
-                <option value="2" >Receiver</option>
-                <option value="3" >Antenna</option>
-                <option value="0" >Tambahan</option>
-              </select> --}}
-              <select name="selectGroupStock" class="form-control m-3" id="selectGroupStock" onchange="selectGroupIndexStocks()" style="max-width:15%;">
-                
+                @foreach ($stocks_group as $sg)
+                  <option value="{{$sg}}">{{ $sg }}</option>
+                @endforeach
               </select>
             </div>
             {{-- card kedua --}}
@@ -157,7 +153,7 @@
 
               {{-- card body kedua --}}
               <div class="card-body">
-                <div class="table-responsive">
+                <div class="table-responsive-lg">
                   <table class="table" id="indexStocksTable">
                     <thead class=" text-primary text-middle">
                       <th>No</th>
@@ -185,11 +181,11 @@
                             <td>{{ $st->jumlah_unit }}</td>
                             <td>{{ $st->status }}</td>
                             <td class="td-actions text-center">
-                              <a rel="tooltip" class="btn btn-lg btn-warning m-2" href="{{ url('stock_currency') }}/{{ $st->stock_id }}/edit" type="submit">
+                              <a rel="tooltip" class="btn btn-lg btn-warning m-2" href="{{ url('stocks') }}/{{ $st->stock_id }}/edit" type="submit">
                                 <i class="material-icons">edit</i>
                                 <div class="ripple-container"></div>
                               </a>
-                              <form action="{{ url('stock_currency') }}/{{ $st->stock_id }}" class="d-inline" method="POST">
+                              <form action="{{ url('stocks') }}/{{ $st->stock_id }}" class="d-inline" method="POST">
                                 @method('DELETE')
                                 @csrf
                                 <button type="submit" class="btn btn-lg btn-danger m-2" title="delete" onclick="return confirm('Are you sure you want to delete '+ '{{ $st->nama_barang }}' +'?')">
@@ -226,4 +222,45 @@
   {{-- container-fluid --}}
 </div>
 {{-- content --}}
+
+{{-- script for dynamic table from select group --}}
+@push('scripts')
+  <script>
+      $("#selectGroupStock").change(()=>{
+
+        var stock_group = JSON.parse('<?php echo json_encode($stocks_group)?>');
+
+        var input, header, table, tr, td, i, j;
+        // dropdown name
+        input = document.getElementById("selectGroupStock").value;
+        // dynamic header
+        header = document.getElementById("groupStocksCardHeader");
+        // table id
+        table = document.getElementById("indexStocksTable");
+        // import row
+        tr = table.getElementsByTagName("tr");
+        // mulai dari 1 karena tr yg pertama tuh cuma no, namabarang dll
+        for (i = 1; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName("input")[0].value;
+          if (td){
+            if (input == td || input == ""){
+              tr[i].style.display = "";
+                stock_group.forEach((group) => {
+                  if (input == ""){
+                    header.innerHTML = "Semua";
+                  } else if (input == group){
+                    header.innerHTML = group;
+                  }
+                });
+            } else {
+              tr[i].style.display = "none";
+            }
+          } 
+        }
+      });
+  </script>
+  {{-- script for dynamic table from select group --}}
+  
+@endpush
+
 @endsection

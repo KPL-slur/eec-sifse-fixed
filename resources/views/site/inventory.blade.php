@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'site', 'titlePage' => __('Detail Inventorie')])
+@extends('layouts.app', ['activePage' => 'site', 'titlePage' => __('Detail Inventory')])
 
 @section('content')
 <div class="content">
@@ -21,33 +21,32 @@
           <div class="card-body">
             
 
-              <div class="text_left">
-                <a title="back" class="btn btn-sm btn-primary m-2" href="/site">
-                  <i class="material-icons">arrow_back</i>
-                  <div class="ripple-container"></div>
-                </a>
-              </div>
+            <div class="text_left">
+              <a title="back" class="btn btn-sm btn-primary m-2" href="/site">
+                <i class="material-icons">arrow_back</i>
+                <div class="ripple-container"></div>
+              </a>
+            </div>
               
-              <div class="text-right">
-                {{-- button modal trigger  --}}
-                <a type="button" rel="tooltip" title="print data" class="btn btn-outline-primary" href="{{ url('inventorySite') }}/{{$sites->site_id ?? ''}}" >
-                  <i class="material-icons">print</i>
-                </a>
-                {{-- for create button --}}
-                <a type="button" rel="tooltip" title="add item" class="btn btn-md btn-outline-primary text-right m-4 " href="/addInventorySite/{{$sites->site_id ?? ''}}">
-                  <i class="material-icons">note_add</i>
-                </a>
-              </div>
+            <div class="text-right">
+              {{-- button modal trigger  --}}
+              <a type="button" rel="tooltip" title="print data" class="btn btn-outline-primary" href="{{ url('inventorySite') }}/{{$sites->site_id ?? ''}}" >
+                <i class="material-icons">print</i>
+              </a>
+              {{-- for create button --}}
+              <a type="button" rel="tooltip" title="add item" class="btn btn-md btn-outline-primary text-right m-4 " href="/addInventorySite/{{$sites->site_id ?? ''}}">
+                <i class="material-icons">note_add</i>
+              </a>
+            </div>
             
 
             <div>
-              <select name="selectGroupStock" class="form-control m-3" id="selectGroupStock" onchange="selectGroupIndexStocks()" style="max-width:15%;">
+              <select name="selectGroupStock" class="form-control m-3" id="selectGroupStock" style="max-width:15%;">
                 <option selected value="">Semua</option>
-                <option value="1" >Transmitter</option>
-                <option value="2" >Receiver</option>
-                <option value="3" >Antenna</option>
-                <option value="0" >Tambahan</option>
-            </select>
+                @foreach ($stocks_group as $group)
+                    <option value="{{$group}}">{{$group}}</option>
+                @endforeach
+              </select>
             </div>
 
             {{-- card kedua --}}
@@ -142,5 +141,41 @@
   </div>
   {{-- container-fluid --}}
 </div>
-{{-- content --}}
+{{-- dynamic year select --}}
+<script>
+  window.onload = () => {
+    $("#selectGroupStock").change(()=>{
+
+      var stock_group = JSON.parse('<?php echo json_encode($stocks_group)?>');
+
+      var input, header, table, tr, td, i, j;
+      // dropdown name
+      input = document.getElementById("selectGroupStock").value;
+      // dynamic header
+      header = document.getElementById("groupStocksCardHeader");
+      // table id
+      table = document.getElementById("indexStocksTable");
+      // import row
+      tr = table.getElementsByTagName("tr");
+      // mulai dari 1 karena tr yg pertama tuh cuma no, namabarang dll
+      for (i = 1; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("input")[0].value;
+        if (td){
+          if (input == td || input == ""){
+            tr[i].style.display = "";
+              stock_group.forEach((group) => {
+                if (input == ""){
+                  header.innerHTML = "Semua";
+                } else if (input == group){
+                  header.innerHTML = group;
+                }
+              });
+          } else {
+            tr[i].style.display = "none";
+          }
+        } 
+      }
+    });
+  };
+</script>
 @endsection
