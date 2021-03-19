@@ -1,4 +1,4 @@
-<form method="post" class="form-horizontal" enctype="multipart/form-data">
+<form method="post" wire:submit.prevent="upstore" class="form-horizontal" enctype="multipart/form-data">
     @csrf
     @if (isset($id))
         @method('put')
@@ -50,7 +50,7 @@
             @switch($modalType)
                 @case('submit')
                     <div>
-                        <button id="submitCmForm" type="button" wire:click.prevent="upstore" class="btn btn-success">Yes</button>
+                        <button id="submitCmForm" type="submit" class="btn btn-success">Yes</button>
                     </div>
                     @break
                 @case('delete')

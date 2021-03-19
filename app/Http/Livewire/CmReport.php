@@ -67,17 +67,16 @@ class CmReport extends Component
      */
     public function upstore()
     {
-        $this->upstoreHead();
+        $this->upstoreHead('cm');
         //INSERT EXPERTREPORT
-        $this->upstoreExpert('cm');
+        $this->upstoreExpert();
         //INSERT MANUALEXPERTREPORT
         $this->upstoreManualExpert();
         //INSERT CMBODYREPORT
+        $this->validate(['remark' => 'required']);
         CmBodyReport::updateOrCreate(
             ['head_id' => $this->head_id],
-            [
-                'remark' => $this->remark
-            ]
+            ['remark' => $this->remark]
         );
         //INSERT RECOMENDATION
         $this->upstoreRecommendation();

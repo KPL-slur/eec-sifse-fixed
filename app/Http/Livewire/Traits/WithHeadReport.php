@@ -28,9 +28,10 @@ trait WithHeadReport
     protected $headRules = [
         'site_id' => 'required',
         'report_date_start' => 'required',
-        'report_date_end' => 'required',
+        'report_date_end' => 'required|after_or_equal:report_date_start',
     ];
 
+    //* LIVEWIRE METHOD
     /**
      * run after class mount method.
      * init dropdown menu items.
@@ -76,7 +77,23 @@ trait WithHeadReport
      */
     public function updatedWithHeadReport()
     {
+        if ($this->site_id) {
             $this->radar = $this->sites->where('site_id', $this->site_id)->first()->radar_name;
+        } else {
+            $this->radar = null;
+        }
+
+        if ($this->report_date_end) {
+            $this->validate(['report_date_end' => 'required|after_or_equal:report_date_start']);
+        }
+    }
+
+    /**
+     * 
+     */
+    protected function rules()
+    {
+        return $this->headRules;
     }
 
     //* EXXPERT METHOD
@@ -174,6 +191,8 @@ trait WithHeadReport
      */
     public function upstoreHead($maintenance_type)
     {
+        $this->validate();
+        
         HeadReport::updateOrCreate(
             ['head_id' => $this->head_id],
             [
@@ -197,6 +216,7 @@ trait WithHeadReport
      */
     public function upstoreExpert()
     {
+        $this->validateExpert();
         foreach ($this->experts as $index => $expert) {
             if (!isset($this->expertReportId[$index])) {
                 ExpertReport::create(
@@ -228,6 +248,7 @@ trait WithHeadReport
      */
     public function upstoreManualExpert()
     {
+        $this->validateManualExpert();
         if ($this->manualExperts) {
             foreach ($this->manualExperts as $manualExpert) {
                 if ($manualExpert['expert_name']) {

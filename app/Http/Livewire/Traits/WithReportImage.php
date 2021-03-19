@@ -12,6 +12,7 @@ trait WithReportImage
     //* user input
     public $attachments = []; //user input
 
+    //* LIVEWIRE METHOD
     /**
      * run after class mount method.
      * if $id exist, then it must be an edit form.
@@ -34,6 +35,27 @@ trait WithReportImage
         }
     }
 
+    /**
+     * check if file isnt image type, then
+     * remove the value so it will fail in validation.
+     * only evaluate the image input
+     * 
+     * @param $value value of the updated model
+     * @param $index updated nested variable // eg. 0.images | 0.caption
+     */
+    public function updatedAttachments($value, $index)
+    {
+        $index = explode(".",$index); // 0.images
+        if ($index[1] == 'image') {
+            $extension = pathinfo($value->getFilename(), PATHINFO_EXTENSION);
+            if (!in_array($extension, ['jpg', 'jpeg', 'png', 'bmp', 'gif', 'svg', 'webp'])) {
+                $this->attachments[$index[0]]['image'] = '';
+            }
+            $this->validateUploads();
+        }
+    }
+
+    //* attachment method
     /**
      * 
      */
@@ -83,6 +105,7 @@ trait WithReportImage
      */
     public function upstoreReportImage()
     {
+        $this->validateUploads();
         foreach ($this->attachments as $index => $attachment) {
             if ($this->attachments[$index]['uploaded'] == 0) {
                 $image[$index] = $this->attachments[$index]['image']->storePublicly('files', 'public');

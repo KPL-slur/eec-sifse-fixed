@@ -23,6 +23,7 @@ trait WithRecommendation
     private $siteRecommendations = []; // list of all rekomendation per site
     public $recommendationId = []; // array meanmpung export_report_id yg sudah di extract dari model
 
+    //* LIVEWIRE METHOD
     /**
      * run after class mount method.
      * if $id exist, then it must be an edit form.
