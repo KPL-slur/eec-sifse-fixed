@@ -177,14 +177,18 @@ class StockController extends Controller
     /**
      * for reports stocks according input start date & end date
      * 
-     * 
+     * @param \Illuminate\Http\Request;
+     * @return \Illuminate\Http\Response
      */
-    public function report($date_start, $date_end){
-        $stocks = DB::table('stocks')
-                    ->whereBetween('tgl_masuk', [$date_start, $date_end])
+    public function report(Request $request){
+        // return $request->query('date-start');
+        // $stocks = DB::table('stocks')
+        //             ->whereBetween('tgl_masuk', [$date_start, $date_end])
+        //             ->get();
+        $stocks = Stock::whereBetween('tgl_masuk', [$request->query('date-start'), $request->query('date-end')])
                     ->get();
 
-        // dd($siteAndStock);
+        return $stocks;
 
         return view('stocks.print', compact('stocks'));
     }
