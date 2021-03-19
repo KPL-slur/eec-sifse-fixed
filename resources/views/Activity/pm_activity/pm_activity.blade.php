@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'activity', 'titlePage' => __('Technisians Activity')])
+@extends('layouts.app', ['activePage' => 'activity', 'titlePage' => __('Experts Activity (PM)')])
 
 @section('content')
     
@@ -13,13 +13,14 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                  {{-- <div class="col-12 text-right">
-                    <a href="addPm" class="btn btn-sm btn-primary">
-                      <i class="material-icons">
-                        add
-                      </i>Add PM Schedule
-                    </a>
-                  </div> --}}
+
+                <div class="text_left">
+                  <a title="back" class="btn btn-sm btn-primary m-3" href="/expertActivity">
+                    <i class="material-icons">arrow_back</i>
+                    <div class="ripple-container"></div>
+                  </a>
+                </div>
+
               </div>
               <div class="table-responsive">
                 <table class="table table-striped">

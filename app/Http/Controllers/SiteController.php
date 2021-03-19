@@ -34,7 +34,16 @@ class SiteController extends Controller
         ->get();
         // dd($stocks);
 
-        return view('site.inventory', compact('sites', 'stocks'));
+        $stocks_group = [];
+
+        $groups = DB::table('stocks')->pluck('group');
+        foreach($groups as $grp){
+            if(!in_array($grp, $stocks_group)){
+                array_push($stocks_group, $grp);
+            }
+        }
+
+        return view('site.inventory', compact('sites', 'stocks', 'stocks_group'));
     }
 
     public function print($id){
@@ -101,29 +110,43 @@ class SiteController extends Controller
         ->first();
         //dd($sites);
 
-        $stocks = DB::table('stocks')
-        ->get();
+        // $stocks = DB::table('stocks')
+        // ->get();
+
+        $stocks = Stock::all();
 
         return view('site.create', compact('sites', 'stocks'));
      }
 
-     public function addDataInventorySite(ValidateInventoryRequest $request){
+     public function addDataInventorySite(Request $request){
     
-        $stocks = new Stock; 
-        $stocks->nama_barang = $request->nama_barang;
-        $stocks->group = $request->group;
-        $stocks->part_number = $request->part_number;
-        $stocks->serial_number = $request->serial_number;
-        $stocks->tgl_masuk = $request->tgl_masuk;
-        $stocks->expired = $request->expired;
-        $stocks->save();
+        // $stocks = new Stock; 
+        // $stocks->nama_barang = $request->nama_barang;
+        // $stocks->group = $request->group;
+        // $stocks->part_number = $request->part_number;
+        // $stocks->serial_number = $request->serial_number;
+        // $stocks->tgl_masuk = $request->tgl_masuk;
+        // $stocks->expired = $request->expired;
+        // $stocks->save();
 
-        $sitedstocks = new SitedStock;
-        $sitedstocks->stock_id = DB::table('stocks')->latest()->first()->stock_id;
-        $sitedstocks->site_id = $request->site_id;
-        $sitedstocks->save();
+        // $sitedstocks = new SitedStock;
+        // $sitedstocks->stock_id = DB::table('stocks')->latest()->first()->stock_id;
+        // $sitedstocks->site_id = $request->site_id;
+        // $sitedstocks->save();
 
-        $validated = $request->validated();
+        //INSERT SITEDSTOCK TO SITE
+        foreach ($request->stocks as $stock) {
+            if ($stock['stock_id']) {
+
+                $sitedstocks = new SitedStock;
+                $sitedstocks->site_id = $request->site_id;
+                $sitedstocks->stock_id = $stock['stock_id'];
+                $sitedstocks->save();
+            }
+        }
+        // dd($request);
+
+        // $validated = $request->validated();
 
         return redirect('inventory/'.$request->site_id)->with('status1', 'Data Created!');
      }
@@ -137,7 +160,16 @@ class SiteController extends Controller
         $stocks = Stock::where('stock_id', $sitedstock->stock_id)
         ->first();
 
-        return view('site.edit', compact('sites', 'stocks'));
+        $stocks_group = [];
+
+        $groups = DB::table('stocks')->pluck('group');
+        foreach($groups as $grp){
+            if(!in_array($grp, $stocks_group)){
+                array_push($stocks_group, $grp);
+            }
+        }
+
+        return view('site.edit', compact('sites', 'stocks', 'stocks_group', 'groups'));
      }
 
     public function editDataInventorySite(ValidateInventoryRequest $request, Stock $stock){

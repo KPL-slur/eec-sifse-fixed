@@ -201,11 +201,23 @@ class StockController extends Controller
         // ->join('sites', 'stocks.site_id', '=', 'sites.site_id')
         // ->get();
 
-        $recommendations = Recommendation::select('sites.radar_name', 'sites.station_id', 'recommendations.name', 'recommendations.jumlah_unit_needed')
+        $recommendations = Recommendation::select('sites.radar_name', 'sites.station_id', 'recommendations.name', 'recommendations.jumlah_unit_needed', 'year')
                                             ->join('head_reports', 'recommendations.head_id', 'head_reports.head_id')
                                             ->join('sites', 'head_reports.site_id', 'sites.site_id')
                                             ->get();
         // dd($recommendations);
+        $rcm_year = [];
+        
+        $years = DB::table('recommendations')
+        // ->join('head_reports', 'recommendations.head_id', 'head_reports.head_id')
+        // ->join('sites', 'head_reports.site_id', 'sites.site_id')
+        ->pluck('year');
+        foreach($years as $year){
+            if(!in_array($year, $rcm_year)){
+                array_push($rcm_year, $year);
+            }
+        }
+        // dd($years);
 
         return view('stocks.recommendation', compact('recommendations'));
     }
