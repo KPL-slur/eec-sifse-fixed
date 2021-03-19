@@ -88,14 +88,6 @@ trait WithHeadReport
         }
     }
 
-    /**
-     * 
-     */
-    protected function rules()
-    {
-        return $this->headRules;
-    }
-
     //* EXXPERT METHOD
     /**
      * 
@@ -191,7 +183,7 @@ trait WithHeadReport
      */
     public function upstoreHead($maintenance_type)
     {
-        $this->validate();
+        $this->validate($this->headRules);
         
         HeadReport::updateOrCreate(
             ['head_id' => $this->head_id],

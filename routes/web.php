@@ -30,56 +30,27 @@ Auth::routes();
 */
 Route::group(['middleware' => 'auth', 'prefix' => 'expert'], function () {
     Route::get('/', [App\Http\Controllers\ExpertController::class, 'index'])->name('expert');
-    
-    // PM REPORT ROUTES
-    Route::group(['prefix' => 'pm', 'as' => 'pm.'], function () {
+
+    Route::group(['prefix' => '{maintenance_type}', 'where' => ['maintenance_type' => '(pm|cm)'], 'as'=>'report.'], function () {
         Route::group(['prefix' => 'trash', 'as' => 'trash.'], function () {
-            Route::get('/', [App\Http\Controllers\PmTrashController::class, 'index'])->name('index');
-            Route::get('/{id}', [App\Http\Controllers\PmTrashController::class, 'show'])->name('show');
-            Route::post('/{id}', [App\Http\Controllers\PmTrashController::class, 'restore'])->name('restore');
-            Route::delete('/{id}', [App\Http\Controllers\PmTrashController::class, 'permDelete'])->name('perm_delete');
+            Route::get('/', [App\Http\Controllers\TrashController::class, 'index'])->name('index');
+            Route::get('/{id}', [App\Http\Controllers\TrashController::class, 'show'])->name('show');
+            Route::post('/{id}', [App\Http\Controllers\TrashController::class, 'restore'])->name('restore');
+            Route::delete('/{id}', [App\Http\Controllers\TrashController::class, 'permDelete'])->name('perm_delete');
         });
         Route::group(['prefix' => 'pdf', 'as' => 'pdf.'], function () {
-            Route::get('/{id}/view', [App\Http\Controllers\PmPdfController::class, 'show'])->name('show');
-            Route::get('/{id}/download', [App\Http\Controllers\PmPdfController::class, 'download'])->name('download');
-            Route::get('/{id}', [App\Http\Controllers\PmPdfController::class, 'print'])->name('print');
-            Route::post('/{id}', [App\Http\Controllers\PmPdfController::class, 'store'])->name('store');
-            Route::delete('/{id}', [App\Http\Controllers\PmPdfController::class, 'destroy'])->name('delete');
+            Route::get('/{id}/view', [App\Http\Controllers\PdfController::class, 'show'])->name('show');
+            Route::get('/{id}/download', [App\Http\Controllers\PdfController::class, 'download'])->name('download');
+            Route::get('/{id}', [App\Http\Controllers\PdfController::class, 'print'])->name('print');
+            Route::post('/{id}', [App\Http\Controllers\PdfController::class, 'store'])->name('store');
+            Route::delete('/{id}', [App\Http\Controllers\PdfController::class, 'destroy'])->name('delete');
         });
-
-        Route::get('/', [App\Http\Controllers\PmReportController::class, 'index'])->name('index');
-        Route::get('/create', [App\Http\Controllers\PmReportController::class, 'create'])->name('create');
-        Route::post('/', [App\Http\Controllers\PmReportController::class, 'store'])->name('store');
-        Route::get('/{id}/edit', [App\Http\Controllers\PmReportController::class, 'edit'])->name('edit');
-        Route::put('/{id}', [App\Http\Controllers\PmReportController::class, 'update'])->name('update');
-        Route::get('/{id}', [App\Http\Controllers\PmReportController::class, 'show'])->name('show');
-        Route::delete('/{id}', [App\Http\Controllers\PmReportController::class, 'destroy'])->name('delete');
+        Route::get('/', [App\Http\Controllers\ReportController::class, 'index'])->name('index');
+        Route::get('/create', [App\Http\Controllers\ReportController::class, 'create'])->name('create');
+        Route::get('/{id}/edit', [App\Http\Controllers\ReportController::class, 'edit'])->name('edit');
+        Route::get('/{id}', [App\Http\Controllers\ReportController::class, 'show'])->name('show');
+        Route::delete('/{id}', [App\Http\Controllers\ReportController::class, 'destroy'])->name('delete');
     });
-
-    Route::group(['prefix' => 'cm', 'as' => 'cm.'], function () {
-        Route::get('/', [App\Http\Controllers\CmReportController::class, 'index'])->name('index');
-        Route::get('/create', [App\Http\Controllers\CmReportController::class, 'create'])->name('create');
-        Route::get('/{id}/edit', [App\Http\Controllers\CmReportController::class, 'edit'])->name('edit');
-    });
-
-    // Route::get('report/pm/create/{headId}', ['App\Http\Controllers\PmBodyReportsController', 'create'])->name('pm.custom.create'); //custom create routing
-    // Route::get('report/pm/{pmBodyReport}/{headId}/edit', ['App\Http\Controllers\PmBodyReportsController', 'edit'])->name('pm.custom.edit'); //custom create routing
-    // Route::resource('report/pm', 'App\Http\Controllers\PmBodyReportsController', ['except' => ['create', 'edit'], 'parameters' => ['pm' => 'pmBodyReport:head_id',]]);
-    
-    // PM REPORT ROUTES
-    // Route::get('report/cm/create/{headId}', ['App\Http\Controllers\CmBodyReportsController', 'create'])->name('cm.custom.create'); //custom create routing
-    // Route::get('report/cm/{cmBodyReport}/{headId}/edit', ['App\Http\Controllers\CmBodyReportsController', 'edit'])->name('cm.custom.edit'); //custom create routing
-    // Route::resource('report/cm', 'App\Http\Controllers\CmBodyReportsController', ['except' => ['create', 'edit'], 'parameters' => ['cm' => 'cmBodyReport:head_id',]]);
-    
-    // recommendations ROUTES
-    // Route::get('report/recommendations/create/{headId}', ['App\Http\Controllers\RecommendationsController', 'create'])->name('recommendations.custom.create'); //custom create routing
-    // Route::get('report/recommendations/{headId}/edit', ['App\Http\Controllers\RecommendationsController', 'edit'])->name('recommendations.custom.edit'); //custom edit routing
-    // Route::get('report/recommendations/{headId}', ['App\Http\Controllers\RecommendationsController', 'show'])->name('recommendations.custom.show'); //custom show routing
-    // Route::put('report/recommendations/{headId}', ['App\Http\Controllers\RecommendationsController', 'update'])->name('recommendations.custom.update'); //custom update routing
-    // Route::post('report/recommendations', ['App\Http\Controllers\RecommendationsController', 'store'])->name('recommendations.custom.store'); //custom store routing
-
-    // REPORT ROUTES
-    // Route::resource('report', 'App\Http\Controllers\HeadReportsController', ['parameters' => ['report' => 'headReport',]]);
     
     //Bawaan dari template
     Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);

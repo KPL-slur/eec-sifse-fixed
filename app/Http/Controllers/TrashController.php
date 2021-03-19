@@ -5,16 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Headreport;
 
-class PmTrashController extends Controller
+class TrashController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($maintenance_type)
     {
-        $maintenance_type = "pm";
         $headReports = HeadReport::where('maintenance_type', $maintenance_type)
         //select eecid expertise only
         ->with(array('experts'=>function ($query) {
@@ -30,24 +29,26 @@ class PmTrashController extends Controller
     /**
      * Restore softdeleted items.
      * @param  int  $id
+     * @param  string  $maintenance_type
      * @return \Illuminate\Http\Response
      */
-    public function restore($id)
+    public function restore($maintenance_type, $id)
     {
         HeadReport::onlyTrashed()
                     ->where('head_id', $id)
                     ->first()
                     ->restore();
 
-        return redirect()->route('pm.trash.index')->with('status_restore', 'Data Berhasil Direstore');
+        return redirect()->route('report.trash.index', compact('maintenance_type'))->with('status_restore', 'Data Berhasil Direstore');
     }
 
     /**
      * Permanent Delete softdeleted items.
      * @param  int  $id
+     * @param  string  $maintenance_type
      * @return \Illuminate\Http\Response
      */
-    public function permDelete($id)
+    public function permDelete($maintenance_type, $id)
     {
         // The other table except report image will cascade on delete
         $headReport = HeadReport::onlyTrashed()->where('head_id', $id)->first();
@@ -60,26 +61,45 @@ class PmTrashController extends Controller
         $headReport->reportImages()->delete();
         $headReport->forceDelete();
 
-        return redirect()->route('pm.trash.index')->with('status_perm_delete', 'Data Dihapus Permanent');
+        return redirect()->route('report.trash.index', compact('maintenance_type'))->with('status_perm_delete', 'Data Dihapus Permanent');
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
+     * @param  string  $maintenance_type
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($maintenance_type, $id)
     {
         $headReport = HeadReport::onlyTrashed()->Where('head_id', $id)->first();
         abort_unless($headReport, 404, 'Report not found');
 
-        $pmBodyReport = $headReport->pmBodyReport;
-        abort_unless($pmBodyReport, 404, 'Report not found');
+        switch ($maintenance_type) {
+            case 'pm':
+                $bodyReport = $headReport->pmBodyReport;
+                abort_unless($bodyReport, 404, 'Report not found');
+                break;
+
+            case 'cm':
+                $bodyReport = $headReport->cmBodyReport;
+                abort_unless($bodyReport, 404, 'Report not found');
+            
+            default:
+                # code...
+                break;
+        }
 
         $recommendations = $headReport->recommendations()->get();
         $reportImages = $headReport->reportImages;
 
-        return view('expert.report.trash.show', compact('pmBodyReport', 'headReport', 'recommendations', 'reportImages'));
+        if ($headReport->printedReport) {
+            $fileName = explode("/", $headReport->printedReport->file)[1]; // return "namafile.pdf" without "cm/"
+        } else {
+            $fileName = '';
+        }
+
+        return view('expert.report.trash.show', compact('bodyReport', 'headReport', 'recommendations', 'reportImages', 'fileName', 'maintenance_type'));
     }
 }

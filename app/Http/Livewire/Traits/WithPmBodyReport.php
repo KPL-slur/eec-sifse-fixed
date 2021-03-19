@@ -158,21 +158,13 @@ trait WithPmBodyReport
         }
     }
 
-    /**
-     * 
-     */
-    protected function rules()
-    {
-        return $this->pmBodyReportRules;
-    }
-
     //* UPSTORE
     /**
      * update or store value in db
      */
     public function upstorePmBodyReport()
     {
-        $this->validate();
+        $this->validate($this->pmBodyReportRules);
 
         PmBodyReport::updateOrCreate(
             ['head_id' => $this->head_id],

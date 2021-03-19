@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\HeadReport;
 
-class PmPdfController extends Controller
+class PdfController extends Controller
 {
-    /*
+    /**
      *
      */
-    public function print($id, Request $request)
+    public function print(Request $request, $maintenance_type, $id)
     {
         $request->validate([
             'kasatName' => 'required',
@@ -18,24 +18,36 @@ class PmPdfController extends Controller
         ]);
 
         $headReport = HeadReport::Where('head_id', $id)->first();
-
-        $kasat = ['name' => $request->kasatName, 'nip' => $request->kasatNip];
         abort_unless($headReport, 404, 'Report not found');
 
-        $headReport = HeadReport::Where('head_id', $id)->first();
+        switch ($maintenance_type) {
+            case 'pm':
+                $bodyReport = $headReport->pmBodyReport;
+                break;
+
+            case 'cm':
+                $bodyReport = $headReport->cmBodyReport;
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+
+        $kasat = ['name' => $request->kasatName, 'nip' => $request->kasatNip];
 
         if (date("F Y", strtotime($headReport->report_date_start)) == date("F Y", strtotime($headReport->report_date_start))) {
             $date = date('j', strtotime($headReport->report_date_start)) . " s.d " . date('j F Y', strtotime($headReport->report_date_start));
         }
 
         // dd($headReport->pmBodyReport->hvps_v_0_4us);
-        return view('expert.report.pm.print', compact('headReport', 'date', 'kasat'));
+        return view('expert.report.print', compact('headReport', 'date', 'kasat', 'bodyReport'));
     }
 
     /**
      *
      */
-    public function store(Request $request, $id)
+    public function store(Request $request, $maintenance_type, $id)
     {
         $request->validate([
             'uploadedPdf' => 'required|mimes:pdf'
@@ -45,15 +57,15 @@ class PmPdfController extends Controller
     
         if ($request->file()) {
 
-            if($headReport->printedReports){
-                \Storage::delete('public/'.$headReport->printedReports->file);
-                $headReport->printedReports()->delete();
+            if($headReport->printedReport){
+                \Storage::delete('public/'.$headReport->printedReport->file);
+                $headReport->printedReport()->delete();
             }
 
             $fileName = time().'_'.$headReport->report_date_start.'_'.$headReport->report_date_end.'_'.$headReport->site->station_id.'.pdf';
             $filePath = $request->file('uploadedPdf')->storePubliclyAs('pm', $fileName, 'public');
 
-            $headReport->printedReports()->updateOrCreate(
+            $headReport->printedReport()->updateOrCreate(
                 ['head_id' => $id],
                 ['file' => $filePath]
             );
@@ -65,29 +77,29 @@ class PmPdfController extends Controller
     /**
      * 
      */
-    public function show($id)
+    public function show($maintenance_type, $id)
     {
-        $filePath = HeadReport::Where('head_id', $id)->first()->printedReports->file; // pm/nama_file.pdf
+        $filePath = HeadReport::withTrashed()->Where('head_id', $id)->first()->printedReport->file; // pm/nama_file.pdf
         return response()->file(('storage/'.$filePath));
     }
     
     /**
      * 
      */
-    public function download($id)
+    public function download($maintenance_type, $id)
     {
-        $filePath = HeadReport::Where('head_id', $id)->first()->printedReports->file; // pm/nama_file.pdf
+        $filePath = HeadReport::withTrashed()->Where('head_id', $id)->first()->printedReport->file; // pm/nama_file.pdf
         return response()->download(('storage/'.$filePath));
     }
 
     /**
      * 
      */
-    public function destroy($id) {
+    public function destroy($maintenance_type, $id) {
         $headReport = HeadReport::Where('head_id', $id)->first();
 
-        \Storage::delete('public/'.$headReport->printedReports->file);
-        $headReport->printedReports()->delete();
+        \Storage::delete('public/'.$headReport->printedReport->file);
+        $headReport->printedReport()->delete();
 
         return back()->with('delete_success', 'File has been deleted.');
     }

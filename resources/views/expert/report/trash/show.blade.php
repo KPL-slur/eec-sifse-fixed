@@ -10,7 +10,7 @@
                 <div class="card-body ">
                     {{-- <div class="sticky-top"> --}}
                         <a type="button" class="btn btn-info"
-                            href="{{ route("$headReport->maintenance_type.trash.index") }}">BACK</a>
+                            href="{{ route("report.trash.index", ['maintenance_type' => $headReport->maintenance_type]) }}">BACK</a>
 
                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalRestore">
                             RESTORE
@@ -21,6 +21,34 @@
                         </button>
                     {{-- </div> --}}
 
+                    <div class="card ">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title">Scanned Hard File</h4>
+                        </div>
+                        <div class="card-body ">
+                            @if ($headReport->printedReport)
+                            <div class="row">
+                                <div class="col table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td>File Name</td>
+                                                <td>{{ $fileName }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Action</td>
+                                                <td>
+                                                    <a type="button" href="{{ route('report.pdf.download', ['id' => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" class="btn btn-success">Download</a>
+                                                    <a type="button" href="{{ route('report.pdf.show', ['id' => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" target="_blank" class="btn btn-info">View</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            @endif
+                        </div>
+                    </div>
                     <div class="card ">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title">{{ $headReport->site->radar_name }}</h4>
@@ -75,6 +103,7 @@
                             </div>
                         </div>
                     </div>
+                    @if ($headReport->maintenance_type == 'pm')
                     <div class="card ">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title">{{ __('GENERAL') }}</h4>
@@ -229,6 +258,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                     <div class="card ">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title">{{ __('REMARK') }}</h4>
@@ -236,7 +266,7 @@
                         <div class="card-body ">
                             <div class="row">
                                 <div class="container">
-                                    <?php echo $pmBodyReport->remark; ?>
+                                    <?php echo $bodyReport->remark; ?>
                                 </div>
                             </div>
                         </div>
@@ -318,7 +348,7 @@
             <p>Are You Sure Want To Restore This Report?</p>
         </x-slot>
         <x-slot name="footer">
-            <form action="{{ route('pm.trash.restore', ['id' => $headReport->head_id]) }}" method="post"
+            <form action="{{ route('report.trash.restore', ['id' => $headReport->head_id, 'maintenance_type' => $headReport->maintenance_type]) }}" method="post"
                 class="d-inline">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                 @csrf
@@ -332,7 +362,7 @@
             <p>Are You Sure Want To Permanently Delete This Report?</p>
         </x-slot>
         <x-slot name="footer">
-            <form action="{{ route('pm.trash.perm_delete', ['id' => $headReport->head_id]) }}" method="post"
+            <form action="{{ route('report.trash.perm_delete', ['id' => $headReport->head_id, 'maintenance_type' => $headReport->maintenance_type]) }}" method="post"
                 class="d-inline">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                 @csrf

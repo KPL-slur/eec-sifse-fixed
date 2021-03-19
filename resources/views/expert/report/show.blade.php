@@ -8,22 +8,22 @@
                     <h4 class="card-title">{{ __('Preventive Maintenance Report') }}</h4>
                 </div>
                 <div class="card-body ">
-                    {{-- <div class="sticky-top"> --}}
+                    <div class="">
                         <a type="button" class="btn btn-info"
-                            href="{{ route("$headReport->maintenance_type.index") }}">BACK</a>
+                            href="{{ route("report.index", $maintenance_type) }}">BACK</a>
                         <button type="button" rel="tooltip" class="btn btn-primary" data-toggle="modal" data-target="#modalPrint">
                             GENERATE PDF</button>
-                        <a type="button" class="btn btn-warning" href="{{ route('cm.edit', ['id' => $headReport->head_id]) }}">EDIT</a>
+                        <a type="button" class="btn btn-warning" href="{{ route('report.edit', ['id' => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}">EDIT</a>
                         <button type="submit" rel="tooltip" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete">
                             DELETE</button>
-                    {{-- </div> --}}
+                    </div>
 
                     <div class="card ">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title">Scanned Hard File</h4>
                         </div>
                         <div class="card-body ">
-                            @if ($headReport->printedReports)
+                            @if ($headReport->printedReport)
                             <div class="row">
                                 <div class="col table-responsive">
                                     <table class="table">
@@ -35,8 +35,8 @@
                                             <tr>
                                                 <td>Action</td>
                                                 <td>
-                                                    <a type="button" href="{{ route('cm.pdf.download', ['id' => $headReport->head_id]) }}" class="btn btn-success">Download</a>
-                                                    <a type="button" href="{{ route('cm.pdf.show', ['id' => $headReport->head_id]) }}" target="_blank" class="btn btn-info">View</a>
+                                                    <a type="button" href="{{ route('report.pdf.download', ['id' => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" class="btn btn-success">Download</a>
+                                                    <a type="button" href="{{ route('report.pdf.show', ['id' => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" target="_blank" class="btn btn-info">View</a>
                                                     <button type="button" rel="tooltip" class="btn btn-warning" data-toggle="modal" data-target="#modalUpload">Change File</button>
                                                     <button type="button" rel="tooltip" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteUpload">Remove File</button>
                                                 </td>
@@ -51,7 +51,7 @@
                             @endif
                         </div>
                     </div>
-                    <div>
+                    
                     <div class="card ">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title">{{ $headReport->site->radar_name }}</h4>
@@ -185,7 +185,7 @@
             </button>
         </li>
         <li>   
-            <a href="{{ route('cm.edit', ['id' => $headReport->head_id]) }}" class="btn btn-warning btn-fab btn-round">
+            <a href="{{ route('report.edit', ['id' => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" class="btn btn-warning btn-fab btn-round">
                 <i class="material-icons">edit</i>
             </a>
         </li>
@@ -202,7 +202,7 @@
             <p>Are You Sure Want To Delete This Rerport?</p>
         </x-slot>
         <x-slot name="footer">
-            <form action="{{ route('cm.delete', ['id' => $headReport->head_id]) }}" method="post"
+            <form action="{{ route('report.delete', ['id' => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" method="post"
                 class="d-inline">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                 @csrf
@@ -217,7 +217,7 @@
             <p>Are You Sure Want To Remove This File?</p>
         </x-slot>
         <x-slot name="footer">
-            <form action="{{ route("cm.pdf.delete", ["id" => $headReport->head_id]) }}" method="POST">
+            <form action="{{ route("report.pdf.delete", ["id" => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" method="POST">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                 @csrf
                 @method('delete')
@@ -233,7 +233,7 @@
         <x-slot name="body">
             <P>Silahkan masukan nama dan nip dari kepala statsiun untuk diisikan pada kolom tanda tangan</P>
             <br>
-            <form action="{{ route("cm.pdf.print", ["id" => $headReport->head_id]) }}" method="GET">
+            <form action="{{ route("report.pdf.print", ["id" => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" method="GET">
             <div class="form-group">
                 <label for="kasatName">Nama Kepala Statsiun</label>
                 <input class="form-control" type="text" name="kasatName" id="kasatName" placeholder="Nama Kepala Statsiun">
@@ -255,7 +255,7 @@
             Upload CM REPORT to PDF
         </x-slot>
         <x-slot name="body">
-            <form action="{{ route("cm.pdf.store", ["id" => $headReport->head_id]) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route("report.pdf.store", ["id" => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="container">
                     <div class="fileinput fileinput-new text-center" data-provides="fileinput">

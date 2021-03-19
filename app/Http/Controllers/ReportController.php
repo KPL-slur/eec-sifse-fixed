@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\HeadReport;
 
-class CmReportController extends Controller
+class ReportController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,20 +31,9 @@ class CmReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($maintenance_type)
     {
-        return view('expert.report.cm.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        dd($request);
+        return view('expert.report.create', compact('maintenance_type'));
     }
 
     /**
@@ -64,13 +53,13 @@ class CmReportController extends Controller
         $recommendations = $headReport->recommendations;
         $reportImages = $headReport->reportImages;
 
-        if ($headReport->printedReports) {
-            $fileName = explode("/", $headReport->printedReports->file)[1]; // return "namafile.pdf" without "cm/"
+        if ($headReport->printedReport) {
+            $fileName = explode("/", $headReport->printedReport->file)[1]; // return "namafile.pdf" without "cm/"
         } else {
             $fileName = '';
         }
 
-        return view('expert.report.cm.show', compact('cmBodyReport', 'headReport', 'recommendations', 'reportImages', 'fileName'));
+        return view('expert.report.show', compact('cmBodyReport', 'headReport', 'recommendations', 'reportImages', 'fileName', 'maintenance_type'));
     }
 
     /**
@@ -79,21 +68,9 @@ class CmReportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($maintenance_type, $id)
     {
-        return view('expert.report.cm.edit', compact('id'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        return view('expert.report.edit', compact('id', 'maintenance_type'));
     }
 
     /**
@@ -102,9 +79,9 @@ class CmReportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($maintenance_type, $id)
     {
         HeadReport::destroy($id);
-        return redirect()->route('cm.index')->with('status_delete', 'Data Dihapus');
+        return redirect()->route('report.index', $maintenance_type)->with('status_delete', 'Data Dihapus');
     }
 }
