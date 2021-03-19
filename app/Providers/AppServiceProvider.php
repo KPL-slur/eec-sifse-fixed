@@ -28,5 +28,12 @@ class AppServiceProvider extends ServiceProvider
         Blade::if('is_admin', function () {
             return auth()->user()->is_admin == 1;
         });
+        
+        /**
+         * add numberOrNa validation rule to global, message in lang\en\validation
+         */
+        \Validator::extend('numberOrNa', function ($attribute, $value) {
+             return (new \App\Rules\NumberOrNa)->passes($attribute, $value);
+        });
     }
 }

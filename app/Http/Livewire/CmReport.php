@@ -6,19 +6,18 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 
 use App\Models\HeadReport;
+use App\Models\CmBodyReport;
 
 use App\Http\Livewire\Traits\WithHeadReport;
-use App\Http\Livewire\Traits\WithPmBodyReport;
 use App\Http\Livewire\Traits\WithRecommendation;
 use App\Http\Livewire\Traits\WithReportImage;
 use App\Http\Livewire\Traits\WithModal;
 
 
-class PmReport extends Component
+class CmReport extends Component
 {
     use WithFileUploads;
     use WithHeadReport;
-    use WithPmBodyReport;
     use WithRecommendation;
     use WithReportImage;
     use WithModal;
@@ -27,7 +26,9 @@ class PmReport extends Component
 
     public $head_id; // to determine which head_id right now
 
-    protected $headReport, $expertReports, $pmBodyReport, $reportImages; // old data for edit form
+    public $remark; // livewire remark model
+
+    protected $headReport, $expertReports, $cmBodyReport, $reportImages; // old data for edit form
 
     /**
      * the first method to run, followed by traits's mount method.
@@ -48,13 +49,14 @@ class PmReport extends Component
             abort_unless($this->headReport, 404, 'Report not found');
 
             $this->expertReports = $this->headReport->experts;
-            $this->pmBodyReport = $this->headReport->pmBodyReport;
-            abort_unless($this->pmBodyReport, 404, 'Report not found');
+            $this->cmBodyReport = $this->headReport->cmBodyReport;
+            abort_unless($this->cmBodyReport, 404, 'Report not found');
 
             $this->reportImages = $this->headReport->reportImages;
 
             //* INITIALIZE EDIT DATA HEAD REPORT
             //* INITIALIZE BODY EDIT
+            $this->remark = $this->cmBodyReport->remark;
             //* INITIALIZE REKOMENDASI EDIT 
             //* INITIALIZE GAMBAR
         }
@@ -65,13 +67,17 @@ class PmReport extends Component
      */
     public function upstore()
     {
-        $this->upstoreHead('pm');
+        $this->upstoreHead('cm');
         //INSERT EXPERTREPORT
         $this->upstoreExpert();
         //INSERT MANUALEXPERTREPORT
         $this->upstoreManualExpert();
-        //INSERT PMBODYREPORT
-        $this->upstorePmBodyReport();
+        //INSERT CMBODYREPORT
+        $this->validate(['remark' => 'required']);
+        CmBodyReport::updateOrCreate(
+            ['head_id' => $this->head_id],
+            ['remark' => $this->remark]
+        );
         //INSERT RECOMENDATION
         $this->upstoreRecommendation();
         //INSERT MANUAL RECOMENDATION, selalu buat baru
@@ -97,17 +103,13 @@ class PmReport extends Component
                 break;
 
             case 2:
-                $this->validate($this->pmBodyReportRules);
-                break;
-
-            case 3:
-                $this->validate([
+                $this->validate(([
                     'remark' => 'required',
-                ]);
+                ]));
                 $this->dispatchBrowserEvent('list-added');
                 break;
 
-            case 5:
+            case 4:
                 $this->validateUploads();
                 $this->modalType = 'submit';
                 $this->dispatchBrowserEvent('openModalConfirm');
@@ -117,7 +119,7 @@ class PmReport extends Component
                 # code...
                 break;
         }
-        if ($this->currentStep < 5) {
+        if ($this->currentStep < 4) {
             $this->currentStep++;
         }
     }
@@ -134,6 +136,6 @@ class PmReport extends Component
 
     public function render()
     {
-        return view('livewire.pm-report');
+        return view('livewire.cm-report');
     }
 }

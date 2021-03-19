@@ -40,8 +40,9 @@ class HeadReport extends Model
     {
         return $this->hasOne(CmBodyReport::class, 'head_id');
     }
+  
+    public function printedReport()
 
-    public function printedReports()
     {
         return $this->hasOne(PrintedReport::class, 'head_id');
     }

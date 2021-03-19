@@ -92,6 +92,7 @@
                             @endforeach
                         </Table>
                         <!----------------------------------------------------------------------------------------- BODY -->
+                        @if ($headReport->maintenance_type == 'pm')
                         <!----------------------------------------------------------------------------------------- GENERAL -->
                         <table class="report body-report">
                             <thead>
@@ -266,6 +267,7 @@
                                     remark="{{ $headReport->pmBodyReport->grease_gear }}" />
                             </tbody>
                         </table>
+                        @endif
                         <!----------------------------------------------------------------------------------------- REMARK -->
                         <table class="report body-report">
                             <thead>
@@ -276,7 +278,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <?php echo $headReport->pmBodyReport->remark; ?>
+                                        <?php echo $bodyReport->remark; ?>
                                     </td>
                                 </tr>
                             </tbody>
