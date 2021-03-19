@@ -9,21 +9,24 @@
           <div class="card-header card-header-info">
             <h4 class="card-title ">Input Inventory {{$sites->radar_name}}</h4>
           </div>
-          <div class="card-body">
+          <div class="card-body text-center">
             <form action="/addInventorySite" method="POST">
               @csrf
-              <div class="form-group my-4">
+              <input type="hidden" class="form-control" id="site_id" name="site_id" value="{{ $sites->site_id }}">
+              
+              <div class="form-group-site ">
+                @livewire('inventory-site', ['stocks' => $stocks])
+              </div>
+
+              {{-- <div class="form-group my-4">
                   <input type="hidden" class="form-control" id="site_id" name="site_id" value="{{ $sites->site_id }}">
                   <label for="nama_barang">Nama Barang</label>
-                  {{-- <input type="text" class="form-control @error('nama_barang') is-invalid @enderror " id="nama_barang" name="nama_barang" placeholder="Masukkan nama barang" value="{{ old('nama_barang') }}"> --}}
                   <select name="nama_barang" id="nama_barang" class="form-control @error('nama_barang') is-invalid @enderror">
                     <option selected disabled value="">--Pilih Barang--</option>
                     @foreach ($stocks as $stk)
                       <option value="{{ $stk->nama_barang }}" {{ old('nama_barang') == $stk->nama_barang ? 'selected' : '' }}>{{$stk->nama_barang}}</option>
                     @endforeach
                   </select>
-
-                  {{-- <input type="text" class="form-control @error('nama_barang') is-invalid @enderror " id="nama_barang" name="nama_barang" placeholder="Masukkan nama barang" value="{{ old('nama_barang') }}"> --}}
                   
                   @error('nama_barang')
                     <div class="invalid-feedback">
@@ -48,19 +51,6 @@
                     </div>
                   @enderror
                 </div>
-
-                {{-- Select2 --}}
-                {{-- <script>
-                  window.onload = () =>{
-                    $("#nama_barang").select2({
-                      tags: true
-                    });
-
-                    $("#group").select2({
-                      tags: true
-                    });
-                  }
-                </script> --}}
 
                 <div class="form-group my-4">
                   <label for="part_number">Part Number</label>
@@ -100,7 +90,7 @@
                       {{$message}}
                     </div>
                   @enderror
-                </div>
+                </div> --}}
 
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <a href="/inventory/{{$sites->site_id}}" class="btn btn-info ml-3 d-inline">Kembali</a>
