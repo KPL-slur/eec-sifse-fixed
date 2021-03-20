@@ -53,6 +53,11 @@ class HeadReport extends Model
         return $this->hasMany(Recommendation::class, 'head_id');
     }
 
+    public function expertReports()
+    {
+        return $this->hasMany(ExpertReport::class, 'head_id');
+    }
+
     public function reportImages()
     {
         return $this->hasMany(ReportImage::class, 'head_id');
