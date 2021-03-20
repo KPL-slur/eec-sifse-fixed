@@ -24,6 +24,16 @@ class Site extends Model
         return $this->hasMany(HeadReport::class, 'site_id');
     }
 
+    public function distributions()
+    {
+        return $this->hasMany(Distribution::class, 'site_id');
+    }
+
+    public function sitedStocks()
+    {
+        return $this->hasMany(SitedStock::class, 'site_id');
+    }
+
     //MANY TO MANY
     public function stocks()
     {
