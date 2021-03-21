@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Services\Utility;
 use App\Models\HeadReport;
 
 class ReportController extends Controller
@@ -41,10 +41,12 @@ class ReportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($maintenance_type, $id)
+    public function show($maintenance_type, $id, Utility $utility)
     {
         $headReport = HeadReport::Where('head_id', $id)->first();
         abort_unless($headReport, 404, 'Report not found');
+
+        $date = $utility->easyToReadDate($headReport->report_date_start, $headReport->report_date_end);
 
         switch ($maintenance_type) {
             case 'pm':
@@ -70,7 +72,7 @@ class ReportController extends Controller
             $fileName = '';
         }
 
-        return view('expert.report.show', compact('bodyReport', 'headReport', 'recommendations', 'reportImages', 'fileName', 'maintenance_type'));
+        return view('expert.report.show', compact('bodyReport', 'headReport', 'recommendations', 'reportImages', 'fileName', 'maintenance_type', 'date'));
     }
 
     /**
