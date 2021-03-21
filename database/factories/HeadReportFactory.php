@@ -35,7 +35,7 @@ class HeadReportFactory extends Factory
      */
     public function definition()
     {
-        $startDate = $this->faker->dateTimeThisYear('+12 months');
+        $startDate = $this->faker->dateTimeThisYear('+24 months');
         return [
             'site_id' => $this->faker->numberBetween(1, 20),
             'maintenance_type' => 'pm', //$this->faker->randomElement(['pm','cm']),
