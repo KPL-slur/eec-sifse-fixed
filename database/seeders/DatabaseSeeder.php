@@ -34,14 +34,20 @@ class DatabaseSeeder extends Seeder
                     ->create();
 
         HeadReport::factory(100)
-                    ->has(ExpertReport::factory(5))
+                    ->has(ExpertReport::factory(1)->eecidExpert()->tenagaAhli())
+                    ->has(ExpertReport::factory(1)->eecidExpert())
+                    ->has(ExpertReport::factory(1)->kasieObs())
+                    ->has(ExpertReport::factory(3))
                     ->has(PmBodyReport::factory(1))
                     ->has(Recommendation::factory(10))
                     ->create();
 
         HeadReport::factory(100)
                     ->cm()
-                    ->has(ExpertReport::factory(5))
+                    ->has(ExpertReport::factory(1)->eecidExpert()->tenagaAhli())
+                    ->has(ExpertReport::factory(1)->eecidExpert())
+                    ->has(ExpertReport::factory(1)->kasieObs())
+                    ->has(ExpertReport::factory(3))
                     ->has(CmBodyReport::factory(1))
                     ->has(Recommendation::factory(10))
                     ->create();

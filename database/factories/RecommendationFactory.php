@@ -25,7 +25,7 @@ class RecommendationFactory extends Factory
         return [
             'name' => $this->faker->word(),
             'jumlah_unit_needed' => $this->faker->randomDigitNotNull().' units',
-            'year' => $this->faker->dateTimeBetween('-2 years', '+1 year')->format("Y"),
+            'year' => $this->faker->dateTimeBetween('-1 years', '+2 year')->format("Y"),
         ];
     }
 }
