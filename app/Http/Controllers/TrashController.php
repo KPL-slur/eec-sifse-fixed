@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\Utility;
 use App\Models\Headreport;
 
 class TrashController extends Controller
@@ -71,10 +72,12 @@ class TrashController extends Controller
      * @param  string  $maintenance_type
      * @return \Illuminate\Http\Response
      */
-    public function show($maintenance_type, $id)
+    public function show($maintenance_type, $id, Utility $utility)
     {
         $headReport = HeadReport::onlyTrashed()->Where('head_id', $id)->first();
         abort_unless($headReport, 404, 'Report not found');
+
+        $date = $utility->easyToReadDate($headReport->report_date_start, $headReport->report_date_end);
 
         switch ($maintenance_type) {
             case 'pm':
@@ -100,6 +103,6 @@ class TrashController extends Controller
             $fileName = '';
         }
 
-        return view('expert.report.trash.show', compact('bodyReport', 'headReport', 'recommendations', 'reportImages', 'fileName', 'maintenance_type'));
+        return view('expert.report.trash.show', compact('bodyReport', 'headReport', 'recommendations', 'reportImages', 'fileName', 'maintenance_type', 'date'));
     }
 }

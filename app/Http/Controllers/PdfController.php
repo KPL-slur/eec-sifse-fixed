@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\Utility;
 use App\Models\HeadReport;
 
 class PdfController extends Controller
@@ -10,7 +11,7 @@ class PdfController extends Controller
     /**
      *
      */
-    public function print(Request $request, $maintenance_type, $id)
+    public function print(Request $request, $maintenance_type, $id, Utility $utility)
     {
         $request->validate([
             'kasatName' => 'required',
@@ -36,9 +37,7 @@ class PdfController extends Controller
 
         $kasat = ['name' => $request->kasatName, 'nip' => $request->kasatNip];
 
-        if (date("F Y", strtotime($headReport->report_date_start)) == date("F Y", strtotime($headReport->report_date_start))) {
-            $date = date('j', strtotime($headReport->report_date_start)) . " s.d " . date('j F Y', strtotime($headReport->report_date_start));
-        }
+        $date = $utility->easyToReadDate($headReport->report_date_start, $headReport->report_date_end);
 
         // dd($headReport->pmBodyReport->hvps_v_0_4us);
         return view('expert.report.print', compact('headReport', 'date', 'kasat', 'bodyReport'));
