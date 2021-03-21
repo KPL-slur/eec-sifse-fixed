@@ -17,7 +17,7 @@
                     
                     <div class="row">
                         <div class="col table-responsive">
-                            <table class="table">
+                            <table class="table" id="report">
                                 <thead>
                                     <tr>
                                         <th class="text-center">#</th>
@@ -107,5 +107,15 @@
             };
         </script>
     @endif
+
+    @push('scripts')
+        <script>
+            window.onload = () => {
+                $(document).ready( function () {
+                    $('#report').DataTable();
+                });
+            };
+        </script>
+    @endpush
 
 @endsection
