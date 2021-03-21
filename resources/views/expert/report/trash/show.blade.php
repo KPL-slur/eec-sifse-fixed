@@ -10,7 +10,7 @@
                 <div class="card-body ">
                     {{-- <div class="sticky-top"> --}}
                         <a type="button" class="btn btn-info"
-                            href="{{ route("$headReport->maintenance_type.trash.index") }}">BACK</a>
+                            href="{{ route("report.trash.index", ['maintenance_type' => $headReport->maintenance_type]) }}">BACK</a>
 
                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalRestore">
                             RESTORE
@@ -23,6 +23,34 @@
 
                     <div class="card ">
                         <div class="card-header card-header-primary">
+                            <h4 class="card-title">Scanned Hard File</h4>
+                        </div>
+                        <div class="card-body ">
+                            @if ($headReport->printedReport)
+                            <div class="row">
+                                <div class="col table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td>File Name</td>
+                                                <td>{{ $fileName }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Action</td>
+                                                <td>
+                                                    <a type="button" href="{{ route('report.pdf.download', ['id' => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" class="btn btn-success">Download</a>
+                                                    <a type="button" href="{{ route('report.pdf.show', ['id' => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" target="_blank" class="btn btn-info">View</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="card ">
+                        <div class="card-header card-header-primary">
                             <h4 class="card-title">{{ $headReport->site->radar_name }}</h4>
                         </div>
                         <div class="card-body ">
@@ -32,13 +60,11 @@
                                         <tbody>
                                             <tr>
                                                 <td>Station Id</td>
-                                                <td colspan="3">{{ $headReport->site->station_id }}</td>
+                                                <td>{{ $headReport->site->station_id }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Date</td>
-                                                <td>{{ $headReport->report_date_start }}</td>
-                                                <td>s.d</td>
-                                                <td>{{ $headReport->report_date_end }}</td>
+                                                <td>{{ $date }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -75,160 +101,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card ">
-                        <div class="card-header card-header-primary">
-                            <h4 class="card-title">{{ __('GENERAL') }}</h4>
-                        </div>
-                        <div class="card-body ">
-                            <div class="row">
-                                <div class="col table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Activity</th>
-                                                <th>Status</th>
-                                                <th>Remark</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @include('expert.report.layout.report-row', ['namaKolom'=>'general_visual'])
-                                            @include('expert.report.layout.report-row', ['namaKolom'=>'rcms'])
-                                            @include('expert.report.layout.report-row', ['namaKolom'=>'wipe_down'])
-                                            @include('expert.report.layout.report-row', ['namaKolom'=>'inspect_all'])
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card ">
-                        <div class="card-header card-header-primary">
-                            <h4 class="card-title">{{ __('COMPRESSOR') }}</h4>
-                        </div>
-                        <div class="card-body ">
-                            <div class="row">
-                                <div class="col table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Activity</th>
-                                                <th>Status</th>
-                                                <th>Remark</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @include('expert.report.layout.report-row', ['namaKolom'=>'compressor_visual'])
-                                            @include('expert.report.layout.report-row', ['namaKolom'=>'duty_cycle'])
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card ">
-                        <div class="card-header card-header-primary">
-                            <h4 class="card-title">{{ __('TRANSMITTER') }}</h4>
-                        </div>
-                        <div class="card-body ">
-                            <div class="row">
-                                <div class="col table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Activity</th>
-                                                <th>Status</th>
-                                                <th>Remark</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @include('expert.report.layout.report-row',
-                                            ['namaKolom'=>'transmitter_visual'])
-                                            @include('expert.report.layout.report-row', ['namaKolom'=>'running_time',
-                                            'satuan'=>'hrs'])
-                                            @include('expert.report.layout.report-row', ['namaKolom'=>'radiate_time',
-                                            'satuan'=>'hrs'])
-
-                                            <th>Pulse Width</th>
-                                            <th></th>
-                                            <th>HVPS V</th>
-                                            <th>HVPS I</th>
-                                            <th>Mag I</th>
-                                            @include('expert.report.layout.report-pulse-row',
-                                            ['namaKolom'=>'0_4us'])
-                                            @include('expert.report.layout.report-pulse-row',
-                                            ['namaKolom'=>'0_8us'])
-                                            @include('expert.report.layout.report-pulse-row',
-                                            ['namaKolom'=>'1_0us'])
-                                            @include('expert.report.layout.report-pulse-row',
-                                            ['namaKolom'=>'2_0us'])
-
-                                            @include('expert.report.layout.report-row', ['namaKolom'=>'forward_power',
-                                            'satuan'=>'mBm'])
-                                            @include('expert.report.layout.report-row', ['namaKolom'=>'reverse_power',
-                                            'satuan'=>'mBm'])
-                                            @include('expert.report.layout.report-row', ['namaKolom'=>'vswr',
-                                            'satuan'=>':1'])
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card ">
-                        <div class="card-header card-header-primary">
-                            <h4 class="card-title">{{ __('RECEIVER') }}</h4>
-                        </div>
-                        <div class="card-body ">
-                            <div class="row">
-                                <div class="col table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Activity</th>
-                                                <th>Status</th>
-                                                <th>Remark</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @include('expert.report.layout.report-row',
-                                            ['namaKolom'=>'receiver_visual'])
-                                            @include('expert.report.layout.report-row', ['namaKolom'=>'stalo_check'])
-                                            @include('expert.report.layout.report-row', ['namaKolom'=>'afc_check'])
-                                            @include('expert.report.layout.report-row', ['namaKolom'=>'mrp_check'])
-                                            @include('expert.report.layout.report-row', ['namaKolom'=>'rcu_check'])
-                                            @include('expert.report.layout.report-row', ['namaKolom'=>'iq2_check'])
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card ">
-                        <div class="card-header card-header-primary">
-                            <h4 class="card-title">{{ __('ANTENNA / PEDESTAL') }}</h4>
-                        </div>
-                        <div class="card-body ">
-                            <div class="row">
-                                <div class="col table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Activity</th>
-                                                <th>Status</th>
-                                                <th>Remark</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @include('expert.report.layout.report-row', ['namaKolom'=>'antenna_visual'])
-                                            @include('expert.report.layout.report-row', ['namaKolom'=>'inspect_motor'])
-                                            @include('expert.report.layout.report-row', ['namaKolom'=>'clean_slip'])
-                                            @include('expert.report.layout.report-row', ['namaKolom'=>'grease_gear'])
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @if ($headReport->maintenance_type == 'pm')
+                        @include('expert.report.layout.pm-show', ['pmBodyReport' => $bodyReport])
+                    @endif
                     <div class="card ">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title">{{ __('REMARK') }}</h4>
@@ -236,7 +111,7 @@
                         <div class="card-body ">
                             <div class="row">
                                 <div class="container">
-                                    <?php echo $pmBodyReport->remark; ?>
+                                    <?php echo $bodyReport->remark; ?>
                                 </div>
                             </div>
                         </div>
@@ -318,7 +193,7 @@
             <p>Are You Sure Want To Restore This Report?</p>
         </x-slot>
         <x-slot name="footer">
-            <form action="{{ route('pm.trash.restore', ['id' => $headReport->head_id]) }}" method="post"
+            <form action="{{ route('report.trash.restore', ['id' => $headReport->head_id, 'maintenance_type' => $headReport->maintenance_type]) }}" method="post"
                 class="d-inline">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                 @csrf
@@ -332,7 +207,7 @@
             <p>Are You Sure Want To Permanently Delete This Report?</p>
         </x-slot>
         <x-slot name="footer">
-            <form action="{{ route('pm.trash.perm_delete', ['id' => $headReport->head_id]) }}" method="post"
+            <form action="{{ route('report.trash.perm_delete', ['id' => $headReport->head_id, 'maintenance_type' => $headReport->maintenance_type]) }}" method="post"
                 class="d-inline">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                 @csrf

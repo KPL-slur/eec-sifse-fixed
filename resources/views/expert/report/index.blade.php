@@ -11,13 +11,13 @@
                     <div class="d-flex">
                         <a type="button" class="btn btn-info" href="{{ route('expert') }}">BACK</a>
                         <a type="button" class="btn btn-primary"
-                            href="{{ route($maintenance_type.".create") }}">ADD NEW</a>
-                        <a type="button" class="btn btn-secondary ml-auto" href="{{ route('pm.trash.index') }}">Trash</a>
+                            href="{{ route("report.create", $maintenance_type) }}">ADD NEW</a>
+                        <a type="button" class="btn btn-secondary ml-auto" href="{{ route('report.trash.index', $maintenance_type) }}">Trash</a>
                     </div>
                     
                     <div class="row">
                         <div class="col table-responsive">
-                            <table class="table">
+                            <table class="table" id="report">
                                 <thead>
                                     <tr>
                                         <th class="text-center">#</th>
@@ -49,23 +49,15 @@
                                             </td>
                                             <td class="td-actions text-right">
                                                 <a type="button" rel="tooltip" class="btn btn-info"
-                                                    {{-- href="{{ url('/expert/' . $maintenance_type . '/' . $hr->head_id) }}"> --}}
-                                                    href="{{ route($maintenance_type.".show", ['id' => $hr->head_id]) }}">
+                                                    href="{{ route("report.show", ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}">
                                                     <i class="material-icons">visibility</i>
                                                 </a>
-                                                {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPrint">
-                                                    <i class="material-icons">print</i>
-                                                </button> --}}
                                                 <a type="button" rel="tooltip" class="btn btn-warning"
-                                                    {{-- href="{{ url('/report/' . $hr->id . '/edit') }}" --}}
-                                                    href="{{ route($maintenance_type.".edit", ['id' => $hr->head_id]) }}"
+                                                    href="{{ route("report.edit", ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}"
                                                     >
                                                     <i class="material-icons">edit</i>
                                                 </a>
-                                                {{-- <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete">
-                                                    <i class="material-icons">close</i>
-                                                </button> --}}
-                                                <form action="{{ route('pm.delete', ['id' => $hr->head_id]) }}" method="post"
+                                                <form action="{{ route('report.delete', ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}" method="post"
                                                     class="d-inline">
                                                     @csrf
                                                     @method('delete')
@@ -88,51 +80,11 @@
     {{-- Floating Menu --}}
     <x-ui.btn-float-group>
         <li>   
-            <a href="{{ route($maintenance_type.'.create') }}" class="btn btn-primary btn-fab btn-round">
+            <a href="{{ route('report.create', $maintenance_type) }}" class="btn btn-primary btn-fab btn-round">
                 <i class="material-icons">create</i>
             </a>
         </li>
     </x-ui.btn-float-group>
-
-    {{-- @if ($headReports->isNotEmpty())
-        <x-ui.modal-confirm id="modalDelete">
-            <x-slot name="body">
-                <p>Are You Sure Want To Delete This Rerport?</p>
-            </x-slot>
-            <x-slot name="footer">
-                <form action="{{ route('pm.delete', ['id' => $hr->head_id]) }}" method="post"
-                    class="d-inline">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                    @csrf
-                    @method('delete')
-                    <button type="submit" rel="tooltip" class="btn btn-secondary">Yes</button>
-                </form>
-            </x-slot>
-        </x-ui.modal-confirm>
-
-        <x-ui.modal-confirm id="modalPrint">
-            <x-slot name="title">
-                Print PM REPORT to PDF
-            </x-slot>
-            <x-slot name="body">
-                <P>Silahkan masukan nama dan nip dari kepala statsiun untuk diisikan pada kolom tanda tangan</P>
-                <br>
-                <form action="{{ route("pm.pdf.print", ["id" => $hr->head_id]) }}" method="GET">
-                <div class="form-group">
-                    <label for="kasatName">Nama Kepala Statsiun</label>
-                    <input class="form-control" type="text" name="kasatName" id="kasatName" placeholder="Nama Kepala Statsiun">
-                </div>
-                <div class="form-group">
-                    <label for="kasatName">Nip Kepala Statsiun</label>
-                    <input class="form-control" type="text" name="kasatNip" id="kasatNip" placeholder="Nip Kepala Statsiun">
-                </div>
-            </x-slot>
-            <x-slot name="footer">
-                <button class="btn btn-success" type="submit">Print</button>
-            </form>
-            </x-slot>
-        </x-ui.modal-confirm>
-    @endif --}}
     
     @if (session('status_success'))
         <script>
@@ -155,20 +107,15 @@
             };
         </script>
     @endif
-    
-    {{-- @error('kasatNip')
+
+    @push('scripts')
         <script>
             window.onload = () => {
-                showNotification('top', 'right', 'danger', "Nip Kepala Statsiun Wajib Diisi");
+                $(document).ready( function () {
+                    $('#report').DataTable();
+                });
             };
         </script>
-    @enderror
-    @error('kasatName')
-        <script>
-            window.onload = () => {
-                showNotification('top', 'right', 'danger', "Nama Kepala Statsiun Wajib Diisi");
-            };
-        </script>
-    @enderror --}}
+    @endpush
 
 @endsection

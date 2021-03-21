@@ -1,10 +1,9 @@
-<form method="post" action="{{ ($edit) ? route('pm.update', ['id' => $headId]) : route('pm.store') }}" class="form-horizontal" enctype="multipart/form-data">
+<form method="post" wire:submit.prevent="upstore" class="form-horizontal" enctype="multipart/form-data">
     @csrf
-    @if ($edit)
+    @if (isset($id))
         @method('put')
     @endif
-    <input type="hidden" name="head_id" value="{{ $headId }}">
-    
+
     <div class="row setup-content {{ $currentStep != 1 ? 'd-none' : '' }}" id="step-1">
         @include('expert.report.layout.forms.head.create')
     </div>
@@ -55,7 +54,7 @@
             @switch($modalType)
                 @case('submit')
                     <div>
-                        <button id="submitPmForm" type="submit" wire:click="uploadAll" class="btn btn-success">Yes</button>
+                        <button id="submitPmForm" type="submit" class="btn btn-success">Yes</button>
                     </div>
                     @break
                 @case('delete')
@@ -65,7 +64,7 @@
                     @break
                 @case('cancel')
                     <div>
-                        <a class="btn btn-secondary" type="button" href="{{ route('pm.index') }}">Yes</a>
+                        <a class="btn btn-secondary" type="button" href="{{ route('report.index', ['maintenance_type' => 'pm']) }}">Yes</a>
                     </div>
                 @break
                 @default

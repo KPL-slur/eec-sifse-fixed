@@ -8,7 +8,7 @@
                     <h4 class="card-title">{{ __('Weather Radar Service Report') }}</h4>
                 </div>
                 <div class="card-body ">
-                    <a type="button" class="btn btn-info" href="{{ route('pm.index') }}">BACK</a>
+                    <a type="button" class="btn btn-info" href="{{ route('report.index', $maintenance_type) }}">BACK</a>
                     
                     <div class="row">
                         <div class="col table-responsive">
@@ -44,17 +44,17 @@
                                             </td>
                                             <td class="td-actions text-right">
                                                 <a type="button" rel="tooltip" class="btn btn-info"
-                                                    href="{{ route($maintenance_type.".trash.show", ['id' => $hr->head_id]) }}">
+                                                    href="{{ route("report.trash.show", ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}">
                                                     <i class="material-icons">visibility</i>
                                                 </a>
-                                                <form action="{{ route('pm.trash.restore', ['id' => $hr->head_id]) }}" method="post"
+                                                <form action="{{ route('report.trash.restore', ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}" method="post"
                                                     class="d-inline">
                                                     @csrf
                                                     <button type="submit" class="btn btn-warning" onclick="return confirm('Apakah yakin ingin merestore data?')">
                                                         <i class="material-icons">restore</i>
                                                     </button>
                                                 </form>
-                                                <form action="{{ route('pm.trash.perm_delete', ['id' => $hr->head_id]) }}" method="post"
+                                                <form action="{{ route('report.trash.perm_delete', ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}" method="post"
                                                     class="d-inline">
                                                     @csrf
                                                     @method('delete')

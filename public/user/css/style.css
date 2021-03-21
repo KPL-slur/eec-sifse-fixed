@@ -54,23 +54,23 @@
  * If this code cause problem remove fade class
  * from modal or delete this code
  */
-.modal-open{
+.modal-open {
     overflow: auto;
-    padding-right:0 !important;
+    padding-right: 0 !important;
 }
 
 /* 
  *  CK EDITOR STYLING
- */ 
+ */
 .editor__editable,
 /* Classic build. */
 main .ck-editor[role='application'] .ck.ck-content
 /* Decoupled document build. */
 .ck.editor__editable[role='textbox'],
 .ck.ck-editor__editable[role='textbox'] {
-	line-height: 1.6em !important;
+    line-height: 1.6em !important;
     width: 90vw;
-	min-height: 400px;
+    min-height: 400px;
 }
 
 .ck.ck-editor__editable > .ck-placeholder::before {

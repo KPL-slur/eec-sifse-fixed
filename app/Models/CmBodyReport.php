@@ -9,6 +9,8 @@ class CmBodyReport extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'cm_id';
+
     protected $fillable = [
         'head_id',
         'remark',

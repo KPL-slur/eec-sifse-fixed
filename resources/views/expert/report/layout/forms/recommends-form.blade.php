@@ -10,7 +10,6 @@
                     <thead>
                         <tr>
                             <th>Product</th>
-                            {{-- <th>Group</th> --}}
                             <th>Quantity</th>
                         </tr>
                     </thead>
@@ -36,27 +35,7 @@
                                         </option>
                                         @endforeach
                                     </select>
-
-                                    {{-- Jika index masih dalam range count, maka index tersebut pernah diisi pada record sebelumnya.
-                                        Maka dari itu, kita harus mengetahui expert_report_id (primary key) dari record tersebut. --}}
-                                    @if($index < $countRecommendationId)
-                                        {{-- expert_report_id (primary key) dari record sebelumnya, disimpan dan dikirim kedalam
-                                            sebuah input hidden untuk selanjutnya digunakan sebagai penanda untuk melakukan update
-                                            pada kontroller --}}
-                                        <input type="hidden" name="old_recommendation_id[{{$index}}]" value="{{$recommendationId[$index]}}">
-                                    @endif
                                 </td>
-                                {{-- <td>
-                                    <select name="recommends[{{ $index }}][group]"
-                                        wire:model="recommends.{{ $index }}.group"
-                                        class="form-control" disabled
-                                    >
-                                        <option selected value="0">TAMBAHAN</option>
-                                        <option value="1">TRANSMITTER</option>
-                                        <option value="2">RECEIVER</option>
-                                        <option value="3">ANTENNA</option>
-                                    </select>
-                                </td> --}}
                                 <td>
                                     <input type="text" class="form-control recommends-qty"
                                     name="recommends[{{ $index }}][jumlah_unit_needed]" 
@@ -76,17 +55,6 @@
                                         name="manualRecommends[{{ $index }}][name]" 
                                         wire:model.defer="manualRecommends.{{ $index }}.name">
                                 </td>
-                                {{-- <td>
-                                    <select name="manualRecommends[{{ $index }}][group]"
-                                        wire:model="manualRecommends.{{ $index }}.group"
-                                        class="form-control"
-                                    >
-                                        <option selected value="0">TAMBAHAN</option>
-                                        <option value="1">TRANSMITTER</option>
-                                        <option value="2">RECEIVER</option>
-                                        <option value="3">ANTENNA</option>
-                                    </select>
-                                </td> --}}
                                 <td>
                                     <input type="text" class="form-control recommends-qty"
                                         name="manualRecommends[{{ $index }}][jumlah_unit_needed]" 
