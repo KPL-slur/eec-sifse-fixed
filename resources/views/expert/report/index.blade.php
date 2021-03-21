@@ -17,7 +17,8 @@
                     
                     <div class="row">
                         <div class="col table-responsive">
-                            <table class="table" id="report">
+                            <x-ui.spinner id="spinner"/>
+                            <table class="table d-none" id="report">
                                 <thead>
                                     <tr>
                                         <th class="text-center">#</th>
@@ -113,6 +114,8 @@
             window.onload = () => {
                 $(document).ready( function () {
                     $('#report').DataTable();
+                    $('#spinner').addClass('d-none');
+                    $('#report').removeClass('d-none');
                 });
             };
         </script>
