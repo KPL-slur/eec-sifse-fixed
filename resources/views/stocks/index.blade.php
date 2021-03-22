@@ -103,58 +103,61 @@
 
               {{-- card body kedua --}}
               <div class="card-body">
-                <div class="table-responsive-lg">
-                  <table class="table" id="indexStocksTable">
-                    <thead class=" text-primary text-middle">
-                      <th>No</th>
-                      <th>Nama Barang</th>
-                      <th>Part Number</th>
-                      <th>Serial Number</th>
-                      <th>Tanggal Masuk</th>
-                      <th>Expired</th>
-                      <th>Kurs Beli</th>
-                      <th>Jumlah Unit</th>
-                      <th>Status</th>
-                      <th class="text-center">Update or delete</th>
-                    </thead>
-                      <tbody>
-                        @foreach ($stocks as $st)
-                          <tr>
-                            <input type="hidden" value="{{ $st->group }}">
-                            <td scope="row">{{$loop->iteration}}</td>
-                            <td>{{ $st->nama_barang }}</td>
-                            <td>{{ $st->part_number }}</td>
-                            <td>{{ $st->serial_number }}</td>
-                            <td>{{ $st->tgl_masuk }}</td>
-                            <td>{{ $st->expired }}</td>
-                            <td>{{ $st->kurs_beli }}</td>
-                            <td>{{ $st->jumlah_unit }}</td>
-                            <td>{{ $st->status }}</td>
-                            <td class="td-actions text-center">
-                              <a rel="tooltip" class="btn btn-lg btn-warning m-2" href="{{ url('stocks') }}/{{ $st->stock_id }}/edit" type="submit">
-                                <i class="material-icons">edit</i>
-                                <div class="ripple-container"></div>
-                              </a>
-                              <form action="{{ url('stocks') }}/{{ $st->stock_id }}" class="d-inline" method="POST">
-                                @method('DELETE')
-                                @csrf
-                                <button type="submit" class="btn btn-lg btn-danger m-2" title="delete" onclick="return confirm('Are you sure you want to delete '+ '{{ $st->nama_barang }}' +'?')">
-                                  <i class="material-icons">delete</i>
-                                  <div class="ripple-container"></div>
-                                  </button>
-              
-                              </form>
-                              {{-- <button class="btn btn-lg btn-danger m-2" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">
-                                <i class="material-icons">delete</i>
-                                <div class="ripple-container"></div>
-                              </button> --}}
-                            </td>
-                          </tr>
-                        @endforeach
-                      </tbody>
-                  </table>
+                <div class="row">
+                    <div class="col table-responsive-lg">
+                      <table class="table d-none" id="indexStocksTable">
+                        <thead class=" text-primary text-middle">
+                          <th>No</th>
+                          <th>Nama Barang</th>
+                          <th>Part Number</th>
+                          <th>Serial Number</th>
+                          <th>Tanggal Masuk</th>
+                          <th>Expired</th>
+                          <th>Kurs Beli</th>
+                          <th>Jumlah Unit</th>
+                          <th>Status</th>
+                          <th class="text-center">Update or delete</th>
+                        </thead>
+                          <tbody>
+                            @foreach ($stocks as $st)
+                              <tr>
+                                <input type="hidden" value="{{ $st->group }}">
+                                <td scope="row">{{$loop->iteration}}</td>
+                                <td>{{ $st->nama_barang }}</td>
+                                <td>{{ $st->part_number }}</td>
+                                <td>{{ $st->serial_number }}</td>
+                                <td>{{ $st->tgl_masuk }}</td>
+                                <td>{{ $st->expired }}</td>
+                                <td>{{ $st->kurs_beli }}</td>
+                                <td>{{ $st->jumlah_unit }}</td>
+                                <td>{{ $st->status }}</td>
+                                <td class="td-actions text-center">
+                                  <a rel="tooltip" class="btn btn-lg btn-warning m-2" href="{{ url('stocks') }}/{{ $st->stock_id }}/edit" type="submit">
+                                    <i class="material-icons">edit</i>
+                                    <div class="ripple-container"></div>
+                                  </a>
+                                  <form action="{{ url('stocks') }}/{{ $st->stock_id }}" class="d-inline" method="POST">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" class="btn btn-lg btn-danger m-2" title="delete" onclick="return confirm('Are you sure you want to delete '+ '{{ $st->nama_barang }}' +'?')">
+                                      <i class="material-icons">delete</i>
+                                      <div class="ripple-container"></div>
+                                      </button>
+                  
+                                  </form>
+                                  {{-- <button class="btn btn-lg btn-danger m-2" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">
+                                    <i class="material-icons">delete</i>
+                                    <div class="ripple-container"></div>
+                                  </button> --}}
+                                </td>
+                              </tr>
+                            @endforeach
+                          </tbody>
+                      </table>
+                    </div>
+                    {{-- table-responsive --}}
+                  </div>
                 </div>
-                {{-- table-responsive --}}
               </div>
               {{-- card body kedua --}}
             </div>
@@ -170,8 +173,6 @@
     {{-- row --}}
   </div>
   {{-- container-fluid --}}
-</div>
-{{-- content --}}
 
 {{-- script for dynamic table from select group --}}
 @push('scripts')
@@ -274,6 +275,13 @@
   </script>
   {{-- script for modal input stocks report --}}
   
+  <script>
+    $(document).ready( () => {
+      $("#indexStocksTable").DataTable();
+      $("#indexStocksTable").removeClass('d-none');
+    });
+  </script>
+
 @endpush
 
 @endsection

@@ -70,7 +70,8 @@ class HomeController extends Controller
                         }])
                         ->get();
 
-        $recommends = Recommendation::select('head_id','name', 'jumlah_unit_needed', 'year')
+        $recommends = Recommendation::take(5)
+                                    ->select('head_id','name', 'jumlah_unit_needed', 'year')
                                     ->with(['headReports'=>function($query){
                                         $query->select('head_id', 'site_id')
                                                 ->with(['site'=>function($query1){
