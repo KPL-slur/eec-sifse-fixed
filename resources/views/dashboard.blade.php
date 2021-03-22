@@ -17,38 +17,34 @@
                   <th>Name</th>
                   {{-- <th>Serial Number</th> --}}
                   <th class="text-center">Units Needed</th>
-                  <th class="text-center">Units on Site</th>
                   <th class="text-center">Units on Stock</th>
                 </thead>
                 <tbody>
                     @php
-                        $i = 0;
+                      $i = 0;
                     @endphp
                     @foreach ($recommends as $rcm)
+                      {{-- cara biar nampilin 0 pas unit di stock gaada --}}
+                      @php
+                        $j = 0;
+                      @endphp
                       <tr>
                         <td>{{ ++$i }}</td>
                         <td>{{ $rcm->name }}</td>
                         <td class="text-center">{{ $rcm->jumlah_unit_needed }}</td>
                         <td class="text-center">
-                          @foreach($site_stocks as $site)
-                            @if ($site->station_id === $rcm->headReports->site->station_id)
-                              @foreach ($site->stocks as $stock)
-                                @if ($stock->nama_barang === $rcm->name)
-                                  {{$stock->nama_barang}}
-                                @endif
-                              @endforeach
+                          @foreach ($stock_rec as $barang => $jml)
+                            @if ($rcm->name === $barang)
+                              {{ $jml }}
+                              @php
+                                $j = -1;
+                              @endphp
+                            @elseif ($rcm->name != $barang && $j == 1)
+                              0
                             @endif
-                          @endforeach
-                        </td>
-                        <td class="text-center">
-                          @foreach ($site_stocks as $site)
-                            @if ($site->station_id === $rcm->headReports->site->station_id)
-                              @foreach ($site->stocks as $stock)
-                                @if ($stock->nama_barang === $rcm->name)
-                                  {{ $stock->jumlah_unit }}
-                                @endif
-                              @endforeach
-                            @endif
+                            @php
+                              $j++;
+                            @endphp
                           @endforeach
                         </td>
                       </tr>
@@ -83,7 +79,7 @@
                     <tr>
                       <td>{{ $loop->iteration }}</td>
                       <td>{{ $pm->site->station_id }}</td>
-                      <td>{{ $pm->report_date_start }}-{{ $pm->report_date_end }}</td>
+                      <td>{{ date('j M Y', strtotime($pm->report_date_start))}} until {{ date('j M Y', strtotime($pm->report_date_end)) }}</td>
                       <td>
                         @foreach ($pm->experts as $expert)
                           {{ $expert->name }}, 
@@ -123,10 +119,10 @@
                     <tr>
                       <td>{{ $loop->iteration }}</td>
                       <td>{{ $cm->site->station_id }}</td>
-                      <td>{{ $cm->report_date_start }}-{{ $cm->report_date_end }}</td>
+                      <td>{{ date('j M Y', strtotime($cm->report_date_start))}} until {{ date('j M Y', strtotime($cm->report_date_end)) }}</td>
                       <td>
                         @foreach ($cm->experts as $expert)
-                          {{ $expert }},
+                          {{ $expert->name }},
                         @endforeach
                       </td>
                       <td>{{ $cm->cmBodyReport->remark }}</td>
