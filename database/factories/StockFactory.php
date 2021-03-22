@@ -21,13 +21,15 @@ class StockFactory extends Factory
      */
     public function definition()
     {
+        $tgl_masuk = $this->faker->dateTimeInInterval('-1 years', '+1 years');
+         
         return [
             'nama_barang' => $this->faker->word(),
             'group' => $this->faker->randomElement(['Receiver', 'Transmitter', 'Antenna', 'Tambahan']),
             'part_number' => strtoupper($this->faker->numerify('PL-######-###')), //PL-133157-100
             'serial_number' => $this->faker->uuid(),
-            'tgl_masuk' => $this->faker->dateTimeInInterval('-1 years', '+10 days'),
-            'expired' => $this->faker->dateTimeInInterval('+10 days', '+5 years'),
+            'tgl_masuk' => $tgl_masuk,
+            'expired' => $this->faker->dateTimeInInterval($tgl_masuk, '+5 years'),
             'kurs_beli' => $this->faker->randomFloat(2, 1500000, 1500000000), //1500000000.11
             'jumlah_unit' => $this->faker->randomDigitNotNull(),
             'status' => $this->faker->randomElement(['Not Obsolete', 'Obsolete', 'Dummy']),

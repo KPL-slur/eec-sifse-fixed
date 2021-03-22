@@ -63,13 +63,11 @@
                                         <tbody>
                                             <tr>
                                                 <td>Station Id</td>
-                                                <td colspan="3">{{ $headReport->site->station_id }}</td>
+                                                <td>{{ $headReport->site->station_id }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Date</td>
-                                                <td>{{ $headReport->report_date_start }}</td>
-                                                <td>s.d</td>
-                                                <td>{{ $headReport->report_date_end }}</td>
+                                                <td>{{ $date }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
