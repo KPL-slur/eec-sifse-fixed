@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'dashboard', 'titlePage' => __('Dashboard')])
+@extends('layouts.app', ['activePage' => 'dashboard', 'titlePage' => __(strtoupper($maintenance_type).' '. $headReport->site->station_id)])
 
 @section('content')
     <div class="content">

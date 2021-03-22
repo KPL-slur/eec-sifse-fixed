@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'dashboard', 'titlePage' => __('Dashboard')])
+@extends('layouts.app', ['activePage' => 'dashboard', 'titlePage' => __(($maintenance_type == 'pm' ? 'Preventive Maintenance' : 'Corrective Maintenance'))])
 
 @section('content')
     <div class="content">
