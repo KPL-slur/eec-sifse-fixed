@@ -103,15 +103,6 @@
         <!-- js for headreport expert coloumn -->
         @stack('js')
         @livewireScripts
-        <script>
-            window.addEventListener('openModalConfirm', event => {
-                $('#modalConfirm').modal('show');
-            });
-
-            window.addEventListener('closeModalConfirm', event => {
-                $('#modalConfirm').modal('hide');
-            });
-        </script>
         @stack('scripts')
         {{-- script timezone checking --}}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>

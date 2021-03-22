@@ -85,7 +85,7 @@ class CmReport extends Component
         //INSERT REPORT IMAGE
         $this->upstoreReportImage();
 
-        return redirect()->route('report.index', ['maintenance_type' => 'pm']);
+        return redirect()->route('report.index', ['maintenance_type' => 'cm']);
     }
 
     /**

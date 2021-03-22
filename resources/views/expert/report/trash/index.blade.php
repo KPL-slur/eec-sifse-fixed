@@ -13,7 +13,7 @@
                     <div class="row">
                         <div class="col table-responsive">
                             <x-ui.spinner id="spinner"/>
-                            <table class="table d-none">
+                            <table class="table d-none" id="report">
                                 <thead>
                                     <tr>
                                         <th class="text-center">#</th>

@@ -6,7 +6,7 @@
             <label class="control-label force-has-danger">{{ $message }}</label>
             <span class="material-icons form-control-feedback">clear</span>
             @enderror
-            <input class="form-control " wire:model="{{ $namaKolom }}"
+            <input class="form-control " wire:model.defer="{{ $namaKolom }}"
                 type="{{ $tipeForm }}" name="{{ $namaKolom }}" id="input{{ $namaKolom }}"
                 placeholder="{{ $namaKolom }}" value="{{ ($headReport->$namaKolom) ?? old($namaKolom) }}" />
         </div>

@@ -21,6 +21,7 @@ class TrashController extends Controller
             $query->where('expert_company', 'Era Elektra Corpora Indonesia');
         }))
         // get trashed items
+        ->with('site')
         ->onlyTrashed()
         ->get();
         
