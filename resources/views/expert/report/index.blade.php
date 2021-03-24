@@ -113,7 +113,15 @@
         <script>
             window.onload = () => {
                 $(document).ready( function () {
-                    $('#report').DataTable();
+                    $('#report').DataTable({
+                        responsive: {
+                            details: {
+                                display: $.fn.dataTable.Responsive.display.childRowImmediate,
+                                type: 'none',
+                                target: ''
+                            }
+                        }
+                    });
                     $('#spinner').addClass('d-none');
                     $('#report').removeClass('d-none');
                 });

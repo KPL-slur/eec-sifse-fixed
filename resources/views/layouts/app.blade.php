@@ -13,7 +13,6 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <!-- CSS Files -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('user') }}/js/plugins/DataTables/datatables.custom.css"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('user') }}/css/plugins/select2.min.css"/>
  
     <link href="{{ asset('material') }}/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
@@ -99,8 +98,6 @@
         <script src="{{ asset('user') }}/js/plugins/ckeditor.js"></script>
         <!-- SELECT2 IMPORT -->
         <script type="text/javascript" src="{{ asset('user') }}/js/plugins/select2.min.js"></script>
-        <!-- DATATABLES IMPORT -->
-        <script type="text/javascript" src="{{ asset('user') }}/js/plugins/DataTables/datatables.min.js"></script>
         <!-- js for headreport expert coloumn -->
         @stack('js')
         @livewireScripts
