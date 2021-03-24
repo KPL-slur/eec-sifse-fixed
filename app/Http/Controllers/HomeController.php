@@ -56,7 +56,19 @@ class HomeController extends Controller
                             $query->select('sites.site_id', 'station_id');
                         }])
                         ->get();
-
+        
+        foreach($pm as $p){
+            $p->pmBodyReport->remark = html_entity_decode($p->pmBodyReport->remark); //decode dari kode html ke string biasa
+            if(strripos($p->pmBodyReport->remark, "kesimpulan")){
+                $pos_kesimpulan = strripos($p->pmBodyReport->remark, "kesimpulan"); //cari posisi terakhir dari kata kesimpulan di string remark
+                $p->pmBodyReport->remark = substr($p->pmBodyReport->remark, $pos_kesimpulan); // ngambil substring dari posisi kesimpulan ke belakang
+                $pos_ul_kesimpulan = stripos($p->pmBodyReport->remark, "</ul>"); //nyari posisi </ul> kesimpulan
+                $p->pmBodyReport->remark = substr($$p->pmBodyReport->remark, 0, $pos_ul_kesimpulan + 5); // taro dalem remark, ilangin string setelah </ul>
+            } else {
+                $p->pmBodyReport->remark = "Tidak dapat ditarik kesimpulan dalam remark PM ini";
+            }
+        }
+        
         $cm = HeadReport::take(5)
                         ->orderBy('updated_at', 'desc')
                         ->where('maintenance_type', 'cm')
@@ -72,12 +84,18 @@ class HomeController extends Controller
                         }])
                         ->get();
 
-        // foreach($cm as $c){
-        //     $c->cmBodyReport->remark = strip_tags(html_entity_decode($c->cmBodyReport->remark));
-        // }
-        $cm_remark = "<h1>Generating fancy text</h1><p>So perhaps, you've generated some fancy text, and you're content that you can now copy and paste your fancy text in the comments section of funny cat videos, but perhaps you're wondering how it's even possible to change the font of your text? Is it some sort of hack? Are you copying and pasting an actual font?</p><p>Well, the answer is actually no - rather than generating fancy fonts, this converter creates fancy symbols. The explanation starts with unicode; an industry standard which creates the specification for thousands of different symbols and characters. All the characters that you see on your electronic devices, and printed in books, are likely specified by the unicode standard.</p>";
-        $cm_remark = strip_tags(html_entity_decode($cm_remark));
-        // return $cm_remark;
+        foreach($cm as $c){
+            $c->cmBodyReport->remark = html_entity_decode($c->cmBodyReport->remark); //decode dari kode html ke string biasa
+            if(strripos($c->cmBodyReport->remark, "kesimpulan")){
+                $pos_kesimpulan = strripos($c->cmBodyReport->remark, "kesimpulan"); //cari posisi terakhir dari kata kesimpulan di string remark
+                $c->cmBodyReport->remark = substr($c->cmBodyReport->remark, $pos_kesimpulan); // ngambil substring dari posisi kesimpulan ke belakang
+                $pos_ul_kesimpulan = stripos($c->cmBodyReport->remark, "</ul>"); //nyari posisi </ul> kesimpulan
+                $c->cmBodyReport->remark = substr($c->cmBodyReport->remark, 0, $pos_ul_kesimpulan + 5);  // taro dalem remark, ilangin string setelah </ul>
+            }else{
+                $c->cmBodyReport->remark = "Tidak dapat ditarik kesimpulan dalam remark CM ini";
+            }
+        }
+
 
         $recommends = Recommendation::take(5)
                                     ->orderBy('updated_at', 'desc')
@@ -97,7 +115,7 @@ class HomeController extends Controller
         foreach($recommends as $rcm){
             foreach($stocks as $st){
                 if($rcm->name === $st->nama_barang){
-                    if(!in_array($st->nama_barang, $stock_rec)){
+                    if(!in_array($st->nama_barang, $stock_rec)){ //gatau kenapa ini works padahal nama barang jadi key
                         // $stock_rec[] = $st->nama_barang;
                         $stock_rec["".$st->nama_barang] = $st->jumlah_unit;
                     }
