@@ -8,15 +8,11 @@
     float: none;
 }
 
-/* 
-  * Digunakan pada tabel rekomendasi sparepart
-  * pada form create pm/cm untuk mengoveride 
-  * posisi icon yang margin topnya negatif
-  * KYKNYA UDH GADIPAKE
-   */
-.btn .material-icons.shoping {
-    margin-top: 0;
-    margin-bottom: 0;
+.navbar.navbar-static {
+    position: static;
+    width: 100%;
+    padding-top: 10px;
+    z-index: 1029;
 }
 
 /* 

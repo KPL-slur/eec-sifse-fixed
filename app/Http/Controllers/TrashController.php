@@ -22,6 +22,7 @@ class TrashController extends Controller
         }))
         // get trashed items
         ->with('site')
+        ->orderBy('head_id', 'desc')
         ->onlyTrashed()
         ->get();
         

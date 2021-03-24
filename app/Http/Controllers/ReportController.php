@@ -21,6 +21,7 @@ class ReportController extends Controller
             $query->where('expert_company', 'Era Elektra Corpora Indonesia');
         }))
         ->with('site')
+        ->orderBy('head_id', 'desc')
         ->get();
         
         return view('expert.report.index', compact('headReports', 'maintenance_type'));
