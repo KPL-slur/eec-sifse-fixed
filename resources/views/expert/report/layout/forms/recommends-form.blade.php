@@ -43,7 +43,7 @@
                                     >
                                 </td>
                                 <td>
-                                    <a href="#"
+                                    <a href="#" class="text-danger"
                                         wire:click.prevent="selectItem({{ $index }}, 'recommendation')">Delete</a>
                                 </td>
                             </tr>
@@ -62,7 +62,7 @@
                                     >
                                 </td>
                                 <td>
-                                    <a href="#"
+                                    <a href="#" class="text-danger"
                                         wire:click.prevent="selectItem({{ $index }}, 'manualRecommendation')">Delete</a>
                                 </td>
                             </tr>
