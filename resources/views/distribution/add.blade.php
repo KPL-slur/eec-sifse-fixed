@@ -24,7 +24,7 @@
                   @csrf
                   <div class="form-group">
                     <label>Station ID</label>
-                    <select name="site_id" id="site_id" class="form-control @error('site_id') is-invalid @enderror ">
+                    <select name="site_id" id="site_id" class="form-control distribution @error('site_id') is-invalid @enderror ">
                       <option selected disabled value="">--Pilih Station ID--</option>
                       @foreach ($sites as $st)
                         <option value="{{ $st->site_id }}" {{ old('site_id') == $st->site_id ? 'selected' : '' }}>{{$st->station_id}}</option>
@@ -42,7 +42,7 @@
                   
                   <div class="form-group">
                     <label >Nama Teknisi</label>
-                    <select name="expert_id" id="expert_id" class="form-control @error('expert_id') is-invalid @enderror ">
+                    <select name="expert_id" id="expert_id" class="form-control distribution @error('expert_id') is-invalid @enderror ">
                         <option value="" selected disabled>--Pilih Teknisi--</option>
                         @foreach ($experts as $exp)
                           <option value={{$exp->expert_id}} {{old('expert_id') == $exp->expert_id ? 'selected' : '' }}>{{$exp->name}}</option>

@@ -26,8 +26,9 @@
                       
                 </div>
                 <div class="form-group my-4">
-                  <label for="group">Group nya</label>
-                  <select name="group" class="form-control @error('group') is-invalid @enderror">
+                  <label for="group">Stock Group</label>
+                  <br>
+                  <select name="group" id="group" class="form-control @error('group') is-invalid @enderror">
                     <option value="" disabled @if($stocks->group === "") selected @endif {{ old('group') == '' }}>--Pilih jenis group--</option>
                     @foreach ($stocks_group as $group)
                         <option value="{{$group}}" @if($group === $stocks->group) selected @endif {{ old('group') == $group ? 'selected' : '' }}>{{$group}}</option>
@@ -92,4 +93,11 @@
     </div>
   </div>
 </div>
+@push('js')
+  <script>
+    $('#group').select2({
+      tags: true
+    });
+  </script>
+@endpush
 @endsection

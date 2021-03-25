@@ -90,17 +90,27 @@ class SiteController extends Controller
                 $sitedstocks->stock_id = $stock['stock_id'];
                 $sitedstocks->save();
 
+                $stocks = DB::table('stocks')
+                ->where('stock_id', '=', $stock['stock_id'])
+                ->decrement('jumlah_unit');
+                
                 // SitedStock::create([
                 //     'site_id' => 
                 //     'stock_id' => $stock['stock_id']
                 // ]);
             }
         }
+        $sites = DB::table('sites')
+        ->select('site_id')
+        ->latest()
+        ->first();
         // dd($request);
+
+
         $validated = $request->validated();
         
-        // return redirect('inventory/'.$request->site_id)->with('status1', 'Data Created!');
-        return redirect('site')->with('success', 'Data Created!');
+        return redirect('inventory/'.$sites->site_id)->with('status1', 'Data Created!');
+        // return redirect('site')->with('success', 'Data Created!');
     }
 
     public function addInventorySite($id){
@@ -142,9 +152,13 @@ class SiteController extends Controller
                 $sitedstocks->site_id = $request->site_id;
                 $sitedstocks->stock_id = $stock['stock_id'];
                 $sitedstocks->save();
+
+                $stocks = DB::table('stocks')
+                ->where('stock_id', '=', $stock['stock_id'])
+                ->decrement('jumlah_unit');
             }
         }
-        // dd($request);
+        dd($request);
 
         // $validated = $request->validated();
 
@@ -174,7 +188,6 @@ class SiteController extends Controller
 
     public function editDataInventorySite(ValidateInventoryRequest $request, Stock $stock){
         //dd($request);
-        //dd($stock);
         $stocks = Stock::find($stock->stock_id)
         ->update($request->validated()
         // (

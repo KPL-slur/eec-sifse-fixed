@@ -4,20 +4,26 @@
 
     <div class="form-group-site" id="products_table">
         <label>Stock</label>
-        <div class="d-flex">
+        <div class="">
             @foreach ($sitedStock as $index => $sitedStock)
                 <tr>
                     <td style="width: 20%">
                         <select name="stocks[{{ $index }}][stock_id]"
                             wire:model="sitedStock.{{ $index }}.stock_id"
-                            class="form-control">
-
+                            class="form-control site ">
                             <option value="">-- choose product --</option>
                             @foreach ($stocks as $stock)
-                                <option value="{{ $stock->stock_id }}">
-                                    {{ $stock->nama_barang }}
-                                </option>
+                            
+                                @if ($stock->jumlah_unit > 0)
+                                
+                                    <option value="{{ $stock->stock_id }}">
+                                        {{ $stock->nama_barang }}
+                                    </option>
+                                    
+                                @endif
+                            
                             @endforeach
+
                         </select>
                         <a class="d-inline mt-4 ml-1" href="#" 
                             wire:click.prevent="removeStock({{ $index }})">Delete

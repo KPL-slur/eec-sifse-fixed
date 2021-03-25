@@ -3,7 +3,7 @@
 @section('content')
     
 <div class="content">
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
           <div class="card">
@@ -12,33 +12,49 @@
               <p class="card-category"> Here you can manage distributions</p>
             </div>
             <div class="card-body">
-              </div>
-              <div class="table-responsive">
-                <table class="table table-striped">
-                  <thead class=" text-primary">
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Radar Name</th>
-                      <th scope="col">Station ID</th>
-                      <th class="text-center">Detail</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach ($sites as $st)
+            </div>
+            
+              <div class="row">
+
+                <div class="col table-responsive">
+                  <table class="table table-striped" >
+                    <thead class="text-primary">
                       <tr>
-                        <td scope="row">{{$loop->iteration}}</td>
-                        <td>{{$st->radar_name}}</td>
-                        <td>{{$st->station_id}}</td>
-                        <td class="td-actions text-center">
-                          <a rel="tooltip" class="btn btn-info" href="viewDistribution/{{$st->site_id}}">
-                            <i class="material-icons">visibility</i>
-                            <div class="ripple-container"></div>
-                          </a>
-                        </td>
+                        <th scope="col">#</th>
+                        <th scope="col">Radar Name</th>
+                        <th scope="col">Station ID</th>
+                        <th class="text-center">Detail</th>
                       </tr>
-                    @endforeach
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      @foreach ($sites as $st)
+                        <tr>
+                          <td scope="row">{{$loop->iteration}}</td>
+                          <td>{{$st->radar_name}}</td>
+                          <td>{{$st->station_id}}</td>
+                          <td class="td-actions text-center">
+                            <a rel="tooltip" class="btn btn-info" href="viewDistribution/{{$st->site_id}}">
+                              <i class="material-icons">visibility</i>
+                              <div class="ripple-container"></div>
+                            </a>
+                          </td>
+                        </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+
+                  {{-- @push('scripts')
+                    <script>
+                        window.onload = () => {
+                            $(document).ready( function () {
+                                $('#table-distribution').DataTable();
+                                $('#table-distribution').removeClass('d-none');
+                            });
+                        };
+                    </script>
+                  @endpush --}}
+                </div>
+
               </div>
             </div>
           </div>
