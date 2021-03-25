@@ -50,7 +50,7 @@
             Back
     </button>
     <button class="btn btn-secondary nextBtn btn-lg pull-right" type="button" 
-            wire:click="cancel">
+            x-data X-on:click="$dispatch('modal-cancel')">
             Cancel
     </button>
 
@@ -58,9 +58,27 @@
 
 </form>
 
+<x-ui.modal-confirm id="modalCancel">
+    <x-slot name="body">
+        <div>
+            <p>Are You Sure Want to Cancel? Any Unsaved Data Will Be Lost</p>
+        </div>
+    </x-slot>
+    <x-slot name="footer">
+        <div>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-secondary" type="button" href="{{ route('report.index', ['maintenance_type' => 'pm']) }}">Yes</a>
+        </div>
+    </x-slot>
+</x-ui.modal-confirm>
+
 @push('scripts')
     <script src="{{ asset('user') }}/js/report.js" type="text/javascript"></script>
     <script>
+        window.addEventListener('modal-cancel', event => {
+            $('#modalCancel').modal('show');
+        });
+
         window.addEventListener('openModalConfirm', event => {
             $('#modalConfirm').modal('show');
         });
