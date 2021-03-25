@@ -150,7 +150,7 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('stocks/create', [App\Http\Controllers\StockController::class, 'create'])->name('stocks-create'); // input new spare part
     Route::put('stocks/{stock}/update', [App\Http\Controllers\StockController::class, 'update']); // save the edited stock
     Route::delete('stocks/{stock}', [App\Http\Controllers\StockController::class, 'destroy']); // delete specific spare part
-    Route::get('stocks/{date_start}/{date_end}/', [App\Http\Controllers\StockController::class, 'report']);
+    Route::get('stocks/print', [App\Http\Controllers\StockController::class, 'report']);
     Route::get('stocks/send-email', [App\Http\Controllers\StockController::class, 'sendEmail']);
     Route::get('stocks/recommendation', [App\Http\Controllers\StockController::class, 'showRecommendation'])->name('recommendation'); //recommendation item
 });

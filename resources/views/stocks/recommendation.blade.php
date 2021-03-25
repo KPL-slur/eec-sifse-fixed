@@ -25,7 +25,6 @@
                 @endforeach
               </select>
             </div>
-            
 
             {{-- card kedua --}}
             <div class="card m-3 my-5">
@@ -107,6 +106,8 @@
 </div>
 {{-- content --}}
 
+@push('scripts')
+
 {{-- script for dynamic table from select year --}}
 <script>
   window.onload = () => {
@@ -146,6 +147,12 @@
     });
   };
 </script>
+<script>
+  $(document).ready(function(){
+      $("#indexRecommendsTable").DataTable();
+  });
+</script>
+@endpush
 
 @endsection
 {{-- @section('content')
