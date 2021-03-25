@@ -15,7 +15,7 @@
     <!-- CSS Files -->
     <link rel="stylesheet" type="text/css" href="{{ asset('user') }}/css/plugins/select2.min.css"/>
  
-    <link href="{{ asset('material') }}/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
+    <link href="{{ asset('material') }}/css/material-dashboard.css" rel="stylesheet" />
     <link href="{{ asset('user') }}/css/style.css" rel="stylesheet" />
     <link href="{{ asset('user') }}/css/btn-float.css" rel="stylesheet" />
     <link href="{{ asset('user') }}/css/spinner.css" rel="stylesheet" />
