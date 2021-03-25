@@ -7,12 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Distribution extends Model
 {
+    use HasFactory;
+
     protected $primaryKey = 'dist_id';
     
     protected $table = 'distributions';
+
     protected $fillable = [
         'expert_id',
         'site_id',
     ];
-    use HasFactory;
+
+    protected $guarded = [
+        'dist_id'
+    ];
 }

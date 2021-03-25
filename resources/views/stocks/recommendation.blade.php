@@ -17,7 +17,7 @@
           <div class="card-body">
 
             <div class="d-flex ">
-              <a href="{{ url('stock_currency/') }}" class="btn btn-info ml-3 d-inline">Kembali</a>
+              <a href="{{ url('stocks/') }}" class="btn btn-info ml-3 d-inline">Kembali</a>
               <select name="selectYearStock" class="form-control ml-auto d-inline" id="selectYearStock" style="max-width:15%;">
                 <option selected value="">Semua</option>
                 @foreach ($rcm_year as $rcm)
@@ -26,9 +26,6 @@
               </select>
             </div>
             
-            <div>
-              <a href="{{ url('stocks/') }}" class="btn btn-info ml-3 d-inline">Kembali</a>
-            </div>
 
             {{-- card kedua --}}
             <div class="card m-3 my-5">

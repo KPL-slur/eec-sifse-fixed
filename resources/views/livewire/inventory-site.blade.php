@@ -10,7 +10,7 @@
                     <td style="width: 20%">
                         <select name="stocks[{{ $index }}][stock_id]"
                             wire:model="sitedStock.{{ $index }}.stock_id"
-                            class="form-control">
+                            class="form-control site ">
                             <option value="">-- choose product --</option>
                             @foreach ($stocks as $stock)
                             
@@ -23,6 +23,7 @@
                                 @endif
                             
                             @endforeach
+
                         </select>
                         <a class="d-inline mt-4 ml-1" href="#" 
                             wire:click.prevent="removeStock({{ $index }})">Delete

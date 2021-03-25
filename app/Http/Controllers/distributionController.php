@@ -36,39 +36,72 @@ class DistributionController extends Controller
         ->join('experts', 'distributions.expert_id', '=', 'experts.expert_id')
         ->where('sites.site_id', '=', $id)
         ->get();
-        //dd($distributions);
+        // dd($distributions);
 
         return view('distribution.detail', compact('sites', 'distributions'));
     }
 
     public function edit($id){
+        // $distributions = DB::table('distributions')
+        // ->join('experts', 'distributions.expert_id', '=', 'experts.expert_id')
+        // ->where('dist_id', '=', $id)
+        // ->get();
+
+        $distributions_all = DB::table('distributions')
+        ->join('sites', 'distributions.site_id', '=', 'sites.site_id')
+        ->where('dist_id', $id)
+        ->get();
+
+        // dd($distributions_all);
+
         $distributions = DB::table('distributions')
-        ->join('experts', 'distributions.expert_id', '=', 'experts.expert_id')
-        ->where('dist_id', '=', $id)
+        ->where('dist_id', $id)
         ->first();
-        //dd($distributions);
+    
+        // dd($distributions);
 
         $experts = DB::table('experts')
-        // ->leftJoin('distributions', 'experts.expert_id', '=', 'distributions.expert_id')
-        ->where('expert_company', '=', 'Era Elektra Corpora Indonesia')
-        // ->whereNull('site_id')
-        ->get();
-        //dd($experts);
+                        ->select('experts.name', 'experts.expert_id')
+                        // ->leftJoin('distributions', 'experts.expert_id', 'distributions.expert_id')
+                        ->where('expert_company', 'Era Elektra Corpora Indonesia')
+                        ->get()
+                        ->toArray();
+        
+        foreach ($distributions_all as $distribution) {
+            if($distribution->dist_id == $id){ //apakah sudah ada distribusi di site
+             
+                foreach ($experts as $key => $exp) {
+                    if ($exp->expert_id === $distribution->expert_id) {
+                        unset($experts[$key]);
+                    }
+                }
+                // dd($distribution);
+            }
+        }
+  
+        // return($experts);
 
         $sites = DB::table('sites')
         ->join('distributions', 'sites.site_id', '=', 'distributions.site_id')
         ->where('dist_id', '=', $id)
         ->get();
+        
         // dd($sites);
+
+        //dd($experts[0]->name);
     
         return view('distribution.edit', compact('distributions','experts', 'sites'));
     }
 
-    public function editData(StoreDistributionRequest $request){
-        $distributions = DB::table('distributions')
-        ->where('site_id', '=', $request->site_id)
+    public function editData(StoreDistributionRequest $request, Distribution $distribution){
+        // $distributions = DB::table('distributions')
+        // dd($id);
+        $distributions = Distribution::find($distribution->dist_id)
+        // ->where('dist_id', '=', $id)
         ->update($request->validated());
-        
+        // dd($distributions);
+        // dd($request);
+
         return redirect('viewDistribution/'.$request->site_id)->with('status2', 'Data Updated!');
     }
 
@@ -85,30 +118,60 @@ class DistributionController extends Controller
         // ->where('site_id',  $id)
         // ->distinct()
         // ->pluck('site_id');
-
         // return($selected);
+        
+        $distributions = DB::table('distributions')
+        ->where('site_id', $id)
+        ->get();
+
+        // $dist_all = DB::table('distributions')
+        // //->where('')
+        // ->get();
 
         $experts = DB::table('experts')
-        ->select('experts.name', 'experts.expert_id')
-        ->leftJoin('distributions', 'experts.expert_id', 'distributions.expert_id')
-        ->where('expert_company', '=', 'Era Elektra Corpora Indonesia')
+                        ->select('experts.name', 'experts.expert_id')
+                        // ->leftJoin('distributions', 'experts.expert_id', 'distributions.expert_id')
+                        ->where('expert_company', 'Era Elektra Corpora Indonesia')
+                        ->get()
+                        ->toArray();
+        
+        // if($distributions->contains($id)){
+        foreach ($distributions as $distribution) {
+            if($distribution->site_id == $id){ //apakah sudah ada distribusi di site
+                foreach ($experts as $key => $exp) {
+                    if ($exp->expert_id === $distribution->expert_id) {
+                        unset($experts[$key]);
+                    }
+                }
+            }
+        }
+        
+        
+        // $experts = DB::table('experts')
+        // ->select('experts.name', 'experts.expert_id')
+        // ->leftJoin('distributions', 'experts.expert_id', 'distributions.expert_id')
+        // ->where('expert_company', '=', 'Era Elektra Corpora Indonesia')
+        // ->where('distributions.site_id', '<>', $id)
+        // ->where('site_id', '=', null)
+        // ->orWhere('site_id', $id)
         // ->union($selected)
-        ->where(function($query){
-            $query->where('site_id', '=', null);
+        // ->where(function($query){
+        //     $query->where('site_id', '=', null);
+        //           ->orWhere()
         //     $query->DB::table('distributions')
         // ->where('site_id',  $id)
         // ->distinct()
         // ->pluck('site_id');
-        })
-        ->get();
+        // })
+        // ->get();
        
-        return($experts);
+        // return $experts;
 
         $sites = DB::table('sites')
         ->where('site_id', '=', $id)
         ->get();
 
-        return view('distribution.add', compact('selected', 'experts', 'sites'));
+        return view('distribution.add', compact('sites', 'experts'));
     }
 
     public function addData(StoreDistributionRequest $request){

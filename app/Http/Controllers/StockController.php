@@ -219,7 +219,7 @@ class StockController extends Controller
         }
         // dd($years);
 
-        return view('stocks.recommendation', compact('recommendations'));
+        return view('stocks.recommendation', compact('recommendations', 'rcm_year', 'years'));
     }
 
     public function sendEmail(){
