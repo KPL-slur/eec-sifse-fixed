@@ -22,8 +22,6 @@ class CmReport extends Component
     use WithReportImage;
     use WithModal;
 
-    public $currentStep; // to determine which page to hide
-
     public $head_id; // to determine which head_id right now
 
     public $remark; // livewire remark model
@@ -32,7 +30,6 @@ class CmReport extends Component
 
     /**
      * the first method to run, followed by traits's mount method.
-     * Initalize the currentStep by one;
      * If $id exsist then it must be edit form.
      * if edit, then it will initialize old data from db. 
      * Some data initialization is handled by traits's mount method.
@@ -41,7 +38,6 @@ class CmReport extends Component
      */
     public function mount($id=NULL)
     {
-        $this->currentStep = 1;
         if ($id) {
             $this->head_id = $id;
             //* INITIALIZE EDIT DATA
@@ -89,13 +85,12 @@ class CmReport extends Component
     }
 
     /**
-     *  Increment the currentStep Variable by one.
      *  at some step, do validation on the given forms.
      *  some step may do some step specific function calls.
      */
-    public function nextStep()
+    public function validateStep($step)
     {
-        switch ($this->currentStep) {
+        switch ($step) {
             case 1:
                 $this->validate($this->headRules);
                 $this->validateExpert();
@@ -113,25 +108,14 @@ class CmReport extends Component
                 $this->validateUploads();
                 $this->modalType = 'submit';
                 $this->dispatchBrowserEvent('openModalConfirm');
+                return false;
                 break;
             
             default:
                 # code...
                 break;
         }
-        if ($this->currentStep < 4) {
-            $this->currentStep++;
-        }
-    }
-
-    /**
-     * decrement the step by one
-     */
-    public function back()
-    {
-        if ($this->currentStep > 1) {
-            $this->currentStep--;
-        }
+        return true;
     }
 
     public function render()

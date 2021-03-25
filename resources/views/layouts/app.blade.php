@@ -49,6 +49,8 @@
         @endguest
         
         <!--   Core JS Files   -->
+        <script type="module" src="{{ asset('user') }}/js/plugins/alpine.js"></script>
+        <script nomodule src="{{ asset('user') }}/js/plugins/alpine-ie11.js" defer></script>
         <script src="{{ asset('material') }}/js/core/jquery.min.js"></script>
         <script src="{{ asset('material') }}/js/core/popper.min.js"></script>
         <script src="{{ asset('material') }}/js/core/bootstrap-material-design.min.js"></script>

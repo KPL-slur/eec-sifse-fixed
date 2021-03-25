@@ -81,3 +81,7 @@ main .ck-editor[role='application'] .ck.ck-content
 select.form-control:not([size]):not([multiple]) {
     width: 50% !important;
 }
+
+[x-cloak] {
+    display: none;
+}

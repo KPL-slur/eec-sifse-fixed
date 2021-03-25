@@ -1,33 +1,58 @@
-<form method="post" wire:submit.prevent="upstore" class="form-horizontal" enctype="multipart/form-data">
+<form method="post" wire:submit.prevent="upstore" class="form-horizontal" enctype="multipart/form-data"
+        x-data="{step: 1}" x-cloak>
     @csrf
     @if (isset($id))
         @method('put')
     @endif
 
-    <div class="row setup-content {{ $currentStep != 1 ? 'd-none' : '' }}" id="step-1">
+    <div class="row setup-content" id="step-1"
+            x-show="step === 1">
         @include('expert.report.layout.forms.head.create')
     </div>
 
-    <div class="row setup-content {{ $currentStep != 2 ? 'd-none' : '' }}" id="step-2">
+    <div class="row setup-content" id="step-2"
+            x-show="step === 2">
         @include('expert.report.layout.forms.pm.create')
     </div>
 
-    <div class="row setup-content {{ $currentStep != 3 ? 'd-none' : '' }}" id="step-3">
+    <div class="row setup-content" id="step-3"
+            x-show="step === 3">
         @include('expert.report.layout.forms.ck-editor')
     </div>
 
-    <div class="row setup-content {{ $currentStep != 4 ? 'd-none' : '' }}" id="step-4">
+    <div class="row setup-content" id="step-4"
+            x-show="step === 4">
         @include('expert.report.layout.forms.recommends-form')
     </div>
 
-    <div class="row setup-content {{ $currentStep != 5 ? 'd-none' : '' }}" id="step-3">
+    <div class="row setup-content" id="step-5"
+            x-show="step === 5">
         @include('expert.report.layout.forms.report-images')
     </div>
     
-    <button class="btn btn-primary nextBtn btn-lg pull-right {{ $currentStep === 5 ? 'd-none' : '' }}" type="button" wire:click="nextStep">Next</button>
-    <button class="btn btn-success nextBtn btn-lg pull-right {{ $currentStep !== 5 ? 'd-none' : '' }}" type="button" wire:click="nextStep">Submit</button>
-    <button class="btn btn-danger nextBtn btn-lg pull-right {{ $currentStep === 1 ? 'd-none' : '' }}" type="button" wire:click="back">Back</button>
-    <button class="btn btn-secondary nextBtn btn-lg pull-right" type="button" wire:click="cancel">Cancel</button>
+    <x-ui.spinner wire:loading className="pull-right"/>
+    <button class="btn btn-primary nextBtn btn-lg pull-right" type="button"
+            wire:loading.remove
+            x-show="step < 5"
+            x-on:click="$wire.validateStep(step)
+                        .then(result => { if(result)step++ })">
+            Next
+    </button>
+    <button class="btn btn-success nextBtn btn-lg pull-right" type="button"
+            wire:loading.remove
+            x-show="step === 5" 
+            x-on:click="$wire.validateStep(step)
+                        .then(result => { if(result)step++ })">
+            Submit
+    </button>
+    <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" 
+            x-show="step > 1" x-on:click="step--">
+            Back
+    </button>
+    <button class="btn btn-secondary nextBtn btn-lg pull-right" type="button" 
+            wire:click="cancel">
+            Cancel
+    </button>
 
     @include('livewire.include.modal', ['modalType' => $modalType])
 
