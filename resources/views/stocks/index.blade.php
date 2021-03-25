@@ -54,58 +54,8 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-                    <button id="reset_input_stocks_report" type="button" class="btn btn-warning">Reset!</button>
-                    <a href="#" id="link_stocks_report" class="btn btn-success" style="pointer-events: none;">Input tanggal awal dan akhir!</a>
+                    <a href="#" id="button_stocks_report" class="btn btn-success px-3" style="pointer-events: none;">Print!</a>
                   </div>
-
-                  {{-- script for modal input --}}
-                  <script>
-                    const id_input_date_start = document.getElementById("input_date_start_stocks_report");
-                    const id_input_date_end = document.getElementById("input_date_end_stocks_report");
-                    var button_input = document.getElementById("link_stocks_report");
-                    var href_input_js = button_input.href;
-                    href_input_js = "stocks/";
-                    var href_input_start, href_input_end;
-
-                    const input_date_start = id_input_date_start.addEventListener("input", (e) => {
-                      href_input_start = e.target.value;
-                      href_input_js = href_input_js + href_input_start + '/';
-                      id_input_date_end.disabled = false;
-                    });
-                    const input_date_end = id_input_date_end.addEventListener("input", (e) => {
-                      href_input_end = e.target.value;
-                      href_input_js = href_input_js + href_input_end;
-                      button_input.href = href_input_js;
-                      button_input.style.pointerEvents = "";
-                      button_input.innerHTML = "Report!";
-                      button_input.target = "_blank";
-                    });
-                    
-                    window.onload = () => {
-                      // kalo teken button reset
-                      $('#reset_input_stocks_report').on('click', function(){
-                        alert("every input will be resetted");
-                        id_input_date_start.value = "";
-                        id_input_date_end.value = "";
-                        button_input.innerHTML = "Input tanggal awal dan akhir!";
-                      });
-
-                      // kalo modal ditutup
-                      $('#modal_input_stocks_report').on('hide.bs.modal', function(){
-                        if (id_input_date_end.value != "" || id_input_date_start.value != ""){
-                          alert('every date input will be deleted');
-                          $('#input_date_start_stocks_report').val("");
-                          $('#input_date_end_stocks_report').val("");
-                          $('#link_stocks_report').css('pointer-events', 'none');
-                          $('#input_date_end_stocks_report').prop("disabled", true);
-                          $('#link_stocks_report').html("Input tanggal awal dan akhir!");
-                          href_input_js = "stocks/";
-                        }
-                      });
-                    }
-                  </script>
-                  {{-- script for modal input --}}
-
                 </div>
               </div>
             </div>
@@ -153,58 +103,61 @@
 
               {{-- card body kedua --}}
               <div class="card-body">
-                <div class="table-responsive-lg">
-                  <table class="table" id="indexStocksTable">
-                    <thead class=" text-primary text-middle">
-                      <th>No</th>
-                      <th>Nama Barang</th>
-                      <th>Part Number</th>
-                      <th>Serial Number</th>
-                      <th>Tanggal Masuk</th>
-                      <th>Expired</th>
-                      <th>Kurs Beli</th>
-                      <th>Jumlah Unit</th>
-                      <th>Status</th>
-                      <th class="text-center">Update or delete</th>
-                    </thead>
-                      <tbody>
-                        @foreach ($stocks as $st)
-                          <tr>
-                            <input type="hidden" value="{{ $st->group }}">
-                            <td scope="row">{{$loop->iteration}}</td>
-                            <td>{{ $st->nama_barang }}</td>
-                            <td>{{ $st->part_number }}</td>
-                            <td>{{ $st->serial_number }}</td>
-                            <td>{{ $st->tgl_masuk }}</td>
-                            <td>{{ $st->expired }}</td>
-                            <td>{{ $st->kurs_beli }}</td>
-                            <td>{{ $st->jumlah_unit }}</td>
-                            <td>{{ $st->status }}</td>
-                            <td class="td-actions text-center">
-                              <a rel="tooltip" class="btn btn-lg btn-warning m-2" href="{{ url('stocks') }}/{{ $st->stock_id }}/edit" type="submit">
-                                <i class="material-icons">edit</i>
-                                <div class="ripple-container"></div>
-                              </a>
-                              <form action="{{ url('stocks') }}/{{ $st->stock_id }}" class="d-inline" method="POST">
-                                @method('DELETE')
-                                @csrf
-                                <button type="submit" class="btn btn-lg btn-danger m-2" title="delete" onclick="return confirm('Are you sure you want to delete '+ '{{ $st->nama_barang }}' +'?')">
-                                  <i class="material-icons">delete</i>
-                                  <div class="ripple-container"></div>
-                                  </button>
-              
-                              </form>
-                              {{-- <button class="btn btn-lg btn-danger m-2" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">
-                                <i class="material-icons">delete</i>
-                                <div class="ripple-container"></div>
-                              </button> --}}
-                            </td>
-                          </tr>
-                        @endforeach
-                      </tbody>
-                  </table>
+                <div class="row">
+                    <div class="col table-responsive-lg">
+                      <table class="table d-none" id="indexStocksTable">
+                        <thead class=" text-primary text-middle">
+                          <th>No</th>
+                          <th>Nama Barang</th>
+                          <th>Part Number</th>
+                          <th>Serial Number</th>
+                          <th>Tanggal Masuk</th>
+                          <th>Expired</th>
+                          <th>Kurs Beli</th>
+                          <th>Jumlah Unit</th>
+                          <th>Status</th>
+                          <th class="text-center">Update or delete</th>
+                        </thead>
+                          <tbody>
+                            @foreach ($stocks as $st)
+                              <tr>
+                                <input type="hidden" value="{{ $st->group }}">
+                                <td scope="row">{{$loop->iteration}}</td>
+                                <td>{{ $st->nama_barang }}</td>
+                                <td>{{ $st->part_number }}</td>
+                                <td>{{ $st->serial_number }}</td>
+                                <td>{{ $st->tgl_masuk }}</td>
+                                <td>{{ $st->expired }}</td>
+                                <td>{{ $st->kurs_beli }}</td>
+                                <td>{{ $st->jumlah_unit }}</td>
+                                <td>{{ $st->status }}</td>
+                                <td class="td-actions text-center">
+                                  <a rel="tooltip" class="btn btn-lg btn-warning m-2" href="{{ url('stocks') }}/{{ $st->stock_id }}/edit" type="submit">
+                                    <i class="material-icons">edit</i>
+                                    <div class="ripple-container"></div>
+                                  </a>
+                                  <form action="{{ url('stocks') }}/{{ $st->stock_id }}" class="d-inline" method="POST">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" class="btn btn-lg btn-danger m-2" title="delete" onclick="return confirm('Are you sure you want to delete '+ '{{ $st->nama_barang }}' +'?')">
+                                      <i class="material-icons">delete</i>
+                                      <div class="ripple-container"></div>
+                                      </button>
+                  
+                                  </form>
+                                  {{-- <button class="btn btn-lg btn-danger m-2" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">
+                                    <i class="material-icons">delete</i>
+                                    <div class="ripple-container"></div>
+                                  </button> --}}
+                                </td>
+                              </tr>
+                            @endforeach
+                          </tbody>
+                      </table>
+                    </div>
+                    {{-- table-responsive --}}
+                  </div>
                 </div>
-                {{-- table-responsive --}}
               </div>
               {{-- card body kedua --}}
             </div>
@@ -220,8 +173,6 @@
     {{-- row --}}
   </div>
   {{-- container-fluid --}}
-</div>
-{{-- content --}}
 
 {{-- script for dynamic table from select group --}}
 @push('scripts')
@@ -260,7 +211,77 @@
       });
   </script>
   {{-- script for dynamic table from select group --}}
+
+  {{-- script for modal input stocks report--}}
+  <script>
+    let url_stocks_report = "print?";
+    let url_stocks_repot_date_start = "date-start=";
+    let iterator_date_start = 0;
+    let url_stocks_repot_date_end = "&date-end=";
+    let iterator_date_end = 0;
+
+    $('#input_date_start_stocks_report').on('input', (e) => {
+      if (iterator_date_start === 0){ // kalo baru pertama kali ke-detect on input
+        url_stocks_repot_date_start = url_stocks_repot_date_start + e.target.value; //masukin input ke url_date_start
+        $('#input_date_end_stocks_report').prop("disabled", false); //nyalain input_date_end
+        iterator_date_start++;
+      } else {
+        url_stocks_repot_date_start = "date-start=" + e.target.value;
+        url_stocks_report = "print?" + url_stocks_repot_date_start + url_stocks_repot_date_end;
+        $("#button_stocks_report").prop('href', url_stocks_report);
+      }
+    });
+
+    $('#input_date_end_stocks_report').on('input', (e) => {
+      if (iterator_date_end === 0){ // kalo baru pertama kali ke-detect on input
+        url_stocks_repot_date_end = url_stocks_repot_date_end + e.target.value; //masukin input ke url_date_end
+        if(url_stocks_report.indexOf("date-start")){ //ngecek string date-start ada di dalem url stock report ga.
+        // ini gr2 error kl 2x input date start berurutan, 1x input date end
+          url_stocks_report = "print?" + url_stocks_repot_date_start + url_stocks_repot_date_end;
+        } else {
+          url_stocks_report = url_stocks_report + url_stocks_repot_date_start + url_stocks_repot_date_end;
+        }
+        $("#button_stocks_report").css('pointer-events', ''); //bikin button print bisa di point
+        $("#button_stocks_report").prop('target', '_blank'); //biar pas button di click ke tab baru
+        iterator_date_end++;
+      } else {
+        url_stocks_repot_date_end = "&date-end=" + e.target.value;
+        url_stocks_report = "print?" + url_stocks_repot_date_start + url_stocks_repot_date_end;
+      }
+      $("#button_stocks_report").prop('href', url_stocks_report); //taro sini krn gapeduli pertama kali ke-detect on input atau ngga, pasti bakal jalan
+    });
+
+    //kalo misalkan modal ditutup
+    $('#modal_input_stocks_report').on('hide.bs.modal', () => {
+      confirm_close = confirm('Apakah Anda yakin ingin menutup input?\nSemua tanggal input akan di-reset');
+      if(confirm_close == true){
+        if( $('#input_date_start_stocks_report').val() != "" || $('#input_date_end_stocks_report').val() != "" ){ //value dari value nya ada apa ngga
+          $('#input_date_start_stocks_report').val(""); //ngosongin value input date start
+          $('#input_date_end_stocks_report').val(""); //ngosongin value input date end
+          $('#button_stocks_report').css('pointer-events', 'none'); //bikin button print gabisa di point
+          $('#input_date_end_stocks_report').prop("disabled", true); //matiin input date end
+          iterator_date_start = 0; //inisialisasi lagi iterator date start
+          iterator_date_end = 0; //inisialisasi lagi iterator date end
+        }
+      }
+    });
+
+    $("#modal_input_stocks_report").on("hidden.bs.modal", () => {
+      if(confirm_close == false){
+        $("#modal_input_stocks_report").modal('show');
+      }
+    });
+    
+  </script>
+  {{-- script for modal input stocks report --}}
   
+  <script>
+    $(document).ready( () => {
+      $("#indexStocksTable").DataTable();
+      $("#indexStocksTable").removeClass('d-none');
+    });
+  </script>
+
 @endpush
 
 @endsection
