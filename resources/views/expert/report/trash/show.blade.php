@@ -8,18 +8,18 @@
                     <h4 class="card-title">{{ __('Preventive Maintenance Report') }}</h4>
                 </div>
                 <div class="card-body ">
-                    {{-- <div class="sticky-top"> --}}
+                    <div class="">
                         <a type="button" class="btn btn-info"
                             href="{{ route("report.trash.index", ['maintenance_type' => $headReport->maintenance_type]) }}">BACK</a>
-
+                        @can('update', $headReport)
                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalRestore">
                             RESTORE
                         </button>
-
                         <button type="button" rel="tooltip" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete">
                             DELETE
                         </button>
-                    {{-- </div> --}}
+                        @endcan
+                    </div>
 
                     <div class="card ">
                         <div class="card-header card-header-primary">
@@ -175,6 +175,7 @@
     
     {{-- FLOATING MENU --}}
     <x-ui.btn-float-group>
+        @can('update', $headReport)
         <li>
             <button class="btn btn-danger btn-fab btn-round" data-toggle="modal" data-target="#modalDelete">
                 <i class="material-icons">close</i>
@@ -185,6 +186,7 @@
                 <i class="material-icons">restore</i>
             </button>
         </li>
+        @endcan
     </x-ui.btn-float-group>
 
     {{-- Modal Delete --}}

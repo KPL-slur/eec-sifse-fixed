@@ -87,9 +87,7 @@ class ReportController extends Controller
     public function edit($maintenance_type, $id)
     {
         $headReport = HeadReport::findOrFail($id);
-        if (! Gate::allows('update-report', $headReport)) {
-            return redirect()->route('report.index', $maintenance_type)->with('status_delete', 'Access Forbidden');
-        }
+        $this->authorize('update', $headReport);
         
         return view('expert.report.edit', compact('id', 'maintenance_type'));
     }
@@ -103,9 +101,7 @@ class ReportController extends Controller
     public function destroy($maintenance_type, $id)
     {
         $headReport = HeadReport::findOrFail($id);
-        if (! Gate::allows('update-report', $headReport)) {
-            return redirect()->route('report.index', $maintenance_type)->with('status_delete', 'Access Forbidden');
-        }
+        $this->authorize('update', $headReport);
 
         HeadReport::destroy($id);
         return redirect()->route('report.index', $maintenance_type)->with('status_delete', 'Data Dihapus');

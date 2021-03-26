@@ -45,7 +45,7 @@
                                                     <i class="material-icons">visibility</i>
                                                 </a>
                                                 @foreach ($hr->experts as $expert)
-                                                    @can('update-report', $hr)
+                                                    @can('update', $hr)
                                                         <div class="d-inline">
                                                             <form action="{{ route('report.trash.restore', ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}" method="post"
                                                                 class="d-inline">

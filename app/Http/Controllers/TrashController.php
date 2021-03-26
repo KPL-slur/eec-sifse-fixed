@@ -39,14 +39,10 @@ class TrashController extends Controller
     public function restore($maintenance_type, $id)
     {
         $headReport = HeadReport::onlyTrashed()->findOrFail($id);
-        if (! Gate::allows('update-report', $headReport)) {
-            return redirect()->route('report.trash.index', $maintenance_type)->with('status_perm_delete', 'Access Forbidden');
-        }
+        $this->authorize('update', $headReport);
         
-        HeadReport::onlyTrashed()
-            ->where('head_id', $id)
-            ->first()
-            ->restore();
+        $headReport->restore();
+
         return redirect()->route('report.trash.index', compact('maintenance_type'))->with('status_restore', 'Data Berhasil Direstore');
     }
 
@@ -59,9 +55,7 @@ class TrashController extends Controller
     public function permDelete($maintenance_type, $id)
     {
         $headReport = HeadReport::onlyTrashed()->findOrFail($id);
-        if (! Gate::allows('update-report', $headReport)) {
-            return redirect()->route('report.trash.index', $maintenance_type)->with('status_perm_delete', 'Access Forbidden');
-        }
+        $this->authorize('update', $headReport);
 
         // delete stored files
         $reportImageFiles = $headReport->reportImages;

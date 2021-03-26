@@ -50,7 +50,7 @@
                                                     <i class="material-icons">visibility</i>
                                                 </a>
                                                 @foreach ($hr->experts as $expert)
-                                                    @can('update-report', $hr)
+                                                    @can('update', $hr)
                                                         <div class="d-inline">
                                                             <a type="button" rel="tooltip" class="btn btn-warning"
                                                                 href="{{ route("report.edit", ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}"

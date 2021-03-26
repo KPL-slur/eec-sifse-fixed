@@ -13,9 +13,11 @@
                             href="{{ route("report.index", $maintenance_type) }}">BACK</a>
                         <button type="button" rel="tooltip" class="btn btn-primary" data-toggle="modal" data-target="#modalPrint">
                             GENERATE PDF</button>
+                        @can('update', $headReport)
                         <a type="button" class="btn btn-warning" href="{{ route('report.edit', ['id' => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}">EDIT</a>
                         <button type="submit" rel="tooltip" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete">
                             DELETE</button>
+                        @endcan
                     </div>
 
                     <div class="card ">
@@ -180,6 +182,7 @@
     
     {{-- FLOATING MENU --}}
     <x-ui.btn-float-group>
+        @can('update', $headReport)
         <li>
             <button class="btn btn-danger btn-fab btn-round" data-toggle="modal" data-target="#modalDelete">
                 <i class="material-icons">close</i>
@@ -190,6 +193,7 @@
                 <i class="material-icons">edit</i>
             </a>
         </li>
+        @endcan
         <li>
             <button class="btn btn-primary btn-fab btn-round" data-toggle="modal" data-target="#modalPrint">
                 <i class="material-icons">print</i>
