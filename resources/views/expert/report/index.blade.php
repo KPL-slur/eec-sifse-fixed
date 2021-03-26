@@ -17,7 +17,7 @@
                     
                     <div class="row">
                         <div class="col material-datatables">
-                            <x-ui.spinner id="spinner"/>
+                            <x-ui.spinner id="spinner" className="spinner-center"/>
                             <table class="table table-no-bordered table-hover d-none" cellspacing="0" width="100%" style="width:100%" id="report">
                                 <thead>
                                     <tr>
