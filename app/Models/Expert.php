@@ -22,6 +22,6 @@ class Expert extends Model
      */
     public function user()
     {
-        return $this->belongsTo(User::class, 'expert_id');
+        return $this->hasOne(User::class, 'expert_id');
     }
 }
