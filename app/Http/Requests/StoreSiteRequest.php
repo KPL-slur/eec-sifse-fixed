@@ -27,6 +27,7 @@ class StoreSiteRequest extends FormRequest
             'radar_name' => 'required',
             'station_id' => 'required',
             'image' => 'image | required',
+            // 'stock_id' => 'required',
         ];
         return $rules;
     }

@@ -17,17 +17,13 @@
           <div class="card-body">
 
             <div class="d-flex ">
-              <a href="{{ url('stock_currency/') }}" class="btn btn-info ml-3 d-inline">Kembali</a>
+              <a href="{{ url('stocks/') }}" class="btn btn-info ml-3 d-inline">Kembali</a>
               <select name="selectYearStock" class="form-control ml-auto d-inline" id="selectYearStock" style="max-width:15%;">
                 <option selected value="">Semua</option>
                 @foreach ($rcm_year as $rcm)
                     <option value="{{$rcm}}">{{$rcm}}</option>
                 @endforeach
               </select>
-            </div>
-            
-            <div>
-              <a href="{{ url('stocks/') }}" class="btn btn-info ml-3 d-inline">Kembali</a>
             </div>
 
             {{-- card kedua --}}
@@ -110,6 +106,8 @@
 </div>
 {{-- content --}}
 
+@push('scripts')
+
 {{-- script for dynamic table from select year --}}
 <script>
   window.onload = () => {
@@ -149,6 +147,12 @@
     });
   };
 </script>
+<script>
+  $(document).ready(function(){
+      $("#indexRecommendsTable").DataTable();
+  });
+</script>
+@endpush
 
 @endsection
 {{-- @section('content')

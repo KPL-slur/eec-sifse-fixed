@@ -108,11 +108,11 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::post('editUser', [App\Http\Controllers\UserController::class, 'editData']);
     Route::delete('deleteUser/{id}', [App\Http\Controllers\UserController::class, 'deleteData']);
 
-    //distribusi
+    //distribution
     Route::get('distribution', [App\Http\Controllers\DistributionController::class, 'index'])->name('distribution');
     Route::get('viewDistribution/{id}', [App\Http\Controllers\DistributionController::class, 'show']);
     Route::get('editDistribution/{id}', [App\Http\Controllers\DistributionController::class, 'edit']);
-    Route::post('edit', [App\Http\Controllers\DistributionController::class, 'editData']);
+    Route::put('edit/{distribution}', [App\Http\Controllers\DistributionController::class, 'editData']);
     Route::delete('deleteDistribution/{id}', [App\Http\Controllers\DistributionController::class, 'deleteData']);
     Route::get('addDistribution/{id}', [App\Http\Controllers\DistributionController::class, 'add']);
     Route::post('addDst', [App\Http\Controllers\DistributionController::class, 'addData']);
@@ -150,7 +150,7 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('stocks/create', [App\Http\Controllers\StockController::class, 'create'])->name('stocks-create'); // input new spare part
     Route::put('stocks/{stock}/update', [App\Http\Controllers\StockController::class, 'update']); // save the edited stock
     Route::delete('stocks/{stock}', [App\Http\Controllers\StockController::class, 'destroy']); // delete specific spare part
-    Route::get('stocks/{date_start}/{date_end}/', [App\Http\Controllers\StockController::class, 'report']);
+    Route::get('stocks/print', [App\Http\Controllers\StockController::class, 'report']);
     Route::get('stocks/send-email', [App\Http\Controllers\StockController::class, 'sendEmail']);
     Route::get('stocks/recommendation', [App\Http\Controllers\StockController::class, 'showRecommendation'])->name('recommendation'); //recommendation item
 });
