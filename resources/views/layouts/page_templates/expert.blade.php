@@ -5,6 +5,6 @@
     <div class="no-margin">
       @yield('content')
     </div>
-    {{-- @include('layouts.footers.auth') --}}
+    @include('layouts.footers.auth')
   </div>
 </div>
