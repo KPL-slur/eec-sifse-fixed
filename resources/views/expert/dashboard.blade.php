@@ -45,7 +45,7 @@
                             <h3 class="card-title">PROFIL</h3>
                         </div>
                         <div class="card-footer">
-                            <button class="btn btn-info">MORE</button>
+                            <a class="btn btn-info" href="{{ route('profile.edit') }}">MORE</a>
                         </div>
                     </div>
                 </div>
