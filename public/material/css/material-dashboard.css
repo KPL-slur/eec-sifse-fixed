@@ -14367,6 +14367,51 @@ label {
   margin: 0;
 }
 
+.progress {
+  height: 4px;
+  border-radius: 0;
+  box-shadow: none;
+  background: #DDDDDD;
+  margin-bottom: 20px;
+}
+.progress .progress-bar {
+  box-shadow: none;
+}
+.progress .progress-bar.progress-bar-primary {
+  background: #9c27b0 !important;
+}
+.progress .progress-bar.progress-bar-info {
+  background: #00bcd4;
+}
+.progress .progress-bar.progress-bar-success {
+  background: #4caf50;
+}
+.progress .progress-bar.progress-bar-warning {
+  background: #ffeb3b;
+}
+.progress .progress-bar.progress-bar-danger {
+  background: #f44336;
+}
+.progress .progress-bar.progress-bar-striped {
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 0, transparent 50%, rgba(255, 255, 255, 0.15) 0, rgba(255, 255, 255, 0.15) 75%, transparent 0, transparent) !important;
+  background-size: 1rem 1rem !important;
+}
+.progress.progress-line-primary {
+  background: rgba(156, 39, 176, 0.2);
+}
+.progress.progress-line-info {
+  background: rgba(0, 188, 212, 0.2);
+}
+.progress.progress-line-success {
+  background: rgba(76, 175, 80, 0.2);
+}
+.progress.progress-line-warning {
+  background: rgba(255, 235, 59, 0.2);
+}
+.progress.progress-line-danger {
+  background: rgba(244, 67, 54, 0.2);
+}
+
 .card {
   border: 0;
   margin-bottom: 30px;

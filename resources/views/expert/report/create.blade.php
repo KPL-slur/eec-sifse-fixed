@@ -3,7 +3,7 @@
 @section('content')
     <div class="content">
         <div class="container">
-            <h1>Create New {{ $maintenance_type == 'pm' ? 'Prevetive' : 'Corrective' }} Maintenance Report</h1>
+            {{-- <h1>Create New {{ $maintenance_type == 'pm' ? 'Prevetive' : 'Corrective' }} Maintenance Report</h1> --}}
             <div class="row">
                 <div class="col-md-12">
                     @switch($maintenance_type)

@@ -1,5 +1,8 @@
 <form method="post" wire:submit.prevent="upstore" class="form-horizontal" enctype="multipart/form-data"
-        x-data="{step: 1}" x-cloak>
+        x-data="{step: 1, type: 'pm'}" x-cloak>
+
+    @include('livewire.include.progress-bar')
+
     @csrf
     @if (isset($id))
         @method('put')
@@ -30,7 +33,7 @@
         @include('expert.report.layout.forms.report-images')
     </div>
     
-    <x-ui.spinner wire:loading className="pull-right"/>
+    <x-ui.spinner wire:loading className="pull-right mt-3"/>
     <button class="btn btn-primary nextBtn btn-lg pull-right" type="button"
             wire:loading.remove
             x-show="step < 5"
