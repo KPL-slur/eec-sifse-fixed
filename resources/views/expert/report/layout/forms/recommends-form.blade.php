@@ -1,6 +1,6 @@
 <div class="card ">
     <div class="card-header card-header-primary">
-        <h4 class="card-title">{{ __('Weather Radar Service Report') }}</h4>
+        <h4 class="card-title">{{ __('Recommendations') }}</h4>
     </div>
 
     <div class="card-body">
@@ -43,7 +43,7 @@
                                     >
                                 </td>
                                 <td>
-                                    <a href="#"
+                                    <a href="#" class="text-danger"
                                         wire:click.prevent="selectItem({{ $index }}, 'recommendation')">Delete</a>
                                 </td>
                             </tr>
@@ -62,7 +62,7 @@
                                     >
                                 </td>
                                 <td>
-                                    <a href="#"
+                                    <a href="#" class="text-danger"
                                         wire:click.prevent="selectItem({{ $index }}, 'manualRecommendation')">Delete</a>
                                 </td>
                             </tr>

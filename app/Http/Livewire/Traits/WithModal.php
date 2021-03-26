@@ -61,13 +61,4 @@ trait WithModal
                 break;
         }
     }
-
-    /**
-     * form input cancelation
-     */
-    public function cancel()
-    {
-        $this->modalType = 'cancel';
-        $this->dispatchBrowserEvent('openModalConfirm');
-    }
 }

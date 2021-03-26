@@ -11,16 +11,17 @@
                     <a type="button" class="btn btn-info" href="{{ route('report.index', $maintenance_type) }}">BACK</a>
                     
                     <div class="row">
-                        <div class="col table-responsive">
-                            <table class="table">
+                        <div class="col material-datatables">
+                            <x-ui.spinner id="spinner" className="spinner-center"/>
+                            <table class="table table-no-bordered table-hover d-none" cellspacing="0" width="100%" style="width:100%" id="report">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">#</th>
+                                        <th>#</th>
                                         <th>Radar Name</th>
                                         <th>Station ID</th>
                                         <th>Date</th>
                                         <th>Expertises</th>
-                                        <th class="text-right">Actions</th>
+                                        <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -75,7 +76,7 @@
     </div>
 
     {{-- Floating Menu --}}
-    <x-ui.btn-float-group></x-ui.btn-float-group>
+    {{-- <x-ui.btn-float-group></x-ui.btn-float-group> --}}
 
     {{-- @if ($headReports->isNotEmpty())
         <x-ui.modal-confirm id="modalRestore">
@@ -122,5 +123,27 @@
             };
         </script>
     @endif
+
+    @push('scripts')
+        <script>
+            window.onload = () => {
+                $(document).ready( function () {
+                    $('#report').DataTable({
+                        "pagingType": "numbers",
+                        "lengthMenu": [
+                            [10, 25, 50, 100, 250, 500],
+                            [10, 25, 50, 100, 250, 500]
+                        ],
+                        responsive: true,
+                        language: {
+                        searchPlaceholder: "Search records",
+                        }
+                    });
+                    $('#report').removeClass('d-none');
+                    $('#spinner').addClass('d-none');
+                });
+            };
+        </script>
+    @endpush
 
 @endsection

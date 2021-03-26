@@ -42,8 +42,9 @@
             <div class="row">
                 <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                     <div class="">
-                        <span wire:loading.remove wire:target="attachments.{{ $index }}.image"
-                            class="btn btn-raised btn-round btn-default btn-file {{ $attachments[$index]['image'] ? 'd-none' : '' }}">
+                        <span wire:loading.remove wire:target="attachments.{{ $index }}.image" 
+                                class="btn btn-default btn-round btn-file {{ $attachments[$index]['image'] ? 'd-none' : '' }}">
+                            <span class="fileinput-new">Select image: </span>
                             <input type="file" name="attachments[{{ $index }}][image]" class="fileinput-new"
                                 wire:model='attachments.{{ $index }}.image' />
                         </span>

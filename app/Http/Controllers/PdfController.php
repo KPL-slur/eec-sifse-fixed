@@ -62,7 +62,7 @@ class PdfController extends Controller
             }
 
             $fileName = time().'_'.$headReport->report_date_start.'_'.$headReport->report_date_end.'_'.$headReport->site->station_id.'.pdf';
-            $filePath = $request->file('uploadedPdf')->storePubliclyAs('pm', $fileName, 'public');
+            $filePath = $request->file('uploadedPdf')->storePubliclyAs($maintenance_type, $fileName, 'public');
 
             $headReport->printedReport()->updateOrCreate(
                 ['head_id' => $id],

@@ -40,6 +40,8 @@
  @import "material-dashboard/tables";
  @import "material-dashboard/misc";
  @import "material-dashboard/social-buttons";
+ @import "material-dashboard/pagination";
+ @import "material-dashboard/progress";
 
 @import "material-dashboard/cards";
 @import "material-dashboard/cards/card-stats";
@@ -50,5 +52,6 @@
  @import "material-dashboard/plugins/animate";
  @import "material-dashboard/plugins/chartist";
  @import "material-dashboard/plugins/perfect-scrollbar";
+ @import "material-dashboard/plugins/datatables.net";
 
  @import "material-dashboard/responsive";

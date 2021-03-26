@@ -73,18 +73,14 @@ trait WithHeadReport
     }
 
     /**
-     * run if any var in this traits get updated
+     * run if site_id get updated
      */
-    public function updatedWithHeadReport()
+    public function updatedSiteId()
     {
         if ($this->site_id) {
             $this->radar = $this->sites->where('site_id', $this->site_id)->first()->radar_name;
         } else {
             $this->radar = null;
-        }
-
-        if ($this->report_date_end) {
-            $this->validate(['report_date_end' => 'required|after_or_equal:report_date_start']);
         }
     }
 
