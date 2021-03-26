@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\Utility;
 use App\Models\HeadReport;
+use Illuminate\Support\Facades\Auth;
 
 class ReportController extends Controller
 {
@@ -23,8 +24,10 @@ class ReportController extends Controller
         ->with('site')
         ->orderBy('head_id', 'desc')
         ->get();
+
+        $auth = Auth::user()->expert->expert_id;
         
-        return view('expert.report.index', compact('headReports', 'maintenance_type'));
+        return view('expert.report.index', compact('headReports', 'maintenance_type', 'auth'));
     }
 
     /**
@@ -85,7 +88,14 @@ class ReportController extends Controller
      */
     public function edit($maintenance_type, $id)
     {
-        return view('expert.report.edit', compact('id', 'maintenance_type'));
+        $auth = Auth::user()->expert->expert_id;
+        $headReport = HeadReport::find($id);
+        foreach ($headReport->experts as $expert) {
+            if (($expert->expert_id == $auth)) {
+                return view('expert.report.edit', compact('id', 'maintenance_type'));
+            }
+        }
+        return redirect()->route('report.index', $maintenance_type)->with('status_delete', 'Access Forbidden');
     }
 
     /**
@@ -96,7 +106,14 @@ class ReportController extends Controller
      */
     public function destroy($maintenance_type, $id)
     {
-        HeadReport::destroy($id);
-        return redirect()->route('report.index', $maintenance_type)->with('status_delete', 'Data Dihapus');
+        $auth = Auth::user()->expert->expert_id;
+        $headReport = HeadReport::find($id);
+        foreach ($headReport->experts as $expert) {
+            if (($expert->expert_id == $auth)) {
+                HeadReport::destroy($id);
+                return redirect()->route('report.index', $maintenance_type)->with('status_delete', 'Data Dihapus');
+            }
+        }
+        return redirect()->route('report.index', $maintenance_type)->with('status_delete', 'Access Forbidden');
     }
 }

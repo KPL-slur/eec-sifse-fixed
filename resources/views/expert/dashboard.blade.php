@@ -3,7 +3,7 @@
 @section('content')
     <div class="content">
         <div class="container-fluid">
-            <h1>HI, {{ $loggedName }} here</h1>
+            <h1>Welcome, {{ $loggedName }} </h1>
 
             <div class="row">
                 <div class="col-lg-4 col-md-6 col-sm-6">

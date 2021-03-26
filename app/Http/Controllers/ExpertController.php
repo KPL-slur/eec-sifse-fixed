@@ -25,7 +25,7 @@ class ExpertController extends Controller
      */
     public function index()
     {
-        $loggedName = Auth::user()->name;
+        $loggedName = Auth::user()->expert->name;
         return view('expert.dashboard', compact('loggedName'));
     }
 }

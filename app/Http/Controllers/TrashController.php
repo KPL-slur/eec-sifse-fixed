@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\Utility;
 use App\Models\Headreport;
+use Illuminate\Support\Facades\Auth;
 
 class TrashController extends Controller
 {
@@ -25,8 +26,10 @@ class TrashController extends Controller
         ->orderBy('head_id', 'desc')
         ->onlyTrashed()
         ->get();
+
+        $auth = Auth::user()->expert->expert_id;
         
-        return view('expert.report.trash.index', compact('headReports', 'maintenance_type'));
+        return view('expert.report.trash.index', compact('headReports', 'maintenance_type', 'auth'));
     }
 
     /**
@@ -37,12 +40,18 @@ class TrashController extends Controller
      */
     public function restore($maintenance_type, $id)
     {
-        HeadReport::onlyTrashed()
+        $auth = Auth::user()->expert->expert_id;
+        $headReport = HeadReport::onlyTrashed()->find($id);
+        foreach ($headReport->experts as $expert) {
+            if (($expert->expert_id == $auth)) {
+                HeadReport::onlyTrashed()
                     ->where('head_id', $id)
                     ->first()
                     ->restore();
-
-        return redirect()->route('report.trash.index', compact('maintenance_type'))->with('status_restore', 'Data Berhasil Direstore');
+                return redirect()->route('report.trash.index', compact('maintenance_type'))->with('status_restore', 'Data Berhasil Direstore');
+            }
+        }
+        return redirect()->route('report.trash.index', $maintenance_type)->with('status_perm_delete', 'Access Forbidden');
     }
 
     /**
@@ -53,18 +62,25 @@ class TrashController extends Controller
      */
     public function permDelete($maintenance_type, $id)
     {
-        // The other table except report image will cascade on delete
-        $headReport = HeadReport::onlyTrashed()->where('head_id', $id)->first();
+        $auth = Auth::user()->expert->expert_id;
+        $headReport = HeadReport::onlyTrashed()->find($id);
+        foreach ($headReport->experts as $expert) {
+            if (($expert->expert_id == $auth)) {
 
-        $reportImageFiles = $headReport->reportImages;
-        foreach ($reportImageFiles as $reportImageFile) {
-            \Storage::delete('public/'.$reportImageFile->image);
+                $headReport = HeadReport::onlyTrashed()->where('head_id', $id)->first();
+                // delete stored files
+                $reportImageFiles = $headReport->reportImages;
+                foreach ($reportImageFiles as $reportImageFile) {
+                    \Storage::delete('public/'.$reportImageFile->image);
+                }
+
+                $headReport->forceDelete();
+
+                return redirect()->route('report.trash.index', compact('maintenance_type'))
+                                 ->with('status_perm_delete', 'Data Dihapus Permanent');
+            }
         }
-
-        $headReport->reportImages()->delete();
-        $headReport->forceDelete();
-
-        return redirect()->route('report.trash.index', compact('maintenance_type'))->with('status_perm_delete', 'Data Dihapus Permanent');
+        return redirect()->route('report.trash.index', $maintenance_type)->with('status_perm_delete', 'Access Forbidden');
     }
 
     /**

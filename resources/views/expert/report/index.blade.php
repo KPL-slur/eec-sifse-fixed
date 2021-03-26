@@ -17,11 +17,14 @@
                     
                     <div class="row">
                         <div class="col material-datatables">
+                            @if ($headReports->isEmpty())
+                            <h4 class="text-center text-danger"> There are no report(s) yet. </h4>
+                            @else
                             <x-ui.spinner id="spinner" className="spinner-center"/>
                             <table class="table table-no-bordered table-hover d-none" cellspacing="0" width="100%" style="width:100%" id="report">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th class="disabled-sorting">#</th>
                                         <th>Radar Name</th>
                                         <th>Station ID</th>
                                         <th>Date</th>
@@ -30,13 +33,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if ($headReports->isEmpty())
-                                        <tr>
-                                            <td colspan="6">
-                                                <p class="text-danger">No Report(s) Yet</p>
-                                            </td>
-                                        </tr>
-                                    @endif
                                     @foreach ($headReports as $hr)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
@@ -53,24 +49,31 @@
                                                     href="{{ route("report.show", ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}">
                                                     <i class="material-icons">visibility</i>
                                                 </a>
-                                                <a type="button" rel="tooltip" class="btn btn-warning"
-                                                    href="{{ route("report.edit", ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}"
-                                                    >
-                                                    <i class="material-icons">edit</i>
-                                                </a>
-                                                <form action="{{ route('report.delete', ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}" method="post"
-                                                    class="d-inline">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button type="submit" rel="tooltip" class="btn btn-danger" onclick="return confirm('Apakah yakin ingin menghapus data?')">
-                                                        <i class="material-icons">close</i>
-                                                    </button>
-                                                </form>
+                                                @foreach ($hr->experts as $expert)
+                                                    @if ($expert->expert_id == $auth)
+                                                        <div class="d-inline">
+                                                            <a type="button" rel="tooltip" class="btn btn-warning"
+                                                                href="{{ route("report.edit", ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}"
+                                                                >
+                                                                <i class="material-icons">edit</i>
+                                                            </a>
+                                                            <form action="{{ route('report.delete', ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}" method="post"
+                                                                class="d-inline">
+                                                                @csrf
+                                                                @method('delete')
+                                                                <button type="submit" rel="tooltip" class="btn btn-danger" onclick="return confirm('Apakah yakin ingin menghapus data?')">
+                                                                    <i class="material-icons">close</i>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -109,9 +112,9 @@
         </script>
     @endif
 
-    @push('scripts')
-        <script>
-            window.onload = () => {
+    @if (!($headReports->isEmpty()))
+        @push('scripts')
+            <script>
                 $(document).ready( function () {
                     $('#report').DataTable({
                         "pagingType": "numbers",
@@ -127,8 +130,8 @@
                     $('#spinner').addClass('d-none');
                     $('#report').removeClass('d-none');
                 });
-            };
-        </script>
-    @endpush
+            </script>
+        @endpush
+    @endif
 
 @endsection
