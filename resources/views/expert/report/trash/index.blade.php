@@ -45,7 +45,7 @@
                                                     <i class="material-icons">visibility</i>
                                                 </a>
                                                 @foreach ($hr->experts as $expert)
-                                                    @if ($expert->expert_id == $auth)
+                                                    @can('update-report', $hr)
                                                         <div class="d-inline">
                                                             <form action="{{ route('report.trash.restore', ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}" method="post"
                                                                 class="d-inline">
@@ -64,7 +64,7 @@
                                                             </form>
                                                         </div>
                                                         @break
-                                                    @endif
+                                                    @endcan
                                                 @endforeach
                                             </td>
                                         </tr>

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\Utility;
 use App\Models\Headreport;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class TrashController extends Controller
 {
@@ -26,10 +26,8 @@ class TrashController extends Controller
         ->orderBy('head_id', 'desc')
         ->onlyTrashed()
         ->get();
-
-        $auth = Auth::user()->expert->expert_id;
         
-        return view('expert.report.trash.index', compact('headReports', 'maintenance_type', 'auth'));
+        return view('expert.report.trash.index', compact('headReports', 'maintenance_type'));
     }
 
     /**
@@ -40,18 +38,16 @@ class TrashController extends Controller
      */
     public function restore($maintenance_type, $id)
     {
-        $auth = Auth::user()->expert->expert_id;
-        $headReport = HeadReport::onlyTrashed()->find($id);
-        foreach ($headReport->experts as $expert) {
-            if (($expert->expert_id == $auth)) {
-                HeadReport::onlyTrashed()
-                    ->where('head_id', $id)
-                    ->first()
-                    ->restore();
-                return redirect()->route('report.trash.index', compact('maintenance_type'))->with('status_restore', 'Data Berhasil Direstore');
-            }
+        $headReport = HeadReport::onlyTrashed()->findOrFail($id);
+        if (! Gate::allows('update-report', $headReport)) {
+            return redirect()->route('report.trash.index', $maintenance_type)->with('status_perm_delete', 'Access Forbidden');
         }
-        return redirect()->route('report.trash.index', $maintenance_type)->with('status_perm_delete', 'Access Forbidden');
+        
+        HeadReport::onlyTrashed()
+            ->where('head_id', $id)
+            ->first()
+            ->restore();
+        return redirect()->route('report.trash.index', compact('maintenance_type'))->with('status_restore', 'Data Berhasil Direstore');
     }
 
     /**
@@ -62,25 +58,21 @@ class TrashController extends Controller
      */
     public function permDelete($maintenance_type, $id)
     {
-        $auth = Auth::user()->expert->expert_id;
-        $headReport = HeadReport::onlyTrashed()->find($id);
-        foreach ($headReport->experts as $expert) {
-            if (($expert->expert_id == $auth)) {
-
-                $headReport = HeadReport::onlyTrashed()->where('head_id', $id)->first();
-                // delete stored files
-                $reportImageFiles = $headReport->reportImages;
-                foreach ($reportImageFiles as $reportImageFile) {
-                    \Storage::delete('public/'.$reportImageFile->image);
-                }
-
-                $headReport->forceDelete();
-
-                return redirect()->route('report.trash.index', compact('maintenance_type'))
-                                 ->with('status_perm_delete', 'Data Dihapus Permanent');
-            }
+        $headReport = HeadReport::onlyTrashed()->findOrFail($id);
+        if (! Gate::allows('update-report', $headReport)) {
+            return redirect()->route('report.trash.index', $maintenance_type)->with('status_perm_delete', 'Access Forbidden');
         }
-        return redirect()->route('report.trash.index', $maintenance_type)->with('status_perm_delete', 'Access Forbidden');
+
+        // delete stored files
+        $reportImageFiles = $headReport->reportImages;
+        foreach ($reportImageFiles as $reportImageFile) {
+            \Storage::delete('public/'.$reportImageFile->image);
+        }
+
+        $headReport->forceDelete();
+
+        return redirect()->route('report.trash.index', compact('maintenance_type'))
+                         ->with('status_perm_delete', 'Data Dihapus Permanent');
     }
 
     /**

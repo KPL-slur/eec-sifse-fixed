@@ -5,6 +5,9 @@ namespace App\Providers;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
+use App\Models\User;
+use App\Models\HeadReport;
+
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -25,6 +28,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('update-report', function (User $user, HeadReport $headReport) {
+            foreach ($headReport->experts as $expert) {
+                if ($user->expert_id == $expert->expert_id) {
+                    return $user->expert_id === $expert->expert_id;
+                }
+            }
+        });
     }
 }
