@@ -77,5 +77,8 @@
     </div>
 
 @endforeach
+<x-ui.action-message on="unsetAttachment" type="danger">
+    Attachment Record Deleted
+</x-ui.action-message>
 <button class="btn btn-sm btn-secondary" wire:click.prevent="addAttachment">+ Add Another
     Attachment</button>

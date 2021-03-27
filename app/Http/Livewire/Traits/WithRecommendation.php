@@ -63,6 +63,7 @@ trait WithRecommendation
         unset($this->recommends[$index]);
         array_values($this->recommends);
         $this->dispatchBrowserEvent('list-added');
+        $this->emit('unsetRecommendation');
     }
 
     /**
@@ -114,6 +115,7 @@ trait WithRecommendation
         unset($this->manualRecommends[$index]);
         array_values($this->manualRecommends);
         $this->dispatchBrowserEvent('list-added');
+        $this->emit('unsetRecommendation');
     }
 
     //* GENERAL RECOMMENDATIONS

@@ -81,6 +81,7 @@ trait WithReportImage
 
         unset($this->attachments[$index]);
         array_values($this->attachments);
+        $this->emit('unsetAttachment');
     }
 
     /**

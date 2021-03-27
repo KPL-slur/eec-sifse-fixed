@@ -153,6 +153,9 @@
                 </table>
                 <div class="row">
                     <div class="col-md-12">
+                        <x-ui.action-message on="unsetExpert" type="danger">
+                            Expert Record Deleted
+                        </x-ui.action-message>
                         @error('dupes')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror

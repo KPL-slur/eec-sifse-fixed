@@ -71,6 +71,9 @@
                 </table>
                 <div class="row">
                     <div class="col-md-12">
+                        <x-ui.action-message on="unsetRecommendation" type="danger">
+                            Recommendation Record Deleted
+                        </x-ui.action-message>
                         <button class="btn btn-sm btn-secondary" wire:click.prevent="addRecommend">+ Add Another Product</button>
                         <button class="btn btn-sm btn-secondary" wire:click.prevent="addManualRecommends">+ Add Manual Product</button>
                     </div>
