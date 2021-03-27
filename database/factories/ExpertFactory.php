@@ -37,7 +37,7 @@ class ExpertFactory extends Factory
     {
         return [
             'name' => $this->faker->firstNameMale()." ".$this->faker->lastName(),
-            'nip' => $this->faker->nik(),
+            'nip' => $this->faker->randomNumber(18, true),
             'expert_company'=> 'Statsiun Metereologi '.$this->faker->city(),//$this->faker->randomElement(['Era Elektra Corpora Indonesia','Statsiun Metereologi '.$this->faker->city()]),
             'created_at' => now()
         ];

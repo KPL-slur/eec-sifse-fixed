@@ -31,6 +31,13 @@ Auth::routes();
 Route::group(['middleware' => 'auth', 'prefix' => 'expert'], function () {
     Route::get('/', [App\Http\Controllers\ExpertController::class, 'index'])->name('expert');
 
+    //PROFILE MANAGEMENT
+    Route::group(['prefix' => 'profile', 'as' => 'profile.'], function () {
+        Route::get('/', [App\Http\Controllers\ProfileController::class, 'edit'])->name('edit');
+        Route::put('/', [App\Http\Controllers\ProfileController::class, 'update'])->name('update');
+        Route::put('/password', [App\Http\Controllers\ProfileController::class, 'password'])->name('password');
+    });
+
     Route::group(['prefix' => '{maintenance_type}', 'where' => ['maintenance_type' => '(pm|cm)'], 'as'=>'report.'], function () {
         Route::group(['prefix' => 'trash', 'as' => 'trash.'], function () {
             Route::get('/', [App\Http\Controllers\TrashController::class, 'index'])->name('index');
@@ -51,12 +58,6 @@ Route::group(['middleware' => 'auth', 'prefix' => 'expert'], function () {
         Route::get('/{id}', [App\Http\Controllers\ReportController::class, 'show'])->name('show');
         Route::delete('/{id}', [App\Http\Controllers\ReportController::class, 'destroy'])->name('delete');
     });
-    
-    //Bawaan dari template
-    Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
-    Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
-    Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
-    Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
 
 /*
@@ -73,6 +74,9 @@ Route::group(['middleware' => 'auth', 'prefix' => 'expert'], function () {
 Route::middleware(['auth', 'is_admin'])->group(function () {
     //Halaman Pertama Admin
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    //USER MANAGEMENT
+    Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
 
     //Halaman Statis Admin
     //Nanti jgn lupa dihapus semua ini

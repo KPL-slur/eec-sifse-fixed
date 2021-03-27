@@ -24,16 +24,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // Expert::factory(10)->eecid()->create();
-        // Expert::factory(50)->create();
-        // Stock::factory(250)->create();
+        Expert::factory(10)->eecid()->create();
+        Expert::factory(50)->create();
+        Stock::factory(250)->create();
 
-        // Site::factory(20)
-        //             ->has(Distribution::factory(2))
-        //             ->has(SitedStock::factory(30))
-        //             ->create();
+        Site::factory(20)
+                    ->has(Distribution::factory(2))
+                    ->has(SitedStock::factory(30))
+                    ->create();
 
-        // HeadReport::factory(100)
+        // HeadReport::factory(10)
         //             ->has(ExpertReport::factory(1)->eecidExpert()->tenagaAhli())
         //             ->has(ExpertReport::factory(1)->eecidExpert())
         //             ->has(ExpertReport::factory(1)->kasieObs())
@@ -42,27 +42,38 @@ class DatabaseSeeder extends Seeder
         //             ->has(Recommendation::factory(10))
         //             ->create();
 
-        // HeadReport::factory(100)
-        //             ->cm()
-        //             ->has(ExpertReport::factory(1)->eecidExpert()->tenagaAhli())
-        //             ->has(ExpertReport::factory(1)->eecidExpert())
-        //             ->has(ExpertReport::factory(1)->kasieObs())
-        //             ->has(ExpertReport::factory(3))
-        //             ->has(CmBodyReport::factory(1))
-        //             ->has(Recommendation::factory(10))
-        //             ->create();
+        HeadReport::factory(20)
+                    ->cm()
+                    ->has(ExpertReport::factory(1)->eecidExpert()->tenagaAhli())
+                    ->has(ExpertReport::factory(1)->eecidExpert())
+                    ->has(ExpertReport::factory(1)->kasieObs())
+                    ->has(ExpertReport::factory(3))
+                    ->has(CmBodyReport::factory(1))
+                    ->has(Recommendation::factory(10))
+                    ->create();
+
+        HeadReport::factory(20)
+                    ->cm()
+                    ->deleted()
+                    ->has(ExpertReport::factory(1)->eecidExpert()->tenagaAhli())
+                    ->has(ExpertReport::factory(1)->eecidExpert())
+                    ->has(ExpertReport::factory(1)->kasieObs())
+                    ->has(ExpertReport::factory(3))
+                    ->has(CmBodyReport::factory(1))
+                    ->has(Recommendation::factory(10))
+                    ->create();
 
         // ===== ================ =====
         $this->call([UsersTableSeeder::class]);
-        $this->call([HeadReportsSeeder::class]);
-        $this->call([PmBodyReportsSeeder::class]);
-        $this->call([CmBodyReportsSeeder::class]);
-        $this->call([ExpertsSeeder::class]);
-        $this->call([StocksSeeder::class]);
-        $this->call([SitesSeeder::class]);
-        $this->call([RecommendationsSeeder::class]);
-        $this->call([ExpertReportsSeeder::class]);
-        $this->call([DistributionsSeeder::class]);
-        $this->call([SitedStockSeeder::class]);
+        // $this->call([HeadReportsSeeder::class]);
+        // $this->call([PmBodyReportsSeeder::class]);
+        // $this->call([CmBodyReportsSeeder::class]);
+        // $this->call([ExpertsSeeder::class]);
+        // $this->call([StocksSeeder::class]);
+        // $this->call([SitesSeeder::class]);
+        // $this->call([RecommendationsSeeder::class]);
+        // $this->call([ExpertReportsSeeder::class]);
+        // $this->call([DistributionsSeeder::class]);
+        // $this->call([SitedStockSeeder::class]);
     }
 }

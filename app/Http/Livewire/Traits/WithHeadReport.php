@@ -66,8 +66,10 @@ trait WithHeadReport
             }
         } else {
             //expert mount
+            $auth = auth()->user();
             $this->experts = [
-                ['expert_id' => '', 'expert_company' => '', 'expert_nip' => '', 'expert_role' => '']
+                ['expert_id' => $auth->expert_id, 'expert_company' => $auth->expert->expert_company, 'expert_nip' => $auth->expert->nip, 'expert_role' => ''],
+                ['expert_id' => '', 'expert_company' => '', 'expert_nip' => '', 'expert_role' => ''],
             ];
         }
     }
@@ -146,9 +148,9 @@ trait WithHeadReport
     {
         foreach ($this->manualExperts as $index => $manualExpert) {
             $this->validate([
-                'manualExperts.'.$index.'.expert_name' => 'required',
-                'manualExperts.'.$index.'.expert_company' => 'required',
-                'manualExperts.'.$index.'.expert_nip' => 'required',
+                'manualExperts.'.$index.'.expert_name' => 'required|unique:experts,name',
+                'manualExperts.'.$index.'.expert_company' => 'required|unique:experts,expert_company',
+                'manualExperts.'.$index.'.expert_nip' => 'required|numeric|digits:18|unique:experts,nip',
                 'manualExperts.'.$index.'.expert_role' => 'required',
             ]);
         };
@@ -162,10 +164,39 @@ trait WithHeadReport
      */
     public function setCompanyAndNip($index)
     {
-        if(!empty($this->experts[$index]['expert_id'])){
-            $selectedExpert[$index] = $this->expertsData->where('expert_id', $this->experts[$index]['expert_id'])->first();
-            $this->experts[$index]['expert_company'] = $selectedExpert[$index]->expert_company;
-            $this->experts[$index]['expert_nip'] = $selectedExpert[$index]->nip;
+        if (! $this->isDupes($index)) { // check if any of the inputs has same value
+            if(!empty($this->experts[$index]['expert_id'])){
+                $selectedExpert[$index] = $this->expertsData->where('expert_id', $this->experts[$index]['expert_id'])->first();
+                $this->experts[$index]['expert_company'] = $selectedExpert[$index]->expert_company;
+                $this->experts[$index]['expert_nip'] = $selectedExpert[$index]->nip;
+            }
+        } else {
+            $this->addError('dupes', 'Cannot add the same expert in one report.');
+            $this->experts[$index] = ['expert_id' => '', 'expert_company' => '', 'expert_nip' => '', 'expert_role' => ''];
+        }
+    }
+
+    /**
+     * check the current arr of input if any of the the record has same value
+     * search the arr twice, because if only once it always return true.
+     * this is happen because it found the current as the same value.
+     * 
+     * @param $index index of the current item 
+     */
+    public function isDupes($index)
+    {
+        foreach ($this->experts as $key => $expert) {
+            if($expert['expert_id'] == $this->experts[$index]['expert_id']) { //apakah sudah ada ?
+                $blacklist = $key;
+                foreach ($this->experts as $jndex => $expert) {
+                    if ($expert['expert_id'] == $this->experts[$index]['expert_id']) { //apakah sudah ada ?
+                        if ($jndex != $blacklist) {
+                            $this->addError('dupes', 'Cannot add the same record.');
+                            return false;
+                        }
+                    }
+                }
+            }
         }
     }
 

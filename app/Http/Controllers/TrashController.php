@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\Utility;
 use App\Models\Headreport;
+use Illuminate\Support\Facades\Gate;
 
 class TrashController extends Controller
 {
@@ -37,10 +38,10 @@ class TrashController extends Controller
      */
     public function restore($maintenance_type, $id)
     {
-        HeadReport::onlyTrashed()
-                    ->where('head_id', $id)
-                    ->first()
-                    ->restore();
+        $headReport = HeadReport::onlyTrashed()->findOrFail($id);
+        $this->authorize('update', $headReport);
+        
+        $headReport->restore();
 
         return redirect()->route('report.trash.index', compact('maintenance_type'))->with('status_restore', 'Data Berhasil Direstore');
     }
@@ -53,18 +54,19 @@ class TrashController extends Controller
      */
     public function permDelete($maintenance_type, $id)
     {
-        // The other table except report image will cascade on delete
-        $headReport = HeadReport::onlyTrashed()->where('head_id', $id)->first();
+        $headReport = HeadReport::onlyTrashed()->findOrFail($id);
+        $this->authorize('update', $headReport);
 
+        // delete stored files
         $reportImageFiles = $headReport->reportImages;
         foreach ($reportImageFiles as $reportImageFile) {
             \Storage::delete('public/'.$reportImageFile->image);
         }
 
-        $headReport->reportImages()->delete();
         $headReport->forceDelete();
 
-        return redirect()->route('report.trash.index', compact('maintenance_type'))->with('status_perm_delete', 'Data Dihapus Permanent');
+        return redirect()->route('report.trash.index', compact('maintenance_type'))
+                         ->with('status_perm_delete', 'Data Dihapus Permanent');
     }
 
     /**

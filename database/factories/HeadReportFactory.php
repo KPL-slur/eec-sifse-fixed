@@ -29,6 +29,20 @@ class HeadReportFactory extends Factory
     }
 
     /**
+     * override maintenance_type to cm
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function deleted()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'deleted_at' => now(),
+            ];
+        });
+    }
+
+    /**
      * Define the model's default state.
      *
      * @return array

@@ -16,4 +16,12 @@ class Expert extends Model
         'nip',
         'expert_company',
     ];
+
+    /**
+     * 
+     */
+    public function user()
+    {
+        return $this->hasOne(User::class, 'expert_id');
+    }
 }
