@@ -106,6 +106,7 @@ trait WithHeadReport
         }
         unset($this->experts[$index]);
         array_values($this->experts);
+        $this->emit('unsetExpert');
     }
 
     /**
@@ -139,6 +140,7 @@ trait WithHeadReport
     {
         unset($this->manualExperts[$index]);
         array_values($this->manualExperts);
+        $this->emit('unsetExpert');
     }
 
     /**
@@ -182,22 +184,23 @@ trait WithHeadReport
      * this is happen because it found the current as the same value.
      * 
      * @param $index index of the current item 
+     * @return boolean
      */
     public function isDupes($index)
     {
-        foreach ($this->experts as $key => $expert) {
+        foreach ($this->experts as $jndex => $expert) {
             if($expert['expert_id'] == $this->experts[$index]['expert_id']) { //apakah sudah ada ?
-                $blacklist = $key;
-                foreach ($this->experts as $jndex => $expert) {
+                $blacklist = $jndex;
+                foreach ($this->experts as $kndex => $expert) {
                     if ($expert['expert_id'] == $this->experts[$index]['expert_id']) { //apakah sudah ada ?
-                        if ($jndex != $blacklist) {
-                            $this->addError('dupes', 'Cannot add the same record.');
-                            return false;
+                        if ($kndex != $blacklist) {
+                            return true;
                         }
                     }
                 }
             }
         }
+        return false;
     }
 
     //* UPSTORE

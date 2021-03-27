@@ -94,3 +94,15 @@ select.distribution:not([size]):not([multiple]) {
 [x-cloak] {
     display: none;
 }
+/*
+ *
+ */
+.toast-top-right{
+	position:fixed !important;
+	top: 40px;
+	right:40px;
+    width: 260px;
+	box-shadow: 2px 2px 3px #999;
+	z-index:1000;
+	animation: bot-to-top 2s ease-out;
+}

@@ -33,35 +33,35 @@ class DatabaseSeeder extends Seeder
                     ->has(SitedStock::factory(30))
                     ->create();
 
+        HeadReport::factory(10)
+                    ->has(ExpertReport::factory(1)->eecidExpert()->tenagaAhli())
+                    ->has(ExpertReport::factory(1)->eecidExpert())
+                    ->has(ExpertReport::factory(1)->kasieObs())
+                    ->has(ExpertReport::factory(3))
+                    ->has(PmBodyReport::factory(1))
+                    ->has(Recommendation::factory(5))
+                    ->create();
+
+        HeadReport::factory(10)
+                    ->cm()
+                    ->has(ExpertReport::factory(1)->eecidExpert()->tenagaAhli())
+                    ->has(ExpertReport::factory(1)->eecidExpert())
+                    ->has(ExpertReport::factory(1)->kasieObs())
+                    ->has(ExpertReport::factory(3))
+                    ->has(CmBodyReport::factory(1))
+                    ->has(Recommendation::factory(5))
+                    ->create();
+
         // HeadReport::factory(10)
+        //             ->cm()
+        //             ->deleted()
         //             ->has(ExpertReport::factory(1)->eecidExpert()->tenagaAhli())
         //             ->has(ExpertReport::factory(1)->eecidExpert())
         //             ->has(ExpertReport::factory(1)->kasieObs())
         //             ->has(ExpertReport::factory(3))
-        //             ->has(PmBodyReport::factory(1))
-        //             ->has(Recommendation::factory(10))
+        //             ->has(CmBodyReport::factory(1))
+        //             ->has(Recommendation::factory(5))
         //             ->create();
-
-        HeadReport::factory(20)
-                    ->cm()
-                    ->has(ExpertReport::factory(1)->eecidExpert()->tenagaAhli())
-                    ->has(ExpertReport::factory(1)->eecidExpert())
-                    ->has(ExpertReport::factory(1)->kasieObs())
-                    ->has(ExpertReport::factory(3))
-                    ->has(CmBodyReport::factory(1))
-                    ->has(Recommendation::factory(10))
-                    ->create();
-
-        HeadReport::factory(20)
-                    ->cm()
-                    ->deleted()
-                    ->has(ExpertReport::factory(1)->eecidExpert()->tenagaAhli())
-                    ->has(ExpertReport::factory(1)->eecidExpert())
-                    ->has(ExpertReport::factory(1)->kasieObs())
-                    ->has(ExpertReport::factory(3))
-                    ->has(CmBodyReport::factory(1))
-                    ->has(Recommendation::factory(10))
-                    ->create();
 
         // ===== ================ =====
         $this->call([UsersTableSeeder::class]);

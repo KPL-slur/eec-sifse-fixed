@@ -92,7 +92,7 @@
                                 </td>
                                 <td>
                                     @if (! $loop->first)
-                                    <a href="#" wire:click.prevent="selectItem({{ $index }}, 'expert')">Delete</a>
+                                    <a href="#" wire:click.prevent="selectItem({{ $index }}, 'expert')" class="text-danger">Delete</a>
                                     @endif
                                 </td>
                             </tr>
@@ -145,7 +145,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <a href="#" wire:click.prevent="selectItem({{ $index }}, 'manualExpert')">Delete</a>
+                                    <a href="#" wire:click.prevent="selectItem({{ $index }}, 'manualExpert')" class="text-danger">Delete</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -153,6 +153,9 @@
                 </table>
                 <div class="row">
                     <div class="col-md-12">
+                        <x-ui.action-message on="unsetExpert" type="danger">
+                            Expert Record Deleted
+                        </x-ui.action-message>
                         @error('dupes')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror

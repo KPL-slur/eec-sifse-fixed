@@ -158,16 +158,20 @@
 
                             <div class="row image-grid">
                                 @foreach ($reportImages as $reportImage)
-                                <div class="col-sm-4 col-md-4">
-                                    <div class="panel panel-default">
-                                        <div class="panel-body">
-                                            <a href="{{ asset('storage/' . $reportImage->image) }}" target="_blank">
-                                                <img alt="" class="img-responsive center-block" 
-                                                width="250px" height="100%" 
-                                                src="{{ asset('storage/' . $reportImage->image) }}">
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="card card-profile ml-auto mr-auto" style="max-width: 360px">
+                                        <div class="card-header card-header-image">
+                                            <img class="img" src="{{ asset('storage/' . $reportImage->image) }}">   
+                                        </div>
+                                      
+                                        <div class="card-body d-flex justify-content-between">
+                                            <h4 class="card-title d-inline">
+                                                {{ $reportImage->caption }}
+                                            </h4>
+                                            <a href="{{ asset('storage/' . $reportImage->image) }}" target="_blank" class="material-icons d-inline">
+                                                open_in_new
                                             </a>
                                         </div>
-                                        <div class="panel-footer">{{ $reportImage->caption }}</div>
                                     </div>
                                 </div>
                                 @endforeach
@@ -238,7 +242,7 @@
         <x-slot name="body">
             <P>Silahkan masukan nama dan nip dari kepala statsiun untuk diisikan pada kolom tanda tangan</P>
             <br>
-            <form action="{{ route("report.pdf.print", ["id" => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" method="GET">
+            <form target="_blank" action="{{ route("report.pdf.print", ["id" => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" method="GET">
             <div class="form-group">
                 <label for="kasatName">Nama Kepala Statsiun</label>
                 <input class="form-control" type="text" name="kasatName" id="kasatName" placeholder="Nama Kepala Statsiun">
