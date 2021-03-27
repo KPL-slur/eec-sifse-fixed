@@ -9,13 +9,10 @@
     --}}
 @props(['on', 'type' => 'success'])
 
-<div x-data x-init="@this.on('{{ $on }}', () => {
-                                            showNotification(
-                                                                'top', 
-                                                                'right', 
-                                                                '<?php echo $type ?>' ,
-                                                                '<?php echo $slot->isEmpty() ? 'Saved.' : $slot ?>'
-                                                            );
-                                        }
-                    )"
-></div>
+<div x-cloak x-data="{ shown: false, timeout: null }"
+    x-init="@this.on('{{ $on }}', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 4000);  })"
+    x-show.transition.opacity.duration.1500ms="shown"
+    role="alert"
+    {{ $attributes->merge(["class" => "toast-top-right alert alert-$type"]) }}>
+    {{ $slot->isEmpty() ? 'Saved.' : $slot }}
+</div>
