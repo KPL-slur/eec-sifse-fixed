@@ -162,7 +162,7 @@
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                     <td rowspan="5" style="padding: 0">
-                                        <table class="nested-table text-center">
+                                        <table class="nested-table">
                                             <tr>
                                                 <th>HVPS_V</th>
                                                 <th>HVPS_I</th>
@@ -269,22 +269,12 @@
                         </table>
                         @endif
                         <!----------------------------------------------------------------------------------------- REMARK -->
-                        <table class="report body-report">
-                            <thead>
-                                <tr>
-                                    <th>Remark</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <?php echo $bodyReport->remark; ?>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <hr>
+                        <h3>Remark</h3>
+                        <?php echo $bodyReport->remark; ?>
+                        <hr>
                         <!----------------------------------------------------------------------------------------- RECOMMENDATIONS -->
-                        <table class="report body-report">
+                        <table class="report recommendation">
                             <thead>
                                 <tr>
                                     <th>No.</th>
@@ -304,7 +294,7 @@
                         </table>
                         <!----------------------------------------------------------------------------------------- TTD PENGESAHAN -->
                         <div class="avoid-break-inside">
-                            <table class="report">
+                            <table class="report ttd">
                                 @foreach ($headReport->experts as $expert)
                                     <tr>
                                         <td>

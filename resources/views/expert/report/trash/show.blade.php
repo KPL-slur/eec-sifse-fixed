@@ -151,16 +151,20 @@
 
                             <div class="row image-grid">
                                 @foreach ($reportImages as $reportImage)
-                                <div class="col-sm-4 col-md-4">
-                                    <div class="panel panel-default">
-                                        <div class="panel-body">
-                                            <a href="{{ asset('storage/' . $reportImage->image) }}" target="_blank">
-                                                <img alt="" class="img-responsive center-block" 
-                                                width="250px" height="100%" 
-                                                src="{{ asset('storage/' . $reportImage->image) }}">
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="card card-profile ml-auto mr-auto" style="max-width: 360px">
+                                        <div class="card-header card-header-image">
+                                            <img class="img" src="{{ asset('storage/' . $reportImage->image) }}">   
+                                        </div>
+                                      
+                                        <div class="card-body d-flex justify-content-between">
+                                            <h4 class="card-title d-inline">
+                                                {{ $reportImage->caption }}
+                                            </h4>
+                                            <a href="{{ asset('storage/' . $reportImage->image) }}" target="_blank" class="material-icons d-inline">
+                                                open_in_new
                                             </a>
                                         </div>
-                                        <div class="panel-footer">{{ $reportImage->caption }}</div>
                                     </div>
                                 </div>
                                 @endforeach

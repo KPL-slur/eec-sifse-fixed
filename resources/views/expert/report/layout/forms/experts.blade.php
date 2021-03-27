@@ -92,7 +92,7 @@
                                 </td>
                                 <td>
                                     @if (! $loop->first)
-                                    <a href="#" wire:click.prevent="selectItem({{ $index }}, 'expert')">Delete</a>
+                                    <a href="#" wire:click.prevent="selectItem({{ $index }}, 'expert')" class="text-danger">Delete</a>
                                     @endif
                                 </td>
                             </tr>
@@ -145,7 +145,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <a href="#" wire:click.prevent="selectItem({{ $index }}, 'manualExpert')">Delete</a>
+                                    <a href="#" wire:click.prevent="selectItem({{ $index }}, 'manualExpert')" class="text-danger">Delete</a>
                                 </td>
                             </tr>
                         @endforeach
