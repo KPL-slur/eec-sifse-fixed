@@ -38,6 +38,14 @@ trait WithRecommendation
         }
     }
 
+    /**
+     * 
+     */
+    public function updatedWithRecommendation()
+    {
+        $this->dispatchBrowserEvent('list-added');
+    }
+
     //* RECOMMENDS
     /**
      * 
@@ -45,7 +53,6 @@ trait WithRecommendation
     public function addRecommend()
     {
         $this->recommends[] = ['name' => '', 'jumlah_unit_needed' => "1 units"];
-        $this->dispatchBrowserEvent('list-added');
     }
     
     /**
@@ -63,7 +70,6 @@ trait WithRecommendation
             
             unset($this->recommends[$index]);
             array_values($this->recommends);
-            $this->dispatchBrowserEvent('list-added');
             $this->emit('unsetRecommendation');
         }
     }
@@ -97,6 +103,21 @@ trait WithRecommendation
         $this->setRecommendationDropdown();
     }
 
+    /**
+     * 
+     */
+    public function validateRecommends()
+    {
+        foreach ($this->recommends as $index => $recommend) {
+            $this->validate([
+                'recommends.'.$index.'.name' => 'required',
+                'recommends.'.$index.'.jumlah_unit_needed' => 'required',
+            ],[
+                'required' => 'This field is required.',
+            ]);
+        };
+    }
+
     //* MANUAL RECOMMENDS
     /**
      * 
@@ -104,7 +125,6 @@ trait WithRecommendation
     public function addManualRecommends ()
     {
         $this->manualRecommends[] = ['name' => '', 'jumlah_unit_needed' => "1 units"];
-        $this->dispatchBrowserEvent('list-added');
     }
 
     /**
@@ -117,9 +137,23 @@ trait WithRecommendation
         if (array_key_exists($index, $this->manualRecommends)) {
             unset($this->manualRecommends[$index]);
             array_values($this->manualRecommends);
-            $this->dispatchBrowserEvent('list-added');
             $this->emit('unsetRecommendation');
         }
+    }
+
+    /**
+     * 
+     */
+    public function validateManualRecommends()
+    {
+        foreach ($this->manualRecommends as $index => $manualRecommend) {
+            $this->validate([
+                'manualRecommends.'.$index.'.name' => 'required',
+                'manualRecommends.'.$index.'.jumlah_unit_needed' => 'required',
+            ],[
+                'required' => 'This field is required.',
+            ]);
+        };
     }
 
     //* GENERAL RECOMMENDATIONS

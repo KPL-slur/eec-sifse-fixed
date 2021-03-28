@@ -24,23 +24,33 @@
                         @foreach ($recommends as $index => $recommend)
                             <tr>
                                 <td>
-                                    <select name="recommends[{{ $index }}][name]"
-                                        wire:model="recommends.{{ $index }}.name"
-                                        class="form-control"
-                                    >
-                                        <option value="">-- choose product --</option>
-                                        @foreach ($stocks as $stock)
-                                        <option value="{{ $stock['name'] }}">
-                                            {{ $stock['name'] }}
-                                        </option>
-                                        @endforeach
-                                    </select>
+                                    <div class='@error('recommends.'.$index.'.name') label-floating has-danger @enderror'>
+                                        @error('recommends.'.$index.'.name')
+                                            <label class="control-label force-has-danger">{{ $message }}</label>
+                                        @enderror
+                                        <select name="recommends[{{ $index }}][name]"
+                                            wire:model="recommends.{{ $index }}.name"
+                                            class="form-control"
+                                        >
+                                            <option value="">-- choose product --</option>
+                                            @foreach ($stocks as $stock)
+                                            <option value="{{ $stock['name'] }}">
+                                                {{ $stock['name'] }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control recommends-qty"
-                                    name="recommends[{{ $index }}][jumlah_unit_needed]" 
-                                    wire:model.defer="recommends.{{ $index }}.jumlah_unit_needed"
-                                    >
+                                    <div class="@error('recommends.'.$index.'.jumlah_unit_needed') label-floating has-danger @enderror">
+                                        @error('recommends.'.$index.'.jumlah_unit_needed')
+                                            <label class="control-label force-has-danger">{{ $message }}</label>
+                                        @enderror
+                                        <input type="text" class="form-control recommends-qty"
+                                        name="recommends[{{ $index }}][jumlah_unit_needed]"
+                                        wire:model.defer="recommends.{{ $index }}.jumlah_unit_needed"
+                                        >
+                                    </div>
                                 </td>
                                 <td>
                                     <a href="#" class="text-danger"
@@ -51,15 +61,25 @@
                         @foreach ($manualRecommends as $index => $manualRecommend)
                             <tr>
                                 <td>
-                                    <input type="text" class="form-control" 
-                                        name="manualRecommends[{{ $index }}][name]" 
-                                        wire:model.defer="manualRecommends.{{ $index }}.name">
+                                    <div class="@error('manualRecommends.'.$index.'.name') label-floating has-danger @enderror">
+                                        @error('manualRecommends.'.$index.'.name')
+                                            <label class="control-label force-has-danger">{{ $message }}</label>
+                                        @enderror
+                                        <input type="text" class="form-control"
+                                            name="manualRecommends[{{ $index }}][name]"
+                                            wire:model.defer="manualRecommends.{{ $index }}.name">
+                                    </div>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control recommends-qty"
-                                        name="manualRecommends[{{ $index }}][jumlah_unit_needed]" 
-                                        wire:model.defer="manualRecommends.{{ $index }}.jumlah_unit_needed"
-                                    >
+                                    <div class="@error('manualRecommends.'.$index.'.jumlah_unit_needed') label-floating has-danger @enderror">
+                                        @error('manualRecommends.'.$index.'.jumlah_unit_needed')
+                                            <label class="control-label force-has-danger">{{ $message }}</label>
+                                        @enderror
+                                        <input type="text" class="form-control recommends-qty"
+                                            name="manualRecommends[{{ $index }}][jumlah_unit_needed]"
+                                            wire:model.defer="manualRecommends.{{ $index }}.jumlah_unit_needed"
+                                        >
+                                    </div>
                                 </td>
                                 <td>
                                     <a href="#" class="text-danger"

@@ -101,7 +101,13 @@ class PmReport extends Component
                 $this->validate([
                     'remark' => 'required',
                 ]);
+                $this->setRecommends();
+                break;
+
+            case 4:
                 $this->dispatchBrowserEvent('list-added');
+                $this->validateRecommends();
+                $this->validateManualRecommends();
                 break;
 
             case 5:

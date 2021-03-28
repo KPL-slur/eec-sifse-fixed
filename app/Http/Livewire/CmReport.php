@@ -101,7 +101,13 @@ class CmReport extends Component
                 $this->validate(([
                     'remark' => 'required',
                 ]));
+                $this->setRecommends();
+                break;
+
+            case 3:
                 $this->dispatchBrowserEvent('list-added');
+                $this->validateRecommends();
+                $this->validateManualRecommends();
                 break;
 
             case 4:
