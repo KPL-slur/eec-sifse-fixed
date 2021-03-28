@@ -262,7 +262,7 @@
                                 <x-pm.print-row label="Clean Slip-rings"
                                     radio="{{ $headReport->pmBodyReport->radio_clean_slip }}"
                                     remark="{{ $headReport->pmBodyReport->clean_slip }}" />
-                                <x-pm.print-row label="Grease geaers and Bearing"
+                                <x-pm.print-row label="Grease Gears and Bearing"
                                     radio="{{ $headReport->pmBodyReport->radio_grease_gear }}"
                                     remark="{{ $headReport->pmBodyReport->grease_gear }}" />
                             </tbody>
