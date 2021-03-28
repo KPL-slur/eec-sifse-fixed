@@ -73,15 +73,17 @@ trait WithReportImage
      */
     public function removeAttachment($index)
     {
-        if ($this->attachments[$index]['uploaded'] === 1) {
-            \Storage::delete('public/'.$this->attachments[$index]['image']);
-            ReportImage::where('image', $this->attachments[$index]['image'])->delete();
-            $this->attachments[$index]['uploaded'] = 0;
+        if (array_key_exists($index, $this->attachments)) {
+            if ($this->attachments[$index]['uploaded'] === 1) {
+                \Storage::delete('public/'.$this->attachments[$index]['image']);
+                ReportImage::where('image', $this->attachments[$index]['image'])->delete();
+                $this->attachments[$index]['uploaded'] = 0;
+            }
+            
+            unset($this->attachments[$index]);
+            array_values($this->attachments);
+            $this->emit('unsetAttachment');
         }
-
-        unset($this->attachments[$index]);
-        array_values($this->attachments);
-        $this->emit('unsetAttachment');
     }
 
     /**
@@ -94,6 +96,9 @@ trait WithReportImage
                 $this->validate([
                     'attachments.'.$index.'.caption' => 'required',
                     'attachments.'.$index.'.image' => 'required|image'
+                ],[
+                    'required' => 'This field is required.',
+                    'image' => 'The input must be an image.',
                 ]);
             }
         }

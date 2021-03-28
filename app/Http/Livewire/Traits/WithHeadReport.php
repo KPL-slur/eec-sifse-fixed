@@ -101,12 +101,14 @@ trait WithHeadReport
      */
     public function removeExpert($index)
     {
-        if (in_array($index , $this->experts)) {
-            $this->expertsData->where('expert_report_id', $this->expertReportId[$index])->delete();
+        if (array_key_exists($index, $this->experts)) {
+            if (in_array($index, $this->experts)) {
+                $this->expertsData->where('expert_report_id', $this->expertReportId[$index])->delete();
+            }
+            unset($this->experts[$index]);
+            array_values($this->experts);
+            $this->emit('unsetExpert');
         }
-        unset($this->experts[$index]);
-        array_values($this->experts);
-        $this->emit('unsetExpert');
     }
 
     /**
@@ -118,6 +120,8 @@ trait WithHeadReport
             $this->validate([
                 'experts.'.$index.'.expert_id' => 'required',
                 'experts.'.$index.'.expert_role' => 'required',
+            ],[
+                'required' => 'This field is required.',
             ]);
         };
     }
@@ -138,9 +142,11 @@ trait WithHeadReport
      */
     public function removeManualExpert($index)
     {
-        unset($this->manualExperts[$index]);
-        array_values($this->manualExperts);
-        $this->emit('unsetExpert');
+        if (array_key_exists($index, $this->manualExperts)) {
+            unset($this->manualExperts[$index]);
+            array_values($this->manualExperts);
+            $this->emit('unsetExpert');
+        }
     }
 
     /**
@@ -151,9 +157,15 @@ trait WithHeadReport
         foreach ($this->manualExperts as $index => $manualExpert) {
             $this->validate([
                 'manualExperts.'.$index.'.expert_name' => 'required|unique:experts,name',
-                'manualExperts.'.$index.'.expert_company' => 'required|unique:experts,expert_company',
+                'manualExperts.'.$index.'.expert_company' => 'required',
                 'manualExperts.'.$index.'.expert_nip' => 'required|numeric|digits:18|unique:experts,nip',
                 'manualExperts.'.$index.'.expert_role' => 'required',
+            ],[
+                'required' => 'This field is required.',
+                'manualExperts.'.$index.'.expert_name.unique' => 'Name has already been taken.',
+                'manualExperts.'.$index.'.expert_nip.unique' => 'Nip has already been taken.',
+                'numeric' => 'The input must be a number.',
+                'digits' => 'The input must be 18 digits.',
             ]);
         };
     }

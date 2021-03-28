@@ -56,14 +56,16 @@ trait WithRecommendation
      */
     public function removeRecommend($index)
     {
-        if (array_key_exists($index, $this->recommendationId)) {
-            Recommendation::where('rec_id', $this->recommendationId[$index])->delete();
+        if (array_key_exists($index, $this->recommends)) {
+            if (array_key_exists($index, $this->recommendationId)) {
+                Recommendation::where('rec_id', $this->recommendationId[$index])->delete();
+            }
+            
+            unset($this->recommends[$index]);
+            array_values($this->recommends);
+            $this->dispatchBrowserEvent('list-added');
+            $this->emit('unsetRecommendation');
         }
-        
-        unset($this->recommends[$index]);
-        array_values($this->recommends);
-        $this->dispatchBrowserEvent('list-added');
-        $this->emit('unsetRecommendation');
     }
 
     /**
@@ -112,10 +114,12 @@ trait WithRecommendation
      */
     public function removeManualRecommends($index)
     {
-        unset($this->manualRecommends[$index]);
-        array_values($this->manualRecommends);
-        $this->dispatchBrowserEvent('list-added');
-        $this->emit('unsetRecommendation');
+        if (array_key_exists($index, $this->manualRecommends)) {
+            unset($this->manualRecommends[$index]);
+            array_values($this->manualRecommends);
+            $this->dispatchBrowserEvent('list-added');
+            $this->emit('unsetRecommendation');
+        }
     }
 
     //* GENERAL RECOMMENDATIONS

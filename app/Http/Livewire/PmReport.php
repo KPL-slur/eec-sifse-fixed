@@ -92,7 +92,9 @@ class PmReport extends Component
                 break;
 
             case 2:
-                $this->validate($this->pmBodyReportRules);
+                $this->validate($this->pmBodyReportRules,[
+                    'required' => 'This field is required.',
+                ]);
                 break;
 
             case 3:
