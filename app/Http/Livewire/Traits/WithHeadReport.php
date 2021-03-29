@@ -13,7 +13,7 @@ use App\Models\ExpertReport;
 trait WithHeadReport
 {
     //* user inputs
-    public $radar, $site_id, $report_date_start, $report_date_end; //user inputs
+    public $radar, $site_id, $kasat_name, $kasat_nip, $report_date_start, $report_date_end; //user inputs
     public $experts = []; // user inputs
     public $manualExperts = []; //user inputs
 
@@ -27,8 +27,17 @@ trait WithHeadReport
     //* validation rules
     protected $headRules = [
         'site_id' => 'required',
+        'kasat_name' => 'required',
+        'kasat_nip' => 'required|numeric|digits:18',
         'report_date_start' => 'required',
         'report_date_end' => 'required|after_or_equal:report_date_start',
+    ];
+
+    protected $kasatErrMessage = [
+        'kasat_name.required' => 'The station master name field is required.',
+        'kasat_nip.required' => 'The station master nip field is required.',
+        'kasat_nip.numeric' => 'The station master nip must be a number.',
+        'kasat_nip.digits' => 'The station master nip must be 18 digits.',
     ];
 
     //* LIVEWIRE METHOD
@@ -51,6 +60,8 @@ trait WithHeadReport
             //INITIALIZE EDIT DATA HEAD REPORT
             $this->site_id = $this->headReport->site_id;
             $this->radar = $this->sites->where('site_id', $this->site_id)->first()->radar_name;
+            $this->kasat_name = $this->headReport->kasat_name;
+            $this->kasat_nip = $this->headReport->kasat_nip;
             $this->report_date_start = $this->headReport->report_date_start;
             $this->report_date_end = $this->headReport->report_date_end;
         
@@ -225,13 +236,15 @@ trait WithHeadReport
      */
     public function upstoreHead($maintenance_type)
     {
-        $this->validate($this->headRules);
+        $this->validate($this->headRules, $this->kasatErrMessage);
         
         HeadReport::updateOrCreate(
             ['head_id' => $this->head_id],
             [
                 'site_id' => $this->site_id,
                 'maintenance_type' => $maintenance_type,
+                'kasat_name' => $this->kasat_name,
+                'kasat_nip' => $this->kasat_nip,
                 'report_date_start' => $this->report_date_start,
                 'report_date_end' => $this->report_date_end,
             ]

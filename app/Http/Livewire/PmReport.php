@@ -86,7 +86,7 @@ class PmReport extends Component
     {
         switch ($step) {
             case 1:
-                $this->validate($this->headRules);
+                $this->validate($this->headRules, $this->kasatErrMessage);
                 $this->validateExpert();
                 $this->validateManualExpert();
                 break;

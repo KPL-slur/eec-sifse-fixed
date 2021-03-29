@@ -43,6 +43,34 @@
             </div>
         </div>
         {{-- END OF SELECT SITE AND RADAR --}}
+
+        {{-- KASAT --}}
+        <div class="row">
+            <label class="col-sm-2 col-form-label" for="input_kasat_name">Station Master Detail</label>
+            <div class="col-sm-4">
+                <div class="form-group @error('kasat_name') label-floating has-danger @enderror">
+                    @error('kasat_name')
+                    <label class="control-label force-has-danger">{{ $message }}</label>
+                    <span class="material-icons form-control-feedback">clear</span>
+                    @enderror
+                    <input class="form-control" type="text" name="kasat_name" id="input_kasat_name" placeholder="Station Master Name"
+                        wire:model.defer="kasat_name"
+                    />
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group @error('kasat_nip') label-floating has-danger @enderror">
+                    @error('kasat_nip')
+                    <label class="control-label force-has-danger">{{ $message }}</label>
+                    <span class="material-icons form-control-feedback">clear</span>
+                    @enderror
+                    <input class="form-control" type="number" name="kasat_nip" id="input_kasat_nip" placeholder="Station Master Nip"
+                        wire:model.defer="kasat_nip"
+                    />
+                </div>
+            </div>
+        </div>
+        {{-- END OF KASAT --}}
         
         {{-- DATE SELECTOR --}}
         <div class="row">
