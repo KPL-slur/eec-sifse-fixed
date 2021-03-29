@@ -13,7 +13,7 @@ params: $modalType
                 @break
             @case('cancel')
                 <p>Are You Sure Want to Cancel ? <strong class="text-danger">Any Unsaved Data Will Be Lost</strong></p>
-            @break
+                @break
             @default
                 <p>Are You Sure ?</p> 
         @endswitch
@@ -36,7 +36,7 @@ params: $modalType
                 <div>
                     <a class="btn btn-secondary" type="button" href="{{ route('report.index', ['maintenance_type' => 'cm']) }}">Yes</a>
                 </div>
-            @break
+                @break
             @default
                 <div>
                     <button type="btn btn-secondary" class="btn btn-primary">Yes</button>
