@@ -53,6 +53,8 @@ class HeadReportFactory extends Factory
         return [
             'site_id' => $this->faker->numberBetween(1, 20),
             'maintenance_type' => 'pm', //$this->faker->randomElement(['pm','cm']),
+            'kasat_name' => $this->faker->firstNameFemale()." ".$this->faker->lastName(),
+            'kasat_nip' => $this->faker->numerify('##################'),
             'report_date_start' => $startDate,
             'report_date_end' => $this->faker->dateTimeInInterval($startDate, '+4 days'),
             'created_at' => now(),

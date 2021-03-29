@@ -14,45 +14,11 @@ class CreateHeadReportsTable extends Migration
     public function up()
     {
         Schema::create('head_reports', function (Blueprint $table) {
-            // ===== bawaan dari letoy ===== 
-            // $table->id();
-
-            // $table->char('maintenance_type',2);
-            // $table->string('radar_name', 20);
-            // $table->string('station_id', 50);
-            // $table->date('report_date_start');
-            // $table->date('report_date_end');
-
-            // //nanti ini dibuat tabel sendiri aja
-            // $table->string('expertise1');
-            // $table->string('expertise2')->nullable();
-            // $table->string('expertise3')->nullable();
-            // $table->string('expertise4');
-            // $table->string('expertise5')->nullable();
-            // $table->string('expertise6')->nullable();
-            // $table->string('expertise7')->nullable();
-            // $table->string('expertise8')->nullable();
-            // $table->string('expertise9')->nullable();
-            // $table->string('expertise10')->nullable();
-
-            // $table->string('expertise_company1')->nullable();
-            // $table->string('expertise_company2')->nullable();
-            // $table->string('expertise_company3')->nullable();
-            // $table->string('expertise_company4')->nullable();
-            // $table->string('expertise_company5')->nullable();
-            // $table->string('expertise_company6')->nullable();
-            // $table->string('expertise_company7')->nullable();
-            // $table->string('expertise_company8')->nullable();
-            // $table->string('expertise_company9')->nullable();
-            // $table->string('expertise_company10')->nullable();
-
-            // $table->timestamps();
-            // ===== bawaan dari letoy ===== 
-
-            //tambahan
             $table->bigIncrements('head_id');
             $table->foreignId('site_id');
             $table->char('maintenance_type',2);
+            $table->string('kasat_name');
+            $table->string('kasat_nip');
             $table->date('report_date_start');
             $table->date('report_date_end');
 
