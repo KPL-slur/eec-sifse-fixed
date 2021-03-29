@@ -58,6 +58,7 @@ class PdfController extends Controller
             ]);
 
         $headReport = HeadReport::Where('head_id', $id)->first();
+        $this->authorize('update', $headReport);
     
         if ($request->file()) {
 
@@ -101,6 +102,7 @@ class PdfController extends Controller
      */
     public function destroy($maintenance_type, $id) {
         $headReport = HeadReport::Where('head_id', $id)->first();
+        $this->authorize('update', $headReport);
 
         \Storage::delete('public/'.$headReport->printedReport->file);
         $headReport->printedReport()->delete();

@@ -39,8 +39,10 @@
                                                 <td>
                                                     <a type="button" href="{{ route('report.pdf.download', ['id' => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" class="btn btn-success">Download</a>
                                                     <a type="button" href="{{ route('report.pdf.show', ['id' => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" target="_blank" class="btn btn-info">View</a>
-                                                    <button type="button" rel="tooltip" class="btn btn-warning" data-toggle="modal" data-target="#modalUpload">Change File</button>
-                                                    <button type="button" rel="tooltip" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteUpload">Remove File</button>
+                                                    @can('update', $headReport)
+                                                        <button type="button" rel="tooltip" class="btn btn-warning" data-toggle="modal" data-target="#modalUpload">Change File</button>
+                                                        <button type="button" rel="tooltip" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteUpload">Remove File</button>
+                                                    @endcan
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -48,8 +50,12 @@
                                 </div>
                             </div>
                             @else
-                            <button type="button" rel="tooltip" class="btn btn-default" data-toggle="modal" data-target="#modalUpload">
-                                UPLOAD</button>
+                                @can('update', $headReport)
+                                    <button type="button" rel="tooltip" class="btn btn-default" data-toggle="modal" data-target="#modalUpload">
+                                        UPLOAD</button>
+                                @else
+                                    <p class="text-danger">no files have been uploaded yet</p>
+                                @endcan
                             @endif
                         </div>
                     </div>
