@@ -59,12 +59,17 @@
                                     <table class="table">
                                         <tbody>
                                             <tr>
-                                                <td>Station Id</td>
-                                                <td>{{ $headReport->site->station_id }}</td>
+                                                <td>Station ID</td>
+                                                <td colspan="2">{{ $headReport->site->station_id }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Station Master</td>
+                                                <td>{{ $headReport->kasat_name }}</td>
+                                                <td>{{ $headReport->kasat_nip }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Date</td>
-                                                <td>{{ $date }}</td>
+                                                <td colspan="2">{{ $date }}</td>
                                             </tr>
                                         </tbody>
                                     </table>

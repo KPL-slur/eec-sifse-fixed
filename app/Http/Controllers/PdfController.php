@@ -11,20 +11,9 @@ class PdfController extends Controller
     /**
      *
      */
-    public function print(Request $request, $maintenance_type, $id, Utility $utility)
+    public function print($maintenance_type, $id, Utility $utility)
     {
-        $request->validate([
-            'kasatName' => 'required',
-            'kasatNip' => 'required|numeric|digits:18',
-        ],[
-            'kasatName.required' => 'The station master name field is required.',
-            'kasatNip.required' => 'The station master nip field is required.',
-            'kasatNip.numeric' => 'The station master nip must be a number.',
-            'kasatNip.digits' => 'The station master nip must be 18 digits.',
-        ]);
-
-        $headReport = HeadReport::Where('head_id', $id)->first();
-        abort_unless($headReport, 404, 'Report not found');
+        $headReport = HeadReport::findOrFail($id);
 
         switch ($maintenance_type) {
             case 'pm':
@@ -40,12 +29,9 @@ class PdfController extends Controller
                 break;
         }
 
-        $kasat = ['name' => $request->kasatName, 'nip' => $request->kasatNip];
-
         $date = $utility->easyToReadDate($headReport->report_date_start, $headReport->report_date_end);
 
-        // dd($headReport->pmBodyReport->hvps_v_0_4us);
-        return view('expert.report.print', compact('headReport', 'date', 'kasat', 'bodyReport'));
+        return view('expert.report.print', compact('headReport', 'date', 'bodyReport'));
     }
 
     /**

@@ -317,8 +317,8 @@
                                 </p>
                                 <div>&nbsp;</div>
                                 <p>
-                                    <strong><u>{{ $kasat['name'] }}</u></strong><br>
-                                    NIP. {{ $kasat['nip'] }}
+                                    <strong><u>{{ $headReport->kasat_name }}</u></strong><br>
+                                    NIP. {{ $headReport->kasat_nip }}
                                 </p>
                             </div>
                         </div>

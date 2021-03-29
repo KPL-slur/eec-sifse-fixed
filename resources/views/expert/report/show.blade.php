@@ -11,8 +11,9 @@
                     <div class="">
                         <a type="button" class="btn btn-info"
                             href="{{ route("report.index", $maintenance_type) }}">BACK</a>
-                        <button type="button" rel="tooltip" class="btn btn-primary" data-toggle="modal" data-target="#modalPrint">
-                            GENERATE PDF</button>
+                        <a type="button" class="btn btn-primary" target="_blank"
+                            href="{{ route("report.pdf.print", ["id" => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}">
+                            GENERATE PDF</a>
                         @can('update', $headReport)
                         <a type="button" class="btn btn-warning" href="{{ route('report.edit', ['id' => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}">EDIT</a>
                         <button type="submit" rel="tooltip" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete">
@@ -70,12 +71,17 @@
                                     <table class="table">
                                         <tbody>
                                             <tr>
-                                                <td>Station Id</td>
-                                                <td>{{ $headReport->site->station_id }}</td>
+                                                <td>Station ID</td>
+                                                <td colspan="2">{{ $headReport->site->station_id }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Station Master</td>
+                                                <td>{{ $headReport->kasat_name }}</td>
+                                                <td>{{ $headReport->kasat_nip }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Date</td>
-                                                <td>{{ $date }}</td>
+                                                <td colspan="2">{{ $date }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -205,9 +211,10 @@
         </li>
         @endcan
         <li>
-            <button class="btn btn-primary btn-fab btn-round" data-toggle="modal" data-target="#modalPrint">
+            <a class="btn btn-primary btn-fab btn-round" target="_blank"
+                href="{{ route("report.pdf.print", ["id" => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}">
                 <i class="material-icons">print</i>
-            </button>
+            </a>
         </li>
     </x-ui.btn-float-group>
 
@@ -238,30 +245,6 @@
                 @method('delete')
                 <button type="submit" class="btn btn-secondary">Yes</button>
             </form>
-        </x-slot>
-    </x-ui.modal-confirm>
-
-    <x-ui.modal-confirm id="modalPrint">
-        <x-slot name="title">
-            Print CM REPORT to PDF
-        </x-slot>
-        <x-slot name="body">
-            <P>Please enter the name and nip of the station master to be filled in the signature column</P>
-            <br>
-            <form target="_blank" action="{{ route("report.pdf.print", ["id" => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" method="GET">
-            <div class="form-group">
-                {{-- <label for="kasatName">Nama Kepala Statsiun</label> --}}
-                <input class="form-control" type="text" name="kasatName" id="kasatName" placeholder="Nama Kepala Statsiun">
-            </div>
-            <div class="form-group">
-                {{-- <label for="kasatName">Nip Kepala Statsiun</label> --}}
-                <input class="form-control" type="number" name="kasatNip" id="kasatNip" placeholder="Nip Kepala Statsiun">
-            </div>
-        </x-slot>
-        <x-slot name="footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-            <button class="btn btn-success" type="submit">Print</button>
-        </form>
         </x-slot>
     </x-ui.modal-confirm>
 
