@@ -59,12 +59,17 @@
                                     <table class="table">
                                         <tbody>
                                             <tr>
-                                                <td>Station Id</td>
-                                                <td>{{ $headReport->site->station_id }}</td>
+                                                <td>Station ID</td>
+                                                <td colspan="2">{{ $headReport->site->station_id }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Station Master</td>
+                                                <td>{{ $headReport->kasat_name }}</td>
+                                                <td>{{ $headReport->kasat_nip }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Date</td>
-                                                <td>{{ $date }}</td>
+                                                <td colspan="2">{{ $date }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -196,7 +201,7 @@
     {{-- Modal Delete --}}
     <x-ui.modal-confirm id="modalRestore">
         <x-slot name="body">
-            <p>Are You Sure Want To Restore This Report?</p>
+            <p>Are You Sure Want To Restore This Report ?</p>
         </x-slot>
         <x-slot name="footer">
             <form action="{{ route('report.trash.restore', ['id' => $headReport->head_id, 'maintenance_type' => $headReport->maintenance_type]) }}" method="post"
@@ -210,7 +215,7 @@
 
     <x-ui.modal-confirm id="modalDelete">
         <x-slot name="body">
-            <p>Are You Sure Want To Permanently Delete This Report?</p>
+            <p>Are You Sure Want To Delete This Report ? <strong class="text-danger">Keep In Mind This Action Cannot Be Undone</strong></p>
         </x-slot>
         <x-slot name="footer">
             <form action="{{ route('report.trash.perm_delete', ['id' => $headReport->head_id, 'maintenance_type' => $headReport->maintenance_type]) }}" method="post"

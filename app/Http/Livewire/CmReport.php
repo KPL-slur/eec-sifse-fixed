@@ -92,7 +92,7 @@ class CmReport extends Component
     {
         switch ($step) {
             case 1:
-                $this->validate($this->headRules);
+                $this->validate($this->headRules, $this->kasatErrMessage);
                 $this->validateExpert();
                 $this->validateManualExpert();
                 break;
@@ -101,7 +101,13 @@ class CmReport extends Component
                 $this->validate(([
                     'remark' => 'required',
                 ]));
+                $this->setRecommends();
+                break;
+
+            case 3:
                 $this->dispatchBrowserEvent('list-added');
+                $this->validateRecommends();
+                $this->validateManualRecommends();
                 break;
 
             case 4:

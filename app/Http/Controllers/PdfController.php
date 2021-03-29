@@ -11,15 +11,9 @@ class PdfController extends Controller
     /**
      *
      */
-    public function print(Request $request, $maintenance_type, $id, Utility $utility)
+    public function print($maintenance_type, $id, Utility $utility)
     {
-        $request->validate([
-            'kasatName' => 'required',
-            'kasatNip' => 'required',
-        ]);
-
-        $headReport = HeadReport::Where('head_id', $id)->first();
-        abort_unless($headReport, 404, 'Report not found');
+        $headReport = HeadReport::findOrFail($id);
 
         switch ($maintenance_type) {
             case 'pm':
@@ -35,12 +29,9 @@ class PdfController extends Controller
                 break;
         }
 
-        $kasat = ['name' => $request->kasatName, 'nip' => $request->kasatNip];
-
         $date = $utility->easyToReadDate($headReport->report_date_start, $headReport->report_date_end);
 
-        // dd($headReport->pmBodyReport->hvps_v_0_4us);
-        return view('expert.report.print', compact('headReport', 'date', 'kasat', 'bodyReport'));
+        return view('expert.report.print', compact('headReport', 'date', 'bodyReport'));
     }
 
     /**
@@ -53,6 +44,7 @@ class PdfController extends Controller
             ]);
 
         $headReport = HeadReport::Where('head_id', $id)->first();
+        $this->authorize('update', $headReport);
     
         if ($request->file()) {
 
@@ -96,6 +88,7 @@ class PdfController extends Controller
      */
     public function destroy($maintenance_type, $id) {
         $headReport = HeadReport::Where('head_id', $id)->first();
+        $this->authorize('update', $headReport);
 
         \Storage::delete('public/'.$headReport->printedReport->file);
         $headReport->printedReport()->delete();

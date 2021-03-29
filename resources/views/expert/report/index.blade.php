@@ -61,7 +61,7 @@
                                                                 class="d-inline">
                                                                 @csrf
                                                                 @method('delete')
-                                                                <button type="submit" rel="tooltip" class="btn btn-danger" onclick="return confirm('Apakah yakin ingin menghapus data?')">
+                                                                <button type="submit" rel="tooltip" class="btn btn-danger" onclick="return confirm('Are You Sure Want To Delete This Report ? Deleted Report Can Be Restored At The Trash Page')">
                                                                     <i class="material-icons">close</i>
                                                                 </button>
                                                             </form>

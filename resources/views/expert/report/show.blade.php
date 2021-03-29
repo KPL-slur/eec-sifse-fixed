@@ -11,8 +11,9 @@
                     <div class="">
                         <a type="button" class="btn btn-info"
                             href="{{ route("report.index", $maintenance_type) }}">BACK</a>
-                        <button type="button" rel="tooltip" class="btn btn-primary" data-toggle="modal" data-target="#modalPrint">
-                            GENERATE PDF</button>
+                        <a type="button" class="btn btn-primary" target="_blank"
+                            href="{{ route("report.pdf.print", ["id" => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}">
+                            GENERATE PDF</a>
                         @can('update', $headReport)
                         <a type="button" class="btn btn-warning" href="{{ route('report.edit', ['id' => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}">EDIT</a>
                         <button type="submit" rel="tooltip" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete">
@@ -39,8 +40,10 @@
                                                 <td>
                                                     <a type="button" href="{{ route('report.pdf.download', ['id' => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" class="btn btn-success">Download</a>
                                                     <a type="button" href="{{ route('report.pdf.show', ['id' => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" target="_blank" class="btn btn-info">View</a>
-                                                    <button type="button" rel="tooltip" class="btn btn-warning" data-toggle="modal" data-target="#modalUpload">Change File</button>
-                                                    <button type="button" rel="tooltip" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteUpload">Remove File</button>
+                                                    @can('update', $headReport)
+                                                        <button type="button" rel="tooltip" class="btn btn-warning" data-toggle="modal" data-target="#modalUpload">Change File</button>
+                                                        <button type="button" rel="tooltip" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteUpload">Remove File</button>
+                                                    @endcan
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -48,8 +51,12 @@
                                 </div>
                             </div>
                             @else
-                            <button type="button" rel="tooltip" class="btn btn-default" data-toggle="modal" data-target="#modalUpload">
-                                UPLOAD</button>
+                                @can('update', $headReport)
+                                    <button type="button" rel="tooltip" class="btn btn-default" data-toggle="modal" data-target="#modalUpload">
+                                        UPLOAD</button>
+                                @else
+                                    <p class="text-danger">no files have been uploaded yet</p>
+                                @endcan
                             @endif
                         </div>
                     </div>
@@ -64,12 +71,17 @@
                                     <table class="table">
                                         <tbody>
                                             <tr>
-                                                <td>Station Id</td>
-                                                <td>{{ $headReport->site->station_id }}</td>
+                                                <td>Station ID</td>
+                                                <td colspan="2">{{ $headReport->site->station_id }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Station Master</td>
+                                                <td>{{ $headReport->kasat_name }}</td>
+                                                <td>{{ $headReport->kasat_nip }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Date</td>
-                                                <td>{{ $date }}</td>
+                                                <td colspan="2">{{ $date }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -199,16 +211,17 @@
         </li>
         @endcan
         <li>
-            <button class="btn btn-primary btn-fab btn-round" data-toggle="modal" data-target="#modalPrint">
+            <a class="btn btn-primary btn-fab btn-round" target="_blank"
+                href="{{ route("report.pdf.print", ["id" => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}">
                 <i class="material-icons">print</i>
-            </button>
+            </a>
         </li>
     </x-ui.btn-float-group>
 
     {{-- Modal Delete --}}
     <x-ui.modal-confirm id="modalDelete">
         <x-slot name="body">
-            <p>Are You Sure Want To Delete This Rerport?</p>
+            <p>Are You Sure Want To Delete This Report ? <strong class="text-danger">Deleted Report Can Be Restored At The Trash Page</strong></p>
         </x-slot>
         <x-slot name="footer">
             <form action="{{ route('report.delete', ['id' => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" method="post"
@@ -223,7 +236,7 @@
 
     <x-ui.modal-confirm id="modalDeleteUpload">
         <x-slot name="body">
-            <p>Are You Sure Want To Remove This File?</p>
+            <p>Are You Sure Want To Remove This File ? <strong class="text-danger">Keep In Mind This Action Cannot Be Undone</strong></p>
         </x-slot>
         <x-slot name="footer">
             <form action="{{ route("report.pdf.delete", ["id" => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" method="POST">
@@ -235,35 +248,12 @@
         </x-slot>
     </x-ui.modal-confirm>
 
-    <x-ui.modal-confirm id="modalPrint">
-        <x-slot name="title">
-            Print CM REPORT to PDF
-        </x-slot>
-        <x-slot name="body">
-            <P>Silahkan masukan nama dan nip dari kepala statsiun untuk diisikan pada kolom tanda tangan</P>
-            <br>
-            <form target="_blank" action="{{ route("report.pdf.print", ["id" => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" method="GET">
-            <div class="form-group">
-                <label for="kasatName">Nama Kepala Statsiun</label>
-                <input class="form-control" type="text" name="kasatName" id="kasatName" placeholder="Nama Kepala Statsiun">
-            </div>
-            <div class="form-group">
-                <label for="kasatName">Nip Kepala Statsiun</label>
-                <input class="form-control" type="text" name="kasatNip" id="kasatNip" placeholder="Nip Kepala Statsiun">
-            </div>
-        </x-slot>
-        <x-slot name="footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-            <button class="btn btn-success" type="submit">Print</button>
-        </form>
-        </x-slot>
-    </x-ui.modal-confirm>
-
     <x-ui.modal-confirm id="modalUpload">
         <x-slot name="title">
             Upload CM REPORT to PDF
         </x-slot>
         <x-slot name="body">
+            <P>Please upload the signed report file here. <strong class="text-danger">This form only accept PDF file</strong></P>
             <form action="{{ route("report.pdf.store", ["id" => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="container">
@@ -308,14 +298,14 @@
     @error('kasatNip')
         <script>
             window.onload = () => {
-                showNotification('top', 'right', 'danger', "Nip Kepala Statsiun Wajib Diisi");
+                showNotification('top', 'right', 'danger', "<?php echo $message; ?>");
             };
         </script>
     @enderror
     @error('kasatName')
         <script>
             window.onload = () => {
-                showNotification('top', 'right', 'danger', "Nama Kepala Statsiun Wajib Diisi");
+                showNotification('top', 'right', 'danger', "<?php echo $message; ?>");
             };
         </script>
     @enderror

@@ -13,7 +13,7 @@ use App\Models\ExpertReport;
 trait WithHeadReport
 {
     //* user inputs
-    public $radar, $site_id, $report_date_start, $report_date_end; //user inputs
+    public $radar, $site_id, $kasat_name, $kasat_nip, $report_date_start, $report_date_end; //user inputs
     public $experts = []; // user inputs
     public $manualExperts = []; //user inputs
 
@@ -27,8 +27,17 @@ trait WithHeadReport
     //* validation rules
     protected $headRules = [
         'site_id' => 'required',
+        'kasat_name' => 'required',
+        'kasat_nip' => 'required|numeric|digits:18',
         'report_date_start' => 'required',
         'report_date_end' => 'required|after_or_equal:report_date_start',
+    ];
+
+    protected $kasatErrMessage = [
+        'kasat_name.required' => 'The station master name field is required.',
+        'kasat_nip.required' => 'The station master nip field is required.',
+        'kasat_nip.numeric' => 'The station master nip must be a number.',
+        'kasat_nip.digits' => 'The station master nip must be 18 digits.',
     ];
 
     //* LIVEWIRE METHOD
@@ -51,6 +60,8 @@ trait WithHeadReport
             //INITIALIZE EDIT DATA HEAD REPORT
             $this->site_id = $this->headReport->site_id;
             $this->radar = $this->sites->where('site_id', $this->site_id)->first()->radar_name;
+            $this->kasat_name = $this->headReport->kasat_name;
+            $this->kasat_nip = $this->headReport->kasat_nip;
             $this->report_date_start = $this->headReport->report_date_start;
             $this->report_date_end = $this->headReport->report_date_end;
         
@@ -101,12 +112,14 @@ trait WithHeadReport
      */
     public function removeExpert($index)
     {
-        if (in_array($index , $this->experts)) {
-            $this->expertsData->where('expert_report_id', $this->expertReportId[$index])->delete();
+        if (array_key_exists($index, $this->experts)) {
+            if (in_array($index, $this->experts)) {
+                $this->expertsData->where('expert_report_id', $this->expertReportId[$index])->delete();
+            }
+            unset($this->experts[$index]);
+            array_values($this->experts);
+            $this->emit('unsetExpert');
         }
-        unset($this->experts[$index]);
-        array_values($this->experts);
-        $this->emit('unsetExpert');
     }
 
     /**
@@ -118,6 +131,8 @@ trait WithHeadReport
             $this->validate([
                 'experts.'.$index.'.expert_id' => 'required',
                 'experts.'.$index.'.expert_role' => 'required',
+            ],[
+                'required' => 'This field is required.',
             ]);
         };
     }
@@ -138,9 +153,11 @@ trait WithHeadReport
      */
     public function removeManualExpert($index)
     {
-        unset($this->manualExperts[$index]);
-        array_values($this->manualExperts);
-        $this->emit('unsetExpert');
+        if (array_key_exists($index, $this->manualExperts)) {
+            unset($this->manualExperts[$index]);
+            array_values($this->manualExperts);
+            $this->emit('unsetExpert');
+        }
     }
 
     /**
@@ -151,9 +168,15 @@ trait WithHeadReport
         foreach ($this->manualExperts as $index => $manualExpert) {
             $this->validate([
                 'manualExperts.'.$index.'.expert_name' => 'required|unique:experts,name',
-                'manualExperts.'.$index.'.expert_company' => 'required|unique:experts,expert_company',
+                'manualExperts.'.$index.'.expert_company' => 'required',
                 'manualExperts.'.$index.'.expert_nip' => 'required|numeric|digits:18|unique:experts,nip',
                 'manualExperts.'.$index.'.expert_role' => 'required',
+            ],[
+                'required' => 'This field is required.',
+                'manualExperts.'.$index.'.expert_name.unique' => 'Name has already been taken.',
+                'manualExperts.'.$index.'.expert_nip.unique' => 'Nip has already been taken.',
+                'numeric' => 'The input must be a number.',
+                'digits' => 'The input must be 18 digits.',
             ]);
         };
     }
@@ -213,13 +236,15 @@ trait WithHeadReport
      */
     public function upstoreHead($maintenance_type)
     {
-        $this->validate($this->headRules);
+        $this->validate($this->headRules, $this->kasatErrMessage);
         
         HeadReport::updateOrCreate(
             ['head_id' => $this->head_id],
             [
                 'site_id' => $this->site_id,
                 'maintenance_type' => $maintenance_type,
+                'kasat_name' => $this->kasat_name,
+                'kasat_nip' => $this->kasat_nip,
                 'report_date_start' => $this->report_date_start,
                 'report_date_end' => $this->report_date_end,
             ]

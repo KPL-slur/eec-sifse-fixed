@@ -86,20 +86,28 @@ class PmReport extends Component
     {
         switch ($step) {
             case 1:
-                $this->validate($this->headRules);
+                $this->validate($this->headRules, $this->kasatErrMessage);
                 $this->validateExpert();
                 $this->validateManualExpert();
                 break;
 
             case 2:
-                $this->validate($this->pmBodyReportRules);
+                $this->validate($this->pmBodyReportRules,[
+                    'required' => 'This field is required.',
+                ]);
                 break;
 
             case 3:
                 $this->validate([
                     'remark' => 'required',
                 ]);
+                $this->setRecommends();
+                break;
+
+            case 4:
                 $this->dispatchBrowserEvent('list-added');
+                $this->validateRecommends();
+                $this->validateManualRecommends();
                 break;
 
             case 5:

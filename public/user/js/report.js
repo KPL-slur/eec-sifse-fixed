@@ -25,9 +25,6 @@ window.onload = function () {
     window.addEventListener('list-added', event => {
         addSpaceBeforeChar('recommends-qty');
     });
-    window.addEventListener('list-added', event => {
-        addSpaceBeforeChar('recommends-qty');
-    });
     // $('#recommends-qty').on('keyup', addSpaceBeforeChar('recommendsQty'));
     // $('#manualRecommendsQty').on('keyup', addSpaceBeforeChar('manualRecommendsQty'));
     /*
