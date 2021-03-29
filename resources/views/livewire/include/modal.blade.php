@@ -9,10 +9,10 @@ params: $modalType
                 <p>Are You Sure Want to Submit This Form ?</p>
                 @break
             @case('delete')
-                <p>Are You Sure Want to Delete This Item ?</p>
+                <p>Are You Sure Want to Delete This Item ? <strong class="text-danger">This Action Is Autosave and Cannot Be Undone</strong></p>
                 @break
             @case('cancel')
-                <p>Are You Sure Want to Cancel? Any Unsaved Data Will Be Lost</p>
+                <p>Are You Sure Want to Cancel ? <strong class="text-danger">Any Unsaved Data Will Be Lost</strong></p>
             @break
             @default
                 <p>Are You Sure ?</p> 
@@ -38,7 +38,7 @@ params: $modalType
                 </div>
             @break
             @default
-                </div>
+                <div>
                     <button type="btn btn-secondary" class="btn btn-primary">Yes</button>
                 </div>
         @endswitch

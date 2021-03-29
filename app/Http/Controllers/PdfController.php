@@ -15,7 +15,12 @@ class PdfController extends Controller
     {
         $request->validate([
             'kasatName' => 'required',
-            'kasatNip' => 'required',
+            'kasatNip' => 'required|numeric|digits:18',
+        ],[
+            'kasatName.required' => 'The station master name field is required.',
+            'kasatNip.required' => 'The station master nip field is required.',
+            'kasatNip.numeric' => 'The station master nip must be a number.',
+            'kasatNip.digits' => 'The station master nip must be 18 digits.',
         ]);
 
         $headReport = HeadReport::Where('head_id', $id)->first();

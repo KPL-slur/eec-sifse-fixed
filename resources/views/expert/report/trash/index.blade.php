@@ -50,7 +50,7 @@
                                                             <form action="{{ route('report.trash.restore', ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}" method="post"
                                                                 class="d-inline">
                                                                 @csrf
-                                                                <button type="submit" class="btn btn-warning" onclick="return confirm('Apakah yakin ingin merestore data?')">
+                                                                <button type="submit" class="btn btn-warning" onclick="return confirm('Are You Sure Want To Restore This Report ?')">
                                                                     <i class="material-icons">restore</i>
                                                                 </button>
                                                             </form>
@@ -58,7 +58,7 @@
                                                                 class="d-inline">
                                                                 @csrf
                                                                 @method('delete')
-                                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah yakin ingin menghapus data secara permanent? Perlu diingat, aksi ini tidak dapat di kembalikan')">
+                                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are You Sure Want To Permanently Delete This Report ? Keep In Mind This Action Cannot Be Undone')">
                                                                     <i class="material-icons">close</i>
                                                                 </button>
                                                             </form>

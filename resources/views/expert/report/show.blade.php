@@ -208,7 +208,7 @@
     {{-- Modal Delete --}}
     <x-ui.modal-confirm id="modalDelete">
         <x-slot name="body">
-            <p>Are You Sure Want To Delete This Rerport?</p>
+            <p>Are You Sure Want To Delete This Report ? <strong class="text-danger">Deleted Report Can Be Restored At The Trash Page</strong></p>
         </x-slot>
         <x-slot name="footer">
             <form action="{{ route('report.delete', ['id' => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" method="post"
@@ -223,7 +223,7 @@
 
     <x-ui.modal-confirm id="modalDeleteUpload">
         <x-slot name="body">
-            <p>Are You Sure Want To Remove This File?</p>
+            <p>Are You Sure Want To Remove This File ? <strong class="text-danger">Keep In Mind This Action Cannot Be Undone</strong></p>
         </x-slot>
         <x-slot name="footer">
             <form action="{{ route("report.pdf.delete", ["id" => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" method="POST">
@@ -240,16 +240,16 @@
             Print CM REPORT to PDF
         </x-slot>
         <x-slot name="body">
-            <P>Silahkan masukan nama dan nip dari kepala statsiun untuk diisikan pada kolom tanda tangan</P>
+            <P>Please enter the name and nip of the station master to be filled in the signature column</P>
             <br>
             <form target="_blank" action="{{ route("report.pdf.print", ["id" => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" method="GET">
             <div class="form-group">
-                <label for="kasatName">Nama Kepala Statsiun</label>
+                {{-- <label for="kasatName">Nama Kepala Statsiun</label> --}}
                 <input class="form-control" type="text" name="kasatName" id="kasatName" placeholder="Nama Kepala Statsiun">
             </div>
             <div class="form-group">
-                <label for="kasatName">Nip Kepala Statsiun</label>
-                <input class="form-control" type="text" name="kasatNip" id="kasatNip" placeholder="Nip Kepala Statsiun">
+                {{-- <label for="kasatName">Nip Kepala Statsiun</label> --}}
+                <input class="form-control" type="number" name="kasatNip" id="kasatNip" placeholder="Nip Kepala Statsiun">
             </div>
         </x-slot>
         <x-slot name="footer">
@@ -264,6 +264,7 @@
             Upload CM REPORT to PDF
         </x-slot>
         <x-slot name="body">
+            <P>Please upload the signed report file here. <strong class="text-danger">This form only accept PDF file</strong></P>
             <form action="{{ route("report.pdf.store", ["id" => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="container">
@@ -308,14 +309,14 @@
     @error('kasatNip')
         <script>
             window.onload = () => {
-                showNotification('top', 'right', 'danger', "Nip Kepala Statsiun Wajib Diisi");
+                showNotification('top', 'right', 'danger', "<?php echo $message; ?>");
             };
         </script>
     @enderror
     @error('kasatName')
         <script>
             window.onload = () => {
-                showNotification('top', 'right', 'danger', "Nama Kepala Statsiun Wajib Diisi");
+                showNotification('top', 'right', 'danger', "<?php echo $message; ?>");
             };
         </script>
     @enderror
