@@ -31,6 +31,7 @@
                       <th scope="col">Password</th>
                       <th scope="col">Creation Date</th>
                       <th class="text-center">Delete</th>
+                      <th class="text-center">Status</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -53,6 +54,10 @@
                                     <div class="ripple-container"></div>
                                   </button>
                                 </form>
+                          </td>
+
+                          <td class="td-actions text-center"> 
+                            <button class="btn btn-sm btn-warning">Pending</button>
                           </td>
   
                       @endforeach

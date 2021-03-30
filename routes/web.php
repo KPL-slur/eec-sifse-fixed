@@ -28,7 +28,7 @@ Auth::routes();
 | ini digunakan middleware auth
 |
 */
-Route::group(['middleware' => 'auth', 'prefix' => 'expert'], function () {
+Route::group(['prefix' => 'expert', 'middleware' =>['auth'] ], function () {
     Route::get('/', [App\Http\Controllers\ExpertController::class, 'index'])->name('expert');
 
     //PROFILE MANAGEMENT
