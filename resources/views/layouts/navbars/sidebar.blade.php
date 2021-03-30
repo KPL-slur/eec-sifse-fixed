@@ -26,16 +26,16 @@
         </a>
         <div class="collapse show" id="manageTask">
           <ul class="nav">
-            <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
-              <a class="nav-link" href="{{ route('profile.edit') }}">
-                <span class="sidebar-mini"> UP </span>
-                <span class="sidebar-normal">{{ __('User profile') }} </span>
-              </a>
-            </li>
             <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
               <a class="nav-link" href="{{ route('userManagement') }}">
                 <span class="sidebar-mini"> UM </span>
                 <span class="sidebar-normal"> {{ __('User Management') }} </span>
+              </a>
+            </li>
+            <li class="nav-item{{ $activePage == 'expert-management' ? ' active' : '' }}">
+              <a class="nav-link" href="{{ route('expertManagement') }}">
+                <span class="sidebar-mini"> EM </span>
+                <span class="sidebar-normal">{{ __('Expert Management') }} </span>
               </a>
             </li>
             <li class="nav-item{{ $activePage == 'distribution-management' ? ' active' : '' }}">

@@ -6,30 +6,37 @@
         <label>Stock</label>
         <div class="">
             @foreach ($sitedStock as $index => $sitedStock)
-                <tr>
-                    <td style="width: 20%">
-                        <select name="stocks[{{ $index }}][stock_id]"
-                            wire:model="sitedStock.{{ $index }}.stock_id"
-                            class="form-control site ">
-                            <option value="">-- choose product --</option>
-                            @foreach ($stocks as $stock)
-                            
-                                @if ($stock->jumlah_unit > 0)
+                <div class='@error('stock.stock_id') label-floating has-danger @enderror'>
+                    @error('stock.stock_id')
+                        <label class="control-label force-has-danger">{{ $message }}</label>
+                        <span class="material-icons form-control-feedback">clear</span>
+                    @enderror
+                    <tr>
+                        <td style="width: 20%">
+                            <select name="stocks[{{ $index }}][stock_id]"
+                                wire:model="sitedStock.{{ $index }}.stock_id"
+                                class="form-control site ">
+                                <option value="">-- choose product --</option>
+                                @foreach ($stocks as $stock)
                                 
-                                    <option value="{{ $stock->stock_id }}">
-                                        {{ $stock->nama_barang }}
-                                    </option>
+                                    @if ($stock->jumlah_unit > 0)
                                     
-                                @endif
-                            
-                            @endforeach
+                                        <option value="{{ $stock->stock_id }}">
+                                            {{ $stock->nama_barang }}
+                                        </option>
+                                        
+                                    @endif
+                                
+                                @endforeach
 
-                        </select>
-                        <a class="d-inline mt-4 ml-1" href="#" 
-                            wire:click.prevent="removeStock({{ $index }})">Delete
-                        </a>
-                    </td>
-                </tr>
+                            </select>
+                            <a class="d-inline mt-4 ml-1" href="#" 
+                                wire:click.prevent="removeStock({{ $index }})">Delete
+                            </a>
+                        </td>
+                    </tr>
+
+                </div>
             @endforeach
 
         </div>
