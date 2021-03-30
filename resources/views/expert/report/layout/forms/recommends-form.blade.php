@@ -1,6 +1,6 @@
 <div class="card ">
     <div class="card-header card-header-primary">
-        <h4 class="card-title">{{ __('Weather Radar Service Report') }}</h4>
+        <h4 class="card-title">{{ __('Recommendations') }}</h4>
     </div>
 
     <div class="card-body">
@@ -24,26 +24,36 @@
                         @foreach ($recommends as $index => $recommend)
                             <tr>
                                 <td>
-                                    <select name="recommends[{{ $index }}][name]"
-                                        wire:model="recommends.{{ $index }}.name"
-                                        class="form-control"
-                                    >
-                                        <option value="">-- choose product --</option>
-                                        @foreach ($stocks as $stock)
-                                        <option value="{{ $stock['name'] }}">
-                                            {{ $stock['name'] }}
-                                        </option>
-                                        @endforeach
-                                    </select>
+                                    <div class='@error('recommends.'.$index.'.name') label-floating has-danger @enderror'>
+                                        @error('recommends.'.$index.'.name')
+                                            <label class="control-label force-has-danger">{{ $message }}</label>
+                                        @enderror
+                                        <select name="recommends[{{ $index }}][name]"
+                                            wire:model="recommends.{{ $index }}.name"
+                                            class="form-control"
+                                        >
+                                            <option value="">-- choose product --</option>
+                                            @foreach ($stocks as $stock)
+                                            <option value="{{ $stock['name'] }}">
+                                                {{ $stock['name'] }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control recommends-qty"
-                                    name="recommends[{{ $index }}][jumlah_unit_needed]" 
-                                    wire:model.defer="recommends.{{ $index }}.jumlah_unit_needed"
-                                    >
+                                    <div class="@error('recommends.'.$index.'.jumlah_unit_needed') label-floating has-danger @enderror">
+                                        @error('recommends.'.$index.'.jumlah_unit_needed')
+                                            <label class="control-label force-has-danger">{{ $message }}</label>
+                                        @enderror
+                                        <input type="text" class="form-control recommends-qty"
+                                        name="recommends[{{ $index }}][jumlah_unit_needed]"
+                                        wire:model.defer="recommends.{{ $index }}.jumlah_unit_needed"
+                                        >
+                                    </div>
                                 </td>
                                 <td>
-                                    <a href="#"
+                                    <a href="#" class="text-danger"
                                         wire:click.prevent="selectItem({{ $index }}, 'recommendation')">Delete</a>
                                 </td>
                             </tr>
@@ -51,18 +61,28 @@
                         @foreach ($manualRecommends as $index => $manualRecommend)
                             <tr>
                                 <td>
-                                    <input type="text" class="form-control" 
-                                        name="manualRecommends[{{ $index }}][name]" 
-                                        wire:model.defer="manualRecommends.{{ $index }}.name">
+                                    <div class="@error('manualRecommends.'.$index.'.name') label-floating has-danger @enderror">
+                                        @error('manualRecommends.'.$index.'.name')
+                                            <label class="control-label force-has-danger">{{ $message }}</label>
+                                        @enderror
+                                        <input type="text" class="form-control"
+                                            name="manualRecommends[{{ $index }}][name]"
+                                            wire:model.defer="manualRecommends.{{ $index }}.name">
+                                    </div>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control recommends-qty"
-                                        name="manualRecommends[{{ $index }}][jumlah_unit_needed]" 
-                                        wire:model.defer="manualRecommends.{{ $index }}.jumlah_unit_needed"
-                                    >
+                                    <div class="@error('manualRecommends.'.$index.'.jumlah_unit_needed') label-floating has-danger @enderror">
+                                        @error('manualRecommends.'.$index.'.jumlah_unit_needed')
+                                            <label class="control-label force-has-danger">{{ $message }}</label>
+                                        @enderror
+                                        <input type="text" class="form-control recommends-qty"
+                                            name="manualRecommends[{{ $index }}][jumlah_unit_needed]"
+                                            wire:model.defer="manualRecommends.{{ $index }}.jumlah_unit_needed"
+                                        >
+                                    </div>
                                 </td>
                                 <td>
-                                    <a href="#"
+                                    <a href="#" class="text-danger"
                                         wire:click.prevent="selectItem({{ $index }}, 'manualRecommendation')">Delete</a>
                                 </td>
                             </tr>
@@ -71,6 +91,9 @@
                 </table>
                 <div class="row">
                     <div class="col-md-12">
+                        <x-ui.action-message on="unsetRecommendation" type="danger">
+                            Recommendation Record Deleted
+                        </x-ui.action-message>
                         <button class="btn btn-sm btn-secondary" wire:click.prevent="addRecommend">+ Add Another Product</button>
                         <button class="btn btn-sm btn-secondary" wire:click.prevent="addManualRecommends">+ Add Manual Product</button>
                     </div>

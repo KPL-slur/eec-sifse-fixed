@@ -27,8 +27,11 @@
                                             <span class="material-icons form-control-feedback">clear</span>
                                         @enderror
                                         <select name="experts[{{ $index }}][expert_id]"
-                                            id="experts[{{ $index }}][expert_id]"
-                                            wire:model="experts.{{ $index }}.expert_id" wire:change="setCompanyAndNip({{ $index }})" class="form-control">
+                                            id="experts[{{ $index }}][expert_id]" class="form-control"
+                                            wire:model="experts.{{ $index }}.expert_id" 
+                                            wire:change="setCompanyAndNip({{ $index }})" 
+                                            @if ($loop->first) disabled @endif
+                                            >
                                             <option value="">-- choose expert --</option>
                                             @foreach ($expertsData as $expertData)
                                                 <option value="{{ $expertData->expert_id }}" 
@@ -88,7 +91,9 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <a href="#" wire:click.prevent="selectItem({{ $index }}, 'expert')">Delete</a>
+                                    @if (! $loop->first)
+                                    <a href="#" wire:click.prevent="selectItem({{ $index }}, 'expert')" class="text-danger">Delete</a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -140,7 +145,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <a href="#" wire:click.prevent="selectItem({{ $index }}, 'manualExpert')">Delete</a>
+                                    <a href="#" wire:click.prevent="selectItem({{ $index }}, 'manualExpert')" class="text-danger">Delete</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -148,6 +153,12 @@
                 </table>
                 <div class="row">
                     <div class="col-md-12">
+                        <x-ui.action-message on="unsetExpert" type="danger">
+                            Expert Record Deleted
+                        </x-ui.action-message>
+                        @error('dupes')
+                            <p class="text-danger">{{ $message }}</p>
+                        @enderror
                         <button class="btn btn-sm btn-secondary" wire:click.prevent="addExpert">+ Add Another Expert</button>
                         @if (empty($experts))
                             <p class="text-danger d-inline"> select atleast one expert to continue </p>

@@ -42,8 +42,9 @@
             <div class="row">
                 <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                     <div class="">
-                        <span wire:loading.remove wire:target="attachments.{{ $index }}.image"
-                            class="btn btn-raised btn-round btn-default btn-file {{ $attachments[$index]['image'] ? 'd-none' : '' }}">
+                        <span wire:loading.remove wire:target="attachments.{{ $index }}.image" 
+                                class="btn btn-default btn-round btn-file {{ $attachments[$index]['image'] ? 'd-none' : '' }}">
+                            <span class="fileinput-new">Select image: </span>
                             <input type="file" name="attachments[{{ $index }}][image]" class="fileinput-new"
                                 wire:model='attachments.{{ $index }}.image' />
                         </span>
@@ -76,5 +77,8 @@
     </div>
 
 @endforeach
+<x-ui.action-message on="unsetAttachment" type="danger">
+    Attachment Record Deleted
+</x-ui.action-message>
 <button class="btn btn-sm btn-secondary" wire:click.prevent="addAttachment">+ Add Another
     Attachment</button>

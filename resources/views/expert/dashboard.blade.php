@@ -3,7 +3,7 @@
 @section('content')
     <div class="content">
         <div class="container-fluid">
-            <h1>HI, {{ $loggedName }} here</h1>
+            <h1>Welcome, {{ $loggedName }} </h1>
 
             <div class="row">
                 <div class="col-lg-4 col-md-6 col-sm-6">
@@ -45,7 +45,7 @@
                             <h3 class="card-title">PROFIL</h3>
                         </div>
                         <div class="card-footer">
-                            <button class="btn btn-info">MORE</button>
+                            <a class="btn btn-info" href="{{ route('profile.edit') }}">MORE</a>
                         </div>
                     </div>
                 </div>

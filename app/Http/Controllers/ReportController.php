@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\Utility;
 use App\Models\HeadReport;
+use Illuminate\Support\Facades\Gate;
 
 class ReportController extends Controller
 {
@@ -20,6 +21,8 @@ class ReportController extends Controller
         ->with(array('experts'=>function ($query) {
             $query->where('expert_company', 'Era Elektra Corpora Indonesia');
         }))
+        ->with('site')
+        ->orderBy('head_id', 'desc')
         ->get();
         
         return view('expert.report.index', compact('headReports', 'maintenance_type'));
@@ -83,6 +86,9 @@ class ReportController extends Controller
      */
     public function edit($maintenance_type, $id)
     {
+        $headReport = HeadReport::findOrFail($id);
+        $this->authorize('update', $headReport);
+        
         return view('expert.report.edit', compact('id', 'maintenance_type'));
     }
 
@@ -94,6 +100,9 @@ class ReportController extends Controller
      */
     public function destroy($maintenance_type, $id)
     {
+        $headReport = HeadReport::findOrFail($id);
+        $this->authorize('update', $headReport);
+
         HeadReport::destroy($id);
         return redirect()->route('report.index', $maintenance_type)->with('status_delete', 'Data Dihapus');
     }

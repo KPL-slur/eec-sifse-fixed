@@ -1,88 +1,13 @@
-{{-- List of Form Name Inputs:
-
-    radio_general_visual
-    radio_rcms
-    radio_wipe_down
-    radio_inspect_all
-
-    radio_compressor_visual
-    radio_duty_cycle
-
-    radio_transmitter_visual
-    radio_running_time
-    radio_radiate_time
-    radio_0_4us
-    radio_0_8us
-    radio_1_0us
-    radio_2_0us
-    radio_forward_power
-    radio_reverse_power
-    radio_vswr
-    
-    radio_receiver_visual
-    radio_stalo_check
-    radio_afc_check
-    radio_mrp_check
-    radio_rcu_check
-    radio_iq2_check
-
-    radio_antenna_visual
-    radio_inspect_motor
-    radio_clean_slip
-    radio_grease_gear
-
-    general_visual
-    rcms
-    wipe_down
-    inspect_all
-
-    compressor_visual
-    duty_cycle
-
-    transmitter_visual
-    running_time
-    radiate_time
-
-    hvps_v_0_4us
-    hvps_i_0_4us
-    mag_i_0_4us
-    hvps_v_0_8us
-    hvps_i_0_8us
-    mag_i_0_8us
-    hvps_v_1_0us
-    hvps_i_1_0us
-    mag_i_1_0us
-    hvps_v_2_0us
-    hvps_i_2_0us
-    mag_i_2_0us
-
-    forward_power
-    reverse_power
-    vswr
-
-    receiver_visual
-    stalo_check
-    afc_check
-    mrp_check
-    rcu_check
-    iq2_check
-
-    antenna_visual
-    inspect_motor
-    clean_slip
-    grease_gear --}}
-
 {{-- GENERAL CHECK --}}
 <div class="card ">
     <div class="card-header card-header-primary">
         <h4 class="card-title">{{ __('General') }}</h4>
     </div>
     <div class="card-body " id="">
-        @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'general_visual'])
-        @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'rcms'])
-        @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'wipe_down'])
-        @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'inspect_all'])
-
+        <x-forms.pm-check namaKolom="general_visual">Visual Inspection</x-forms.pm-check>
+        <x-forms.pm-check namaKolom="rcms">RCMS Control And Monitoring Test</x-forms.pm-check>
+        <x-forms.pm-check namaKolom="wipe_down">Wipe down external surface</x-forms.pm-check>
+        <x-forms.pm-check namaKolom="inspect_all">Inspect inside all cabinets for vermin ingres</x-forms.pm-check>
     </div>
 </div>
 {{-- END OF GENERAL CHECK --}}
@@ -93,9 +18,8 @@
         <h4 class="card-title">{{ __('Compressor') }}</h4>
     </div>
     <div class="card-body " id="">
-        @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'compressor_visual'])
-        @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'duty_cycle'])
-
+        <x-forms.pm-check namaKolom="compressor_visual">Visual Inspection</x-forms.pm-check>
+        <x-forms.pm-check namaKolom="duty_cycle">Duty Cycle</x-forms.pm-check>
     </div>
 </div>
 {{-- END OF COMPRESSOR --}}
@@ -106,22 +30,21 @@
         <h4 class="card-title">{{ __('Transmitter') }}</h4>
     </div>
     <div class="card-body " id="">
-        @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'transmitter_visual'])
-        @include('expert.report.layout.forms.pm-appended-form', ['namaKolom' => 'running_time', 'satuan' => 'hrs'])
-        @include('expert.report.layout.forms.pm-appended-form', ['namaKolom' => 'radiate_time', 'satuan' => 'hrs'])
+        <x-forms.pm-check namaKolom="transmitter_visual">Visual Inspection</x-forms.pm-check>
+        <x-forms.pm-check namaKolom="running_time" satuan="hrs">Running Time</x-forms.pm-check>
+        <x-forms.pm-check namaKolom="radiate_time" satuan="hrs">Radiate Time</x-forms.pm-check>
 
         <div class="row">
             <label class="col-sm-2 col-form-label" for="">{{ __('Pulse Width') }}</label>
         </div>
-        @include('expert.report.layout.forms.pm-pulse-form', ['namaKolom' => '0_4us'])
-        @include('expert.report.layout.forms.pm-pulse-form', ['namaKolom' => '0_8us'])
-        @include('expert.report.layout.forms.pm-pulse-form', ['namaKolom' => '1_0us'])
-        @include('expert.report.layout.forms.pm-pulse-form', ['namaKolom' => '2_0us'])
+        <x-forms.pm-check namaKolom="0_4us" type="pulse">0.4 us</x-forms.pm-check>
+        <x-forms.pm-check namaKolom="0_8us" type="pulse">0.8 us</x-forms.pm-check>
+        <x-forms.pm-check namaKolom="1_0us" type="pulse">1.0 us</x-forms.pm-check>
+        <x-forms.pm-check namaKolom="2_0us" type="pulse">2.0 us</x-forms.pm-check>
 
-        @include('expert.report.layout.forms.pm-appended-form', ['namaKolom' => 'forward_power', 'satuan' => 'dBm'])
-        @include('expert.report.layout.forms.pm-appended-form', ['namaKolom' => 'reverse_power', 'satuan' => 'dBm'])
-        @include('expert.report.layout.forms.pm-appended-form', ['namaKolom' => 'vswr', 'satuan' => ':1'])
-
+        <x-forms.pm-check namaKolom="forward_power" satuan="dBm">Forward Power</x-forms.pm-check>
+        <x-forms.pm-check namaKolom="reverse_power" satuan="dBm">Reverse Power</x-forms.pm-check>
+        <x-forms.pm-check namaKolom="vswr" satuan=":1">VSWR</x-forms.pm-check>
     </div>
 </div>
 {{-- END OF TRANSMITTER --}}
@@ -132,13 +55,12 @@
         <h4 class="card-title">{{ __('Receiver') }}</h4>
     </div>
     <div class="card-body " id="">
-        @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'receiver_visual'])
-        @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'stalo_check'])
-        @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'afc_check'])
-        @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'mrp_check'])
-        @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'rcu_check'])
-        @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'iq2_check'])
-
+        <x-forms.pm-check namaKolom="receiver_visual">Visual Inspection</x-forms.pm-check>
+        <x-forms.pm-check namaKolom="stalo_check">Stalo Check</x-forms.pm-check>
+        <x-forms.pm-check namaKolom="afc_check">AFC Check</x-forms.pm-check>
+        <x-forms.pm-check namaKolom="mrp_check">MRP Check</x-forms.pm-check>
+        <x-forms.pm-check namaKolom="rcu_check">RCU Check</x-forms.pm-check>
+        <x-forms.pm-check namaKolom="iq2_check">IQ2 Check</x-forms.pm-check>
     </div>
 </div>
 {{-- END OF RECEIVER --}}
@@ -149,42 +71,10 @@
         <h4 class="card-title">{{ __('Antenna/Pedestal') }}</h4>
     </div>
     <div class="card-body " id="">
-        @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'antenna_visual'])
-        @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'inspect_motor'])
-        @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'clean_slip'])
-        @include('expert.report.layout.forms.pm-form', ['namaKolom' => 'grease_gear'])
-
+        <x-forms.pm-check namaKolom="antenna_visual">Visual Inspection</x-forms.pm-check>
+        <x-forms.pm-check namaKolom="inspect_motor">Inspect Motor Drive</x-forms.pm-check>
+        <x-forms.pm-check namaKolom="clean_slip">Clean Slip-rings</x-forms.pm-check>
+        <x-forms.pm-check namaKolom="grease_gear">Grease Gears and Bearing</x-forms.pm-check>
     </div>
 </div>
 {{-- END OF ANTENNA/PEDESTAL --}}
-
-{{-- CKEDITOR REMARK --}}
-{{-- <div class="card ">
-    <div class="card-header card-header-primary">
-        <h4 class="card-title">{{ __('REMARK') }}</h4>
-    </div>
-
-    <div class="card-body ">
-        <div class="row">
-            <div class="col-sm-7">
-                <div class="form-group">
-                    <textarea class="editor" name="remark" id="editor" cols="50" rows="10"
-                        class="form-control"
-                        placeholder="@error('remark') {{ $message }} @enderror">
-                        {{ old('remark') }}
-                    </textarea>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> --}}
-{{-- END OF CKEDITOR REMARK --}}
-
-{{-- BUTTON GROUP --}}
-{{-- <div class="d-flex justify-content-end">
-    <a type="button" class="btn btn-info" href="{{ url('expert') }}">BACK</a>
-    <button type="submit" value='submit' class="btn btn-primary mx-5">SUBMIT</button>
-</div> --}}
-{{-- END OF BUTTON GROUP --}}
-
-

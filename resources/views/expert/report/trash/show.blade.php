@@ -8,18 +8,18 @@
                     <h4 class="card-title">{{ __('Preventive Maintenance Report') }}</h4>
                 </div>
                 <div class="card-body ">
-                    {{-- <div class="sticky-top"> --}}
+                    <div class="">
                         <a type="button" class="btn btn-info"
                             href="{{ route("report.trash.index", ['maintenance_type' => $headReport->maintenance_type]) }}">BACK</a>
-
+                        @can('update', $headReport)
                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalRestore">
                             RESTORE
                         </button>
-
                         <button type="button" rel="tooltip" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete">
                             DELETE
                         </button>
-                    {{-- </div> --}}
+                        @endcan
+                    </div>
 
                     <div class="card ">
                         <div class="card-header card-header-primary">
@@ -59,12 +59,17 @@
                                     <table class="table">
                                         <tbody>
                                             <tr>
-                                                <td>Station Id</td>
-                                                <td>{{ $headReport->site->station_id }}</td>
+                                                <td>Station ID</td>
+                                                <td colspan="2">{{ $headReport->site->station_id }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Station Master</td>
+                                                <td>{{ $headReport->kasat_name }}</td>
+                                                <td>{{ $headReport->kasat_nip }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Date</td>
-                                                <td>{{ $date }}</td>
+                                                <td colspan="2">{{ $date }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -151,16 +156,20 @@
 
                             <div class="row image-grid">
                                 @foreach ($reportImages as $reportImage)
-                                <div class="col-sm-4 col-md-4">
-                                    <div class="panel panel-default">
-                                        <div class="panel-body">
-                                            <a href="{{ asset('storage/' . $reportImage->image) }}" target="_blank">
-                                                <img alt="" class="img-responsive center-block" 
-                                                width="250px" height="100%" 
-                                                src="{{ asset('storage/' . $reportImage->image) }}">
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="card card-profile ml-auto mr-auto" style="max-width: 360px">
+                                        <div class="card-header card-header-image">
+                                            <img class="img" src="{{ asset('storage/' . $reportImage->image) }}">   
+                                        </div>
+                                      
+                                        <div class="card-body d-flex justify-content-between">
+                                            <h4 class="card-title d-inline">
+                                                {{ $reportImage->caption }}
+                                            </h4>
+                                            <a href="{{ asset('storage/' . $reportImage->image) }}" target="_blank" class="material-icons d-inline">
+                                                open_in_new
                                             </a>
                                         </div>
-                                        <div class="panel-footer">{{ $reportImage->caption }}</div>
                                     </div>
                                 </div>
                                 @endforeach
@@ -175,6 +184,7 @@
     
     {{-- FLOATING MENU --}}
     <x-ui.btn-float-group>
+        @can('update', $headReport)
         <li>
             <button class="btn btn-danger btn-fab btn-round" data-toggle="modal" data-target="#modalDelete">
                 <i class="material-icons">close</i>
@@ -185,12 +195,13 @@
                 <i class="material-icons">restore</i>
             </button>
         </li>
+        @endcan
     </x-ui.btn-float-group>
 
     {{-- Modal Delete --}}
     <x-ui.modal-confirm id="modalRestore">
         <x-slot name="body">
-            <p>Are You Sure Want To Restore This Report?</p>
+            <p>Are You Sure Want To Restore This Report ?</p>
         </x-slot>
         <x-slot name="footer">
             <form action="{{ route('report.trash.restore', ['id' => $headReport->head_id, 'maintenance_type' => $headReport->maintenance_type]) }}" method="post"
@@ -204,7 +215,7 @@
 
     <x-ui.modal-confirm id="modalDelete">
         <x-slot name="body">
-            <p>Are You Sure Want To Permanently Delete This Report?</p>
+            <p>Are You Sure Want To Delete This Report ? <strong class="text-danger">Keep In Mind This Action Cannot Be Undone</strong></p>
         </x-slot>
         <x-slot name="footer">
             <form action="{{ route('report.trash.perm_delete', ['id' => $headReport->head_id, 'maintenance_type' => $headReport->maintenance_type]) }}" method="post"

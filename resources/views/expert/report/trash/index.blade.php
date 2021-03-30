@@ -1,36 +1,33 @@
-@extends('layouts.app', ['activePage' => 'dashboard', 'titlePage' => __('Dashboard')])
+@extends('layouts.app', ['activePage' => 'dashboard', 'titlePage' => __('Discarded '.strtoupper($maintenance_type).' Reports')])
 
 @section('content')
     <div class="content">
         <div class="container-fluid">
             <div class="card ">
-                <div class="card-header card-header-primary">
-                    <h4 class="card-title">{{ __('Weather Radar Service Report') }}</h4>
+                <div class="card-header card-header-danger">
+                    <h4 class="card-title">{{ __('Discarded Weather Radar Service Report') }}</h4>
                 </div>
                 <div class="card-body ">
                     <a type="button" class="btn btn-info" href="{{ route('report.index', $maintenance_type) }}">BACK</a>
                     
                     <div class="row">
-                        <div class="col table-responsive">
-                            <table class="table">
+                        <div class="col material-datatables">
+                            @if ($headReports->isEmpty())
+                            <h4 class="text-center text-danger"> There are no deleted report(s) yet. </h4>
+                            @else
+                            <x-ui.spinner id="spinner" className="spinner-center"/>
+                            <table class="table table-no-bordered table-hover d-none" cellspacing="0" width="100%" style="width:100%" id="report">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">#</th>
+                                        <th class="disabled-sorting">#</th>
                                         <th>Radar Name</th>
                                         <th>Station ID</th>
                                         <th>Date</th>
                                         <th>Expertises</th>
-                                        <th class="text-right">Actions</th>
+                                        <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if ($headReports->isEmpty())
-                                        <tr>
-                                            <td colspan="6">
-                                                <p class="text-danger">There Is Nothing In The Trash Right Now</p>
-                                            </td>
-                                        </tr>
-                                    @endif
                                     @foreach ($headReports as $hr)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
@@ -47,26 +44,34 @@
                                                     href="{{ route("report.trash.show", ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}">
                                                     <i class="material-icons">visibility</i>
                                                 </a>
-                                                <form action="{{ route('report.trash.restore', ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}" method="post"
-                                                    class="d-inline">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-warning" onclick="return confirm('Apakah yakin ingin merestore data?')">
-                                                        <i class="material-icons">restore</i>
-                                                    </button>
-                                                </form>
-                                                <form action="{{ route('report.trash.perm_delete', ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}" method="post"
-                                                    class="d-inline">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah yakin ingin menghapus data secara permanent? Perlu diingat, aksi ini tidak dapat di kembalikan')">
-                                                        <i class="material-icons">close</i>
-                                                    </button>
-                                                </form>
+                                                @foreach ($hr->experts as $expert)
+                                                    @can('update', $hr)
+                                                        <div class="d-inline">
+                                                            <form action="{{ route('report.trash.restore', ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}" method="post"
+                                                                class="d-inline">
+                                                                @csrf
+                                                                <button type="submit" class="btn btn-warning" onclick="return confirm('Are You Sure Want To Restore This Report ?')">
+                                                                    <i class="material-icons">restore</i>
+                                                                </button>
+                                                            </form>
+                                                            <form action="{{ route('report.trash.perm_delete', ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}" method="post"
+                                                                class="d-inline">
+                                                                @csrf
+                                                                @method('delete')
+                                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are You Sure Want To Permanently Delete This Report ? Keep In Mind This Action Cannot Be Undone')">
+                                                                    <i class="material-icons">close</i>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                        @break
+                                                    @endcan
+                                                @endforeach
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -75,7 +80,7 @@
     </div>
 
     {{-- Floating Menu --}}
-    <x-ui.btn-float-group></x-ui.btn-float-group>
+    {{-- <x-ui.btn-float-group></x-ui.btn-float-group> --}}
 
     {{-- @if ($headReports->isNotEmpty())
         <x-ui.modal-confirm id="modalRestore">
@@ -121,6 +126,28 @@
                 showNotification('top', 'right', 'danger', "<?php echo session('status_perm_delete'); ?>");
             };
         </script>
+    @endif
+
+    @if (!($headReports->isEmpty()))
+        @push('scripts')
+            <script>
+                $(document).ready( function () {
+                    $('#report').DataTable({
+                        "pagingType": "numbers",
+                        "lengthMenu": [
+                            [10, 25, 50, 100, 250, 500],
+                            [10, 25, 50, 100, 250, 500]
+                        ],
+                        responsive: true,
+                        language: {
+                        searchPlaceholder: "Search records",
+                        }
+                    });
+                    $('#report').removeClass('d-none');
+                    $('#spinner').addClass('d-none');
+                });
+            </script>
+        @endpush
     @endif
 
 @endsection

@@ -2,7 +2,7 @@
     @php
         $radioNamaKolom = 'radio_' . $namaKolom;
     @endphp
-    <td>{{ $namaKolom }}</td>
+    <td>{{ $label }}</td>
     <td
         class="{{ $pmBodyReport->$radioNamaKolom === 0 ? 'text-light bg-danger' : ($pmBodyReport->$radioNamaKolom === 1 ? 'text-light bg-success' : '') }}">
         {{ $pmBodyReport->$radioNamaKolom === 0 ? 'FAIL' : ($pmBodyReport->$radioNamaKolom === 1 ? 'PASS' : 'not defined') }}

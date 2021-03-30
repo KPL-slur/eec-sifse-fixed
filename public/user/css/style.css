@@ -8,15 +8,15 @@
     float: none;
 }
 
-/* 
-  * Digunakan pada tabel rekomendasi sparepart
-  * pada form create pm/cm untuk mengoveride 
-  * posisi icon yang margin topnya negatif
-  * KYKNYA UDH GADIPAKE
-   */
-.btn .material-icons.shoping {
-    margin-top: 0;
-    margin-bottom: 0;
+.navbar.navbar-static {
+    position: static;
+    width: 100%;
+    padding-top: 10px;
+    z-index: 1029;
+}
+
+.no-margin .content {
+    margin-top: 0 !important;
 }
 
 /* 
@@ -69,7 +69,7 @@ main .ck-editor[role='application'] .ck.ck-content
 .ck.editor__editable[role='textbox'],
 .ck.ck-editor__editable[role='textbox'] {
     line-height: 1.6em !important;
-    width: 90vw;
+    width: 73vw;
     min-height: 400px;
 }
 
@@ -81,11 +81,29 @@ main .ck-editor[role='application'] .ck.ck-content
 select.form-control:not([size]):not([multiple]) {
     width: 100% !important;
 }
-
 select.site:not([size]):not([multiple]){
     width: 50% !important;
 }
-
 select.distribution:not([size]):not([multiple]) {
     width: 100% !important;
 }
+
+/*
+ * alpine js
+ */
+[x-cloak] {
+    display: none;
+}
+/*
+ *
+ */
+.toast-top-right{
+	position:fixed !important;
+	top: 40px;
+	right:40px;
+    width: 260px;
+	box-shadow: 2px 2px 3px #999;
+	z-index:1000;
+	animation: bot-to-top 2s ease-out;
+}
+

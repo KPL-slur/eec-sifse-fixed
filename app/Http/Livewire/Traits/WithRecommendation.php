@@ -38,6 +38,14 @@ trait WithRecommendation
         }
     }
 
+    /**
+     * 
+     */
+    public function updatedWithRecommendation()
+    {
+        $this->dispatchBrowserEvent('list-added');
+    }
+
     //* RECOMMENDS
     /**
      * 
@@ -45,7 +53,6 @@ trait WithRecommendation
     public function addRecommend()
     {
         $this->recommends[] = ['name' => '', 'jumlah_unit_needed' => "1 units"];
-        $this->dispatchBrowserEvent('list-added');
     }
     
     /**
@@ -56,13 +63,15 @@ trait WithRecommendation
      */
     public function removeRecommend($index)
     {
-        if (array_key_exists($index, $this->recommendationId)) {
-            Recommendation::where('rec_id', $this->recommendationId[$index])->delete();
+        if (array_key_exists($index, $this->recommends)) {
+            if (array_key_exists($index, $this->recommendationId)) {
+                Recommendation::where('rec_id', $this->recommendationId[$index])->delete();
+            }
+            
+            unset($this->recommends[$index]);
+            array_values($this->recommends);
+            $this->emit('unsetRecommendation');
         }
-        
-        unset($this->recommends[$index]);
-        array_values($this->recommends);
-        $this->dispatchBrowserEvent('list-added');
     }
 
     /**
@@ -73,36 +82,40 @@ trait WithRecommendation
     public function setRecommends()
     {
         // Clear Array
-        unset($this->siteRecommendations);
         unset($this->recommends);
         unset($this->recommendationId);
         // Init Array
-        $this->siteRecommendations = [];
         $this->recommends = [];
         $this->recommendationId = [];
+        
 
-        $this->recommendations = HeadReport::Where('site_id', $this->site_id)->get();
-        foreach ($this->recommendations as $rcm){ //headreport
-            foreach ($rcm->recommendations as $rcmItem){ //one to many relation with recomendation
-                $this->siteRecommendations[] = $rcmItem;
+
+        $siteHeadReports = HeadReport::Where('site_id', $this->site_id)->with('recommendations')->get();
+        foreach ($siteHeadReports as $siteHeadReport){ //headreport
+            foreach ($siteHeadReport->recommendations as $index => $recommendation) {
+                $this->recommends[] = [
+                                        'name' => $recommendation->name,
+                                        'jumlah_unit_needed' => $recommendation->jumlah_unit_needed,
+                                    ];
+                $this->recommendationId[] = $recommendation->rec_id;
             }
         }
-
-        foreach ($this->siteRecommendations as $recommendation) {
-            $this->recommends[] = [
-                'name' => $recommendation->name,
-                'jumlah_unit_needed' => $recommendation->jumlah_unit_needed];
-        }
-
-        /*
-        *  Bagian ini mengextrak model kedalam array dan 
-        *  menghitung jumlah record recomendation sebelumnya
-        */
-        foreach($this->siteRecommendations as $index => $recommendation){
-            $this->recommendationId[$index] = $recommendation->rec_id;
-        }
-
         $this->setRecommendationDropdown();
+    }
+
+    /**
+     * 
+     */
+    public function validateRecommends()
+    {
+        foreach ($this->recommends as $index => $recommend) {
+            $this->validate([
+                'recommends.'.$index.'.name' => 'required',
+                'recommends.'.$index.'.jumlah_unit_needed' => 'required',
+            ],[
+                'required' => 'This field is required.',
+            ]);
+        };
     }
 
     //* MANUAL RECOMMENDS
@@ -112,7 +125,6 @@ trait WithRecommendation
     public function addManualRecommends ()
     {
         $this->manualRecommends[] = ['name' => '', 'jumlah_unit_needed' => "1 units"];
-        $this->dispatchBrowserEvent('list-added');
     }
 
     /**
@@ -122,9 +134,26 @@ trait WithRecommendation
      */
     public function removeManualRecommends($index)
     {
-        unset($this->manualRecommends[$index]);
-        array_values($this->manualRecommends);
-        $this->dispatchBrowserEvent('list-added');
+        if (array_key_exists($index, $this->manualRecommends)) {
+            unset($this->manualRecommends[$index]);
+            array_values($this->manualRecommends);
+            $this->emit('unsetRecommendation');
+        }
+    }
+
+    /**
+     * 
+     */
+    public function validateManualRecommends()
+    {
+        foreach ($this->manualRecommends as $index => $manualRecommend) {
+            $this->validate([
+                'manualRecommends.'.$index.'.name' => 'required',
+                'manualRecommends.'.$index.'.jumlah_unit_needed' => 'required',
+            ],[
+                'required' => 'This field is required.',
+            ]);
+        };
     }
 
     //* GENERAL RECOMMENDATIONS
@@ -140,9 +169,9 @@ trait WithRecommendation
         $this->stocks = Stock::select('nama_barang AS name')
                             ->get()
                             ->toArray();
-        foreach ($this->siteRecommendations as $siteRecommendation){
-            if (!($utility->in_array_r($siteRecommendation['name'], $this->stocks))) {
-                $this->stocks[] = $siteRecommendation;
+        foreach ($this->recommends as $recommend){
+            if (!($utility->in_array_r($recommend['name'], $this->stocks))) {
+                $this->stocks[] = ['name' => $recommend['name']];
             }
         }
     }

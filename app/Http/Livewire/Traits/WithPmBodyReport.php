@@ -164,7 +164,9 @@ trait WithPmBodyReport
      */
     public function upstorePmBodyReport()
     {
-        $this->validate($this->pmBodyReportRules);
+        $this->validate($this->pmBodyReportRules,[
+            'required' => 'This field is required.',
+        ]);
 
         PmBodyReport::updateOrCreate(
             ['head_id' => $this->head_id],

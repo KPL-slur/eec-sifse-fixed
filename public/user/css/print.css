@@ -1,5 +1,9 @@
 /* STYLE FOR HEADER AND FOOTER */
 
+.table {
+    table-layout:fixed !important;
+}
+
 .page-header,
 .page-header-space {
     height: 180px;
@@ -50,8 +54,35 @@
     padding: 5px;
 }
 
-.report.body-report td:nth-child(2),
-.report.body-report td:nth-child(3) {
+.report.body-report td:nth-child(1):not(.nested-table td) {
+    width: 350px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.report.body-report td:nth-child(4):not(.nested-table td) {
+    width: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.report.ttd td:nth-child(3) {
+    width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.report.recommendation td:nth-child(1) {
+    width: 50px;
+    text-align: center;
+}
+
+.report.recommendation td:nth-child(3) {
+    text-align: center;
+}
+
+.report.body-report td:nth-child(2):not(.nested-table td),
+.report.body-report td:nth-child(3):not(.nested-table td) {
     text-align: center;
 }
 

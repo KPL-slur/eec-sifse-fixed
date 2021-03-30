@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ __('EECID INVENTORY AND REPORT APP') }}</title>
+    <title>{{ __('Print '.strtoupper($headReport->maintenance_type).' '. $headReport->site->station_id) }} | EECID</title>
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('material') }}/img/apple-icon.png">
     <link rel="icon" type="image/png" href="{{ asset('material') }}/img/favicon.png">
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
@@ -162,7 +162,7 @@
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                     <td rowspan="5" style="padding: 0">
-                                        <table class="nested-table text-center">
+                                        <table class="nested-table">
                                             <tr>
                                                 <th>HVPS_V</th>
                                                 <th>HVPS_I</th>
@@ -262,29 +262,19 @@
                                 <x-pm.print-row label="Clean Slip-rings"
                                     radio="{{ $headReport->pmBodyReport->radio_clean_slip }}"
                                     remark="{{ $headReport->pmBodyReport->clean_slip }}" />
-                                <x-pm.print-row label="Grease geaers and Bearing"
+                                <x-pm.print-row label="Grease Gears and Bearing"
                                     radio="{{ $headReport->pmBodyReport->radio_grease_gear }}"
                                     remark="{{ $headReport->pmBodyReport->grease_gear }}" />
                             </tbody>
                         </table>
                         @endif
                         <!----------------------------------------------------------------------------------------- REMARK -->
-                        <table class="report body-report">
-                            <thead>
-                                <tr>
-                                    <th>Remark</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <?php echo $bodyReport->remark; ?>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <hr>
+                        <h3>Remark</h3>
+                        <?php echo $bodyReport->remark; ?>
+                        <hr>
                         <!----------------------------------------------------------------------------------------- RECOMMENDATIONS -->
-                        <table class="report body-report">
+                        <table class="report recommendation">
                             <thead>
                                 <tr>
                                     <th>No.</th>
@@ -304,7 +294,7 @@
                         </table>
                         <!----------------------------------------------------------------------------------------- TTD PENGESAHAN -->
                         <div class="avoid-break-inside">
-                            <table class="report">
+                            <table class="report ttd">
                                 @foreach ($headReport->experts as $expert)
                                     <tr>
                                         <td>
@@ -327,8 +317,8 @@
                                 </p>
                                 <div>&nbsp;</div>
                                 <p>
-                                    <strong><u>{{ $kasat['name'] }}</u></strong><br>
-                                    NIP. {{ $kasat['nip'] }}
+                                    <strong><u>{{ $headReport->kasat_name }}</u></strong><br>
+                                    NIP. {{ $headReport->kasat_nip }}
                                 </p>
                             </div>
                         </div>
