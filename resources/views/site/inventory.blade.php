@@ -87,7 +87,7 @@
                                   <i class="material-icons">edit</i>
                                   <div class="ripple-container"></div>
                                 </a>
-                                
+
                                 <form action="/deleteInventorySite/{{$st->sited_stock_id}}" class="d-inline" method="POST">
                                   @method('DELETE')
                                   @csrf
@@ -95,7 +95,6 @@
                                     <i class="material-icons">delete</i>
                                     <div class="ripple-container"></div>
                                     </button>
-                
                                 </form>
                               </td> 
                               
@@ -105,6 +104,7 @@
                         @endif
                       </tbody>
                   </table>
+
                 </div>
                 {{-- table-responsive --}}
               </div>
@@ -142,8 +142,10 @@
   {{-- container-fluid --}}
 </div>
 {{-- dynamic year select --}}
+
+@push('scripts')
 <script>
-  window.onload = () => {
+  
     $("#selectGroupStock").change(()=>{
 
       var stock_group = JSON.parse('<?php echo json_encode($stocks_group)?>');
@@ -176,6 +178,7 @@
         } 
       }
     });
-  };
 </script>
+
+@endpush
 @endsection

@@ -21,7 +21,7 @@
                   </button>
                 </div>
 
-                <div class="table-responsive">
+                <div class="table-responsive mt-3">
                   <table class="table table-striped">
                     <thead class=" text-primary">
                       <tr>
@@ -71,6 +71,7 @@
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
+                      
                       
                       <form method="POST" action="/addUser">
                         @csrf
@@ -148,7 +149,7 @@
 
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                          <button type="submit" onclick="return confirm('Aapakah anda yakin ingin menambah data ini?')" class="btn btn-primary">Add</button>
+                          <button type="submit" onclick="return confirm('Apakah anda yakin ingin menambah data ini?')" class="btn btn-primary">Add</button>
                         </div>
 
                       </form> 

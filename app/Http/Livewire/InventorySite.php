@@ -9,7 +9,12 @@ class InventorySite extends Component
 {
     public $stocks = [];
     public $sitedStock = [];
-    
+
+    public function mount()
+    {
+        $this->sitedStock[] = ['stock_id' => ''];
+    }
+
     public function stock()
     {
         $this->stocks = Stock::all();
@@ -33,4 +38,5 @@ class InventorySite extends Component
     {
         return view('livewire.inventory-site');
     }
+
 }

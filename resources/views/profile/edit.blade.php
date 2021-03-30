@@ -22,7 +22,13 @@
 
                 {{-- NAME FIELD --}}
                 <div class="row">
-                  <label class="col-sm-2 col-form-label">{{ __('Name') }}</label>
+                  <div class="col-12 text-left mt-2">
+                    <a title="back" class="btn btn-sm btn-primary m-2" href="{{ route('home') }}">
+                      <i class="material-icons">arrow_back</i>
+                      <div class="ripple-container"></div>
+                    </a>
+                  </div>
+                  <label class="col-sm-2 col-form-label mt-2">{{ __('Name') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
                       <input class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" id="input-name" type="text" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->expert->name) }}"/>
@@ -48,7 +54,7 @@
 
                 {{-- EMAIL FIELD --}}
                 <div class="row">
-                  <label class="col-sm-2 col-form-label">{{ __('Email') }}</label>
+                  <label class="col-sm-2 col-form-label mt-2">{{ __('Email') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
                       <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" id="input-email" type="email" placeholder="{{ __('Email') }}" value="{{ old('email', auth()->user()->email) }}"/>
@@ -83,7 +89,7 @@
               </div>
               <div class="card-body ">
                 <div class="row">
-                  <label class="col-sm-2 col-form-label" for="input-current-password">{{ __('Current Password') }}</label>
+                  <label class="col-sm-2 col-form-label mt-2" for="input-current-password">{{ __('Current Password') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('old_password') ? ' has-danger' : '' }}">
                       <input class="form-control{{ $errors->has('old_password') ? ' is-invalid' : '' }}" input type="password" name="old_password" id="input-current-password" placeholder="{{ __('Current Password') }}" value=""/>
@@ -94,7 +100,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <label class="col-sm-2 col-form-label" for="input-password">{{ __('New Password') }}</label>
+                  <label class="col-sm-2 col-form-label mt-2" for="input-password">{{ __('New Password') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
                       <input class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" id="input-password" type="password" placeholder="{{ __('New Password') }}" value=""/>
@@ -105,7 +111,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <label class="col-sm-2 col-form-label" for="input-password-confirmation">{{ __('Confirm New Password') }}</label>
+                  <label class="col-sm-2 col-form-label mt-2" for="input-password-confirmation">{{ __('Confirm New Password') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group">
                       <input class="form-control" name="password_confirmation" id="input-password-confirmation" type="password" placeholder="{{ __('Confirm New Password') }}" value=""/>

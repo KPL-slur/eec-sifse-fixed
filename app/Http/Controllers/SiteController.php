@@ -16,8 +16,9 @@ class SiteController extends Controller
     public function index()
     {
         $sites = DB::table('sites')
+        ->orderBy('station_id', 'asc')
         ->get();
-        return view('site.site', ['sites' => $sites]);
+        return view('site.site', compact('sites'));
     }
     
     public function show($id){
@@ -146,6 +147,9 @@ class SiteController extends Controller
 
         //INSERT SITEDSTOCK TO SITE
         foreach ($request->stocks as $stock) {
+            $request->validate([
+                'stock.stock_id' => 'required'
+            ], ['required'=>'This field is required']);
             if ($stock['stock_id']) {
 
                 $sitedstocks = new SitedStock;
@@ -158,7 +162,7 @@ class SiteController extends Controller
                 ->decrement('jumlah_unit');
             }
         }
-        dd($request);
+        // dd($request);
 
         // $validated = $request->validated();
 
@@ -213,7 +217,6 @@ class SiteController extends Controller
     }
 
     public function destroySite($id){
-        //temporary
         $sites = DB::table('sites')->where('site_id',$id);
         $sites->delete();
 

@@ -13,11 +13,13 @@
 
             <form action="/addInventorySite" method="POST">
               @csrf
-              <input type="hidden" class="form-control" id="site_id" name="site_id" value="{{ $sites->site_id }}">
+              <input type="hidden" class="form-control @error('stock_id') is-invalid @enderror" id="site_id" name="site_id" value="{{ $sites->site_id }}">
               
               <div class="form-group-site ">
                 @livewire('inventory-site', ['stocks' => $stocks])
+                
               </div>
+
 
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <a href="/inventory/{{$sites->site_id}}" class="btn btn-info ml-3 d-inline">Kembali</a>

@@ -105,12 +105,20 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         return view('pages.upgrade');
     })->name('upgrade');
 
-    //user_management
+    //user management
     Route::get('userManagement', [App\Http\Controllers\UserController::class, 'index'])->name('userManagement');
     Route::post('addUser', [App\Http\Controllers\UserController::class, 'addData']);
     Route::get('editUser/{id}', [App\Http\Controllers\UserController::class, 'index']);
     Route::post('editUser', [App\Http\Controllers\UserController::class, 'editData']);
     Route::delete('deleteUser/{id}', [App\Http\Controllers\UserController::class, 'deleteData']);
+
+    //expert management
+    Route::get('expertManagement', [App\Http\Controllers\ExpertiserController::class, 'index'])->name('expertManagement');
+    Route::get('addExpert', [App\Http\Controllers\ExpertiserController::class, 'add']);
+    Route::post('addExp', [App\Http\Controllers\ExpertiserController::class, 'store']);
+    Route::get('editExpert/{expert}', [App\Http\Controllers\ExpertiserController::class, 'edit']);
+    Route::put('editExp/{expert}', [App\Http\Controllers\ExpertiserController::class, 'update']);
+    Route::delete('deleteExp/{expert}', [App\Http\Controllers\ExpertiserController::class, 'destroy']);
 
     //distribution
     Route::get('distribution', [App\Http\Controllers\DistributionController::class, 'index'])->name('distribution');

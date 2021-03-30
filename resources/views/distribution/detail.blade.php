@@ -28,7 +28,7 @@
                   </div>
               </div>
               
-              <div class="table-responsive">
+              <div class="table-responsive mt-3">
                 <table class="table table-striped">
                   <thead class=" text-primary">
                     <tr>
@@ -65,6 +65,7 @@
                     @endforeach
                   </tbody>
                 </table>
+
               </div>
               @if (session('status1'))
               <script>
