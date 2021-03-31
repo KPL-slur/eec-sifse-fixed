@@ -10,6 +10,7 @@ use App\Mail\ExpiredStockNotificationEmail;
 use App\Models\Stock;
 use App\Models\Recommendation;
 use App\Services\ExchangeRate;
+use Carbon\Carbon;
 
 class StockController extends Controller
 {
@@ -98,15 +99,9 @@ class StockController extends Controller
      */
     public function edit(Stock $stock, ExchangeRate $ex_rate)
     {
-        // $stock_data = Stock::where('stock_id');
-        // $rate_fix = $ex_rate->apiCall();
+        
         $rate_fix = 1000.11;
 
-        // $siteAndStock = DB::table('stocks')
-        //                     // ->select('stocks.site_id', 'station_id', 'stock_id', 'nama_barang', 'group', 'part_number','serial_number', 'tgl_masuk', 'expired', 'kurs_beli', 'jumlah_unit', 'status')
-        //                     // ->leftJoin('sites', 'stocks.site_id', '=', 'sites.site_id')
-        //                     ->where('stocks.stock_id', $stock->stock_id)
-        //                     ->first();
         $stock = Stock::where('stocks.stock_id', $stock->stock_id)
                             ->first();
 
@@ -140,23 +135,8 @@ class StockController extends Controller
      */
     public function update(ValidateStockRequest $request, Stock $stock)
     {
-        //belom nambah validasi
-        // dd($request);
 
         Stock::find($stock->stock_id)->update($request->validated());
-
-        // $stock_where = Stock::where('stock_id', $stocks->stock_id)
-        //             ->update([
-        //                 'nama_barang'=>$request->nama_barang,
-        //                 'group'=>$request->group,
-        //                 'part_number'=>$request->part_number,
-        //                 'serial_number'=>$request->serial_number,
-        //                 'tgl_masuk'=>$request->tgl_masuk,
-        //                 'expired'=>$request->expired,
-        //                 'kurs_beli'=>$request->kurs_beli,
-        //                 'jumlah_unit'=>$request->jumlah_unit,
-        //                 'status'=>$request->status
-        //             ]);
 
         return redirect('stocks')->with('status2', 'Data berhasil di update');
     }
@@ -181,10 +161,6 @@ class StockController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function report(Request $request){
-        // return $request->query('date-start');
-        // $stocks = DB::table('stocks')
-        //             ->whereBetween('tgl_masuk', [$date_start, $date_end])
-        //             ->get();
         $stocks = Stock::whereBetween('tgl_masuk', [$request->query('date-start'), $request->query('date-end')])
                     ->get();
 
@@ -199,45 +175,20 @@ class StockController extends Controller
      * take recommendations into stocks view
      */
     public function showRecommendation(){
-        // $recommendations =  DB::table('recommendations')
-        // ->join('head_reports', 'recommendations.head_id', '=', 'head_reports.head_id')
-        // ->join('stocks', 'recommendations.stock_id', '=', 'stocks.stock_id')
-        // ->join('sites', 'stocks.site_id', '=', 'sites.site_id')
-        // ->get();
-
         $recommendations = Recommendation::select('sites.radar_name', 'sites.station_id', 'recommendations.name', 'recommendations.jumlah_unit_needed', 'year')
                                             ->join('head_reports', 'recommendations.head_id', 'head_reports.head_id')
                                             ->join('sites', 'head_reports.site_id', 'sites.site_id')
                                             ->get();
-        // dd($recommendations);
         $rcm_year = [];
         
-        $years = DB::table('recommendations')
-        // ->join('head_reports', 'recommendations.head_id', 'head_reports.head_id')
-        // ->join('sites', 'head_reports.site_id', 'sites.site_id')
-        ->pluck('year');
+        $years = DB::table('recommendations')->pluck('year');
         foreach($years as $year){
             if(!in_array($year, $rcm_year)){
                 array_push($rcm_year, $year);
             }
         }
-        // dd($years);
-
 
         return view('stocks.recommendation', compact('recommendations', 'rcm_year', 'years'));
-    }
-
-    public function sendEmail(){
-        $to_email = "wicaklearn@gmail.com";
-
-        Mail::to($to_email)
-            ->send(new ExpiredStockNotificationEmail);
-
-        if(Mail::failures() != 0) {
-            return "<p> Success! Your E-mail has been sent.</p>";
-        } else {
-            return "<p> Failed! Your E-mail has not sent.</p>";
-        }
     }
 
 }

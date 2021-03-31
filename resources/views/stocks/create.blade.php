@@ -14,22 +14,6 @@
             <p class="mb-4 text-center h3">Harga Kurs Sekarang : <span class="text-primary text-center display-4">Rp {{ $rate_fix }}</span> ke USD</p>
             <form action="{{ url('stocks/') }}" method="POST">
               @csrf
-                {{-- <div class="form-group my-4">
-                  <label for="site_id">Pilih Site</label>
-                  <select name="site_id" id="site_id" class="form-control @error('site_id') is-invalid @enderror">
-                    <option value="">-- Pilih Site --</option>
-                    @foreach ($sites as $st)
-                      <option value="{{ $st->site_id }}" {{ old('site_id') == $st->site_id ? 'selected' : '' }}>{{ $st->station_id }}</option>  
-                    @endforeach
-                  </select>
-                  <input type="text" class="form-control" id="site_id" name="site_id"> DISINI TADINYA KE-KOMEN
-                  <small class="form-text text-muted">Apabila site tidak ada, berarti tambah dahulu di fitur site</small>
-                  @error('site_id')
-                    <div class="invalid-feedback">
-                      Lokasi site belum diisi
-                    </div>
-                  @enderror
-                </div> --}}
 
                 <div class="form-group my-4">
                   <label for="nama_barang">Nama Barang</label>
@@ -44,12 +28,6 @@
                 </div>
                 <div class="form-group my-4">
                   <label for="group">Group nya</label>
-                  {{-- <select name="group" id="group" class="form-control @error('group') is-invalid @enderror">
-                    <option value="" {{ old('group') == '' ? 'selected' : '' }} >-- Pilih jenis barang --</option>
-                    <option value="1" {{ old('group') == 1 ? 'selected' : '' }} >Transmitter</option>
-                    <option value="2" {{ old('group') == 2 ? 'selected' : '' }}>Receiver</option>
-                    <option value="3" {{ old('group') == 3 ? 'selected' : '' }}>Antenna</option>
-                  </select> --}}
                   <br>
                   <select name="group" id="group" class="form-control @error('group') is-invalid @enderror">
                     <option value="" {{ old('group') == '' ? 'selected' : '' }} >-- Pilih jenis barang --</option>
