@@ -15,18 +15,6 @@
               <form action="{{ url('stocks/') }}/{{ $stock->stock_id }}/update" method="POST">
                 @method('PUT')
                 @csrf
-                  {{-- <div class="form-group my-4">
-                    <label for="site_id">Pilih Site(?)</label>
-                    <select name="site_id" id="site_id" class="form-control">
-                      @php
-                          $chosen_site = 0;
-                      @endphp
-                      @foreach ($sites as $st)
-                        <option value="{{ $st->site_id }}" @if ($stock->site_id == $st->site_id) selected @php $chosen_site = 1 @endphp @endif >{{ $st->station_id }}</option>
-                      @endforeach
-                        <option value="{{ $stock->site_id }}" @if ($chosen_site == 0) selected  @endif >{{ $stock->station_id ?? 'Site ini masih belum ada namanya' }}</option>
-                    </select>
-                  </div> --}}
                   <div class="form-group my-4">
                     <label for="nama_barang">Nama Barang</label>
                     <input type="text" class="form-control @error('nama_barang') is-invalid @enderror" id="nama_barang" name="nama_barang" placeholder="Masukkan nama barang" value="{{ $stock->nama_barang }}" >

@@ -145,10 +145,6 @@
                                       </button>
                   
                                   </form>
-                                  {{-- <button class="btn btn-lg btn-danger m-2" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">
-                                    <i class="material-icons">delete</i>
-                                    <div class="ripple-container"></div>
-                                  </button> --}}
                                 </td>
                               </tr>
                             @endforeach

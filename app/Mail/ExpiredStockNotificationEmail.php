@@ -10,15 +10,16 @@ use Illuminate\Queue\SerializesModels;
 class ExpiredStockNotificationEmail extends Mailable
 {
     use Queueable, SerializesModels;
+    public $expired_stocks;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($expired_stocks)
     {
-        //
+        $this->expired_stocks = $expired_stocks;
     }
 
     /**
@@ -28,6 +29,6 @@ class ExpiredStockNotificationEmail extends Mailable
      */
     public function build()
     {
-        return $this->from("admin@eecid.com")->view('stocks_currencies.notification');
+        return $this->from("admin@eecid.com")->markdown('stocks.notification', ['expired_stocks'=>$this->expired_stocks]);
     }
 }
