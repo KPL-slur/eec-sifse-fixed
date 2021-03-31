@@ -3,7 +3,7 @@
     an anonymous laravel component
     just give it id and x-slot for title,body
  -->
-<div class="modal" tabindex="-1" role="dialog" aria-hidden="true" {{ $attributes }}>
+ <div class="modal" tabindex="-1" role="dialog" aria-hidden="true" id="modalDelete">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -13,7 +13,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                {{ $body }}
+                {{ $slot }}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
@@ -29,7 +29,7 @@
             id =  $(this).data("id");
         });
         $(".btn-yes").on('click', function (e) {
-            $(`#form_${id}`).submit();
+            $(`#form_delete_${id}`).submit();
         });
     </script>
 @endpush

@@ -57,10 +57,10 @@
                                                                 >
                                                                 <i class="material-icons">edit</i>
                                                             </a>
-                                                            <x-forms.btn-trigger modalId="modalDelete"
+                                                            <x-confirmation.btn-delete
                                                                     route="{{ route('report.delete', ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}">
                                                                 {{ $hr->head_id }}
-                                                            </x-forms.btn-trigger>
+                                                            </x-confirmation.btn-delete>
                                                         </div>
                                                         @break
                                                     @endcan
@@ -78,11 +78,9 @@
         </div>
     </div>
 
-    <x-ui.modal-submit id="modalDelete">
-        <x-slot name="body">
-            <p>Are You Sure Want To Delete This Report ? <strong class="text-danger">Deleted Report Can Be Restored At The Trash Page</strong></p>
-        </x-slot>
-    </x-ui.modal-submit>
+    <x-confirmation.mdl-delete>
+        <p>Are You Sure Want To Delete This Report ? <strong class="text-danger">Deleted Report Can Be Restored At The Trash Page</strong></p>
+    </x-confirmation.mdl-delete>
 
     {{-- Floating Menu --}}
     {{-- <x-ui.btn-float-group>

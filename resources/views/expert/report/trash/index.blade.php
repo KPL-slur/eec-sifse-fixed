@@ -54,10 +54,10 @@
                                                                     <i class="material-icons">restore</i>
                                                                 </button>
                                                             </form>
-                                                            <x-forms.btn-trigger modalId="modalDelete"
+                                                            <x-confirmation.btn-delete
                                                                     route="{{ route('report.trash.perm_delete', ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}">
                                                                 {{ $hr->head_id }}
-                                                            </x-forms.btn-trigger>
+                                                            </x-confirmation.btn-delete>
                                                         </div>
                                                         @break
                                                     @endcan
@@ -75,11 +75,9 @@
         </div>
     </div>
 
-    <x-ui.modal-submit id="modalDelete">
-        <x-slot name="body">
-            <p>Are You Sure Want To Permanently Delete This Report ? <strong class="text-danger">Keep In Mind This Action Cannot Be Undone</strong></p>
-        </x-slot>
-    </x-ui.modal-submit>
+    <x-confirmation.mdl-delete>
+        <p>Are You Sure Want To Permanently Delete This Report ? <strong class="text-danger">Keep In Mind This Action Cannot Be Undone</strong></p>
+    </x-confirmation.mdl-delete>
 
     {{-- Floating Menu --}}
     {{-- <x-ui.btn-float-group></x-ui.btn-float-group> --}}
