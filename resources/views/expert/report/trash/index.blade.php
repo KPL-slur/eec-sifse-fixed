@@ -54,14 +54,10 @@
                                                                     <i class="material-icons">restore</i>
                                                                 </button>
                                                             </form>
-                                                            <form action="{{ route('report.trash.perm_delete', ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}" method="post"
-                                                                class="d-inline">
-                                                                @csrf
-                                                                @method('delete')
-                                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are You Sure Want To Permanently Delete This Report ? Keep In Mind This Action Cannot Be Undone')">
-                                                                    <i class="material-icons">close</i>
-                                                                </button>
-                                                            </form>
+                                                            <x-forms.btn-trigger modalId="modalDelete"
+                                                                    route="{{ route('report.trash.perm_delete', ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}">
+                                                                {{ $hr->head_id }}
+                                                            </x-forms.btn-trigger>
                                                         </div>
                                                         @break
                                                     @endcan
@@ -78,6 +74,12 @@
             </div>
         </div>
     </div>
+
+    <x-ui.modal-submit id="modalDelete">
+        <x-slot name="body">
+            <p>Are You Sure Want To Permanently Delete This Report ? <strong class="text-danger">Keep In Mind This Action Cannot Be Undone</strong></p>
+        </x-slot>
+    </x-ui.modal-submit>
 
     {{-- Floating Menu --}}
     {{-- <x-ui.btn-float-group></x-ui.btn-float-group> --}}

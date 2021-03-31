@@ -60,7 +60,7 @@
                                                             <x-forms.btn-trigger modalId="modalDelete"
                                                                     route="{{ route('report.delete', ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}">
                                                                 {{ $hr->head_id }}
-                                                            </x-forms.btn-delete>
+                                                            </x-forms.btn-trigger>
                                                         </div>
                                                         @break
                                                     @endcan
@@ -82,7 +82,7 @@
         <x-slot name="body">
             <p>Are You Sure Want To Delete This Report ? <strong class="text-danger">Deleted Report Can Be Restored At The Trash Page</strong></p>
         </x-slot>
-    </x-ui.modal-delete>
+    </x-ui.modal-submit>
 
     {{-- Floating Menu --}}
     {{-- <x-ui.btn-float-group>
