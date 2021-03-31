@@ -3,7 +3,7 @@
     data-toggle="modal" data-target="#modalDelete">
     <i class="material-icons">delete</i>
     <form action="{{ $route }}" 
-        method="post" class="d-inline" id="form_delete{{ $slot }}">
+        method="post" class="d-inline" id="form_delete_{{ $slot }}">
         @csrf
         @method('delete')
     </form>
