@@ -28,7 +28,13 @@ Auth::routes();
 | ini digunakan middleware auth
 |
 */
-Route::group(['prefix' => 'expert', 'middleware' =>['auth'] ], function () {
+Route::middleware(['auth'])->group(function (){
+    Route::get('waiting-room', function () {
+        return view('pages.waiting-room');
+    })->name('waiting_room');
+});
+
+Route::group(['prefix' => 'expert', 'middleware' =>['auth', 'is_approved'] ], function () {
     Route::get('/', [App\Http\Controllers\ExpertController::class, 'index'])->name('expert');
 
     //PROFILE MANAGEMENT
@@ -111,6 +117,7 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('editUser/{id}', [App\Http\Controllers\UserController::class, 'index']);
     Route::post('editUser', [App\Http\Controllers\UserController::class, 'editData']);
     Route::delete('deleteUser/{id}', [App\Http\Controllers\UserController::class, 'deleteData']);
+    Route::post('approveUser/{id}', [App\Http\Controllers\UserController::class, 'validator']);
 
     //expert management
     Route::get('expertManagement', [App\Http\Controllers\ExpertiserController::class, 'index'])->name('expertManagement');

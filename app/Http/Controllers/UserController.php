@@ -20,7 +20,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::where('is_admin', '!=', 1)
+        $users = DB::table('users')
+        ->join('experts', 'users.expert_id', 'experts.expert_id')
+        ->where('is_admin', '<>', 1)
         ->orWhere('is_admin', '=', null)
         ->get();
 
@@ -52,4 +54,12 @@ class UserController extends Controller
 
         return redirect('userManagement')->with('status3', 'Data Deleted!');
     }
+
+    public function validator($id){
+        $users = DB::table('users')->where('id', $id);
+        $users->update(['is_approved'=> 1]);
+
+        return redirect('userManagement')->with('status1', 'User Approved');
+    }
+
 }

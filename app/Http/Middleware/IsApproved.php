@@ -20,6 +20,6 @@ class IsApproved
         if(auth()->user()->is_approved == 1){
             return $next($request);
         }
-        return redirect('/expert')->with('error', "Silahkan Login");
+        return redirect('waiting-room');
     }
 }
