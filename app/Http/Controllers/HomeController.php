@@ -29,19 +29,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-
-        // $pm = HeadReport::where('maintenance_type', 'pm')
-        //                 ->first()
-        //                 ->experts()
-        //                 ->where('expert_company', 'Era Elektra Corpora Indonesia')
-        //                 ->get();
-
-        // $pm = HeadReport::where('maintenance_type', 'pm')
-        // ->with(array('experts'=>function($query){
-        //     $query->where('expert_company', 'Era Elektra Corpora Indonesia');
-        // }))
-        // ->get();
-
         $pm = HeadReport::take(5)
                         ->orderBy('updated_at','desc')
                         ->where('maintenance_type', 'pm')
@@ -62,8 +49,11 @@ class HomeController extends Controller
             if(strripos($p->pmBodyReport->remark, "kesimpulan")){
                 $pos_kesimpulan = strripos($p->pmBodyReport->remark, "kesimpulan"); //cari posisi terakhir dari kata kesimpulan di string remark
                 $p->pmBodyReport->remark = substr($p->pmBodyReport->remark, $pos_kesimpulan); // ngambil substring dari posisi kesimpulan ke belakang
-                $pos_ul_kesimpulan = stripos($p->pmBodyReport->remark, "</ul>"); //nyari posisi </ul> kesimpulan
-                $p->pmBodyReport->remark = substr($$p->pmBodyReport->remark, 0, $pos_ul_kesimpulan + 5); // taro dalem remark, ilangin string setelah </ul>
+                if(stripos($p->pmBodyReport->remark, "</ul>")){
+                    $pos_ul_kesimpulan = stripos($p->pmBodyReport->remark, "</ul>"); //nyari posisi </ul> kesimpulan
+                    $p->pmBodyReport->remark = substr($$p->pmBodyReport->remark, 0, $pos_ul_kesimpulan + 5); // taro dalem remark, ilangin string setelah </ul>
+                }
+                $p->pmBodyReport->remark = strip_tags($p->pmBodyReport->remark);
             } else {
                 $p->pmBodyReport->remark = "Tidak dapat ditarik kesimpulan dalam remark PM ini";
             }
@@ -83,14 +73,18 @@ class HomeController extends Controller
                             $query->select('sites.site_id', 'station_id');
                         }])
                         ->get();
+        // return $cm;
 
         foreach($cm as $c){
             $c->cmBodyReport->remark = html_entity_decode($c->cmBodyReport->remark); //decode dari kode html ke string biasa
             if(strripos($c->cmBodyReport->remark, "kesimpulan")){
                 $pos_kesimpulan = strripos($c->cmBodyReport->remark, "kesimpulan"); //cari posisi terakhir dari kata kesimpulan di string remark
                 $c->cmBodyReport->remark = substr($c->cmBodyReport->remark, $pos_kesimpulan); // ngambil substring dari posisi kesimpulan ke belakang
-                $pos_ul_kesimpulan = stripos($c->cmBodyReport->remark, "</ul>"); //nyari posisi </ul> kesimpulan
-                $c->cmBodyReport->remark = substr($c->cmBodyReport->remark, 0, $pos_ul_kesimpulan + 5);  // taro dalem remark, ilangin string setelah </ul>
+                if(stripos($c->cmBodyReport->remark, "</ul>")){
+                    $pos_ul_kesimpulan = stripos($c->cmBodyReport->remark, "</ul>"); //nyari posisi </ul> kesimpulan
+                    $c->cmBodyReport->remark = substr($c->cmBodyReport->remark, 0, $pos_ul_kesimpulan + 5);  // taro dalem remark, ilangin string setelah </ul>
+                }
+                $c->cmBodyReport->remark = strip_tags($c->cmBodyReport->remark);
             }else{
                 $c->cmBodyReport->remark = "Tidak dapat ditarik kesimpulan dalam remark CM ini";
             }
@@ -112,6 +106,7 @@ class HomeController extends Controller
                                     ->get();
         $stocks = Stock::all();
         $stock_rec = [];
+        //nama recommendation sama kyk nama di stocks, masuk ke array baru
         foreach($recommends as $rcm){
             foreach($stocks as $st){
                 if($rcm->name === $st->nama_barang){
@@ -120,6 +115,10 @@ class HomeController extends Controller
                         $stock_rec["".$st->nama_barang] = $st->jumlah_unit;
                     }
                 }
+            }
+            //kalo misalkan nama recommendations blm ada di stock_rec, masukin dgn value 0
+            if(!array_key_exists($rcm->name, $stock_rec)){
+                $stock_rec["".$rcm->name] = 0;
             }
         }
         

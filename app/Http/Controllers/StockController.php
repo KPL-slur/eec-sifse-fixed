@@ -24,8 +24,8 @@ class StockController extends Controller
     {
         $stocks = Stock::all();
 
-        // $rate_fix = $ex_rate->apiCall();
-        $rate_fix = 1000.11;
+        $rate_fix = $ex_rate->apiCall();
+        // $rate_fix = 1000.11;
 
         // BUAT GROUP DARI STOCKS YANG SELECT NYA
         $stocks_group = []; //inisiasi empty array stocks_group
@@ -48,8 +48,8 @@ class StockController extends Controller
      */
     public function create(ExchangeRate $ex_rate)
     {
-        // $rate_fix = $ex_rate->apiCall();
-        $rate_fix = 1000.11;
+        $rate_fix = $ex_rate->apiCall();
+        // $rate_fix = 1000.11;
 
         // BUAT GROUP DARI STOCKS YANG SELECT NYA
         $stocks_group = []; //inisiasi empty array stocks_group
@@ -99,7 +99,7 @@ class StockController extends Controller
      */
     public function edit(Stock $stock, ExchangeRate $ex_rate)
     {
-        
+        $rate_fix = $ex_rate->apiCall();
         $rate_fix = 1000.11;
 
         $stock = Stock::where('stocks.stock_id', $stock->stock_id)
