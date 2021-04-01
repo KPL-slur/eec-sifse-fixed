@@ -20,35 +20,14 @@
                   <th class="text-center">Units on Stock</th>
                 </thead>
                 <tbody>
-                    @php
-                      $i = 0;
-                    @endphp
-                    @foreach ($recommends as $rcm)
-                      {{-- cara biar nampilin 0 pas unit di stock gaada --}}
-                      @php
-                        $j = 0;
-                      @endphp
-                      <tr>
-                        <td>{{ ++$i }}</td>
-                        <td>{{ $rcm->name }}</td>
-                        <td class="text-center">{{ $rcm->jumlah_unit_needed }}</td>
-                        <td class="text-center">
-                          @foreach ($stock_rec as $barang => $jml)
-                            @if ($rcm->name === $barang)
-                              {{ $jml }}
-                              @php
-                                $j = -1;
-                              @endphp
-                            @elseif ($rcm->name != $barang && $j == 1)
-                              0
-                            @endif
-                            @php
-                              $j++;
-                            @endphp
-                          @endforeach
-                        </td>
-                      </tr>
-                    @endforeach
+                  @foreach ($recommends as $rcm)
+                    <tr>
+                      <td>{{ $loop->iteration }}</td>
+                      <td>{{ $rcm->name }}</td>
+                      <td class="text-center">{{ $rcm->jumlah_unit_needed }}</td>
+                      <td class="text-center">{{ $stock_rec[$rcm->name]  }}</td>
+                    </tr>
+                  @endforeach
                 </tbody>
               </table>
             </div>
@@ -112,7 +91,7 @@
                   <th>Lokasi</th>
                   <th>Date</th>
                   <th>Technicians</th>
-                  <th>Remark</th>
+                  <th class="text-center">Remark</th>
                 </thead>
                 <tbody>
                   @foreach ($cm as $cm)
@@ -127,7 +106,6 @@
                       </td>
                       <td>{{ $cm->cmBodyReport->remark }}</td>
                     </tr>
-
                   @endforeach
                 </tbody>
               </table>
@@ -145,12 +123,3 @@
   </div>
   {{-- div content --}}
 @endsection
-
-@push('js')
-  {{-- <script>
-    $(document).ready(function() {
-      // Javascript method's body can be found in assets/js/demos.js
-      md.initDashboardPageCharts();
-    });
-  </script> --}}
-@endpush

@@ -57,14 +57,10 @@
                                                                 >
                                                                 <i class="material-icons">edit</i>
                                                             </a>
-                                                            <form action="{{ route('report.delete', ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}" method="post"
-                                                                class="d-inline">
-                                                                @csrf
-                                                                @method('delete')
-                                                                <button type="submit" rel="tooltip" class="btn btn-danger" onclick="return confirm('Are You Sure Want To Delete This Report ? Deleted Report Can Be Restored At The Trash Page')">
-                                                                    <i class="material-icons">close</i>
-                                                                </button>
-                                                            </form>
+                                                            <x-confirmation.btn-delete
+                                                                    route="{{ route('report.delete', ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}">
+                                                                {{ $hr->head_id }}
+                                                            </x-confirmation.btn-delete>
                                                         </div>
                                                         @break
                                                     @endcan
@@ -81,6 +77,10 @@
             </div>
         </div>
     </div>
+
+    <x-confirmation.mdl-delete>
+        <p>Are You Sure Want To Delete This Report ? <strong class="text-danger">Deleted Report Can Be Restored At The Trash Page</strong></p>
+    </x-confirmation.mdl-delete>
 
     {{-- Floating Menu --}}
     {{-- <x-ui.btn-float-group>

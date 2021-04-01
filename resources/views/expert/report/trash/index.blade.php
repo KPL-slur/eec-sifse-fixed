@@ -47,21 +47,14 @@
                                                 @foreach ($hr->experts as $expert)
                                                     @can('update', $hr)
                                                         <div class="d-inline">
-                                                            <form action="{{ route('report.trash.restore', ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}" method="post"
-                                                                class="d-inline">
-                                                                @csrf
-                                                                <button type="submit" class="btn btn-warning" onclick="return confirm('Are You Sure Want To Restore This Report ?')">
-                                                                    <i class="material-icons">restore</i>
-                                                                </button>
-                                                            </form>
-                                                            <form action="{{ route('report.trash.perm_delete', ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}" method="post"
-                                                                class="d-inline">
-                                                                @csrf
-                                                                @method('delete')
-                                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are You Sure Want To Permanently Delete This Report ? Keep In Mind This Action Cannot Be Undone')">
-                                                                    <i class="material-icons">close</i>
-                                                                </button>
-                                                            </form>
+                                                            <x-confirmation.btn-restore
+                                                                    route="{{ route('report.trash.restore', ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}">
+                                                                {{ $hr->head_id }}
+                                                            </x-confirmation.btn-restore>
+                                                            <x-confirmation.btn-delete
+                                                                    route="{{ route('report.trash.perm_delete', ['id' => $hr->head_id, 'maintenance_type' => $maintenance_type]) }}">
+                                                                {{ $hr->head_id }}
+                                                            </x-confirmation.btn-delete>
                                                         </div>
                                                         @break
                                                     @endcan
@@ -78,6 +71,13 @@
             </div>
         </div>
     </div>
+
+    <x-confirmation.mdl-restore>
+        <p>Are You Sure Want To Restore This Report ?</p>
+    </x-confirmation.mdl-restore>
+    <x-confirmation.mdl-delete>
+        <p>Are You Sure Want To Permanently Delete This Report ? <strong class="text-danger">Keep In Mind This Action Cannot Be Undone</strong></p>
+    </x-confirmation.mdl-delete>
 
     {{-- Floating Menu --}}
     {{-- <x-ui.btn-float-group></x-ui.btn-float-group> --}}
