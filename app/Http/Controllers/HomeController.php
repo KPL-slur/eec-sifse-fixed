@@ -57,17 +57,17 @@ class HomeController extends Controller
                         }])
                         ->get();
         
-        foreach($pm as $p){
-            $p->pmBodyReport->remark = html_entity_decode($p->pmBodyReport->remark); //decode dari kode html ke string biasa
-            if(strripos($p->pmBodyReport->remark, "kesimpulan")){
-                $pos_kesimpulan = strripos($p->pmBodyReport->remark, "kesimpulan"); //cari posisi terakhir dari kata kesimpulan di string remark
-                $p->pmBodyReport->remark = substr($p->pmBodyReport->remark, $pos_kesimpulan); // ngambil substring dari posisi kesimpulan ke belakang
-                $pos_ul_kesimpulan = stripos($p->pmBodyReport->remark, "</ul>"); //nyari posisi </ul> kesimpulan
-                $p->pmBodyReport->remark = substr($$p->pmBodyReport->remark, 0, $pos_ul_kesimpulan + 5); // taro dalem remark, ilangin string setelah </ul>
-            } else {
-                $p->pmBodyReport->remark = "Tidak dapat ditarik kesimpulan dalam remark PM ini";
-            }
-        }
+        // foreach($pm as $p){
+        //     $p->pmBodyReport->remark = html_entity_decode($p->pmBodyReport->remark); //decode dari kode html ke string biasa
+        //     if(strripos($p->pmBodyReport->remark, "kesimpulan")){
+        //         $pos_kesimpulan = strripos($p->pmBodyReport->remark, "kesimpulan"); //cari posisi terakhir dari kata kesimpulan di string remark
+        //         $p->pmBodyReport->remark = substr($p->pmBodyReport->remark, $pos_kesimpulan); // ngambil substring dari posisi kesimpulan ke belakang
+        //         $pos_ul_kesimpulan = stripos($p->pmBodyReport->remark, "</ul>"); //nyari posisi </ul> kesimpulan
+        //         $p->pmBodyReport->remark = substr($$p->pmBodyReport->remark, 0, $pos_ul_kesimpulan + 5); // taro dalem remark, ilangin string setelah </ul>
+        //     } else {
+        //         $p->pmBodyReport->remark = "Tidak dapat ditarik kesimpulan dalam remark PM ini";
+        //     }
+        // }
         
         $cm = HeadReport::take(5)
                         ->orderBy('updated_at', 'desc')
