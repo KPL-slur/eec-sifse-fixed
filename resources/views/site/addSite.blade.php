@@ -21,7 +21,7 @@
               {{-- {{$errors}} --}}
               <form method="POST" action="/add" enctype="multipart/form-data">
                 @csrf
-                <div class="form-group-site ">
+                <div class="form-group form-group-site ">
                   <label for="inputSite">Nama Site</label>
                   <input type="text" class="form-control @error('radar_name') is-invalid @enderror" id="radar_name" name="radar_name" value="{{ old('radar_name') }}" placeholder="Masukan Radar Name">
 
@@ -33,7 +33,7 @@
 
                 </div>
 
-                <div class="form-group-site ">
+                <div class="form-group form-group-site ">
                   <label for="inputSite">Lokasi Site</label>
                   <input type="text" class="form-control @error('station_id') is-invalid @enderror" id="station_id" name="station_id" value="{{ old('station_id') }}" placeholder="Masukan Station ID">
 
@@ -45,7 +45,7 @@
 
                 </div>
 
-                <div class="form-group-site ">
+                <div class="form-group form-group-site">
                   @livewire('inventory-site', ['stocks' => $stocks])
                 </div>
                 

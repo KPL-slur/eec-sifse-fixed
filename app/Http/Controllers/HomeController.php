@@ -44,6 +44,7 @@ class HomeController extends Controller
                         }])
                         ->get();
         
+
         foreach($pm as $p){
             $p->pmBodyReport->remark = html_entity_decode($p->pmBodyReport->remark); //decode dari kode html ke string biasa
             if(strripos($p->pmBodyReport->remark, "kesimpulan")){
@@ -58,6 +59,7 @@ class HomeController extends Controller
                 $p->pmBodyReport->remark = "Tidak dapat ditarik kesimpulan dalam remark PM ini";
             }
         }
+
         
         $cm = HeadReport::take(5)
                         ->orderBy('updated_at', 'desc')

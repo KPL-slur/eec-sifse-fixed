@@ -5,6 +5,7 @@
 | kompabilitas, takutnya ada error nanti
 |
  --}}
+ 
 <div class="wrapper ">
   @include('layouts.navbars.sidebar')
   <div class="main-panel">

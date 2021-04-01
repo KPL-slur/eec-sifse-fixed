@@ -25,13 +25,14 @@
                   <table class="table table-striped">
                     <thead class=" text-primary">
                       <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Email</th>
-                      <th scope="col">Password</th>
-                      <th scope="col">Creation Date</th>
-                      <th class="text-center">Delete</th>
-                    </tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Password</th>
+                        <th scope="col">Creation Date</th>
+                        <th class="text-center">Delete</th>
+                        <th class="text-center">Status</th>
+                      </tr>
                     </thead>
                     <tbody>
                       
@@ -54,6 +55,17 @@
                                   </button>
                                 </form>
                           </td>
+
+                          <td class="td-actions text-center">
+                              @if ($user->is_approved == 0)
+                                <form method="POST" action="/approveUser/{{$user->id}}" onclick="return confirm('Apakah anda yakin ingin memverifikasi user ini ?')" class="d-inline">
+                                    @csrf
+                                    <button class="btn btn-sm btn-warning">Pending</button>
+                                </form>
+                              @else
+                                <button class="btn btn-sm btn-success">Approved</button>
+                              @endif
+                          </td>
   
                       @endforeach
   
@@ -61,7 +73,7 @@
                   </table>
                 </div>
 
-                  <!-- Modal Add User-->
+                <!-- Modal Add User-->
                 <div class="modal fade" id="modalAddUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
