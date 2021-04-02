@@ -66,7 +66,7 @@ class ReportController extends Controller
                 break;
         }
 
-        $recommendations = $headReport->recommendations;
+        $recommendations = $headReport->recommendations()->withTrashed()->get();
         $reportImages = $headReport->reportImages;
 
         if ($headReport->printedReport) {

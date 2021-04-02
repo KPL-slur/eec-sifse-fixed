@@ -28,7 +28,7 @@ class UsersTableSeeder extends Seeder
             'expert_id' => '1',
             'email' => 'eko@eecid.com',
             'is_admin' => '0',
-            'is_approved' => '0',
+            'is_approved' => '1',
             'email_verified_at' => now(),
             'password' => Hash::make('12345'),
             'created_at' => now(),

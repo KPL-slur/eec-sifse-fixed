@@ -41,7 +41,7 @@ trait WithRecommendation
     /**
      * 
      */
-    public function updatedWithRecommendation()
+    public function dehydrate()
     {
         $this->dispatchBrowserEvent('list-added');
     }
@@ -65,7 +65,11 @@ trait WithRecommendation
     {
         if (array_key_exists($index, $this->recommends)) {
             if (array_key_exists($index, $this->recommendationId)) {
-                Recommendation::where('rec_id', $this->recommendationId[$index])->delete();
+                if (array_key_exists('head_id', $this->recommends[$index]) && $this->recommends[$index]['head_id'] == $this->head_id ) {
+                    Recommendation::where('rec_id', $this->recommendationId[$index])->forceDelete();
+                } else {
+                    Recommendation::where('rec_id', $this->recommendationId[$index])->delete();
+                }
             }
             
             unset($this->recommends[$index]);
@@ -91,14 +95,25 @@ trait WithRecommendation
 
 
         $siteHeadReports = HeadReport::Where('site_id', $this->site_id)->with('recommendations')->get();
+        $deletedRecommends = HeadReport::find($this->head_id)->recommendations()->onlyTrashed()->get();
+        
         foreach ($siteHeadReports as $siteHeadReport){ //headreport
             foreach ($siteHeadReport->recommendations as $index => $recommendation) {
                 $this->recommends[] = [
                                         'name' => $recommendation->name,
                                         'jumlah_unit_needed' => $recommendation->jumlah_unit_needed,
+                                        'head_id' => $recommendation->head_id,
                                     ];
                 $this->recommendationId[] = $recommendation->rec_id;
             }
+        }
+        foreach ($deletedRecommends as $deletedRecommend) {
+            $this->recommends[] = [
+                                        'name' => $deletedRecommend->name,
+                                        'jumlah_unit_needed' => $deletedRecommend->jumlah_unit_needed,
+                                        'head_id' => $deletedRecommend->head_id,
+                                    ];
+            $this->recommendationId[] = $deletedRecommend->rec_id;
         }
         $this->setRecommendationDropdown();
     }
