@@ -10,27 +10,45 @@
                             <tr>
                                 <td>File Name</td>
                                 <td>
-                                    @error('reports.'.$index.'.fileName')
+                                    @error('reports.' . $index . '.fileName')
                                         <p class="text-danger">{{ $message }}</p>
                                     @else
-                                        {{ explode("/", $reports[$index]['fileName'])[1] }}
+                                        {{ explode("/", $reports[$index]['fileName'])[1] ?? '' }}
                                     @enderror
                                 </td>
                             </tr>
                             <tr>
                                 <td>Action</td>
-                                <td>
+                                <td x-data="{ changeFile: false }" x-cloak x-init="@this.on('{{ 'uploadReport' }}', () => { changeFile = false })">
                                     @if ($report['uploaded'] === 1)
-                                        <a type="button"
-                                            href="{{ route('report.pdf.download', ['id' => $headReport->head_id, 'maintenance_type' => $maintenance_type, 'path' => explode("/", $reports[$index]['fileName'])[1] ]) }}"
+                                        <a type="button" x-show="!changeFile"
+                                            href="{{ route('report.pdf.download', [
+                                                                                        'id' => $headReport->head_id,
+                                                                                        'maintenance_type' => $maintenance_type,
+                                                                                        'path' => explode('/', $reports[$index]['fileName'])[1],
+                                                                                    ]) }}"
                                             class="btn btn-success">Download</a>
-                                        <a type="button"
-                                            href="{{ route('report.pdf.show', ['id' => $headReport->head_id, 'maintenance_type' => $maintenance_type, 'path' => explode("/", $reports[$index]['fileName'])[1] ]) }}"
+                                        <a type="button" x-show="!changeFile"
+                                            href="{{ route('report.pdf.show', [
+                                                                                    'id' => $headReport->head_id,
+                                                                                    'maintenance_type' => $maintenance_type,
+                                                                                    'path' => explode('/', $reports[$index]['fileName'])[1],
+                                                                                ]) }}"
                                             target="_blank" class="btn btn-info">View</a>
                                         @can('update', $headReport)
-                                            <button type="button" rel="tooltip" class="btn btn-warning" data-toggle="modal"
-                                                data-target="#modalUpload">Change File</button>
-                                            <button class="btn btn-danger" type="button"
+                                            <span x-show="changeFile"
+                                                wire:loading.remove wire:target="reports.{{ $index }}.fileName"
+                                                class="btn btn-default btn-round btn-file">
+                                                <input type="file" name="reports[{{ $index }}][fileName]"
+                                                    class="fileinput-new"
+                                                    wire:model='reports.{{ $index }}.fileName' />
+                                            </span>
+                                            <button class="btn btn-danger" x-on:click="changeFile = false"
+                                                x-show="changeFile">
+                                                Cancel</button>
+                                            <button x-show="!changeFile" type="button" rel="tooltip" class="btn btn-warning"
+                                                x-on:click="changeFile = true">Change File</button>
+                                            <button x-show="!changeFile" class="btn btn-danger" type="button"
                                                 wire:click="openModalDelete({{ $index }})">
                                                 Remove File
                                             </button>
@@ -47,7 +65,8 @@
                                                             wire:model='reports.{{ $index }}.fileName' />
                                                     </span>
                                                     @if ($report['fileName'] != '')
-                                                        <button class="btn btn-primary" wire:click="store({{ $index }})">
+                                                        <button class="btn btn-primary"
+                                                            wire:click="store({{ $index }})">
                                                             UPLOAD
                                                         </button>
                                                     @endif
@@ -72,13 +91,14 @@
 
         <x-ui.modal-confirm id="modalConfirmDelete">
             <x-slot name="body">
-                <p>Are You Sure Want To Remove This File ? 
+                <p>Are You Sure Want To Remove This File ?
                     <strong class="text-danger">Keep In Mind This Action Cannot Be Undone</strong>
                 </p>
             </x-slot>
             <x-slot name="footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-secondary" data-dismiss="modal" wire:click.prevent="confirmDelete">Yes</button>
+                <button type="submit" class="btn btn-secondary" data-dismiss="modal"
+                    wire:click.prevent="confirmDelete">Yes</button>
             </x-slot>
         </x-ui.modal-confirm>
     @endif

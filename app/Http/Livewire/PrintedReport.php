@@ -43,7 +43,7 @@ class PrintedReport extends Component
 
     public function updatedReports()
     {
-        $this->store();
+        $this->upstore();
     }
 
     //* reports method
@@ -72,6 +72,17 @@ class PrintedReport extends Component
         $this->removeReport($this->selectedItem);
         $this->dispatchBrowserEvent('closeModalConfirm');
     }
+
+    /**
+     * 
+     */
+    public function deleteStoredFile($index)
+    {
+        dd($this->reports[$index]['fileName']);
+        \Storage::delete('public/'.$this->reports[$index]['fileName']);
+        $this->headReport->printedReports()->where('file', $this->reports[$index]['fileName'])->delete();
+        $this->reports[$index]['uploaded'] = 0;
+    }
     
     /**
      * if file already uploaded, first delete it from storage.
@@ -84,9 +95,7 @@ class PrintedReport extends Component
     {
         if (array_key_exists($index, $this->reports)) {
             if ($this->reports[$index]['uploaded'] === 1) {
-                \Storage::delete('public/'.$this->reports[$index]['fileName']);
-                $this->headReport->printedReports()->where('file', $this->reports[$index]['fileName'])->delete();
-                $this->reports[$index]['uploaded'] = 0;
+                $this->deleteStoredFile($index);
             }
             
             unset($this->reports[$index]);
@@ -125,22 +134,23 @@ class PrintedReport extends Component
      * storage with default laravel file naming. then,
      * save the record to db and set teh uploaded value to one.
      */
-    public function store()
+    public function upstore()
     {
         $this->validateAllUploads();
         
         foreach ($this->reports as $index => $report) {
-            if ($this->reports[$index]['uploaded'] == 0) {
-                $fileName[$index] = $this->reports[$index]['fileName']->storePublicly($this->maintenance_type, 'public');
-        
-                $this->headReport->printedReports()->create([
-                    'head_id' => $this->headReport->head_id,
-                    'file' => $fileName[$index],
-                ]);
-                
-                $this->reports[$index]['fileName'] = $fileName[$index];
-                $this->reports[$index]['uploaded'] = 1;
+            if ($this->reports[$index]['uploaded'] == 1) {
+                $this->deleteStoredFile($index);
             }
+            $fileName[$index] = $this->reports[$index]['fileName']->storePublicly($this->maintenance_type, 'public');
+    
+            $this->headReport->printedReports()->updateOrCreate(
+                ['head_id' => $this->headReport->head_id],
+                ['file' => $fileName[$index]]
+            );
+            
+            $this->reports[$index]['fileName'] = $fileName[$index];
+            $this->reports[$index]['uploaded'] = 1;
         }
         $this->emit('uploadReport'); // notif
     }
