@@ -75,9 +75,11 @@ trait WithReportImage
     {
         if (array_key_exists($index, $this->attachments)) {
             if ($this->attachments[$index]['uploaded'] === 1) {
-                \Storage::delete('public/'.$this->attachments[$index]['image']);
-                ReportImage::where('image', $this->attachments[$index]['image'])->delete();
-                $this->attachments[$index]['uploaded'] = 0;
+                if (isset($this->attachments[$index]['image'])) {
+                    \Storage::delete('public/'.$this->attachments[$index]['image']);
+                    ReportImage::where('image', $this->attachments[$index]['image'])->delete();
+                    $this->attachments[$index]['uploaded'] = 0;
+                }
             }
             
             unset($this->attachments[$index]);

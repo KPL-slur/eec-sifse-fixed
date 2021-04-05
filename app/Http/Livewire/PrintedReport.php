@@ -77,9 +77,11 @@ class PrintedReport extends Component
      */
     public function deleteStoredFile($index)
     {
-        \Storage::delete('public/'.$this->reports[$index]['fileName']);
-        $this->headReport->printedReports()->where('file', $this->reports[$index]['fileName'])->delete();
-        $this->reports[$index]['uploaded'] = 0;
+        if (isset($this->reports[$index]['fileName'])) {
+            \Storage::delete('public/'.$this->reports[$index]['fileName']);
+            $this->headReport->printedReports()->where('file', $this->reports[$index]['fileName'])->delete();
+            $this->reports[$index]['uploaded'] = 0;
+        }
     }
     
     /**
