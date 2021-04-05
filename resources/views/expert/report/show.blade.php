@@ -26,38 +26,7 @@
                             <h4 class="card-title">Scanned Hard File</h4>
                         </div>
                         <div class="card-body ">
-                            @if ($headReport->printedReport)
-                            <div class="row">
-                                <div class="col table-responsive">
-                                    <table class="table">
-                                        <tbody>
-                                            <tr>
-                                                <td>File Name</td>
-                                                <td>{{ $fileName }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Action</td>
-                                                <td>
-                                                    <a type="button" href="{{ route('report.pdf.download', ['id' => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" class="btn btn-success">Download</a>
-                                                    <a type="button" href="{{ route('report.pdf.show', ['id' => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" target="_blank" class="btn btn-info">View</a>
-                                                    @can('update', $headReport)
-                                                        <button type="button" rel="tooltip" class="btn btn-warning" data-toggle="modal" data-target="#modalUpload">Change File</button>
-                                                        <button type="button" rel="tooltip" class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteUpload">Remove File</button>
-                                                    @endcan
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            @else
-                                @can('update', $headReport)
-                                    <button type="button" rel="tooltip" class="btn btn-default" data-toggle="modal" data-target="#modalUpload">
-                                        UPLOAD</button>
-                                @else
-                                    <p class="text-danger">no files have been uploaded yet</p>
-                                @endcan
-                            @endif
+                            @livewire('printed-report', ['headReport' => $headReport, 'maintenance_type' => $maintenance_type])
                         </div>
                     </div>
                     
@@ -231,45 +200,6 @@
                 @method('delete')
                 <button type="submit" rel="tooltip" class="btn btn-secondary">Yes</button>
             </form>
-        </x-slot>
-    </x-ui.modal-confirm>
-
-    <x-ui.modal-confirm id="modalDeleteUpload">
-        <x-slot name="body">
-            <p>Are You Sure Want To Remove This File ? <strong class="text-danger">Keep In Mind This Action Cannot Be Undone</strong></p>
-        </x-slot>
-        <x-slot name="footer">
-            <form action="{{ route("report.pdf.delete", ["id" => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" method="POST">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                @csrf
-                @method('delete')
-                <button type="submit" class="btn btn-secondary">Yes</button>
-            </form>
-        </x-slot>
-    </x-ui.modal-confirm>
-
-    <x-ui.modal-confirm id="modalUpload">
-        <x-slot name="title">
-            Upload CM REPORT to PDF
-        </x-slot>
-        <x-slot name="body">
-            <P>Please upload the signed report file here. <strong class="text-danger">This form only accept PDF file</strong></P>
-            <form action="{{ route("report.pdf.store", ["id" => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="container">
-                    <div class="fileinput fileinput-new text-center" data-provides="fileinput">
-                        <div class="">
-                            <span class="btn btn-raised btn-round btn-default btn-file">
-                                <input type="file" name="uploadedPdf" class="fileinput-new"/>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-        </x-slot>
-        <x-slot name="footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-            <button class="btn btn-success" type="submit">Upload</button>
-        </form>
         </x-slot>
     </x-ui.modal-confirm>
 
