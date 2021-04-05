@@ -13,7 +13,6 @@ class PrintedReport extends Component
 
     public $headReport;
     public $maintenance_type;
-    public $fileName; // display
 
     public $reports = []; //user input
 
@@ -32,11 +31,11 @@ class PrintedReport extends Component
     {
         if (empty($this->reports)) {
             foreach ($this->headReport->printedReports as $printedReport) {
-                $this->reports[] = ['fileName' => $printedReport->file, 'uploaded' => 1];
+                $this->reports[] = ['fileName' => $printedReport->file, 'uploaded' => 1, 'file' => ''];
             }
         } else {
             $this->reports = [
-                ['fileName' => '', 'uploaded' => 0]
+                ['fileName' => '', 'uploaded' => 0, 'file' => '']
             ];
         }
     }
@@ -52,7 +51,7 @@ class PrintedReport extends Component
      */
     public function addReport()
     {
-        $this->reports[] = ['fileName' => '', 'uploaded' => 0];
+        $this->reports[] = ['fileName' => '', 'uploaded' => 0, 'file' => ''];
     }
 
     /**
@@ -78,7 +77,6 @@ class PrintedReport extends Component
      */
     public function deleteStoredFile($index)
     {
-        dd($this->reports[$index]['fileName']);
         \Storage::delete('public/'.$this->reports[$index]['fileName']);
         $this->headReport->printedReports()->where('file', $this->reports[$index]['fileName'])->delete();
         $this->reports[$index]['uploaded'] = 0;
@@ -110,7 +108,7 @@ class PrintedReport extends Component
     public function validateUpload($index)
     {
         $this->validate([
-                            'reports.'.$index.'.fileName' => 'required|mimes:pdf'
+                            'reports.'.$index.'.file' => 'required|mimes:pdf'
                         ], [
                             'required' => 'This input is required.',
                             'mimes:pdf' => 'This input must be a file of type: pdf.',
@@ -142,7 +140,7 @@ class PrintedReport extends Component
             if ($this->reports[$index]['uploaded'] == 1) {
                 $this->deleteStoredFile($index);
             }
-            $fileName[$index] = $this->reports[$index]['fileName']->storePublicly($this->maintenance_type, 'public');
+            $fileName[$index] = $this->reports[$index]['file']->storePublicly($this->maintenance_type, 'public');
     
             $this->headReport->printedReports()->updateOrCreate(
                 ['head_id' => $this->headReport->head_id],

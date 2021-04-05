@@ -37,11 +37,11 @@
                                             target="_blank" class="btn btn-info">View</a>
                                         @can('update', $headReport)
                                             <span x-show="changeFile"
-                                                wire:loading.remove wire:target="reports.{{ $index }}.fileName"
+                                                wire:loading.remove wire:target="reports.{{ $index }}.file"
                                                 class="btn btn-default btn-round btn-file">
-                                                <input type="file" name="reports[{{ $index }}][fileName]"
+                                                <input type="file" name="reports[{{ $index }}][file]"
                                                     class="fileinput-new"
-                                                    wire:model='reports.{{ $index }}.fileName' />
+                                                    wire:model='reports.{{ $index }}.file' />
                                             </span>
                                             <button class="btn btn-danger" x-on:click="changeFile = false"
                                                 x-show="changeFile">
@@ -58,11 +58,11 @@
                                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                                 <div class="">
                                                     <span wire:loading.remove
-                                                        wire:target="reports.{{ $index }}.fileName"
+                                                        wire:target="reports.{{ $index }}.file"
                                                         class="btn btn-default btn-round btn-file">
-                                                        <input type="file" name="reports[{{ $index }}][fileName]"
+                                                        <input type="file" name="reports[{{ $index }}][file]"
                                                             class="fileinput-new"
-                                                            wire:model='reports.{{ $index }}.fileName' />
+                                                            wire:model='reports.{{ $index }}.file' />
                                                     </span>
                                                     @if ($report['fileName'] != '')
                                                         <button class="btn btn-primary"
