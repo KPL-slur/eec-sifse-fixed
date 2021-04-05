@@ -35,7 +35,7 @@ class PdfController extends Controller
     }
 
     /**
-     *
+     * ! Deprecated Method, Should not be used, delete later
      */
     public function store(Request $request, $maintenance_type, $id)
     {
@@ -82,7 +82,7 @@ class PdfController extends Controller
     }
 
     /**
-     * 
+     * ! Deprecated Method, Should not be used, delete later
      */
     public function destroy($maintenance_type, $id) {
         $headReport = HeadReport::Where('head_id', $id)->first();

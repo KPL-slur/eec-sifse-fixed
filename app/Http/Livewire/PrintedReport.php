@@ -35,34 +35,18 @@ class PrintedReport extends Component
                 $this->reports[] = ['fileName' => $printedReport->file, 'uploaded' => 1];
             }
         } else {
-        //images mount
-        $this->attachments = [
+            $this->reports = [
                 ['fileName' => '', 'uploaded' => 0]
             ];
         }
     }
 
-    /**
-     * check if file isnt image type, then
-     * remove the value so it will fail in validation.
-     * only evaluate the image input
-     *
-     * @param $value value of the updated model
-     * @param $index updated nested variable // eg. 0.images | 0.caption
-     */
-    // public function updatedAttachments($value, $index)
-    // {
-    //     $index = explode(".",$index); // 0.images
-    //     if ($index[1] == 'image') {
-    //         $extension = pathinfo($value->getFilename(), PATHINFO_EXTENSION);
-    //         if (!in_array($extension, ['jpg', 'jpeg', 'png', 'bmp', 'gif', 'svg', 'webp'])) {
-    //             $this->attachments[$index[0]]['image'] = '';
-    //         }
-    //         $this->validateUploads();
-    //     }
-    // }
+    public function updatedReports()
+    {
+        $this->store();
+    }
 
-    //* attachment method
+    //* reports method
     /**
      *
      */
@@ -112,15 +96,26 @@ class PrintedReport extends Component
     }
 
     /**
+     * 
+     */
+    public function validateUpload($index)
+    {
+        $this->validate([
+                            'reports.'.$index.'.fileName' => 'required|mimes:pdf'
+                        ], [
+                            'required' => 'This input is required.',
+                            'mimes:pdf' => 'This input must be a file of type: pdf.',
+                        ]);
+    }
+
+    /**
      * validate every single file that are not uplaoded
      */
-    public function validateUploads()
+    public function validateAllUploads()
     {
         foreach ($this->reports as $index => $report) {
             if ($this->reports[$index]['uploaded'] == 0) {
-                $this->validate([
-                    'reports.'.$index.'.fileName' => 'required|mimes:pdf'
-                ]);
+                $this->validateUpload($index);
             }
         }
     }
@@ -132,7 +127,7 @@ class PrintedReport extends Component
      */
     public function store()
     {
-        $this->validateUploads();
+        $this->validateAllUploads();
         
         foreach ($this->reports as $index => $report) {
             if ($this->reports[$index]['uploaded'] == 0) {

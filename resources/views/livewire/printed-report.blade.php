@@ -9,7 +9,13 @@
                         <tbody>
                             <tr>
                                 <td>File Name</td>
-                                <td>{{ $reports[$index]['fileName'] }}</td>
+                                <td>
+                                    @error('reports.'.$index.'.fileName')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @else
+                                        {{ explode("/", $reports[$index]['fileName'])[1] }}
+                                    @enderror
+                                </td>
                             </tr>
                             <tr>
                                 <td>Action</td>
@@ -40,9 +46,11 @@
                                                             class="fileinput-new"
                                                             wire:model='reports.{{ $index }}.fileName' />
                                                     </span>
-                                                    <button class="btn btn-primary" wire:click="store({{ $index }})">
-                                                        UPLOAD
-                                                    </button>
+                                                    @if ($report['fileName'] != '')
+                                                        <button class="btn btn-primary" wire:click="store({{ $index }})">
+                                                            UPLOAD
+                                                        </button>
+                                                    @endif
                                                     <button class="btn btn-danger" type="button"
                                                         wire:click="removeReport({{ $index }})">
                                                         Remove File
