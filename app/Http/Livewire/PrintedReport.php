@@ -17,8 +17,7 @@ class PrintedReport extends Component
 
     public $reports = []; //user input
 
-    //* user input
-    public $attachments = []; //user input
+    public $selectedItem;
 
     //* LIVEWIRE METHOD
     /**
@@ -71,6 +70,24 @@ class PrintedReport extends Component
     {
         $this->reports[] = ['fileName' => '', 'uploaded' => 0];
     }
+
+    /**
+     * 
+     */
+    public function openModalDelete($index)
+    {
+        $this->dispatchBrowserEvent('openModalConfirm');
+        $this->selectedItem = $index;
+    }
+
+    /**
+     * 
+     */
+    public function confirmDelete()
+    {
+        $this->removeReport($this->selectedItem);
+        $this->dispatchBrowserEvent('closeModalConfirm');
+    }
     
     /**
      * if file already uploaded, first delete it from storage.
@@ -83,14 +100,14 @@ class PrintedReport extends Component
     {
         if (array_key_exists($index, $this->reports)) {
             if ($this->reports[$index]['uploaded'] === 1) {
-                \Storage::delete('public/'.$this->headReport->printedReport->file);
-                $this->headReport->printedReports()->delete();
+                \Storage::delete('public/'.$this->reports[$index]['fileName']);
+                $this->headReport->printedReports()->where('file', $this->reports[$index]['fileName'])->delete();
                 $this->reports[$index]['uploaded'] = 0;
             }
             
             unset($this->reports[$index]);
             array_values($this->reports);
-            $this->emit('unsetReports');
+            $this->emit('removeReport'); // notif
         }
     }
 
@@ -121,7 +138,7 @@ class PrintedReport extends Component
             if ($this->reports[$index]['uploaded'] == 0) {
                 $fileName[$index] = $this->reports[$index]['fileName']->storePublicly($this->maintenance_type, 'public');
         
-                $this->headReport->printedReport()->create([
+                $this->headReport->printedReports()->create([
                     'head_id' => $this->headReport->head_id,
                     'file' => $fileName[$index],
                 ]);
@@ -130,6 +147,7 @@ class PrintedReport extends Component
                 $this->reports[$index]['uploaded'] = 1;
             }
         }
+        $this->emit('uploadReport'); // notif
     }
 
     public function render()
