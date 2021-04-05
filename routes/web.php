@@ -53,7 +53,7 @@ Route::group(['prefix' => 'expert', 'middleware' =>['auth', 'is_approved'] ], fu
         });
         Route::group(['prefix' => 'pdf', 'as' => 'pdf.'], function () {
             Route::get('/{id}/{path}/view', [App\Http\Controllers\PdfController::class, 'show'])->name('show');
-            Route::get('/{id}/download', [App\Http\Controllers\PdfController::class, 'download'])->name('download');
+            Route::get('/{id}/{path}/download', [App\Http\Controllers\PdfController::class, 'download'])->name('download');
             Route::get('/{id}', [App\Http\Controllers\PdfController::class, 'print'])->name('print');
             Route::post('/{id}', [App\Http\Controllers\PdfController::class, 'store'])->name('store');
             Route::delete('/{id}', [App\Http\Controllers\PdfController::class, 'destroy'])->name('delete');

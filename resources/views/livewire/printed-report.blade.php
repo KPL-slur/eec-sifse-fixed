@@ -16,7 +16,7 @@
                                 <td>
                                     @if ($report['uploaded'] === 1)
                                         <a type="button"
-                                            href="{{ route('report.pdf.download', ['id' => $headReport->head_id, 'maintenance_type' => $maintenance_type]) }}"
+                                            href="{{ route('report.pdf.download', ['id' => $headReport->head_id, 'maintenance_type' => $maintenance_type, 'path' => explode("/", $reports[$index]['fileName'])[1] ]) }}"
                                             class="btn btn-success">Download</a>
                                         <a type="button"
                                             href="{{ route('report.pdf.show', ['id' => $headReport->head_id, 'maintenance_type' => $maintenance_type, 'path' => explode("/", $reports[$index]['fileName'])[1] ]) }}"

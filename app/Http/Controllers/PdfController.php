@@ -76,10 +76,9 @@ class PdfController extends Controller
     /**
      * 
      */
-    public function download($maintenance_type, $id)
+    public function download($maintenance_type, $id, $path)
     {
-        $filePath = HeadReport::withTrashed()->Where('head_id', $id)->first()->printedReport->file; // pm/nama_file.pdf
-        return response()->download(('storage/'.$filePath));
+        return response()->download(('storage/'.$maintenance_type.'/'.$path));
     }
 
     /**
