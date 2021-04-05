@@ -40,12 +40,6 @@ class HeadReport extends Model
     {
         return $this->hasOne(CmBodyReport::class, 'head_id');
     }
-  
-    public function printedReport()
-
-    {
-        return $this->hasOne(PrintedReport::class, 'head_id');
-    }
 
     //ONE TO MANY
     public function recommendations()
@@ -61,5 +55,10 @@ class HeadReport extends Model
     public function reportImages()
     {
         return $this->hasMany(ReportImage::class, 'head_id');
+    }
+
+    public function printedReports()
+    {
+        return $this->hasMany(PrintedReport::class, 'head_id');
     }
 }
