@@ -68,10 +68,9 @@ class PdfController extends Controller
     /**
      * 
      */
-    public function show($maintenance_type, $id)
+    public function show($maintenance_type, $id, $path)
     {
-        $filePath = HeadReport::withTrashed()->Where('head_id', $id)->first()->printedReport->file; // pm/nama_file.pdf
-        return response()->file(('storage/'.$filePath));
+        return response()->file(('storage/'.$maintenance_type.'/'.$path));
     }
     
     /**

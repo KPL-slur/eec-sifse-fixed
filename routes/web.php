@@ -52,7 +52,7 @@ Route::group(['prefix' => 'expert', 'middleware' =>['auth', 'is_approved'] ], fu
             Route::delete('/{id}', [App\Http\Controllers\TrashController::class, 'permDelete'])->name('perm_delete');
         });
         Route::group(['prefix' => 'pdf', 'as' => 'pdf.'], function () {
-            Route::get('/{id}/view', [App\Http\Controllers\PdfController::class, 'show'])->name('show');
+            Route::get('/{id}/{path}/view', [App\Http\Controllers\PdfController::class, 'show'])->name('show');
             Route::get('/{id}/download', [App\Http\Controllers\PdfController::class, 'download'])->name('download');
             Route::get('/{id}', [App\Http\Controllers\PdfController::class, 'print'])->name('print');
             Route::post('/{id}', [App\Http\Controllers\PdfController::class, 'store'])->name('store');
