@@ -19,7 +19,12 @@
                             </tr>
                             <tr>
                                 <td>Action</td>
-                                <td x-data="{ changeFile: false }" x-cloak x-init="@this.on('{{ 'uploadReport' }}', () => { changeFile = false })">
+                                <td x-data="{ changeFile: false }" x-cloak>
+                                    <div class="spinner" wire:loading wire:target="reports.{{ $index }}.file">
+                                        <div class="bounce1"></div>
+                                        <div class="bounce2"></div>
+                                        <div class="bounce3"></div>
+                                    </div>
                                     @if ($report['uploaded'] === 1)
                                         <a type="button" x-show="!changeFile"
                                             href="{{ route('report.pdf.download', [
@@ -37,9 +42,9 @@
                                             target="_blank" class="btn btn-info">View</a>
                                         @can('update', $headReport)
                                             <span x-show="changeFile"
-                                                wire:loading.remove wire:target="reports.{{ $index }}.file"
                                                 class="btn btn-default btn-round btn-file">
-                                                <input type="file" name="reports[{{ $index }}][file]"
+                                                <input x-on:change="changeFile = false"
+                                                    type="file" name="reports[{{ $index }}][file]"
                                                     class="fileinput-new"
                                                     wire:model='reports.{{ $index }}.file' />
                                             </span>

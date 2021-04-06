@@ -55,7 +55,7 @@ class PrintedReport extends Component
     }
 
     /**
-     * 
+     *
      */
     public function openModalDelete($index)
     {
@@ -64,7 +64,7 @@ class PrintedReport extends Component
     }
 
     /**
-     * 
+     *
      */
     public function confirmDelete()
     {
@@ -73,11 +73,11 @@ class PrintedReport extends Component
     }
 
     /**
-     * 
+     *
      */
     public function deleteStoredFile($index)
     {
-        if (isset($this->reports[$index]['fileName'])) {
+        if (!empty($this->reports[$index]['fileName'])) {
             \Storage::delete('public/'.$this->reports[$index]['fileName']);
             $this->headReport->printedReports()->where('file', $this->reports[$index]['fileName'])->delete();
             $this->reports[$index]['uploaded'] = 0;
@@ -105,7 +105,7 @@ class PrintedReport extends Component
     }
 
     /**
-     * 
+     *
      */
     public function validateUpload($index)
     {
@@ -139,18 +139,30 @@ class PrintedReport extends Component
         $this->validateAllUploads();
         
         foreach ($this->reports as $index => $report) {
-            if ($this->reports[$index]['uploaded'] == 1) {
-                $this->deleteStoredFile($index);
+
+            if (! empty($this->reports[$index]['file'])) {
+
+                $fileName[$index] = $this->reports[$index]['file']->storePublicly($this->maintenance_type, 'public');
+                
+                if ($this->reports[$index]['uploaded'] == 1) {
+                    \Storage::delete('public/'.$this->reports[$index]['fileName']);
+                    $this->headReport->printedReports()
+                    ->where('file', $this->reports[$index]['fileName'])
+                    ->update([
+                                'file' => $fileName[$index]
+                            ]);
+                } else {
+                    $this->headReport
+                    ->printedReports()
+                    ->create([
+                                'head_id' => $this->headReport->head_id,
+                                'file' => $fileName[$index]
+                            ]);
+                }
+                
+                $this->reports[$index]['fileName'] = $fileName[$index];
+                $this->reports[$index]['uploaded'] = 1;
             }
-            $fileName[$index] = $this->reports[$index]['file']->storePublicly($this->maintenance_type, 'public');
-    
-            $this->headReport->printedReports()->updateOrCreate(
-                ['head_id' => $this->headReport->head_id],
-                ['file' => $fileName[$index]]
-            );
-            
-            $this->reports[$index]['fileName'] = $fileName[$index];
-            $this->reports[$index]['uploaded'] = 1;
         }
         $this->emit('uploadReport'); // notif
     }
