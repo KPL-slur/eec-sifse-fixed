@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col table-responsive">
                         <table class="table">
-                            <tbody x-data="{ changeFile: false, customFileName: '' }" x-cloak>
+                            <tbody x-data="{ changeFile: false, customFileName: '', disableInput: false, disableCheck: true }" x-cloak>
                                 <tr>
                                     <td>File Name</td>
                                     <td>
