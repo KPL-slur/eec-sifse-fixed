@@ -127,6 +127,12 @@
             </x-ui.modal-confirm>
         @endcan
     @endif
+    <x-ui.action-message on="fileError" type="danger">
+        File Not Found
+    </x-ui.action-message>
+    <x-ui.action-message on="prevLimit" type="danger">
+        Please Fill The Empty Form First Before Adding A New One
+    </x-ui.action-message>
     <x-ui.action-message on="removeReport" type="danger">
         Report Record Deleted
     </x-ui.action-message>

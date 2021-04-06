@@ -29,11 +29,10 @@ class PrintedReport extends Component
      */
     public function mount()
     {
+        foreach ($this->headReport->printedReports as $printedReport) {
+            $this->reports[] = ['fileName' => $printedReport->file, 'uploaded' => 1, 'file' => ''];
+        }
         if (empty($this->reports)) {
-            foreach ($this->headReport->printedReports as $printedReport) {
-                $this->reports[] = ['fileName' => $printedReport->file, 'uploaded' => 1, 'file' => ''];
-            }
-        } else {
             $this->reports = [
                 ['fileName' => '', 'uploaded' => 0, 'file' => '']
             ];
@@ -55,7 +54,15 @@ class PrintedReport extends Component
      */
     public function addReport()
     {
-        $this->reports[] = ['fileName' => '', 'uploaded' => 0, 'file' => ''];
+        if (count($this->reports) != 0) {
+            if ($this->reports[count($this->reports)-1]['fileName'] != '') {
+                $this->reports[] = ['fileName' => '', 'uploaded' => 0, 'file' => ''];
+            } else {
+                $this->emit('prevLimit'); // notif
+            }
+        } else {
+            $this->reports[] = ['fileName' => '', 'uploaded' => 0, 'file' => ''];
+        }
     }
 
     /**
@@ -85,6 +92,8 @@ class PrintedReport extends Component
             \Storage::delete('public/'.$this->reports[$index]['fileName']);
             $this->headReport->printedReports()->where('file', $this->reports[$index]['fileName'])->delete();
             $this->reports[$index]['uploaded'] = 0;
+        } else {
+            $this->emit('fileError'); // notif
         }
     }
     
@@ -155,6 +164,8 @@ class PrintedReport extends Component
                 $this->reports[$index]['fileName'] = $fileName[$index];
                 $this->reports[$index]['uploaded'] = 1;
                 $this->emit('uploadReport'); // notif
+            } else {
+                $this->emit('fileError'); // notif
             }
         }
     }
@@ -181,6 +192,8 @@ class PrintedReport extends Component
                 $this->reports[$index]['fileName'] = $fileName[$index];
                 $this->reports[$index]['uploaded'] = 1;
                 $this->emit('uploadReport'); // notif
+            } else {
+                $this->emit('fileError'); // notif
             }
         }
     }
