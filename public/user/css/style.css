@@ -49,6 +49,11 @@
     width: 35vw !important;
     height: auto !important;
 }
+
+.check-inside-table .form-check-sign {
+    top: 0px !important;
+}
+
 /*
  * Try to fix modal adding padding to the right
  * If this code cause problem remove fade class

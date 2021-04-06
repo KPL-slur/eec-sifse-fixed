@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col table-responsive">
                         <table class="table">
-                            <tbody>
+                            <tbody x-data="{ changeFile: false, customFileName: '' }" x-cloak>
                                 <tr>
                                     <td>File Name</td>
                                     <td>
@@ -21,15 +21,20 @@
                                         @else
                                             @if (!empty($reports[$index]['file']))
                                                 {{ $reports[$index]['file']->getClientOriginalName() }}
-                                            @else
-                                                {{ explode("/", $reports[$index]['fileName'])[1] ?? 'Please Select Your File And Click The Upload Button To Proceed' }}
+                                            @elseif (isset(explode("/", $reports[$index]['fileName'])[1]))
+                                                <p x-show="!changeFile">{{ explode("/", $reports[$index]['fileName'])[1] }}</p>
+                                                <div x-show="changeFile">
+                                                    @include('livewire.include.fileNameCheck')
+                                                </div>
+                                            @else 
+                                                @include('livewire.include.fileNameCheck')
                                             @endif
                                         @enderror
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Action</td>
-                                    <td x-data="{ changeFile: false }" x-cloak>
+                                    <td>
                                         <div class="spinner" wire:loading wire:target="reports.{{ $index }}.file">
                                             <div class="bounce1"></div>
                                             <div class="bounce2"></div>

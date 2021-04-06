@@ -15,6 +15,7 @@ class PrintedReport extends Component
     public $maintenance_type;
 
     public $reports = []; //user input
+    public $fileNameChecks = []; //user input
 
     public $selectedItem;
 
@@ -29,6 +30,7 @@ class PrintedReport extends Component
      */
     public function mount()
     {
+        $this->fileNameChecks[] = 'Report';
         foreach ($this->headReport->printedReports as $printedReport) {
             $this->reports[] = ['fileName' => $printedReport->file, 'uploaded' => 1, 'file' => ''];
         }
@@ -42,7 +44,7 @@ class PrintedReport extends Component
     //* reports method
 
     /**
-     * 
+     *
      */
     public function clearInput($index)
     {
@@ -145,13 +147,28 @@ class PrintedReport extends Component
     /**
      *
      */
+    public function setFileName()
+    {
+        $name = time();
+        foreach ($this->fileNameChecks as $key => $fileNameCheck) {
+            if ($fileNameCheck != '') {
+                $name = $name.'-'.$fileNameCheck;
+            }
+        }
+        $name = $name.'-'.$this->headReport->site->station_id.'.pdf';
+        return $name;
+    }
+
+    /**
+     *
+     */
     public function update($index)
     {
         $this->validateUpload($index);
         
         if ($this->reports[$index]['uploaded'] == 1) {
             if (! empty($this->reports[$index]['file'])) {
-                $fileName[$index] = $this->reports[$index]['file']->storePublicly($this->maintenance_type, 'public');
+                $fileName[$index] = $this->reports[$index]['file']->storePubliclyAs($this->maintenance_type, $this->setFileName(), 'public');
             
                 \Storage::delete('public/'.$this->reports[$index]['fileName']);
                 $this->headReport->printedReports()
@@ -171,7 +188,7 @@ class PrintedReport extends Component
     }
 
     /**
-     * 
+     *
      */
     public function store($index)
     {
@@ -179,14 +196,13 @@ class PrintedReport extends Component
 
         if ($this->reports[$index]['uploaded'] == 0) {
             if (! empty($this->reports[$index]['file'])) {
-                $fileName[$index] = $this->reports[$index]['file']->storePublicly($this->maintenance_type, 'public');
+                $fileName[$index] = $this->reports[$index]['file']->storePubliclyAs($this->maintenance_type, $this->setFileName(), 'public');
             
-                $this->headReport
-                ->printedReports()
-                ->create([
-                            'head_id' => $this->headReport->head_id,
-                            'file' => $fileName[$index]
-                        ]);
+                $this->headReport->printedReports()
+                                 ->create([
+                                            'head_id' => $this->headReport->head_id,
+                                            'file' => $fileName[$index]
+                                        ]);
 
                 $this->reports[$index]['file'] = '';
                 $this->reports[$index]['fileName'] = $fileName[$index];
