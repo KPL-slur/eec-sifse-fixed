@@ -40,11 +40,6 @@ class PrintedReport extends Component
         }
     }
 
-    public function updatedReports()
-    {
-        $this->upstore();
-    }
-
     //* reports method
     /**
      *
@@ -130,41 +125,53 @@ class PrintedReport extends Component
     }
 
     /**
-     * if it is not uploaded, store the file in
-     * storage with default laravel file naming. then,
-     * save the record to db and set teh uploaded value to one.
+     *
      */
-    public function upstore()
+    public function update($index)
     {
-        $this->validateAllUploads();
+        $this->validateUpload($index);
         
-        foreach ($this->reports as $index => $report) {
-
+        if ($this->reports[$index]['uploaded'] == 1) {
             if (! empty($this->reports[$index]['file'])) {
-
                 $fileName[$index] = $this->reports[$index]['file']->storePublicly($this->maintenance_type, 'public');
-                
-                if ($this->reports[$index]['uploaded'] == 1) {
-                    \Storage::delete('public/'.$this->reports[$index]['fileName']);
-                    $this->headReport->printedReports()
-                    ->where('file', $this->reports[$index]['fileName'])
-                    ->update([
-                                'file' => $fileName[$index]
-                            ]);
-                } else {
-                    $this->headReport
-                    ->printedReports()
-                    ->create([
-                                'head_id' => $this->headReport->head_id,
-                                'file' => $fileName[$index]
-                            ]);
-                }
-                
+            
+                \Storage::delete('public/'.$this->reports[$index]['fileName']);
+                $this->headReport->printedReports()
+                ->where('file', $this->reports[$index]['fileName'])
+                ->update([
+                            'file' => $fileName[$index]
+                        ]);
+            
                 $this->reports[$index]['fileName'] = $fileName[$index];
                 $this->reports[$index]['uploaded'] = 1;
+                $this->emit('uploadReport'); // notif
             }
         }
-        $this->emit('uploadReport'); // notif
+    }
+
+    /**
+     * 
+     */
+    public function store($index)
+    {
+        $this->validateUpload($index);
+
+        if ($this->reports[$index]['uploaded'] == 0) {
+            if (! empty($this->reports[$index]['file'])) {
+                $fileName[$index] = $this->reports[$index]['file']->storePublicly($this->maintenance_type, 'public');
+            
+                $this->headReport
+                ->printedReports()
+                ->create([
+                            'head_id' => $this->headReport->head_id,
+                            'file' => $fileName[$index]
+                        ]);
+            
+                $this->reports[$index]['fileName'] = $fileName[$index];
+                $this->reports[$index]['uploaded'] = 1;
+                $this->emit('uploadReport'); // notif
+            }
+        }
     }
 
     public function render()

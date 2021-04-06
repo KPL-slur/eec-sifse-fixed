@@ -43,11 +43,17 @@
                                         @can('update', $headReport)
                                             <span x-show="changeFile"
                                                 class="btn btn-default btn-round btn-file">
-                                                <input x-on:change="changeFile = false"
-                                                    type="file" name="reports[{{ $index }}][file]"
+                                                <input type="file" name="reports[{{ $index }}][file]"
                                                     class="fileinput-new"
                                                     wire:model='reports.{{ $index }}.file' />
                                             </span>
+                                            @if ($report['file'] != '')
+                                                <button class="btn btn-primary" type="button"
+                                                    x-show="changeFile" x-on:click="changeFile = false"
+                                                    wire:click="update({{ $index }})">
+                                                    UPLOAD
+                                                </button>
+                                            @endif
                                             <button class="btn btn-danger" x-on:click="changeFile = false"
                                                 x-show="changeFile">
                                                 Cancel</button>
@@ -69,7 +75,7 @@
                                                             class="fileinput-new"
                                                             wire:model='reports.{{ $index }}.file' />
                                                     </span>
-                                                    @if ($report['fileName'] != '')
+                                                    @if ($report['file'] != '')
                                                         <button class="btn btn-primary"
                                                             wire:click="store({{ $index }})">
                                                             UPLOAD
