@@ -70,6 +70,7 @@ class PdfController extends Controller
      */
     public function show($maintenance_type, $id, $path)
     {
+        HeadReport::find($id)->printedReports()->where('file', $maintenance_type.'/'.$path)->firstOrFail();
         return response()->file(('storage/'.$maintenance_type.'/'.$path));
     }
     
@@ -78,6 +79,7 @@ class PdfController extends Controller
      */
     public function download($maintenance_type, $id, $path)
     {
+        HeadReport::find($id)->printedReports()->where('file', $maintenance_type.'/'.$path)->firstOrFail();
         return response()->download(('storage/'.$maintenance_type.'/'.$path));
     }
 

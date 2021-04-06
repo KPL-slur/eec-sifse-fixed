@@ -41,6 +41,15 @@ class PrintedReport extends Component
     }
 
     //* reports method
+
+    /**
+     * 
+     */
+    public function clearInput($index)
+    {
+        $this->reports[$index]['file'] = '';
+    }
+
     /**
      *
      */
@@ -142,6 +151,7 @@ class PrintedReport extends Component
                             'file' => $fileName[$index]
                         ]);
             
+                $this->reports[$index]['file'] = '';
                 $this->reports[$index]['fileName'] = $fileName[$index];
                 $this->reports[$index]['uploaded'] = 1;
                 $this->emit('uploadReport'); // notif
@@ -166,7 +176,8 @@ class PrintedReport extends Component
                             'head_id' => $this->headReport->head_id,
                             'file' => $fileName[$index]
                         ]);
-            
+
+                $this->reports[$index]['file'] = '';
                 $this->reports[$index]['fileName'] = $fileName[$index];
                 $this->reports[$index]['uploaded'] = 1;
                 $this->emit('uploadReport'); // notif

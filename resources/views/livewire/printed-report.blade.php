@@ -19,7 +19,11 @@
                                         @error('reports.' . $index . '.fileName')
                                             <p class="text-danger">{{ $message }}</p>
                                         @else
-                                            {{ explode("/", $reports[$index]['fileName'])[1] ?? 'Please Select Your File And Click The Upload Button To Proceed' }}
+                                            @if (!empty($reports[$index]['file']))
+                                                {{ $reports[$index]['file']->getClientOriginalName() }}
+                                            @else
+                                                {{ explode("/", $reports[$index]['fileName'])[1] ?? 'Please Select Your File And Click The Upload Button To Proceed' }}
+                                            @endif
                                         @enderror
                                     </td>
                                 </tr>
@@ -47,21 +51,23 @@
                                                                                     ]) }}"
                                                 target="_blank" class="btn btn-info">View</a>
                                             @can('update', $headReport)
-                                                <span x-show="changeFile"
-                                                    class="btn btn-default btn-round btn-file">
-                                                    <input type="file" name="reports[{{ $index }}][file]"
-                                                        class="fileinput-new"
-                                                        wire:model='reports.{{ $index }}.file' />
-                                                </span>
-                                                @if ($report['file'] != '')
+                                                @if ($report['file'] == '')
+                                                    <span x-show="changeFile"
+                                                        class="btn btn-default btn-round btn-file">
+                                                        <input type="file" name="reports[{{ $index }}][file]"
+                                                            class="fileinput-new"
+                                                            wire:model='reports.{{ $index }}.file' />
+                                                    </span>
+                                                @else
                                                     <button class="btn btn-primary" type="button"
                                                         x-show="changeFile" x-on:click="changeFile = false"
                                                         wire:click="update({{ $index }})">
                                                         UPLOAD
                                                     </button>
                                                 @endif
-                                                <button class="btn btn-danger" x-on:click="changeFile = false"
-                                                    x-show="changeFile">
+                                                <button class="btn btn-danger" 
+                                                    x-on:click="changeFile = false" x-show="changeFile"
+                                                    wire:click="clearInput({{ $index }})">
                                                     Cancel</button>
                                                 <button x-show="!changeFile" type="button" rel="tooltip" class="btn btn-warning"
                                                     x-on:click="changeFile = true">Change File</button>
@@ -74,14 +80,15 @@
                                             @can('update', $headReport)
                                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                                     <div class="">
-                                                        <span wire:loading.remove
-                                                            wire:target="reports.{{ $index }}.file"
-                                                            class="btn btn-default btn-round btn-file">
-                                                            <input type="file" name="reports[{{ $index }}][file]"
-                                                                class="fileinput-new"
-                                                                wire:model='reports.{{ $index }}.file' />
-                                                        </span>
-                                                        @if ($report['file'] != '')
+                                                        @if ($report['file'] == '')
+                                                            <span wire:loading.remove
+                                                                wire:target="reports.{{ $index }}.file"
+                                                                class="btn btn-default btn-round btn-file">
+                                                                <input type="file" name="reports[{{ $index }}][file]"
+                                                                    class="fileinput-new"
+                                                                    wire:model='reports.{{ $index }}.file' />
+                                                            </span>
+                                                        @else
                                                             <button class="btn btn-primary"
                                                                 wire:click="store({{ $index }})">
                                                                 UPLOAD
@@ -89,7 +96,7 @@
                                                         @endif
                                                         <button class="btn btn-danger" type="button"
                                                             wire:click="removeReport({{ $index }})">
-                                                            Remove File
+                                                            Cancel
                                                         </button>
                                                     </div>
                                                 </div>
