@@ -120,6 +120,18 @@ class PrintedReport extends Component
     }
 
     /**
+     * ! Deprecated not really used but still kept just in case
+     * nilai MAX harus sama dengan nilai max_len 
+     * pada fungsi js di view livewire.printed-report
+     */
+    public function validateFileNameChecks()
+    {
+        foreach ($this->fileNameChecks as $index => $fileNameCheck) {
+            $this->validate(['fileNameChecks.'.$index => 'required|max:30']);
+        }
+    }
+
+    /**
      *
      */
     public function validateUpload($index)
@@ -156,6 +168,7 @@ class PrintedReport extends Component
             }
         }
         $name = $name.'-'.$this->headReport->site->station_id.'.pdf';
+        $this->reset('fileNameChecks');
         return $name;
     }
 

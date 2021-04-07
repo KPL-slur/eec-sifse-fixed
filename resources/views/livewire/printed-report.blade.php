@@ -156,4 +156,20 @@
             $('#modalConfirmDelete').modal('hide');
         });
     </script>
+    <script type="text/javascript">
+        /**
+         * http://www.webcodingtech.com/javascript/limit-input-text.php
+         * nilai max_len harus sama dengan nilai MAX pada validasi server 
+         * pada file app/http/livewire/PrintedReport@validateFileNameChecks()
+         */
+        function limitInput (el) {
+            var max_len = 30;
+            if (el.value.length > max_len) {
+                el.value = el.value.substr(0, max_len);
+            }
+            document.getElementById('char_cnt').innerHTML = el.value.length;
+            document.getElementById('chars_left').innerHTML = max_len - el.value.length;
+            return true;
+        }
+    </script>
 @endpush
