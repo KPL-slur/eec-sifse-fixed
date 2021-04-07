@@ -33,4 +33,20 @@ class Utility{
 
         return $date;
     }
+
+    /**
+     * convert from iso YYYY/MM/DD and combine tro dates into d-M-y
+     */
+    public function easyToReadDateTime($start, $end)
+    {
+        if (date("F Y", strtotime($start)) == date("F Y", strtotime($end))) {
+            $date = date('d', strtotime($start)) . "-" . date('d-M-y', strtotime($end));
+        } elseif (date("Y", strtotime($start)) == date("Y", strtotime($end))) {
+            $date = date('d-M', strtotime($start)) . "-" . date('d-M-y', strtotime($end));
+        } else {
+            $date = date('d-M-y', strtotime($start)) . "-" . date('d-M-y', strtotime($end));
+        }
+
+        return $date;
+    }
 }

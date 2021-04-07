@@ -4,7 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
-
+use App\Services\Utility;
 use App\Models\HeadReport;
 
 class PrintedReport extends Component
@@ -168,8 +168,14 @@ class PrintedReport extends Component
      */
     public function setFileName($index)
     {
-        $name = time();
-        foreach ($this->fileNameChecks[$index] as $key => $fileNameCheck) {
+        $priorities = array('Report', 'Berita Acara');
+        $sortedFNC = array_merge(array_intersect($priorities, $this->fileNameChecks[$index]), array_diff($this->fileNameChecks[$index], $priorities));
+
+        $utility = new Utility;
+        $date = $utility->easyToReadDateTime($this->headReport->report_date_start, $this->headReport->report_date_end);
+        $name = $date;
+        
+        foreach ($sortedFNC as $key => $fileNameCheck) {
             if ($fileNameCheck != '') {
                 $name = $name.'-'.$fileNameCheck;
             }
