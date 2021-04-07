@@ -30,14 +30,15 @@ class PrintedReport extends Component
      */
     public function mount()
     {
-        $this->fileNameChecks[] = 'Report';
         foreach ($this->headReport->printedReports as $printedReport) {
             $this->reports[] = ['fileName' => $printedReport->file, 'uploaded' => 1, 'file' => ''];
+            $this->fileNameChecks[] = ['Report'];
         }
         if (empty($this->reports)) {
             $this->reports = [
                 ['fileName' => '', 'uploaded' => 0, 'file' => '']
             ];
+            $this->fileNameChecks[] = ['Report'];
         }
     }
 
@@ -59,11 +60,13 @@ class PrintedReport extends Component
         if (count($this->reports) != 0) {
             if ($this->reports[count($this->reports)-1]['fileName'] != '') {
                 $this->reports[] = ['fileName' => '', 'uploaded' => 0, 'file' => ''];
+                $this->fileNameChecks[] = ['Report'];
             } else {
                 $this->emit('prevLimit'); // notif
             }
         } else {
             $this->reports[] = ['fileName' => '', 'uploaded' => 0, 'file' => ''];
+            $this->fileNameChecks[] = ['Report'];
         }
     }
 
@@ -115,6 +118,8 @@ class PrintedReport extends Component
             
             unset($this->reports[$index]);
             array_values($this->reports);
+            unset($this->fileNameChecks[$index]);
+            array_values($this->fileNameChecks);
             $this->emit('removeReport'); // notif
         }
     }
@@ -127,7 +132,9 @@ class PrintedReport extends Component
     public function validateFileNameChecks()
     {
         foreach ($this->fileNameChecks as $index => $fileNameCheck) {
-            $this->validate(['fileNameChecks.'.$index => 'required|max:30']);
+            foreach ($this->fileNameCheck as $jndex => $fileName) {
+                $this->validate(['fileNameChecks.'.$jndex => 'required|max:30']);
+            }
         }
     }
 
@@ -159,16 +166,16 @@ class PrintedReport extends Component
     /**
      *
      */
-    public function setFileName()
+    public function setFileName($index)
     {
         $name = time();
-        foreach ($this->fileNameChecks as $key => $fileNameCheck) {
+        foreach ($this->fileNameChecks[$index] as $key => $fileNameCheck) {
             if ($fileNameCheck != '') {
                 $name = $name.'-'.$fileNameCheck;
             }
         }
         $name = $name.'-'.$this->headReport->site->station_id.'.pdf';
-        $this->reset('fileNameChecks');
+        $this->fileNameChecks[$index] = ['Report'];
         return $name;
     }
 
@@ -181,7 +188,7 @@ class PrintedReport extends Component
         
         if ($this->reports[$index]['uploaded'] == 1) {
             if (! empty($this->reports[$index]['file'])) {
-                $fileName[$index] = $this->reports[$index]['file']->storePubliclyAs($this->maintenance_type, $this->setFileName(), 'public');
+                $fileName[$index] = $this->reports[$index]['file']->storePubliclyAs($this->maintenance_type, $this->setFileName($index), 'public');
             
                 \Storage::delete('public/'.$this->reports[$index]['fileName']);
                 $this->headReport->printedReports()
@@ -209,7 +216,7 @@ class PrintedReport extends Component
 
         if ($this->reports[$index]['uploaded'] == 0) {
             if (! empty($this->reports[$index]['file'])) {
-                $fileName[$index] = $this->reports[$index]['file']->storePubliclyAs($this->maintenance_type, $this->setFileName(), 'public');
+                $fileName[$index] = $this->reports[$index]['file']->storePubliclyAs($this->maintenance_type, $this->setFileName($index), 'public');
             
                 $this->headReport->printedReports()
                                  ->create([

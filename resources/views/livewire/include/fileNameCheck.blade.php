@@ -3,7 +3,7 @@
         <div class="form-check check-inside-table">
             <label class="form-check-label">
                 <input class="form-check-input" type="checkbox" name="fileNameChecks[]" value="Report"
-                        wire:model.lazy="fileNameChecks">
+                        wire:model.lazy="fileNameChecks.{{ $index }}">
                 <span class="form-check-sign">
                     <span class="check"></span>
                 </span>
@@ -12,7 +12,7 @@
         <div class="form-check check-inside-table">
             <label class="form-check-label">
                 <input class="form-check-input" type="checkbox" name="fileNameChecks[]" value="Berita Acara"
-                        wire:model.lazy="fileNameChecks">
+                        wire:model.lazy="fileNameChecks.{{ $index }}">
                 <span class="form-check-sign">
                     <span class="check"></span>
                 </span>
@@ -21,7 +21,7 @@
         <div class="form-check check-inside-table">
             <label class="form-check-label">
                 <input class="form-check-input" type="checkbox" name="fileNameChecks[]" value="dummy"
-                        wire:model.lazy="fileNameChecks"
+                        wire:model.lazy="fileNameChecks.{{ $index }}"
                         x-bind:value="customFileName" x-bind:disabled="disableCheck" 
                         x-on:click="if (disableInput){ disableInput = false } else { disableInput = true }">
                 <span class="form-check-sign">
