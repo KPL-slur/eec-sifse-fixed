@@ -23,8 +23,8 @@ class StockController extends Controller
     {
         $stocks = Stock::all();
 
-        // $rate_fix = $ex_rate->apiCall();
-        $rate_fix = 1000.11;
+        $rate_fix = $ex_rate->apiCall();
+        // $rate_fix = 1000.11;
 
         // BUAT GROUP DARI STOCKS YANG SELECT NYA
         $stocks_group = []; //inisiasi empty array stocks_group
@@ -47,8 +47,8 @@ class StockController extends Controller
      */
     public function create(ExchangeRate $ex_rate)
     {
-        // $rate_fix = $ex_rate->apiCall();
-        $rate_fix = 1000.11;
+        $rate_fix = $ex_rate->apiCall();
+        // $rate_fix = 1000.11;
 
         // BUAT GROUP DARI STOCKS YANG SELECT NYA
         $stocks_group = []; //inisiasi empty array stocks_group
@@ -99,8 +99,8 @@ class StockController extends Controller
     public function edit(Stock $stock, ExchangeRate $ex_rate)
     {
         // $stock_data = Stock::where('stock_id');
-        // $rate_fix = $ex_rate->apiCall();
-        $rate_fix = 1000.11;
+        $rate_fix = $ex_rate->apiCall();
+        // $rate_fix = 1000.11;
 
         // $siteAndStock = DB::table('stocks')
         //                     // ->select('stocks.site_id', 'station_id', 'stock_id', 'nama_barang', 'group', 'part_number','serial_number', 'tgl_masuk', 'expired', 'kurs_beli', 'jumlah_unit', 'status')
@@ -188,7 +188,6 @@ class StockController extends Controller
         $stocks = Stock::whereBetween('tgl_masuk', [$request->query('date-start'), $request->query('date-end')])
                     ->get();
 
-        return $stocks;
 
         return view('stocks.print', compact('stocks'));
     }

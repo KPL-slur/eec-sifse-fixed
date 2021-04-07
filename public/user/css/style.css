@@ -30,6 +30,7 @@
 .form-group-site {
     position: relative;
     margin-top: auto;
+    text-align: center;
 }
 
 .hidden {
@@ -107,3 +108,7 @@ select.distribution:not([size]):not([multiple]) {
 	animation: bot-to-top 2s ease-out;
 }
 
+.logos{
+    width: 150px;
+    height: 150px;
+}
