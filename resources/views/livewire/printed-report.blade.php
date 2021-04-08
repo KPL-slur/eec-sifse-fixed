@@ -144,7 +144,9 @@
     <x-ui.action-message on="uploadReport" type="success">
         Report Record Uploaded
     </x-ui.action-message>
-    <button class="btn btn-sm btn-secondary" wire:click="addReport">+ Add Scanned Report</button>
+    @can('update', $headReport)
+        <button class="btn btn-sm btn-secondary" wire:click="addReport">+ Add Scanned Report</button>
+    @endcan
 </div>
 
 @push('scripts')

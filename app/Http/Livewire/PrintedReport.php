@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Services\Utility;
@@ -10,6 +11,7 @@ use App\Models\HeadReport;
 class PrintedReport extends Component
 {
     use WithFileUploads;
+    use AuthorizesRequests;
 
     public $headReport;
     public $maintenance_type;
@@ -57,6 +59,7 @@ class PrintedReport extends Component
      */
     public function addReport()
     {
+        $this->authorize('update', $this->headReport);
         if (count($this->reports) != 0) {
             if ($this->reports[count($this->reports)-1]['fileName'] != '') {
                 $this->reports[] = ['fileName' => '', 'uploaded' => 0, 'file' => ''];
@@ -111,6 +114,7 @@ class PrintedReport extends Component
      */
     public function removeReport($index)
     {
+        $this->authorize('update', $this->headReport);
         if (array_key_exists($index, $this->reports)) {
             if ($this->reports[$index]['uploaded'] === 1) {
                 $this->deleteStoredFile($index);
@@ -190,6 +194,7 @@ class PrintedReport extends Component
      */
     public function update($index)
     {
+        $this->authorize('update', $this->headReport);
         $this->validateUpload($index);
         
         if ($this->reports[$index]['uploaded'] == 1) {
@@ -218,6 +223,7 @@ class PrintedReport extends Component
      */
     public function store($index)
     {
+        $this->authorize('update', $this->headReport);
         $this->validateUpload($index);
 
         if ($this->reports[$index]['uploaded'] == 0) {
