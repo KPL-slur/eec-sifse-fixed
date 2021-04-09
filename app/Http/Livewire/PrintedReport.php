@@ -158,12 +158,13 @@ class PrintedReport extends Component
                             'reports.'.$index.'.fileName' => 'unique:App\Models\PrintedReport,file',
                         ], [
                             'required' => 'This input is required.',
-                            'mimes:pdf' => 'This input must be a file of type: pdf.',
+                            'mimes' => 'This input must be a file of type: pdf.',
                             'unique' => 'This report already has this kind of file, please check your file category input again.'
                         ]);
     }
 
     /**
+     * ! deprecated
      * validate every single file that are not uplaoded
      */
     public function validateAllUploads()

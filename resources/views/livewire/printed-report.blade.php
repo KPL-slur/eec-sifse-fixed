@@ -10,34 +10,64 @@
         @can('update', $headReport)
             @foreach ($reports as $index => $report)
                 <div class="row">
-                    <div class="col table-responsive">
+                    <div class="col">
                         <table class="table">
                             <tbody x-data="{ changeFile: false, customFileName: '', disableInput: false, disableCheck: true }" x-cloak>
                                 <tr>
                                     <td>File Name</td>
                                     <td>
+                                        {{-- IF FILE NAME DUPE --}}
                                         @error('reports.' . $index . '.fileName')
-                                            <p class="text-danger">{{ $message }}</p>
+                                            <p class="text-danger mb-0">{{ $message }}</p>
                                         @enderror
-                                        @if (!empty($reports[$index]['file']))
-                                                {{ $reports[$index]['file']->getClientOriginalName() }}
-                                        @endif
+                                        {{-- IF THE FILE ARENT PDF TYPE OR NULL --}}
                                         @error('reports.' . $index . '.file')
-                                            <p class="text-danger">{{ $message }}</p>
+                                            <p class="text-danger mb-0">{{ $message }}</p>
                                         @else
-                                            @if ($reports[$index]['uploaded'])     
+                                            {{-- THERE ARE NO FILE ERROR AND FILE SAVED --}}
+                                            @if ($reports[$index]['uploaded'] === 1)
+                                                {{-- IF FILE PROPERLY SAVED --}}
                                                 @if (isset(explode("/", $reports[$index]['fileName'])[1]))
-                                                    <p x-show="!changeFile">{{ explode("/", $reports[$index]['fileName'])[1] }}</p>
-                                                    <div x-show="changeFile">
-                                                        @include('livewire.include.fileNameCheck')
-                                                    </div>
+                                                    <p class="mb-0">{{ explode("/", $reports[$index]['fileName'])[1] }}</p>
                                                 @endif
-                                            @else 
-                                                @include('livewire.include.fileNameCheck')
                                             @endif
                                         @enderror
                                     </td>
                                 </tr>
+                                {{-- IF USER ALREADY CHOOSE FILE BUT NOT SAVED TO SERVER --}}
+                                @if (!empty($reports[$index]['file']))
+                                    <tr>
+                                        <td>
+                                            Choosed File
+                                        </td>
+                                        <td>
+                                            {{ $reports[$index]['file']->getClientOriginalName() }}
+                                            &nbsp;
+                                            <a href="#" class="text-danger" type="button" wire:click.prevent="clearInput({{ $index }})">clear</a>
+                                        </td>
+                                    </tr>
+                                @endif
+                                {{-- IF FILE ALREADY STORE, SOMTIHING LIKE EDIT --}}
+                                @if ($reports[$index]['uploaded'] === 1)
+                                    <tr x-show="changeFile">
+                                        <td>
+                                            File Category
+                                        </td>
+                                        <td>
+                                            @include('livewire.include.fileNameCheck')
+                                        </td>
+                                    </tr>
+                                {{-- FOR NEW FILE UPLOAD, CREATISH --}}
+                                @else
+                                    <tr>
+                                        <td>
+                                            File Category
+                                        </td>
+                                        <td>
+                                            @include('livewire.include.fileNameCheck')
+                                        </td>
+                                    </tr>
+                                @endif
                                 <tr>
                                     <td>Action</td>
                                     <td>
