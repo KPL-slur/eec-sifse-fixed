@@ -44,6 +44,12 @@ class PrintedReport extends Component
         }
     }
 
+    public function hydrate()
+    {
+        $this->resetErrorBag();
+        $this->resetValidation();
+    }
+
     //* reports method
 
     /**
@@ -88,7 +94,6 @@ class PrintedReport extends Component
     public function confirmDelete()
     {
         $this->removeReport($this->selectedItem);
-        $this->resetErrorBag();
         $this->dispatchBrowserEvent('closeModalConfirm');
     }
 

@@ -25,11 +25,13 @@
                                         @error('reports.' . $index . '.file')
                                             <p class="text-danger">{{ $message }}</p>
                                         @else
-                                            @if (isset(explode("/", $reports[$index]['fileName'])[1]))
-                                                <p x-show="!changeFile">{{ explode("/", $reports[$index]['fileName'])[1] }}</p>
-                                                <div x-show="changeFile">
-                                                    @include('livewire.include.fileNameCheck')
-                                                </div>
+                                            @if ($reports[$index]['uploaded'])     
+                                                @if (isset(explode("/", $reports[$index]['fileName'])[1]))
+                                                    <p x-show="!changeFile">{{ explode("/", $reports[$index]['fileName'])[1] }}</p>
+                                                    <div x-show="changeFile">
+                                                        @include('livewire.include.fileNameCheck')
+                                                    </div>
+                                                @endif
                                             @else 
                                                 @include('livewire.include.fileNameCheck')
                                             @endif
