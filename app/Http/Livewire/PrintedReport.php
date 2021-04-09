@@ -21,6 +21,12 @@ class PrintedReport extends Component
 
     public $selectedItem;
 
+    private $errMessage = [
+        'required' => 'This input is required.',
+        'mimes' => 'This input must be a file of type: pdf.',
+        'unique' => 'This report already has this kind of file, please check your file category input again.'
+    ];
+
     //* LIVEWIRE METHOD
     /**
      * run after class mount method.
@@ -149,21 +155,6 @@ class PrintedReport extends Component
     }
 
     /**
-     *
-     */
-    public function validateUpload($index)
-    {
-        $this->validate([
-                            'reports.'.$index.'.file' => 'required|mimes:pdf',
-                            'reports.'.$index.'.fileName' => 'unique:App\Models\PrintedReport,file',
-                        ], [
-                            'required' => 'This input is required.',
-                            'mimes' => 'This input must be a file of type: pdf.',
-                            'unique' => 'This report already has this kind of file, please check your file category input again.'
-                        ]);
-    }
-
-    /**
      * ! deprecated
      * validate every single file that are not uplaoded
      */
@@ -204,7 +195,9 @@ class PrintedReport extends Component
     {
         $this->authorize('update', $this->headReport);
         $this->reports[$index]['fileName'] = $this->maintenance_type.'/'.$this->setFileName($index);
-        $this->validateUpload($index);
+        $this->validate([
+            'reports.'.$index.'.file' => 'required|mimes:pdf',
+        ], $this->errMessage);
         
         if ($this->reports[$index]['uploaded'] == 1) {
             if (! empty($this->reports[$index]['file'])) {
@@ -234,7 +227,10 @@ class PrintedReport extends Component
     {
         $this->authorize('update', $this->headReport);
         $this->reports[$index]['fileName'] = $this->maintenance_type.'/'.$this->setFileName($index);
-        $this->validateUpload($index);
+        $this->validate([
+            'reports.'.$index.'.file' => 'required|mimes:pdf',
+            'reports.'.$index.'.fileName' => 'unique:App\Models\PrintedReport,file',
+        ], $this->errMessage);
 
         if ($this->reports[$index]['uploaded'] == 0) {
             if (! empty($this->reports[$index]['file'])) {
