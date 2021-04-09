@@ -16,7 +16,7 @@ class CreatePrintedReportsTable extends Migration
         Schema::create('printed_reports', function (Blueprint $table) {
             $table->bigIncrements('printed_report_id');
             $table->foreignId('head_id')->constrained('head_reports', 'head_id')->onDelete('cascade');
-            $table->string('file');
+            $table->string('file')->unique();
             $table->timestamps();
         });
     }

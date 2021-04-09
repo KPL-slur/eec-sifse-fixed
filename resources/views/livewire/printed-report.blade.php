@@ -18,10 +18,14 @@
                                     <td>
                                         @error('reports.' . $index . '.fileName')
                                             <p class="text-danger">{{ $message }}</p>
-                                        @else
-                                            @if (!empty($reports[$index]['file']))
+                                        @enderror
+                                        @if (!empty($reports[$index]['file']))
                                                 {{ $reports[$index]['file']->getClientOriginalName() }}
-                                            @elseif (isset(explode("/", $reports[$index]['fileName'])[1]))
+                                        @endif
+                                        @error('reports.' . $index . '.file')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @else
+                                            @if (isset(explode("/", $reports[$index]['fileName'])[1]))
                                                 <p x-show="!changeFile">{{ explode("/", $reports[$index]['fileName'])[1] }}</p>
                                                 <div x-show="changeFile">
                                                     @include('livewire.include.fileNameCheck')

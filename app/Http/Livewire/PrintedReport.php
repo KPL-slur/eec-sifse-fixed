@@ -88,6 +88,7 @@ class PrintedReport extends Component
     public function confirmDelete()
     {
         $this->removeReport($this->selectedItem);
+        $this->resetErrorBag();
         $this->dispatchBrowserEvent('closeModalConfirm');
     }
 
@@ -148,10 +149,12 @@ class PrintedReport extends Component
     public function validateUpload($index)
     {
         $this->validate([
-                            'reports.'.$index.'.file' => 'required|mimes:pdf'
+                            'reports.'.$index.'.file' => 'required|mimes:pdf',
+                            'reports.'.$index.'.fileName' => 'unique:App\Models\PrintedReport,file',
                         ], [
                             'required' => 'This input is required.',
                             'mimes:pdf' => 'This input must be a file of type: pdf.',
+                            'unique' => 'This report already has this kind of file, please check your file category input again.'
                         ]);
     }
 
@@ -185,7 +188,6 @@ class PrintedReport extends Component
             }
         }
         $name = $name.'-'.$this->headReport->site->station_id.'.pdf';
-        $this->fileNameChecks[$index] = ['Report'];
         return $name;
     }
 
@@ -195,6 +197,7 @@ class PrintedReport extends Component
     public function update($index)
     {
         $this->authorize('update', $this->headReport);
+        $this->reports[$index]['fileName'] = $this->maintenance_type.'/'.$this->setFileName($index);
         $this->validateUpload($index);
         
         if ($this->reports[$index]['uploaded'] == 1) {
@@ -224,6 +227,7 @@ class PrintedReport extends Component
     public function store($index)
     {
         $this->authorize('update', $this->headReport);
+        $this->reports[$index]['fileName'] = $this->maintenance_type.'/'.$this->setFileName($index);
         $this->validateUpload($index);
 
         if ($this->reports[$index]['uploaded'] == 0) {
