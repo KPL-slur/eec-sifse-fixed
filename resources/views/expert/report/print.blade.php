@@ -333,7 +333,7 @@
                                         <img src="{{ asset('storage/' . $reportImage->image) }}" width="350" height="200"
                                             class="m-center" alt="" id="image_{{ $index }}"
                                             x-bind:height="height">
-                                        <p class="text-center no-margin">
+                                        <p class="text-center no-margin" id="caption_{{ $index }}">
                                             {{ $reportImage->caption }}
                                         </p>
                                         <button class="not-print" x-on:click="height = (height == 'auto' ? 200 : 'auto')">Fit</button>
@@ -355,7 +355,7 @@
     </table>
 
     <script type="text/javascript">
-        // window.print();
+        window.print();
         let click = 0;
         let swapper = document.getElementsByClassName('btn-swap');
         Array.from(swapper).forEach(element => {
@@ -370,9 +370,12 @@
                         secondId =  this.dataset.id;
                         firstSrc = document.getElementById('image_'+firstId).src;
                         secondSrc = document.getElementById('image_'+secondId).src;
-
+                        firstText = document.getElementById('caption_'+firstId).innerText;
+                        secondText = document.getElementById('caption_'+secondId).innerText;
                         document.getElementById('image_'+firstId).src = secondSrc;
                         document.getElementById('image_'+secondId).src = firstSrc;
+                        document.getElementById('caption_'+firstId).innerText = secondText;
+                        document.getElementById('caption_'+secondId).innerText = firstText;
                         click = 0;
                         break;
                 
