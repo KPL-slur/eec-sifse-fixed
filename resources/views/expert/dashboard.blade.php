@@ -42,26 +42,17 @@
                             <div class="card-icon">
                                 <i class="material-icons">person</i>
                             </div>
-                            <h3 class="card-title">PROFIL</h3>
+                            <h3 class="card-title">Edit Profile</h3>
                         </div>
                         <div class="card-footer">
                             <a class="btn btn-info" href="{{ route('profile.edit') }}">MORE</a>
                         </div>
                     </div>
                 </div>
-                {{--  --}}
+                
+                <x-stock-table/>
+                
             </div>
         </div>
     </div>
 @endsection
-
-
-{{-- Gatau ini buat apa --}}
-{{-- @push('js')
-  <script>
-    $(document).ready(function() {
-      // Javascript method's body can be found in assets/js/demos.js
-      md.initDashboardPageCharts();
-    });
-  </script>
-@endpush --}}
