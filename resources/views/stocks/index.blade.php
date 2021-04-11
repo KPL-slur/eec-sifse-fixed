@@ -210,11 +210,11 @@
 
   {{-- script for modal input stocks report--}}
   <script>
-    let url_stocks_report = "print?";
-    let url_stocks_repot_date_start = "date-start=";
-    let iterator_date_start = 0;
-    let url_stocks_repot_date_end = "&date-end=";
-    let iterator_date_end = 0;
+    var url_stocks_report = "stocks/print?";
+    var url_stocks_repot_date_start = "date-start=";
+    var iterator_date_start = 0;
+    var url_stocks_repot_date_end = "&date-end=";
+    var iterator_date_end = 0;
 
     $('#input_date_start_stocks_report').on('input', (e) => {
       if (iterator_date_start === 0){ // kalo baru pertama kali ke-detect on input
@@ -223,7 +223,7 @@
         iterator_date_start++;
       } else {
         url_stocks_repot_date_start = "date-start=" + e.target.value;
-        url_stocks_report = "print?" + url_stocks_repot_date_start + url_stocks_repot_date_end;
+        url_stocks_report = "stocks/print?" + url_stocks_repot_date_start + url_stocks_repot_date_end;
         $("#button_stocks_report").prop('href', url_stocks_report);
       }
     });
@@ -233,7 +233,7 @@
         url_stocks_repot_date_end = url_stocks_repot_date_end + e.target.value; //masukin input ke url_date_end
         if(url_stocks_report.indexOf("date-start")){ //ngecek string date-start ada di dalem url stock report ga.
         // ini gr2 error kl 2x input date start berurutan, 1x input date end
-          url_stocks_report = "print?" + url_stocks_repot_date_start + url_stocks_repot_date_end;
+          url_stocks_report = "stocks/print?" + url_stocks_repot_date_start + url_stocks_repot_date_end;
         } else {
           url_stocks_report = url_stocks_report + url_stocks_repot_date_start + url_stocks_repot_date_end;
         }
@@ -242,7 +242,7 @@
         iterator_date_end++;
       } else {
         url_stocks_repot_date_end = "&date-end=" + e.target.value;
-        url_stocks_report = "print?" + url_stocks_repot_date_start + url_stocks_repot_date_end;
+        url_stocks_report = "stocks/print?" + url_stocks_repot_date_start + url_stocks_repot_date_end;
       }
       $("#button_stocks_report").prop('href', url_stocks_report); //taro sini krn gapeduli pertama kali ke-detect on input atau ngga, pasti bakal jalan
     });
