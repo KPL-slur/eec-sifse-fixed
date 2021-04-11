@@ -13,6 +13,9 @@
         name='viewport' />
     <link href="{{ asset('user') }}/css/frameworks/gutenberg.css" rel="stylesheet" />
     <link href="{{ asset('user') }}/css/print.css" rel="stylesheet" />
+    <script type="module" src="{{ asset('user') }}/js/plugins/alpine.js"></script>
+    <script nomodule src="{{ asset('user') }}/js/plugins/alpine-ie11.js" defer></script>
+    <script src="{{ asset('material') }}/js/core/jquery.min.js"></script>
 </head>
 
 <body>
@@ -326,13 +329,16 @@
                         <h5 class="page-break-before">Lampiran Kegiatan</h5>
                         <table class="report page-break-after">
                             <tr>
-                                @foreach ($headReport->reportImages as $reportImage)
-                                    <td colspan="{{ $loop->last ? 2 : 1 }}">
-                                        <img src="{{ asset('storage/' . $reportImage->image) }}" width="350"
-                                            height="200" class="m-center" alt="">
+                                @foreach ($headReport->reportImages as $index => $reportImage)
+                                    <td colspan="{{ $loop->last ? 2 : 1 }}" x-data="{height: 200}">
+                                        <img src="{{ asset('storage/' . $reportImage->image) }}" width="350" height="200"
+                                            class="m-center" alt="" id="image_{{ $index }}"
+                                            x-bind:height="height">
                                         <p class="text-center">
                                             {{ $reportImage->caption }}
                                         </p>
+                                        <button class="not-print" x-on:click="height = (height == 'auto' ? 200 : 'auto')">Fit</button>
+                                        <button class="not-print btn-swap" data-id="{{ $index }}">Swap</button>
                                     </td>
                                     @if ($loop->iteration % 2 == 0)
                             </tr>
@@ -344,26 +350,6 @@
                             @endif
                             @endforeach
                         </table>
-                        {{-- <table class="report page-break-after">
-                            <tr>
-                                @for ($i = 1; $i <= 29; $i++)
-                                    <td colspan={{ $i == 29 ? 2 : 1 }}>
-                                        <img src="{{ 'http://placeimg.com/' . rand(500, 3000) . '/' . rand(500, 300) . '/any' }}"
-                                            width="350" height="200" class="m-center" alt="">
-                                        <p class="text-center">
-                                            This is a lead paragraph. It stands out from regular paragraphs.
-                                        </p>
-                                    </td>
-                                    @if ($i % 2 == 0)
-                            </tr>
-                            <tr>
-                                @endif
-                                @if ($i % 8 == 0)
-                        </table>
-                        <table class="report page-break-after">
-                            @endif
-                            @endfor
-                        </table> --}}
                     </main>
                 </td>
             </tr>
@@ -373,6 +359,28 @@
 
     <script type="text/javascript">
         window.print();
+        let click = 0;
+        $('.btn-swap').on('click', function (e) { 
+            click++;
+            switch (click) {
+                case 1:
+                    firstId =  $(this).data("id");
+                    break;
+
+                case 2:
+                    secondId =  $(this).data("id");
+                    firstSrc = $('#image_' + firstId).attr('src');
+                    secondSrc = $('#image_' + secondId).attr('src');
+
+                    $('#image_' + firstId).attr('src', secondSrc);
+                    $('#image_' + secondId).attr('src', firstSrc);
+                    click = 0;
+                    break;
+            
+                default:
+                    break;
+            }
+        });
     </script>
 </body>
 

@@ -92,6 +92,12 @@
     width: 100%;
 }
 
+@media print {
+    .not-print{
+        display: none;
+    }
+}
+
 /*
  *  TABLE INNER BORDER ONLY
  */
