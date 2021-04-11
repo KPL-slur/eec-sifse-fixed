@@ -94,8 +94,12 @@
 
 @media print {
     .not-print{
-        display: none;
+        display: none !important;
     }
+}
+
+.no-margin{
+    margin: 0 !important;
 }
 
 /*

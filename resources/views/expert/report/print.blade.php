@@ -326,14 +326,14 @@
                         </div>
                         <!----------------------------------------------------------------------------------------- LAMPIRAN -->
                         <h5 class="page-break-before">Lampiran Kegiatan</h5>
-                        <table class="report page-break-after">
+                        <table class="report no-margin">
                             <tr>
                                 @foreach ($headReport->reportImages as $index => $reportImage)
                                     <td colspan="{{ $loop->last ? 2 : 1 }}" x-data="{height: 200}">
                                         <img src="{{ asset('storage/' . $reportImage->image) }}" width="350" height="200"
                                             class="m-center" alt="" id="image_{{ $index }}"
                                             x-bind:height="height">
-                                        <p class="text-center">
+                                        <p class="text-center no-margin">
                                             {{ $reportImage->caption }}
                                         </p>
                                         <button class="not-print" x-on:click="height = (height == 'auto' ? 200 : 'auto')">Fit</button>
@@ -342,10 +342,8 @@
                                     @if ($loop->iteration % 2 == 0)
                             </tr>
                             <tr>
-                                @endif
-                                @if ($loop->iteration % 8 == 0)
                         </table>
-                        <table class="report page-break-after">
+                        <table class="report no-margin">
                             @endif
                             @endforeach
                         </table>
