@@ -15,7 +15,6 @@
     <link href="{{ asset('user') }}/css/print.css" rel="stylesheet" />
     <script type="module" src="{{ asset('user') }}/js/plugins/alpine.js"></script>
     <script nomodule src="{{ asset('user') }}/js/plugins/alpine-ie11.js" defer></script>
-    <script src="{{ asset('material') }}/js/core/jquery.min.js"></script>
 </head>
 
 <body>
@@ -358,28 +357,31 @@
     </table>
 
     <script type="text/javascript">
-        window.print();
+        // window.print();
         let click = 0;
-        $('.btn-swap').on('click', function (e) { 
-            click++;
-            switch (click) {
-                case 1:
-                    firstId =  $(this).data("id");
-                    break;
+        let swapper = document.getElementsByClassName('btn-swap');
+        Array.from(swapper).forEach(element => {
+            element.addEventListener('click', function (e) { 
+                click++;
+                switch (click) {
+                    case 1:
+                        firstId =  this.dataset.id;
+                        break;
 
-                case 2:
-                    secondId =  $(this).data("id");
-                    firstSrc = $('#image_' + firstId).attr('src');
-                    secondSrc = $('#image_' + secondId).attr('src');
+                    case 2:
+                        secondId =  this.dataset.id;
+                        firstSrc = document.getElementById('image_'+firstId).src;
+                        secondSrc = document.getElementById('image_'+secondId).src;
 
-                    $('#image_' + firstId).attr('src', secondSrc);
-                    $('#image_' + secondId).attr('src', firstSrc);
-                    click = 0;
-                    break;
-            
-                default:
-                    break;
-            }
+                        document.getElementById('image_'+firstId).src = secondSrc;
+                        document.getElementById('image_'+secondId).src = firstSrc;
+                        click = 0;
+                        break;
+                
+                    default:
+                        break;
+                }
+            });
         });
     </script>
 </body>
