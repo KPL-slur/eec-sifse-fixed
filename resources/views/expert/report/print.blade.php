@@ -40,7 +40,7 @@
                 <td>
                     <!--*** CONTENT GOES HERE ***-->
                     <main>
-                        <h1 class="text-center">WEATHER RADAR {{ $headReport->site->radar_name }} SERVICE REPORT</h1>
+                        <h4 class="text-center">WEATHER RADAR {{ $headReport->site->radar_name }} SERVICE REPORT</h4>
 
                         <!----------------------------------------------------------------------------------------- HEAD -->
                         <Table class="report head-report">
@@ -270,7 +270,7 @@
                         @endif
                         <!----------------------------------------------------------------------------------------- REMARK -->
                         <hr>
-                        <h3>Remark</h3>
+                        <h5>Remark</h5>
                         <?php echo $bodyReport->remark; ?>
                         <hr>
                         <!----------------------------------------------------------------------------------------- RECOMMENDATIONS -->
@@ -323,7 +323,7 @@
                             </div>
                         </div>
                         <!----------------------------------------------------------------------------------------- LAMPIRAN -->
-                        <h3 class="page-break-before">Lampiran Kegiatan</h3>
+                        <h5 class="page-break-before">Lampiran Kegiatan</h5>
                         <table class="report page-break-after">
                             <tr>
                                 @foreach ($headReport->reportImages as $reportImage)

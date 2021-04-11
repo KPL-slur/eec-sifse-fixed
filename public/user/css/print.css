@@ -55,7 +55,7 @@
 }
 
 .report.body-report td:nth-child(1):not(.nested-table td) {
-    width: 350px;
+    width: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
