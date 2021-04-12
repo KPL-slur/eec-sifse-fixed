@@ -95,7 +95,6 @@ trait WithRecommendation
 
 
         $siteHeadReports = HeadReport::Where('site_id', $this->site_id)->with('recommendations')->get();
-        $deletedRecommends = HeadReport::find($this->head_id)->recommendations()->onlyTrashed()->get();
         
         foreach ($siteHeadReports as $siteHeadReport){ //headreport
             foreach ($siteHeadReport->recommendations as $index => $recommendation) {
@@ -107,13 +106,16 @@ trait WithRecommendation
                 $this->recommendationId[] = $recommendation->rec_id;
             }
         }
-        foreach ($deletedRecommends as $deletedRecommend) {
-            $this->recommends[] = [
+        if (isset($this->head_id)) {
+            $deletedRecommends = HeadReport::find($this->head_id)->recommendations()->onlyTrashed()->get();
+            foreach ($deletedRecommends as $deletedRecommend) {
+                $this->recommends[] = [
                                         'name' => $deletedRecommend->name,
                                         'jumlah_unit_needed' => $deletedRecommend->jumlah_unit_needed,
                                         'head_id' => $deletedRecommend->head_id,
                                     ];
-            $this->recommendationId[] = $deletedRecommend->rec_id;
+                $this->recommendationId[] = $deletedRecommend->rec_id;
+            }
         }
         $this->setRecommendationDropdown();
     }
