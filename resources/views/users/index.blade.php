@@ -13,13 +13,13 @@
             
             <div class="card-body">
                 <div class="row">
-                <div class="col-12 text-right">
+                {{-- <div class="col-12 text-right">
                   <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalAddUser">
                     <i class="material-icons">
                       add
                     </i>Add User
                   </button>
-                </div>
+                </div> --}}
 
                 <div class="table-responsive mt-3">
                   <table class="table table-striped">

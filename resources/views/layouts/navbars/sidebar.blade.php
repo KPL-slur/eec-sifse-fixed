@@ -7,7 +7,7 @@
   <div class="logo">
     <a href="" class="simple-text logo-normal">
       {{-- {{ __('EEC ID') }} --}}
-      <img class="logos" src="{{ asset('user') }}/img/eecidfix.png"/>
+      <img class="logos" src="{{ asset('user') }}/img/eecidfix.png" alt="EECID LOGO"/>
     </a>
   </div>
   <div class="sidebar-wrapper">

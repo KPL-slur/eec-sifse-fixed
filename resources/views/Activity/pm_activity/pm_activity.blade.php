@@ -54,19 +54,20 @@
                             <i class="material-icons">visibility</i>
                             <div class="ripple-container"></div>
                           </a>
+
                             {{-- <a rel="tooltip" class="btn btn-warning" href="editPm/{{$pm->head_id}}">
                               <i class="material-icons">edit</i>
                               <div class="ripple-container"></div>
                             </a> --}}
                               
-                            <form method="POST" action="/deletePm/{{ $pm->head_id }}" class="d-inline">
+                            {{-- <form method="POST" action="/deletePm/{{ $pm->head_id }}" class="d-inline">
                               @csrf
                               @method('delete')
                               <button class="btn btn-danger " onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')" >
                                 <i class="material-icons">delete</i>
                                 <div class="ripple-container"></div>
                               </button>
-                            </form>
+                            </form> --}}
                         </td>
                       </tr>
                     @endforeach
