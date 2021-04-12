@@ -1,4 +1,4 @@
-@extends('layouts.app', ['class' => 'off-canvas-sidebar', 'activePage' => 'home', 'title' => __('Material Dashboard')])
+@extends('layouts.app', ['class' => 'off-canvas-sidebar off-canvas-sidebar-custom', 'activePage' => 'home', 'titlePage' => __('Email Verification')])
 
 @section('content')
 <div class="container">
@@ -11,11 +11,6 @@
             <div class="card-body">
               <p class="card-description text-center"></p>
               <p>
-                @if (session('message'))
-                    <div class="alert alert-success" role="alert">
-                        {{ __('A fresh verification link has been sent to your email address.') }}
-                    </div>
-                @endif
                 
                 {{ __('Before proceeding, please check your email for a verification link.') }}
                 
@@ -33,3 +28,11 @@
   </div>
 </div>
 @endsection
+
+@if (session('message'))
+    <script>
+       window.onload = () => {
+         showNotification('top', 'right', 'success' ,'<?php echo session('message') ?>');
+       };
+     </script>
+@endif

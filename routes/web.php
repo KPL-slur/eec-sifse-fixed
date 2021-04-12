@@ -33,7 +33,7 @@ Route::group(['prefix' => 'email', 'middleware' =>['auth'] ], function () {
     Route::post('/verification-notification', function (Request $request) {
         $request->user()->sendEmailVerificationNotification();
     
-        return back()->with('message', 'Verification link sent!');
+        return back()->with('message', 'A fresh verification link has been sent to your email address.');
     })->middleware(['throttle:6,1'])->name('verification.send');
 });
 

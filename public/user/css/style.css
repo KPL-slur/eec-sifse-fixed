@@ -19,6 +19,10 @@
     margin-top: 0 !important;
 }
 
+.off-canvas-sidebar-custom .navbar .navbar-collapse .navbar-nav .nav-item .nav-link {
+    color: inherit !important;
+}
+
 /* 
 *  
 */
