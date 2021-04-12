@@ -9,8 +9,8 @@
 
             <x-ui.spinner id="spinner" className="spinner-center"/>
 
-            <div class="col table-responsive-lg">
-                <table class="table d-none" id="indexStocksTable">
+            <div class="col material-datatables">
+                <table class="table table-no-bordered table-hover d-none" cellspacing="0" width="100%" style="width:100%" id="indexStocksTable">
                     <thead class=" text-primary text-middle">
                         <th>No</th>
                         <th>Nama Barang</th>
