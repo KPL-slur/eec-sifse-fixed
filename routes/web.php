@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +19,24 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
 
 Auth::routes();
 
+Route::group(['prefix' => 'email', 'middleware' =>['auth'] ], function () {
+    Route::get('/verify', function () {
+        return view('auth.verify');
+    })->name('verification.notice');
+
+    Route::get('/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+        $request->fulfill();
+    
+        return redirect('/home');
+    })->middleware(['signed'])->name('verification.verify');
+
+    Route::post('/verification-notification', function (Request $request) {
+        $request->user()->sendEmailVerificationNotification();
+    
+        return back()->with('message', 'Verification link sent!');
+    })->middleware(['throttle:6,1'])->name('verification.send');
+});
+
 /*
 |--------------------------------------------------------------------------
 | USER/expert/AUTH ROUTES
@@ -28,13 +48,13 @@ Auth::routes();
 | ini digunakan middleware auth
 |
 */
-Route::middleware(['auth'])->group(function (){
+Route::middleware(['auth', 'verified'])->group(function (){
     Route::get('waiting-room', function () {
         return view('pages.waiting-room');
     })->name('waiting_room');
 });
 
-Route::group(['prefix' => 'expert', 'middleware' =>['auth', 'is_approved'] ], function () {
+Route::group(['prefix' => 'expert', 'middleware' =>['auth', 'verified', 'is_approved'] ], function () {
     Route::get('/', [App\Http\Controllers\ExpertController::class, 'index'])->name('expert');
 
     //PROFILE MANAGEMENT
@@ -77,7 +97,7 @@ Route::group(['prefix' => 'expert', 'middleware' =>['auth', 'is_approved'] ], fu
 |
 */
 
-Route::middleware(['auth', 'is_admin'])->group(function () {
+Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
     //Halaman Pertama Admin
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
