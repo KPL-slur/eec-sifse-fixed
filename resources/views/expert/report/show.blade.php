@@ -203,41 +203,4 @@
         </x-slot>
     </x-ui.modal-confirm>
 
-    @if (session('upload_success'))
-        <script>
-            window.onload = () => {
-                showNotification('top', 'right', 'success', "<?php echo session('upload_success'); ?>");
-            };
-        </script>
-    @endif
-    @if (session('delete_success'))
-        <script>
-            window.onload = () => {
-                showNotification('top', 'right', 'danger', "<?php echo session('delete_success'); ?>");
-            };
-        </script>
-    @endif
-
-    @error('uploadedPdf')
-        <script>
-            window.onload = () => {
-                showNotification('top', 'right', 'danger', "<?php echo $message; ?>");
-            };
-        </script>
-    @enderror
-    @error('kasatNip')
-        <script>
-            window.onload = () => {
-                showNotification('top', 'right', 'danger', "<?php echo $message; ?>");
-            };
-        </script>
-    @enderror
-    @error('kasatName')
-        <script>
-            window.onload = () => {
-                showNotification('top', 'right', 'danger', "<?php echo $message; ?>");
-            };
-        </script>
-    @enderror
-
 @endsection
