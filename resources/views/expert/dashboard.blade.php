@@ -40,12 +40,12 @@
                     <div class="card card-stats">
                         <div class="card-header card-header-info card-header-icon">
                             <div class="card-icon">
-                                <i class="material-icons">person</i>
+                                <i class="material-icons">inventory_2</i>
                             </div>
-                            <h3 class="card-title">Edit Profile</h3>
+                            <h3 class="card-title">Stocks</h3>
                         </div>
                         <div class="card-footer">
-                            <a class="btn btn-info" href="{{ route('profile.edit') }}">MORE</a>
+                            <a class="btn btn-info ml-auto" href="{{ route('expert_stocks') }}">VIEW</a>
                         </div>
                     </div>
                 </div>

@@ -37,6 +37,11 @@ Route::middleware(['auth'])->group(function (){
 Route::group(['prefix' => 'expert', 'middleware' =>['auth', 'is_approved'] ], function () {
     Route::get('/', [App\Http\Controllers\ExpertController::class, 'index'])->name('expert');
 
+    //STOCKS READ ONLY
+    Route::get('/stocks', function () {
+        return view('stocks.index');
+    })->name('expert_stocks');
+
     //PROFILE MANAGEMENT
     Route::group(['prefix' => 'profile', 'as' => 'profile.'], function () {
         Route::get('/', [App\Http\Controllers\ProfileController::class, 'edit'])->name('edit');
