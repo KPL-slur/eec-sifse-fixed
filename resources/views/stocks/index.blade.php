@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'stock_currency', 'titlePage' => __('Stocks and their currencies')])
+@extends('layouts.app', ['activePage' => 'stock_currency', 'titlePage' => __('Shows stocks and their actions')])
 
 @section('content')
 <div class="content">
@@ -10,8 +10,8 @@
         <div class="card">
           {{-- header read plg luar --}}
           <div class="card-header card-header-primary">
-            <h4 class="card-title ">Table Inventory and Exchange Rate</h4>
-            <p class="card-category"> Here is a subtitle for this table</p>
+            <h4 class="card-title ">Table Inventory and their actions</h4>
+            <p class="card-category">Here you can make new stock row, edit specific stock, or delete them.</p>
           </div>
 
           {{-- body paling luar --}}
@@ -23,7 +23,7 @@
                 <i class="material-icons">print</i>
               </button>
               {{-- for create button --}}
-              <a type="button" rel="tooltip" title="add item" class="btn btn-md btn-outline-primary text-right m-4 " href="{{ route('stocks-create') }}">
+              <a type="button" rel="tooltip" title="add item" class="btn btn-md btn-outline-primary text-right m-4 " href="{{ url('stocks/create/') }}">
                 <i class="material-icons">note_add</i>
               </a>
               {{-- for recommendatio item --}}
@@ -84,14 +84,6 @@
               </script>
             @endif
 
-            <div>
-              <select name="selectGroupStock" class="form-control m-3" id="selectGroupStock" style="max-width:15%;">
-                <option selected value="">Semua</option>
-                @foreach ($stocks_group as $sg)
-                  <option value="{{$sg}}">{{ $sg }}</option>
-                @endforeach
-              </select>
-            </div>
             {{-- card kedua --}}
             <div class="card m-3 my-5">
 
@@ -104,46 +96,45 @@
               {{-- card body kedua --}}
               <div class="card-body">
                 <div class="row">
-                    <div class="col table-responsive-lg">
-                      <table class="table d-none" id="indexStocksTable">
+                  <div class="col">
+                    <div class="table-responsive material-datatables ">
+                      <table class="table none table-striped table-no-bordered table-hover" cellspacing="0" style="width:100%" id="indexStocksTable">
                         <thead class=" text-primary text-middle">
-                          <th>No</th>
-                          <th>Nama Barang</th>
-                          <th>Part Number</th>
-                          <th>Serial Number</th>
-                          <th>Tanggal Masuk</th>
-                          <th>Expired</th>
-                          <th>Kurs Beli</th>
-                          <th>Jumlah Unit</th>
-                          <th>Status</th>
-                          <th class="text-center">Update or delete</th>
+                          <tr>
+                            <th>No</th>
+                            <th>Nama Barang</th>
+                            <th>Group</th>
+                            <th>Part Number</th>
+                            <th>Jumlah Unit</th>
+                            <th>Status</th>
+                            <th class="text-center">Actions</th>
+                          </tr>
                         </thead>
                           <tbody>
                             @foreach ($stocks as $st)
                               <tr>
-                                <input type="hidden" value="{{ $st->group }}">
                                 <td scope="row">{{$loop->iteration}}</td>
                                 <td>{{ $st->nama_barang }}</td>
+                                <td>{{ $st->group }}</td>
                                 <td>{{ $st->part_number }}</td>
-                                <td>{{ $st->serial_number }}</td>
-                                <td>{{ $st->tgl_masuk }}</td>
-                                <td>{{ $st->expired }}</td>
-                                <td>{{ $st->kurs_beli }}</td>
-                                <td>{{ $st->jumlah_unit }}</td>
+                                <td class="text-center">{{ $st->jumlah_unit }}</td>
                                 <td>{{ $st->status }}</td>
                                 <td class="td-actions text-center">
-                                  <a rel="tooltip" class="btn btn-lg btn-warning m-2" href="{{ url('stocks') }}/{{ $st->stock_id }}/edit" type="submit">
+                                  <a rel="tooltip" class="btn btn-sm btn-info btn-primary m-2" href="{{ url("stocks") }}/{{$st->stock_id}}">
+                                    <i class="material-icons">visibility</i>
+                                    <div class="ripple-container"></div>
+                                  </a>
+                                  <a rel="tooltip" class="btn btn-sm btn-warning m-2" href="{{ url('stocks') }}/{{ $st->stock_id }}/edit" type="submit">
                                     <i class="material-icons">edit</i>
                                     <div class="ripple-container"></div>
                                   </a>
                                   <form action="{{ url('stocks') }}/{{ $st->stock_id }}" class="d-inline" method="POST">
                                     @method('DELETE')
                                     @csrf
-                                    <button type="submit" class="btn btn-lg btn-danger m-2" title="delete" onclick="return confirm('Are you sure you want to delete '+ '{{ $st->nama_barang }}' +'?')">
+                                    <button type="submit" class="btn btn-sm btn-danger m-2" title="delete" onclick="return confirm('Are you sure you want to delete '+ '{{ $st->nama_barang }}' +'?')">
                                       <i class="material-icons">delete</i>
                                       <div class="ripple-container"></div>
                                       </button>
-                  
                                   </form>
                                 </td>
                               </tr>
@@ -152,6 +143,7 @@
                       </table>
                     </div>
                     {{-- table-responsive --}}
+                  </div>
                   </div>
                 </div>
               </div>
@@ -172,42 +164,6 @@
 
 {{-- script for dynamic table from select group --}}
 @push('scripts')
-  <script>
-      $("#selectGroupStock").change(()=>{
-
-        var stock_group = JSON.parse('<?php echo json_encode($stocks_group)?>');
-
-        var input, header, table, tr, td, i, j;
-        // dropdown name
-        input = document.getElementById("selectGroupStock").value;
-        // dynamic header
-        header = document.getElementById("groupStocksCardHeader");
-        // table id
-        table = document.getElementById("indexStocksTable");
-        // import row
-        tr = table.getElementsByTagName("tr");
-        // mulai dari 1 karena tr yg pertama tuh cuma no, namabarang dll
-        for (i = 1; i < tr.length; i++) {
-          td = tr[i].getElementsByTagName("input")[0].value;
-          if (td){
-            if (input == td || input == ""){
-              tr[i].style.display = "";
-                stock_group.forEach((group) => {
-                  if (input == ""){
-                    header.innerHTML = "Semua";
-                  } else if (input == group){
-                    header.innerHTML = group;
-                  }
-                });
-            } else {
-              tr[i].style.display = "none";
-            }
-          } 
-        }
-      });
-  </script>
-  {{-- script for dynamic table from select group --}}
-
   {{-- script for modal input stocks report--}}
   <script>
     var url_stocks_report = "stocks/print?";
@@ -271,12 +227,24 @@
   </script>
   {{-- script for modal input stocks report --}}
   
+  {{-- script for datatable --}}
   <script>
     $(document).ready( () => {
-      $("#indexStocksTable").DataTable();
+      $("#indexStocksTable").DataTable({
+        "pagingType": "numbers",
+        "lengthMenu": [
+          [10, 25, 50, 100, 250, 500],
+          [10, 25, 50, 100, 250, 500]
+        ],
+        responsive: true,
+        language: {
+          searchPlaceholder: "Search stock records",
+        }
+      });
       $("#indexStocksTable").removeClass('d-none');
     });
   </script>
+  {{-- script for datatable --}}
 
 @endpush
 

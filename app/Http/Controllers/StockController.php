@@ -5,48 +5,35 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\ValidateStockRequest;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\ExpiredStockNotificationEmail;
 use App\Models\Stock;
 use App\Models\Recommendation;
 use App\Services\ExchangeRate;
-use Carbon\Carbon;
 
 class StockController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @param \App\Services\ExchangeRate $ex_rate
      * @return \Illuminate\Http\Response
      */
-    public function index(ExchangeRate $ex_rate)
+    public function index()
     {
+        $ex_rate = new ExchangeRate;
         $stocks = Stock::all();
 
         $rate_fix = $ex_rate->apiCall();
-
-        // BUAT GROUP DARI STOCKS YANG SELECT NYA
-        $stocks_group = []; //inisiasi empty array stocks_group
-
-        $stocks_group_db = DB::table('stocks')->pluck('group'); //buat ngambil semua isi column group
-        foreach($stocks_group_db as $sgb){
-            if(!in_array($sgb, $stocks_group)){
-                array_push($stocks_group, $sgb);
-            }
-        }
-        
-        return view('stocks.index', compact('stocks', 'rate_fix', 'stocks_group'));
+      
+        return view('stocks.index', compact('stocks', 'rate_fix'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @param \App\Services\ExchangeRate $ex_rate
      * @return \Illuminate\Http\Response
      */
-    public function create(ExchangeRate $ex_rate)
+    public function create()
     {
+        $ex_rate = new ExchangeRate;
         $rate_fix = $ex_rate->apiCall();
 
         // BUAT GROUP DARI STOCKS YANG SELECT NYA
@@ -71,7 +58,6 @@ class StockController extends Controller
      */
     public function store(ValidateStockRequest $request)
     {
-        // dd($request);
         Stock::create($request->validated());
 
         return redirect('stocks')->with('status1','Data berhasil ditambah!');
@@ -80,34 +66,39 @@ class StockController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Stock  $stock
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Stock $stock)
     {
-        //
+        // BUAT GROUP DARI STOCKS YANG SELECT NYA
+        $stocks_group = []; //inisiasi empty array stocks_group
+
+        $stocks_group_db = DB::table('stocks')->pluck('group'); //buat ngambil 1 isi column group
+
+        foreach($stocks_group_db as $sgb){
+            if(!in_array($sgb, $stocks_group)){
+                array_push($stocks_group, $sgb);
+            }
+        }
+        
+        return view('stocks.show', compact('stock', 'stocks_group'));
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Stock  $stock
-     * @param \App\Services\ExchangeRate $ex_rate
      * @return \Illuminate\Http\Response
      */
-    public function edit(Stock $stock, ExchangeRate $ex_rate)
+    public function edit(Stock $stock)
     {
+        $ex_rate = new ExchangeRate;
         $rate_fix = $ex_rate->apiCall();
 
         $stock = Stock::where('stocks.stock_id', $stock->stock_id)
                             ->first();
-
-        // dd($siteAndStock);
-
-        $sites = DB::table('sites')
-                    ->select('site_id', 'station_id')
-                    ->get();
-        // dd($sites);
 
         // BUAT GROUP DARI STOCKS YANG BAGIAN SELECT
         $stocks_group = []; //inisiasi empty array stocks_group
@@ -120,7 +111,7 @@ class StockController extends Controller
             }            
         }
         
-        return view('stocks.edit', compact('stock', 'sites' , 'rate_fix', 'stocks_group'));
+        return view('stocks.edit', compact('stock', 'rate_fix', 'stocks_group'));
     }
 
     /**
