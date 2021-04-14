@@ -23,17 +23,17 @@ class ValidateStockRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'nama_barang' => ['required'],
-            'group' => ['required'],
-            'part_number' => ['required'],
-            'serial_number' => ['required'],
-            'tgl_masuk' => ['required'],
-            'expired' => ['required'],
-            'kurs_beli' => ['required'],
-            'jumlah_unit' => ['required'],
-            'status' => ['required']
+        return [
+            'nama_barang' => 'required|string',
+            'group' => 'required|string',
+            'part_number' => 'required|string',
+            'ref_des' => 'required|string',
+            'tgl_masuk' => 'nullable|date',
+            'expired' => 'required|date|after_or_equal:tgl_masuk',
+            'kurs_beli' => 'nullable|numeric',
+            'jumlah_unit' => 'required|integer',
+            'status' => 'required|string',
+            'keterangan' => 'required'
         ];
-        return $rules;
     }
 }

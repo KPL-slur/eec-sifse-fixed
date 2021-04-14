@@ -12,6 +12,7 @@ class ExchangeRate{
         $usd = $rates->rates->USD;
         $idr = $rates->rates->IDR;
         $rate_fix = $idr / $usd;
+        $rate_fix = number_format($rate_fix, 2, ".", "");
 
         return $rate_fix;
     }

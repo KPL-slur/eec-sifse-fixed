@@ -18,12 +18,13 @@ class CreateStocksTable extends Migration
             $table->string('nama_barang');
             $table->string('group');
             $table->string('part_number')->nullable();
-            $table->string('serial_number')->nullable();
+            $table->string('ref_des')->nullable();
             $table->date('tgl_masuk')->nullable();
             $table->date('expired')->nullable();
             $table->float('kurs_beli', 24, 2)->nullable();
             $table->integer('jumlah_unit')->nullable();
             $table->string('status')->nullable();
+            $table->longText('keterangan')->nullable();
             $table->timestamps();
         });
     }
