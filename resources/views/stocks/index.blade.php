@@ -88,17 +88,14 @@
             <div class="card m-3 my-5">
 
               {{-- header kedua --}}
-              <div class="card-header card-header-rose">
-                {{-- <h4 class="card-title">Group 1 transmitter</h4> --}}
-                <p class="card-category" id="groupStocksCardHeader">Semua</p>
-              </div>
+              <div class="card-header card-header-rose"></div>
 
               {{-- card body kedua --}}
               <div class="card-body">
                 <div class="row">
                   <div class="col">
                     <div class="table-responsive material-datatables ">
-                      <table class="table none table-striped table-no-bordered table-hover" cellspacing="0" style="width:100%" id="indexStocksTable">
+                      <table class="table none table-striped table-no-bordered table-hover" cellspacing="0" width="100" style="width:100%" id="indexStocksTable">
                         <thead class=" text-primary text-middle">
                           <tr>
                             <th>|</th>
@@ -111,6 +108,7 @@
                             <th>Kurs Beli</th>
                             <th>Jumlah Unit</th>
                             <th>Status</th>
+                            <th>Keterangan</th>
                             <th class="text-center">Actions</th>
                           </tr>
                         </thead>
@@ -127,11 +125,8 @@
                                 <td>{{ $st->kurs_beli }}</td>
                                 <td class="text-center">{{ $st->jumlah_unit }}</td>
                                 <td>{{ $st->status }}</td>
+                                <td>{{ $st->keterangan }}</td>
                                 <td class="td-actions text-center">
-                                  <a rel="tooltip" class="btn btn-sm btn-info btn-primary m-2" href="{{ url("stocks") }}/{{$st->stock_id}}">
-                                    <i class="material-icons">visibility</i>
-                                    <div class="ripple-container"></div>
-                                  </a>
                                   <a rel="tooltip" class="btn btn-sm btn-warning m-2" href="{{ url('stocks') }}/{{ $st->stock_id }}/edit" type="submit">
                                     <i class="material-icons">edit</i>
                                     <div class="ripple-container"></div>
@@ -246,7 +241,7 @@
         ],
         responsive: true,
         "columnDefs": [
-          { className: "none", "targets": [ 3, 4, 5, 6 ] }
+          { className: "none", "targets": [ 3, 4, 5, 6, 10 ] }
         ],
         language: {
           searchPlaceholder: "Search stock records",
