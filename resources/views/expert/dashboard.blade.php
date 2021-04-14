@@ -49,9 +49,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <x-stock-table/>
-                
             </div>
         </div>
     </div>
