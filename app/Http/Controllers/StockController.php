@@ -69,21 +69,9 @@ class StockController extends Controller
      * @param  Stock  $stock
      * @return \Illuminate\Http\Response
      */
-    public function show(Stock $stock)
+    public function show()
     {
-        // BUAT GROUP DARI STOCKS YANG SELECT NYA
-        $stocks_group = []; //inisiasi empty array stocks_group
-
-        $stocks_group_db = DB::table('stocks')->pluck('group'); //buat ngambil 1 isi column group
-
-        foreach($stocks_group_db as $sgb){
-            if(!in_array($sgb, $stocks_group)){
-                array_push($stocks_group, $sgb);
-            }
-        }
-        
-        return view('stocks.show', compact('stock', 'stocks_group'));
-
+        // 
     }
 
     /**
@@ -164,16 +152,8 @@ class StockController extends Controller
                                             ->join('head_reports', 'recommendations.head_id', 'head_reports.head_id')
                                             ->join('sites', 'head_reports.site_id', 'sites.site_id')
                                             ->get();
-        $rcm_year = [];
-        
-        $years = DB::table('recommendations')->pluck('year');
-        foreach($years as $year){
-            if(!in_array($year, $rcm_year)){
-                array_push($rcm_year, $year);
-            }
-        }
 
-        return view('stocks.recommendation', compact('recommendations', 'rcm_year', 'years'));
+        return view('stocks.recommendation', compact('recommendations'));
     }
 
 }

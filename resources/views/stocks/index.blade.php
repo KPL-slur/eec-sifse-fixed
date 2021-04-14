@@ -101,10 +101,14 @@
                       <table class="table none table-striped table-no-bordered table-hover" cellspacing="0" style="width:100%" id="indexStocksTable">
                         <thead class=" text-primary text-middle">
                           <tr>
-                            <th>No</th>
+                            <th>|</th>
                             <th>Nama Barang</th>
                             <th>Group</th>
                             <th>Part Number</th>
+                            <th>Ref Des</th>
+                            <th>Tanggal Masuk</th>
+                            <th>Expired</th>
+                            <th>Kurs Beli</th>
                             <th>Jumlah Unit</th>
                             <th>Status</th>
                             <th class="text-center">Actions</th>
@@ -113,10 +117,14 @@
                           <tbody>
                             @foreach ($stocks as $st)
                               <tr>
-                                <td scope="row">{{$loop->iteration}}</td>
+                                <td></td>
                                 <td>{{ $st->nama_barang }}</td>
                                 <td>{{ $st->group }}</td>
                                 <td>{{ $st->part_number }}</td>
+                                <td>{{ $st->ref_des }}</td>
+                                <td>{{ $st->tgl_masuk }}</td>
+                                <td>{{ $st->expired }}</td>
+                                <td>{{ $st->kurs_beli }}</td>
                                 <td class="text-center">{{ $st->jumlah_unit }}</td>
                                 <td>{{ $st->status }}</td>
                                 <td class="td-actions text-center">
@@ -134,7 +142,7 @@
                                     <button type="submit" class="btn btn-sm btn-danger m-2" title="delete" onclick="return confirm('Are you sure you want to delete '+ '{{ $st->nama_barang }}' +'?')">
                                       <i class="material-icons">delete</i>
                                       <div class="ripple-container"></div>
-                                      </button>
+                                    </button>
                                   </form>
                                 </td>
                               </tr>
@@ -237,6 +245,9 @@
           [10, 25, 50, 100, 250, 500]
         ],
         responsive: true,
+        "columnDefs": [
+          { className: "none", "targets": [ 3, 4, 5, 6 ] }
+        ],
         language: {
           searchPlaceholder: "Search stock records",
         }

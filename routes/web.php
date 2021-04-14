@@ -165,7 +165,6 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     //stock with currencies
     Route::get('stocks', [App\Http\Controllers\StockController::class, 'index'])->name('stocks'); // index stocks
     Route::get('stocks/create', [App\Http\Controllers\StockController::class, 'create'])->name('stocks-create'); // input new spare part
-    Route::get('stocks/{stock}', [App\Http\Controllers\StockController::class, 'show']); // show detailed of a specific stocks
     Route::get('stocks/{stock}/edit', [App\Http\Controllers\StockController::class, 'edit']); //edit specific stock
     Route::post('stocks/', [App\Http\Controllers\StockController::class, 'store']); // save new sparepart
     Route::put('stocks/{stock}/update', [App\Http\Controllers\StockController::class, 'update']); // save the edited stock
