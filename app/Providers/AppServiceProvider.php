@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Validator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
         /**
          * add numberOrNa validation rule to global, message in lang\en\validation
          */
-        \Validator::extend('numberOrNa', function ($attribute, $value) {
+        Validator::extend('numberOrNa', function ($attribute, $value) {
              return (new \App\Rules\NumberOrNa)->passes($attribute, $value);
         });
     }

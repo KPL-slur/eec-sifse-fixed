@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Services\Utility;
 use App\Models\HeadReport;
@@ -49,7 +50,7 @@ class PdfController extends Controller
         if ($request->file()) {
 
             if($headReport->printedReport){
-                \Storage::delete('public/'.$headReport->printedReport->file);
+                Storage::delete('public/'.$headReport->printedReport->file);
                 $headReport->printedReport()->delete();
             }
 
@@ -90,7 +91,7 @@ class PdfController extends Controller
         $headReport = HeadReport::Where('head_id', $id)->first();
         $this->authorize('update', $headReport);
 
-        \Storage::delete('public/'.$headReport->printedReport->file);
+        Storage::delete('public/'.$headReport->printedReport->file);
         $headReport->printedReport()->delete();
 
         return back()->with('delete_success', 'File has been deleted.');
