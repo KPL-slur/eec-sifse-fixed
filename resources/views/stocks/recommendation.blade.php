@@ -16,36 +16,28 @@
           {{-- body paling luar --}}
           <div class="card-body">
 
-            {{-- card kedua --}}
-            <div class="card m-3 my-5">
-
-              {{-- header kedua --}}
-              <div class="card-header card-header-rose">
-                {{-- <h4 class="card-title">2020 year</h4> --}}
-                <p class="card-category" id="yearRecommendsCardHeader">Semua</p>
-              </div>
 
               {{-- card body kedua --}}
               <div class="row">
                 <div class="col">
                   <div class="table-responsive material-datatables">
-                    <table class="table table-striped" id="indexRecommendsTable" >
+                    <table class="table none table-striped table-no-bordered table-hover" cellspacing="0" width="100" style="width:100%" id="indexRecommendsTable" >
     
                       <thead class=" text-primary text-middle">
                         <tr>
-                          <th scope="col">#</th>
-                          <th scope="col">Radar Name</th>
-                          <th scope="col">Station ID</th>
-                          <th scope="col">Nama Barang</th>
+                          <th>#</th>
+                          <th>Radar Name</th>
+                          <th>Station ID</th>
+                          <th>Nama Barang</th>
                           <th>Amount Required</th>
-                          <th scope="col">Year</th>
+                          <th>Year</th>
                         </tr>
                       </thead>
     
                       <tbody>
                         @foreach ($recommendations as $rcm)
                           <tr>
-                            <td scope="row"></td>
+                            <td></td>
                             <td>{{$rcm->radar_name}}</td>
                             <td>{{$rcm->station_id}}</td>
                             <td>{{$rcm->name}}</td>
@@ -60,8 +52,6 @@
                 </div>
               </div>
               {{-- card body kedua --}}
-            </div>
-            {{-- card kedua --}}
           </div>
           {{-- body paling luar --}}
         </div>
