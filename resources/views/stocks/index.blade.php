@@ -11,78 +11,82 @@
           {{-- header read plg luar --}}
           <div class="card-header card-header-primary">
             <h4 class="card-title ">Table Inventory and their actions</h4>
-            <p class="card-category">Here you can make new stock row, edit specific stock, or delete them.</p>
+            @is_admin()
+              <p class="card-category">Here you can make new stock row, edit specific stock, or delete them.</p>
+            @endis_admin
           </div>
 
           {{-- body paling luar --}}
           <div class="card-body">
-            <p class="text-center">Harga Kurs Sekarang : <div class="text-primary text-center display-4">Rp {{ $rate_fix }}</div></p>
-            <div class="text-right">
-              {{-- button modal trigger  --}}
-              <button type="button" rel="tooltip" title="print data" class="btn btn-outline-primary" data-toggle="modal" data-target="#modal_input_stocks_report">
-                <i class="material-icons">print</i>
-              </button>
-              {{-- for create button --}}
-              <a type="button" rel="tooltip" title="add item" class="btn btn-md btn-outline-primary text-right m-4 " href="{{ url('stocks/create/') }}">
-                <i class="material-icons">note_add</i>
-              </a>
-              {{-- for recommendatio item --}}
-              <a type="button" rel="tooltip" title="recommendation item" class="btn btn-md btn-outline-primary text-right m-8 " href="{{ route('recommendation') }}">
-                <i class="material-icons">shopping_basket</i>
-              </a>
-            </div>
+            @is_admin()
+              <p class="text-center">Harga Kurs Sekarang : <div class="text-primary text-center display-4">Rp {{ $rate_fix }}</div></p>
+              <div class="text-right">
+                {{-- button modal trigger  --}}
+                <button type="button" rel="tooltip" title="print data" class="btn btn-outline-primary" data-toggle="modal" data-target="#modal_input_stocks_report">
+                  <i class="material-icons">print</i>
+                </button>
+                {{-- for create button --}}
+                <a type="button" rel="tooltip" title="add item" class="btn btn-md btn-outline-primary text-right m-4 " href="{{ url('stocks/create/') }}">
+                  <i class="material-icons">note_add</i>
+                </a>
+                {{-- for recommendatio item --}}
+                <a type="button" rel="tooltip" title="recommendation item" class="btn btn-md btn-outline-primary text-right m-8 " href="{{ route('recommendation') }}">
+                  <i class="material-icons">shopping_basket</i>
+                </a>
+              </div>
 
-            {{-- for modal --}}
-            <div class="modal fade" id="modal_input_stocks_report" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <div class="form-group">
-                      <label for="input_date_start_stocks_report">Tanggal Awal</label>
-                      <input type="date" name="input_date_start_stocks_report" id="input_date_start_stocks_report" class="form-control">
+              {{-- for modal --}}
+              <div class="modal fade" id="modal_input_stocks_report" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Modal title</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
                     </div>
-                    <div class="form-group">
-                      <label for="input_date_end_stocks_report">Tanggal Akhir</label>
-                      <input type="date" name="input_date_end_stocks_report" id="input_date_end_stocks_report" class="form-control" disabled>
+                    <div class="modal-body">
+                      <div class="form-group">
+                        <label for="input_date_start_stocks_report">Tanggal Awal</label>
+                        <input type="date" name="input_date_start_stocks_report" id="input_date_start_stocks_report" class="form-control">
+                      </div>
+                      <div class="form-group">
+                        <label for="input_date_end_stocks_report">Tanggal Akhir</label>
+                        <input type="date" name="input_date_end_stocks_report" id="input_date_end_stocks_report" class="form-control" disabled>
+                      </div>
                     </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-                    <a href="#" id="button_stocks_report" class="btn btn-success px-3" style="pointer-events: none;">Print!</a>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                      <a href="#" id="button_stocks_report" class="btn btn-success px-3" style="pointer-events: none;">Print!</a>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            {{-- for end modal --}}
+              {{-- for end modal --}}
 
-            {{-- success created new sparepart --}}
-            @if (session('status1'))
+              {{-- success created new sparepart --}}
+              @if (session('status1'))
+                  <script>
+                    window.onload = () => {
+                      showNotification('top', 'right', 'success' ,'<?php echo session('status1') ?>');
+                    };
+                  </script>
+              {{-- success edited sparepart --}}
+              @elseif (session('status2'))
                 <script>
                   window.onload = () => {
-                    showNotification('top', 'right', 'success' ,'<?php echo session('status1') ?>');
+                    showNotification('top', 'right', 'warning' ,'<?php echo session('status2') ?>');
                   };
                 </script>
-            {{-- success edited sparepart --}}
-            @elseif (session('status2'))
-              <script>
-                window.onload = () => {
-                  showNotification('top', 'right', 'warning' ,'<?php echo session('status2') ?>');
-                };
-              </script>
-            {{-- success deleted sparepart --}}
-            @elseif (session('status0'))
-              <script>
-                window.onload = () => {
-                  showNotification('top', 'right', 'danger' ,'<?php echo session('status0') ?>');
-                };
-              </script>
-            @endif
+              {{-- success deleted sparepart --}}
+              @elseif (session('status0'))
+                <script>
+                  window.onload = () => {
+                    showNotification('top', 'right', 'danger' ,'<?php echo session('status0') ?>');
+                  };
+                </script>
+              @endif
+            @endis_admin
 
             {{-- card kedua --}}
             <div class="card m-3 my-5">
@@ -109,7 +113,9 @@
                             <th>Jumlah Unit</th>
                             <th>Status</th>
                             <th>Keterangan</th>
-                            <th class="text-center">Actions</th>
+                            @is_admin()
+                              <th class="text-center">Actions</th>
+                            @endis_admin
                           </tr>
                         </thead>
                           <tbody>
@@ -126,20 +132,22 @@
                                 <td class="text-center">{{ $st->jumlah_unit }}</td>
                                 <td>{{ $st->status }}</td>
                                 <td>{{ $st->keterangan }}</td>
-                                <td class="td-actions text-center">
-                                  <a rel="tooltip" class="btn btn-sm btn-warning m-2" href="{{ url('stocks') }}/{{ $st->stock_id }}/edit" type="submit">
-                                    <i class="material-icons">edit</i>
-                                    <div class="ripple-container"></div>
-                                  </a>
-                                  <form action="{{ url('stocks') }}/{{ $st->stock_id }}" class="d-inline" method="POST">
-                                    @method('DELETE')
-                                    @csrf
-                                    <button type="submit" class="btn btn-sm btn-danger m-2" title="delete" onclick="return confirm('Are you sure you want to delete '+ '{{ $st->nama_barang }}' +'?')">
-                                      <i class="material-icons">delete</i>
+                                @is_admin()
+                                  <td class="td-actions text-center">
+                                    <a rel="tooltip" class="btn btn-sm btn-warning m-2" href="{{ url('stocks') }}/{{ $st->stock_id }}/edit" type="submit">
+                                      <i class="material-icons">edit</i>
                                       <div class="ripple-container"></div>
-                                    </button>
-                                  </form>
-                                </td>
+                                    </a>
+                                    <form action="{{ url('stocks') }}/{{ $st->stock_id }}" class="d-inline" method="POST">
+                                      @method('DELETE')
+                                      @csrf
+                                      <button type="submit" class="btn btn-sm btn-danger m-2" title="delete" onclick="return confirm('Are you sure you want to delete '+ '{{ $st->nama_barang }}' +'?')">
+                                        <i class="material-icons">delete</i>
+                                        <div class="ripple-container"></div>
+                                      </button>
+                                    </form>
+                                  </td>
+                                @endis_admin
                               </tr>
                             @endforeach
                           </tbody>
@@ -167,69 +175,70 @@
 
 {{-- script for dynamic table from select group --}}
 @push('scripts')
-  {{-- script for modal input stocks report--}}
-  <script>
-    var url_stocks_report = "stocks/print?";
-    var url_stocks_repot_date_start = "date-start=";
-    var iterator_date_start = 0;
-    var url_stocks_repot_date_end = "&date-end=";
-    var iterator_date_end = 0;
+  @is_admin()
+    {{-- script for modal input stocks report--}}
+    <script>
+      var url_stocks_report = "stocks/print?";
+      var url_stocks_repot_date_start = "date-start=";
+      var iterator_date_start = 0;
+      var url_stocks_repot_date_end = "&date-end=";
+      var iterator_date_end = 0;
 
-    $('#input_date_start_stocks_report').on('input', (e) => {
-      if (iterator_date_start === 0){ // kalo baru pertama kali ke-detect on input
-        url_stocks_repot_date_start = url_stocks_repot_date_start + e.target.value; //masukin input ke url_date_start
-        $('#input_date_end_stocks_report').prop("disabled", false); //nyalain input_date_end
-        iterator_date_start++;
-      } else {
-        url_stocks_repot_date_start = "date-start=" + e.target.value;
-        url_stocks_report = "stocks/print?" + url_stocks_repot_date_start + url_stocks_repot_date_end;
-        $("#button_stocks_report").prop('href', url_stocks_report);
-      }
-    });
-
-    $('#input_date_end_stocks_report').on('input', (e) => {
-      if (iterator_date_end === 0){ // kalo baru pertama kali ke-detect on input
-        url_stocks_repot_date_end = url_stocks_repot_date_end + e.target.value; //masukin input ke url_date_end
-        if(url_stocks_report.indexOf("date-start")){ //ngecek string date-start ada di dalem url stock report ga.
-        // ini gr2 error kl 2x input date start berurutan, 1x input date end
-          url_stocks_report = "stocks/print?" + url_stocks_repot_date_start + url_stocks_repot_date_end;
+      $('#input_date_start_stocks_report').on('input', (e) => {
+        if (iterator_date_start === 0){ // kalo baru pertama kali ke-detect on input
+          url_stocks_repot_date_start = url_stocks_repot_date_start + e.target.value; //masukin input ke url_date_start
+          $('#input_date_end_stocks_report').prop("disabled", false); //nyalain input_date_end
+          iterator_date_start++;
         } else {
-          url_stocks_report = url_stocks_report + url_stocks_repot_date_start + url_stocks_repot_date_end;
+          url_stocks_repot_date_start = "date-start=" + e.target.value;
+          url_stocks_report = "stocks/print?" + url_stocks_repot_date_start + url_stocks_repot_date_end;
+          $("#button_stocks_report").prop('href', url_stocks_report);
         }
-        $("#button_stocks_report").css('pointer-events', ''); //bikin button print bisa di point
-        $("#button_stocks_report").prop('target', '_blank'); //biar pas button di click ke tab baru
-        iterator_date_end++;
-      } else {
-        url_stocks_repot_date_end = "&date-end=" + e.target.value;
-        url_stocks_report = "stocks/print?" + url_stocks_repot_date_start + url_stocks_repot_date_end;
-      }
-      $("#button_stocks_report").prop('href', url_stocks_report); //taro sini krn gapeduli pertama kali ke-detect on input atau ngga, pasti bakal jalan
-    });
+      });
 
-    //kalo misalkan modal ditutup
-    $('#modal_input_stocks_report').on('hide.bs.modal', () => {
-      confirm_close = confirm('Apakah Anda yakin ingin menutup input?\nSemua tanggal input akan di-reset');
-      if(confirm_close == true){
-        if( $('#input_date_start_stocks_report').val() != "" || $('#input_date_end_stocks_report').val() != "" ){ //value dari value nya ada apa ngga
-          $('#input_date_start_stocks_report').val(""); //ngosongin value input date start
-          $('#input_date_end_stocks_report').val(""); //ngosongin value input date end
-          $('#button_stocks_report').css('pointer-events', 'none'); //bikin button print gabisa di point
-          $('#input_date_end_stocks_report').prop("disabled", true); //matiin input date end
-          iterator_date_start = 0; //inisialisasi lagi iterator date start
-          iterator_date_end = 0; //inisialisasi lagi iterator date end
+      $('#input_date_end_stocks_report').on('input', (e) => {
+        if (iterator_date_end === 0){ // kalo baru pertama kali ke-detect on input
+          url_stocks_repot_date_end = url_stocks_repot_date_end + e.target.value; //masukin input ke url_date_end
+          if(url_stocks_report.indexOf("date-start")){ //ngecek string date-start ada di dalem url stock report ga.
+          // ini gr2 error kl 2x input date start berurutan, 1x input date end
+            url_stocks_report = "stocks/print?" + url_stocks_repot_date_start + url_stocks_repot_date_end;
+          } else {
+            url_stocks_report = url_stocks_report + url_stocks_repot_date_start + url_stocks_repot_date_end;
+          }
+          $("#button_stocks_report").css('pointer-events', ''); //bikin button print bisa di point
+          $("#button_stocks_report").prop('target', '_blank'); //biar pas button di click ke tab baru
+          iterator_date_end++;
+        } else {
+          url_stocks_repot_date_end = "&date-end=" + e.target.value;
+          url_stocks_report = "stocks/print?" + url_stocks_repot_date_start + url_stocks_repot_date_end;
         }
-      }
-    });
+        $("#button_stocks_report").prop('href', url_stocks_report); //taro sini krn gapeduli pertama kali ke-detect on input atau ngga, pasti bakal jalan
+      });
 
-    $("#modal_input_stocks_report").on("hidden.bs.modal", () => {
-      if(confirm_close == false){
-        $("#modal_input_stocks_report").modal('show');
-      }
-    });
-    
-  </script>
-  {{-- script for modal input stocks report --}}
-  
+      //kalo misalkan modal ditutup
+      $('#modal_input_stocks_report').on('hide.bs.modal', () => {
+        confirm_close = confirm('Apakah Anda yakin ingin menutup input?\nSemua tanggal input akan di-reset');
+        if(confirm_close == true){
+          if( $('#input_date_start_stocks_report').val() != "" || $('#input_date_end_stocks_report').val() != "" ){ //value dari value nya ada apa ngga
+            $('#input_date_start_stocks_report').val(""); //ngosongin value input date start
+            $('#input_date_end_stocks_report').val(""); //ngosongin value input date end
+            $('#button_stocks_report').css('pointer-events', 'none'); //bikin button print gabisa di point
+            $('#input_date_end_stocks_report').prop("disabled", true); //matiin input date end
+            iterator_date_start = 0; //inisialisasi lagi iterator date start
+            iterator_date_end = 0; //inisialisasi lagi iterator date end
+          }
+        }
+      });
+
+      $("#modal_input_stocks_report").on("hidden.bs.modal", () => {
+        if(confirm_close == false){
+          $("#modal_input_stocks_report").modal('show');
+        }
+      });
+      
+    </script>
+    {{-- script for modal input stocks report --}}
+  @endis_admin
   {{-- script for datatable --}}
   <script>
     $(document).ready( () => {

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\Stock;
 // use Illuminate\Http\Request;
 
 class ExpertController extends Controller
@@ -32,5 +32,12 @@ class ExpertController extends Controller
             $loggedName = '';
         }
         return view('expert.dashboard', compact('loggedName'));
+    }
+
+    public function stocks()
+    {
+        $stocks = Stock::all();
+      
+        return view('stocks.index', compact('stocks'));
     }
 }
