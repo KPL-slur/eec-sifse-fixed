@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'stock_currency', 'titlePage' => __('Edit Stocks and their currencies')])
+@extends('layouts.app', ['activePage' => 'stock_currency', 'titlePage' => __('Edit '.$stock->nama_barang)])
 
 @section('content')
 <div class="content">
@@ -25,7 +25,7 @@
                     @enderror
                   </div>
                   <div class="form-group my-4">
-                    <label for="group">Group nya</label>
+                    <label for="group">Group nya</label><br>
                     <select name="group" id="group" class="form-control @error('group') is-invalid @enderror">
                       <option value="" disabled @if($stock->group === "") selected @endif {{ old('group') == '' ? 'selected' : '' }} >-- Pilih jenis barang --</option>
                       @foreach ($stocks_group as $sg)
@@ -48,38 +48,48 @@
                     @enderror
                   </div>
                   <div class="form-group my-4">
-                    <label for="serial_number">Serial Number</label>
-                    <input type="text" class="form-control @error('serial_number') is-invalid @enderror" id="serial_number" name="serial_number" placeholder="Masukkan part number" value="{{ $stock->serial_number }}" >
-                    @error('serial_number')
-                      {{ $message }}
+                    <label for="ref_des">Ref Des</label>
+                    <input type="text" class="form-control @error('ref_des') is-invalid @enderror" id="ref_des" name="ref_des" placeholder="Masukkan Ref Des" value="{{ $stock->ref_des }}" >
+                    @error('ref_des')
+                      <div class="invalid-feedback">
+                        {{ $message }}
+                      </div>
                     @enderror
                   </div>
                   <div class="form-group my-4">
                     <label for="tgl_masuk">Tanggal Masuk / Edit</label>
                     <input type="date" class="form-control @error('tgl_masuk') is-invalid @enderror" id="tgl_masuk" name="tgl_masuk" placeholder="Tanggal Input" value="{{ $stock->tgl_masuk }}">
                     @error('tgl_masuk')
-                      {{ $message }}
+                      <div class="invalid-feedback">
+                        {{ $message }}
+                      </div>
                     @enderror
                   </div>
                   <div class="form-group my-4">
                     <label for="expired">Life expectancy</label>
                     <input type="date" class="form-control @error('expired') is-invalid @enderror" id="expired" name="expired" placeholder="Expected lifetime" value="{{ $stock->expired }}">
                     @error('expired')
-                      {{ $message }}
+                      <div class="invalid-feedback">
+                        {{ $message }}
+                      </div>
                     @enderror
                   </div>
                   <div class="form-group my-4">
                     <label for="kurs_beli">Kurs Beli</label>
                     <input type="text" class="form-control @error('kurs_beli') is-invalid @enderror" id="kurs_beli" name="kurs_beli" placeholder="Kurs Beli" value="{{ $stock->kurs_beli }}">
                     @error('kurs_beli')
-                      {{ $message }}
+                      <div class="invalid-feedback">
+                        {{ $message }}
+                      </div>
                     @enderror
                   </div>
                   <div class="form-group my-4">
                     <label for="jumlah_unit">Jumlah Unit</label>
                     <input type="text" class="form-control @error('jumlah_unit') is-invalid @enderror " id="jumlah_unit" name="jumlah_unit" value="{{ $stock->jumlah_unit }}">
                     @error('jumlah_unit')
-                      {{ $message }}
+                      <div class="invalid-feedback">
+                        {{ $message }}
+                      </div>
                     @enderror
                   </div>
                   <div class="form-group my-4">
@@ -90,11 +100,22 @@
                       <option value="Dummy" @if ($stock->status === "Dummy") selected @endif>Dummy</option>
                     </select>
                     @error('status')
-                      {{ $message }}
+                      <div class="invalid-feedback">
+                        {{ $message }}
+                      </div>
                     @enderror
                   </div>                    
+                  <div class="form-group my-4">
+                    <label for="keterangan">Keterangan</label>
+                    <input type="text" class="form-control @error('keterangan') is-invalid @enderror " id="keterangan" name="keterangan" value="{{ $stock->keterangan }}">
+                    @error('keterangan')
+                      <div class="invalid-feedback">
+                        {{ $message }}
+                      </div>
+                    @enderror
+                  </div>
                   <button type="submit" class="btn btn-primary">Submit</button>
-                  <a href="{{ url('stocks/') }}" class="btn btn-info ml-3 d-inline">Kembali</a>
+                  <a href="{{ url()->previous() }}" class="btn btn-info ml-3 d-inline">Kembali</a>
               </form>
           </div>
         </div>
