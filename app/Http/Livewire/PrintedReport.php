@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Services\Utility;
@@ -109,7 +110,7 @@ class PrintedReport extends Component
     public function deleteStoredFile($index)
     {
         if (!empty($this->reports[$index]['fileName'])) {
-            \Storage::delete('public/'.$this->reports[$index]['fileName']);
+            Storage::delete('public/'.$this->reports[$index]['fileName']);
             $this->headReport->printedReports()->where('file', $this->reports[$index]['fileName'])->delete();
             $this->reports[$index]['uploaded'] = 0;
         } else {
@@ -203,7 +204,7 @@ class PrintedReport extends Component
             if (! empty($this->reports[$index]['file'])) {
                 $fileName[$index] = $this->reports[$index]['file']->storePubliclyAs($this->maintenance_type, $this->setFileName($index), 'public');
             
-                \Storage::delete('public/'.$this->reports[$index]['fileName']);
+                Storage::delete('public/'.$this->reports[$index]['fileName']);
                 $this->headReport->printedReports()
                 ->where('file', $this->reports[$index]['fileName'])
                 ->update([

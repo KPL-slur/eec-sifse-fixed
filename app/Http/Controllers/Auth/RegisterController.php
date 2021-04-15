@@ -40,6 +40,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        $this->redirectTo = route('waiting_room');
     }
 
     /**
@@ -52,7 +53,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'nip' => ['required', 'digits:18'],
+            'nip' => ['required', 'digits:18', 'unique:experts'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);

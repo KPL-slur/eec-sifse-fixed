@@ -57,6 +57,9 @@ Route::middleware(['auth', 'verified'])->group(function (){
 Route::group(['prefix' => 'expert', 'middleware' =>['auth', 'verified', 'is_approved'] ], function () {
     Route::get('/', [App\Http\Controllers\ExpertController::class, 'index'])->name('expert');
 
+    //STOCKS READ ONLY
+    Route::get('/stocks', [App\Http\Controllers\ExpertController::class, 'stocks'])->name('expert_stocks');
+
     //PROFILE MANAGEMENT
     Route::group(['prefix' => 'profile', 'as' => 'profile.'], function () {
         Route::get('/', [App\Http\Controllers\ProfileController::class, 'edit'])->name('edit');
@@ -131,6 +134,13 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
         return view('pages.upgrade');
     })->name('upgrade');
 
+    //Admin profile
+    Route::group(['prefix' => 'profile', 'as' => 'profile.'], function (){
+        Route::get('/', [App\Http\Controllers\AdminProfileController::class, 'edit'])->name('edit');
+        Route::put('/', [App\Http\Controllers\AdminProfileController::class, 'update'])->name('update');
+        Route::put('/password', [App\Http\Controllers\AdminProfileController::class, 'password'])->name('password');
+    });
+
     //user management
     Route::get('userManagement', [App\Http\Controllers\UserController::class, 'index'])->name('userManagement');
     Route::post('addUser', [App\Http\Controllers\UserController::class, 'addData']);
@@ -184,9 +194,9 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
     
     //stock with currencies
     Route::get('stocks', [App\Http\Controllers\StockController::class, 'index'])->name('stocks'); // index stocks
+    Route::get('stocks/create', [App\Http\Controllers\StockController::class, 'create'])->name('stocks-create'); // input new spare part
     Route::get('stocks/{stock}/edit', [App\Http\Controllers\StockController::class, 'edit']); //edit specific stock
     Route::post('stocks/', [App\Http\Controllers\StockController::class, 'store']); // save new sparepart
-    Route::get('stocks/create', [App\Http\Controllers\StockController::class, 'create'])->name('stocks-create'); // input new spare part
     Route::put('stocks/{stock}/update', [App\Http\Controllers\StockController::class, 'update']); // save the edited stock
     Route::delete('stocks/{stock}', [App\Http\Controllers\StockController::class, 'destroy']); // delete specific spare part
     Route::get('stocks/print', [App\Http\Controllers\StockController::class, 'report']);

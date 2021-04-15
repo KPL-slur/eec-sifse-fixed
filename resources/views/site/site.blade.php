@@ -1,10 +1,10 @@
-@extends('layouts.app', ['activePage' => 'site', 'titlePage' => __('Detail Site')])
+@extends('layouts.app', ['activePage' => 'site', 'titlePage' => __('Site List')])
 
 @section('content')
   <div class="content">
     <div class="container">
       <div class="col-6 mt-10 text-left">
-        <a href="addSite" class="btn btn-sm btn-primary">
+        <a rel="tooltip" title="Adding Site" href="addSite" class="btn btn-sm btn-primary">
           <i class="material-icons">
             add
           </i> Add New Site
@@ -18,7 +18,11 @@
           <div class="card card-stats">
               <div class="card-header card-header-warning card-header-icon">
                   <div class="card-icon">
-                    <img id="towers" src="storage/image/{{ $sts->image }}" alt="tower" >
+                      @if ($sts->image == null)
+                        <img id="towers" src="storage/image/default.png" alt="tower"/>
+                      @else    
+                        <img id="towers" src="storage/image/{{ $sts->image }}" alt="tower"/>
+                      @endif
                   </div>
                   <h3 class="card-title"><strong>{{$sts->station_id}}</strong></h3>
               </div>
@@ -26,23 +30,23 @@
                 <div class="card-footer d-flex">
                     <a title="view" href="inventory/{{$sts->site_id}}" class="btn btn-sm btn-info" >VIEW</a>
 
-                    <button title="delete" class="btn btn-sm btn-danger m-2" data-toggle="modal" data-target="#modalDeleteSite">
+                    {{-- <button title="delete" class="btn btn-sm btn-danger m-2" data-toggle="modal" data-target="#modalDeleteSite">
                       DELETE
-                    </button>
-                    {{-- <form action="/deleteSite/{{$sts->site_id}}" class="d-inline" method="POST">
+                    </button> --}}
+                    <form action="/deleteSite/{{$sts->site_id}}" class="d-inline" method="POST">
                       @method('DELETE')
                       @csrf
-                      <button type="submit" class="btn btn-sm btn-danger m-2" title="delete" onclick="return confirm('Are you sure you want to delete')">
+                      <button type="submit" class="btn btn-sm btn-danger m-2" title="delete" onclick="return confirm('Are you sure, you want to delete'+ '{{$sts->station_id}}'+ ' site ?')">
                         DELETE
                       </button>
-                    </form> --}}
+                    </form>
                     
+                  </div>
+                  
                 </div>
-  
-          </div>
-
-           {{-- Modal Confirmation--}}
-           <div class="modal fade" id="modalDeleteSite" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                
+                {{-- Modal Confirmation--}}
+                {{-- <div class="modal fade" id="modalDeleteSite" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -62,7 +66,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> --}}
 
         </div>
 

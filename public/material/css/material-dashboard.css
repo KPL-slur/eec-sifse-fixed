@@ -11992,9 +11992,9 @@ fieldset[disabled] .form-group .form-control {
   top: 0;
   content: "";
 }
-.page-header:before {
+/* .page-header:before {
   background-color: rgba(0, 0, 0, 0.3);
-}
+} */
 
 html * {
   -webkit-font-smoothing: antialiased;

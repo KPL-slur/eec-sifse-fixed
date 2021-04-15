@@ -16,12 +16,13 @@ class Stock extends Model
         'nama_barang',
         'group',
         'part_number',
-        'serial_number',
+        'ref_des',
         'tgl_masuk',
         'expired',
         'kurs_beli',
         'jumlah_unit',
-        'status'
+        'status',
+        'keterangan'
     ];
 
     protected $guarded = [

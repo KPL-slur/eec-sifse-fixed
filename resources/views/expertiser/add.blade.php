@@ -6,8 +6,8 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header card-header-info">
-            <h4 class="card-title ">Input New Expert</h4>
+          <div class="card-header card-header-primary">
+            <h4 class="card-title ">Add New Expert</h4>
           </div>
 
           <div class="card-body">
@@ -16,7 +16,7 @@
                     @csrf
       
                       <div class="form-group expert">
-                        <label for="name">Nama Expert</label>
+                        <label for="name">Expert Name</label>
                         <br>
                         <input type="text" class="form-control  @error('name') is-invalid @enderror " id="name" name="name" placeholder="Input the Expert's Name" value="{{ old('name') }}">
                         
@@ -61,8 +61,8 @@
                         
                       </div>
                       
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                      <a href="{{ route('expertManagement') }}" class="btn btn-info ml-3 d-inline">Kembali</a>
+                      <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure, you want to add this expert ?')">Submit</button>
+                      <a href="{{ route('expertManagement') }}" class="btn btn-info ml-3 d-inline">Back</a>
                   </form>
               </div>
           </div>
