@@ -36,7 +36,7 @@
                     <form action="/deleteSite/{{$sts->site_id}}" class="d-inline" method="POST">
                       @method('DELETE')
                       @csrf
-                      <button type="submit" class="btn btn-sm btn-danger m-2" title="delete" onclick="return confirm('Are you sure you want to delete')">
+                      <button type="submit" class="btn btn-sm btn-danger m-2" title="delete" onclick="return confirm('Are you sure, you want to delete'+ '{{$sts->station_id}}'+ ' site ?')">
                         DELETE
                       </button>
                     </form>
