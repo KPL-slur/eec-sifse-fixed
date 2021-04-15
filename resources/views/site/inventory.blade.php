@@ -63,7 +63,7 @@
                           <th scope="col">#</th>
                           <th scope="col">Nama Barang</th>
                           <th scope="col">Part Number</th>
-                          <th scope="col">Serial Number</th>
+                          <th scope="col">Ref_des</th>
                           <th scope="col">Tanggal Masuk</th>
                           <th scope="col">Expired</th>
                           <th class="text-center">Update or Delete</th>
@@ -78,7 +78,7 @@
                                 <td scope="row">{{$loop->iteration}}</td>
                                 <td>{{ $st->nama_barang }}</td>
                                 <td>{{ $st->part_number }}</td>
-                                <td>{{ $st->serial_number }}</td>
+                                <td>{{ $st->ref_des }}</td>
                                 <td>{{ $st->tgl_masuk }}</td>
                                 <td>{{ $st->expired }}</td>
                                 <td class="td-actions text-center">

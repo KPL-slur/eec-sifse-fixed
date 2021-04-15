@@ -53,7 +53,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Sparepart</th>
                         <th scope="col">Part Number</th>
-                        <th scope="col">ref_des</th>
+                        <th scope="col">Ref des</th>
                         <th scope="col">Installed Date</th>
                         <th scope="col">Expired Date</th>
                       </tr>
