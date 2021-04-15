@@ -51,9 +51,9 @@
                   @enderror
                 </div>
                 <div class="form-group my-4">
-                  <label for="serial_number">Serial Number</label>
-                  <input type="text" class="form-control @error('serial_number') is-invalid @enderror" id="serial_number" name="serial_number" placeholder="Masukkan part number" value="{{ old('serial_number') }}">
-                  @error('serial_number')
+                  <label for="ref_des">Ref Des</label>
+                  <input type="text" class="form-control @error('ref_des') is-invalid @enderror" id="ref_des" name="ref_des" placeholder="Masukkan Ref Des dari barang ini" value="{{ old('ref_des') }}">
+                  @error('ref_des')
                     <div class="invalid-feedback">
                       {{ $message }}
                     </div>
@@ -110,6 +110,15 @@
                     <option value="Dummy" {{ old('group') === "Dummy" ? 'selected' : '' }}>Dummy</option>
                   </select>
                   @error('status')
+                    <div class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
+                </div>                    
+                <div class="form-group my-4">
+                  <label for="keterangan">Keterangan</label>
+                  <input type="text" class="form-control @error('keterangan') is-invalid @enderror " id="keterangan" name="keterangan" value="{{ old('keterangan') }}">
+                  @error('keterangan')
                     <div class="invalid-feedback">
                       {{ $message }}
                     </div>

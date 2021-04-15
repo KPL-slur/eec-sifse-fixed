@@ -99,7 +99,7 @@
                 <div class="row">
                   <div class="col">
                     <div class="table-responsive material-datatables ">
-                      <table class="table none table-striped table-no-bordered table-hover" cellspacing="0" width="100" style="width:100%" id="indexStocksTable">
+                      <table class="table none table-striped table-no-bordered table-hover d-none" cellspacing="0" width="100" style="width:100%" id="indexStocksTable">
                         <thead class=" text-primary text-middle">
                           <tr>
                             <th>|</th>

@@ -1,4 +1,4 @@
-@extends('layouts.app', ['class' => 'off-canvas-sidebar', 'activePage' => 'email', 'title' => __('Material Dashboard')])
+@extends('layouts.app', ['class' => 'off-canvas-sidebar', 'activePage' => 'email', 'title' => __('ERA ELEKTRA CORPORA INDONESIA')])
 
 @section('content')
 <div class="container" style="height: auto;">
@@ -12,6 +12,7 @@
             <h4 class="card-title"><strong>{{ __('Forgot Password') }}</strong></h4>
           </div>
           <div class="card-body">
+            <p class="card-description text-center"><strong>{{ __('Fill Your Email Here') }}</strong></p>
             @if (session('status'))
               <div class="row">
                 <div class="col-sm-12">

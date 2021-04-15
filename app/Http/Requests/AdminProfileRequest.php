@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreSiteRequest extends FormRequest
+class AdminProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,12 +23,8 @@ class StoreSiteRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'radar_name' => 'required',
-            'station_id' => 'required',
-            'image' => 'image'
-            // 'stock_id' => 'required',
+        return [
+            'email' => ['required', 'email']
         ];
-        return $rules;
     }
 }

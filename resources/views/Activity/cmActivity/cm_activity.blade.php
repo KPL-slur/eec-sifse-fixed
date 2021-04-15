@@ -13,11 +13,10 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                  <div class="col-12 text-right">
-                    <a href="addPm" class="btn btn-sm btn-primary">
-                      <i class="material-icons">
-                        add
-                      </i>Add CM Schedule
+                  <div class="text_left">
+                    <a title="back" class="btn btn-sm btn-primary m-3" href="/expertActivity">
+                      <i class="material-icons">arrow_back</i>
+                      <div class="ripple-container"></div>
                     </a>
                   </div>
               </div>
@@ -44,12 +43,12 @@
                         <td>{{$cm->report_date_start}}</td>
                         <td>{{$cm->report_date_end}}</td>
                         <td class="td-actions text-right">
-                            {{-- <a rel="tooltip" class="btn btn-info " href="">
+                            <a rel="tooltip" class="btn btn-info " href="">
                               <i class="material-icons">visibility</i>
                               <div class="ripple-container"></div>
-                            </a> --}}
+                            </a>
                               
-                            <a rel="tooltip" class="btn btn-warning" href="">
+                            {{-- <a rel="tooltip" class="btn btn-warning" href="">
                               <i class="material-icons">edit</i>
                               <div class="ripple-container"></div>
                             </a>
@@ -61,7 +60,7 @@
                                   <i class="material-icons">delete</i>
                                   <div class="ripple-container"></div>
                                 </button>
-                              </form>
+                              </form> --}}
                         </td>
                       </tr>
                     @endforeach

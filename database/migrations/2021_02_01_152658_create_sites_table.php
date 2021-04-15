@@ -16,7 +16,7 @@ class CreateSitesTable extends Migration
         Schema::create('sites', function (Blueprint $table) {
             $table->bigIncrements('site_id');
             $table->string('radar_name');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->string('station_id');
             $table->timestamps();
         });

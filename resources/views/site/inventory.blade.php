@@ -6,10 +6,6 @@
     <div class="row">
       <div class="col-md-12">
 
-        {{-- buat oper data stocks ke javascript 'select-group-in-stocks' --}}
-        {{-- buat sekarang pake ini dulu, nanti ganti --}}
-        {{-- <input type="hidden" id="stockDatas" value="{{ json_encode($stocks) }}"> --}}
-
         {{-- card paling luar --}}
         <div class="card">
           {{-- header read plg luar --}}
@@ -22,10 +18,7 @@
             
 
             <div class="text_left">
-              <a title="back" class="btn btn-sm btn-primary m-2" href="/site">
-                <i class="material-icons">arrow_back</i>
-                <div class="ripple-container"></div>
-              </a>
+                <a type="button" href="/site" class="btn btn-info btn-md ml-3">Back</a>
             </div>
               
             <div class="text-right">
@@ -60,51 +53,59 @@
 
               {{-- card body kedua --}}
               <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table table-striped" id="indexStocksTable">
-                    <thead class=" text-primary text-middle">
-                      <th>#</th>
-                      <th>Nama Barang</th>
-                      <th>Part Number</th>
-                      <th>Serial Number</th>
-                      <th>Tanggal Masuk</th>
-                      <th>Expired</th>
-                      <th class="text-center">Update or Delete</th>
-                    </thead>
-                      <tbody>
-                        @if ($stocks)
-                          @foreach ($stocks as $st)
-                            <tr>
-                              <input type="hidden" value="{{ $st->group }}">
-                              <td scope="row">{{$loop->iteration}}</td>
-                              <td>{{ $st->nama_barang }}</td>
-                              <td>{{ $st->part_number }}</td>
-                              <td>{{ $st->serial_number }}</td>
-                              <td>{{ $st->tgl_masuk }}</td>
-                              <td>{{ $st->expired }}</td>
-                              <td class="td-actions text-center">
-                                <a title="edit" class="btn btn-lg btn-warning m-2" href="/editInventorySite/{{$st->sited_stock_id}}" type="submit">
-                                  <i class="material-icons">edit</i>
-                                  <div class="ripple-container"></div>
-                                </a>
+                <div class="row">
 
-                                <form action="/deleteInventorySite/{{$st->sited_stock_id}}" class="d-inline" method="POST">
-                                  @method('DELETE')
-                                  @csrf
-                                  <button type="submit" class="btn btn-lg btn-danger m-2" title="delete" onclick="return confirm('Are you sure you want to delete '+ '{{ $st->nama_barang }}' +'?')">
-                                    <i class="material-icons">delete</i>
+                  <div class="col material-datatables">
+                    <x-ui.spinner id="spinner" className="spinner-center"/>
+                    <table class="table table-bordered table-hover d-none" cellspacing="0" width="100%" style="width: 100%" id="indexStocksTable">
+                      <thead class=" text-primary text-middle">
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Nama Barang</th>
+                          <th scope="col">Part Number</th>
+                          <th scope="col">Serial Number</th>
+                          <th scope="col">Tanggal Masuk</th>
+                          <th scope="col">Expired</th>
+                          <th class="text-center">Update or Delete</th>
+                        </tr>
+                      </thead>
+
+                        <tbody>
+                         
+                            @foreach ($stocks as $st)
+                              <tr>
+                                {{-- <input type="hidden" value="{{ $st->group }}"> --}}
+                                <td scope="row">{{$loop->iteration}}</td>
+                                <td>{{ $st->nama_barang }}</td>
+                                <td>{{ $st->part_number }}</td>
+                                <td>{{ $st->serial_number }}</td>
+                                <td>{{ $st->tgl_masuk }}</td>
+                                <td>{{ $st->expired }}</td>
+                                <td class="td-actions text-center">
+                                  <a title="edit" class="btn btn-lg btn-warning m-2" href="/editInventorySite/{{$st->sited_stock_id}}" type="submit">
+                                    <i class="material-icons">edit</i>
                                     <div class="ripple-container"></div>
-                                    </button>
-                                </form>
-                              </td> 
+                                  </a>
+  
+                                  <form action="/deleteInventorySite/{{$st->sited_stock_id}}" class="d-inline" method="POST">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" class="btn btn-lg btn-danger m-2" title="delete" onclick="return confirm('Are you sure you want to delete '+ '{{ $st->nama_barang }}' +'from this site ?')">
+                                      <i class="material-icons">delete</i>
+                                      <div class="ripple-container"></div>
+                                      </button>
+                                  </form>
+                                </td> 
+                                
+                              </tr>
+                            @endforeach
                               
-                            </tr>
-                          @endforeach
-                            
-                        @endif
-                      </tbody>
-                  </table>
-
+                          
+                        </tbody>
+                    </table>
+  
+                  </div>
+                  {{--  --}}
                 </div>
                 {{-- table-responsive --}}
               </div>
@@ -179,6 +180,25 @@
       }
     });
 </script>
+
+<script>
+    $(document).ready( function () {
+        $('#indexStocksTable').DataTable({
+            "pagingType": "numbers",
+            "lengthMenu": [
+                [10, 25, 50, 100, 250, 500],
+                [10, 25, 50, 100, 250, 500]
+            ],
+            responsive: true,
+            language: {
+            searchPlaceholder: "Search records",
+            }
+        });
+        $('#spinner').addClass('d-none');
+        $('#indexStocksTable').removeClass('d-none');
+    });
+</script>
+
 
 @endpush
 @endsection
