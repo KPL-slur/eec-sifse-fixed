@@ -4,7 +4,7 @@
   <div class="content">
     <div class="container">
       <div class="col-6 mt-10 text-left">
-        <a href="addSite" class="btn btn-sm btn-primary">
+        <a rel="tooltip" title="Adding Site" href="addSite" class="btn btn-sm btn-primary">
           <i class="material-icons">
             add
           </i> Add New Site
@@ -18,7 +18,11 @@
           <div class="card card-stats">
               <div class="card-header card-header-warning card-header-icon">
                   <div class="card-icon">
-                    <img id="towers" src="storage/image/{{ $sts->image }}" alt="tower" >
+                      @if ($sts->image == null)
+                        <img id="towers" src="storage/image/default.png" alt="tower"/>
+                      @else    
+                        <img id="towers" src="storage/image/{{ $sts->image }}" alt="tower"/>
+                      @endif
                   </div>
                   <h3 class="card-title"><strong>{{$sts->station_id}}</strong></h3>
               </div>

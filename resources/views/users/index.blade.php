@@ -6,6 +6,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
+        
           <div class="card">
             <div class="card-header card-header-primary">
               <h4 class="card-title ">Users Management</h4>
@@ -13,27 +14,21 @@
             
             <div class="card-body">
                 <div class="row">
-                {{-- <div class="col-12 text-right">
-                  <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalAddUser">
-                    <i class="material-icons">
-                      add
-                    </i>Add User
-                  </button>
-                </div> --}}
 
-                <div class="table-responsive mt-3">
-                  <table class="table table-striped">
-                    <thead class=" text-primary">
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Password</th>
-                        <th scope="col">Creation Date</th>
-                        <th class="text-center">Delete</th>
-                        <th class="text-center">Status</th>
-                      </tr>
-                    </thead>
+                <div class="col material-datatables">
+                  <x-ui.spinner id="spinner" className="spinner-center"/>
+                  <table class="table table-bordered table-hover d-none" cellspacing="0" width="100%" style="width:100%" id="indexUsersTable">
+                      <thead class="text-primary">
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Email</th>
+                          <th scope="col">Password</th>
+                          <th scope="col">Creation Date</th>
+                          <th class="text-center">Delete</th>
+                          <th class="text-center">Status</th>
+                        </tr>
+                      </thead>
                     <tbody>
                       
                       @foreach ($users as $user)
@@ -49,7 +44,7 @@
                                 <form method="POST" action="/deleteUser/{{$user->id}}" class="d-inline">
                                   @csrf
                                   @method('delete')
-                                  <button class="btn btn-danger" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">
+                                  <button title="delete" class="btn btn-danger" onclick="return confirm('Are you sure, you want to delete this user ?')">
                                     <i class="material-icons">delete</i>
                                     <div class="ripple-container"></div>
                                   </button>
@@ -58,7 +53,7 @@
 
                           <td class="td-actions text-center">
                               @if ($user->is_approved == 0)
-                                <form method="POST" action="/approveUser/{{$user->id}}" onclick="return confirm('Apakah anda yakin ingin memverifikasi user ini ?')" class="d-inline">
+                                <form method="POST" action="/approveUser/{{$user->id}}" onclick="return confirm('Are you sure, you want to verify this user ?')" class="d-inline">
                                     @csrf
                                     <button class="btn btn-sm btn-warning">Pending</button>
                                 </form>
@@ -190,5 +185,35 @@
     </div>
   </div>
 </div>
+
+@push('scripts')
+<script>
+  $(document).ready( function () {
+      $('#indexUsersTable').DataTable({
+          "pagingType": "numbers",
+          "lengthMenu": [
+              [10, 25, 50, 100, 250, 500],
+              [10, 25, 50, 100, 250, 500]
+          ],
+          responsive: true,
+          language: {
+          searchPlaceholder: "Search records",
+          },
+          // "columnDefs": [
+          // { className: "none", "targets": [ 2 ] }
+          // ],
+      });
+      $('#spinner').addClass('d-none');
+      $('#indexUsersTable').removeClass('d-none');
+  });
+</script>
+
+    {{-- <script>
+      $(document).ready( () => {
+        $("#indexUsersTable").DataTable();
+        $("#indexUsersTable").removeClass('d-none');
+      });
+    </script> --}}
+@endpush
 
 @endsection

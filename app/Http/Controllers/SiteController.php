@@ -68,13 +68,29 @@ class SiteController extends Controller
 
         //INSERT NEW SITE
         $file = $request->file('image');
-        $name = $file->getClientOriginalName();
-        $path = $file->storeAs('public/image', $name);
-        Site::create([
+        
+        if(!file_exists($file)){
+            // $name = '027ce6f5bc035a08d207f0de97b23965.png';
+            // $path = $file->storeAs('public/image', $name);
+            
+            Site::create([
             'radar_name' => $request->radar_name,
             'station_id' => $request->station_id,
-            'image' => $name
-        ]);
+            'image' => null
+            ]);
+            // dd($request);
+        }
+        else {
+            // dd('hello');
+            $name = $file->getClientOriginalName();
+            $path = $file->storeAs('public/image', $name);
+            
+            Site::create([
+                'radar_name' => $request->radar_name,
+                'station_id' => $request->station_id,
+                'image' => $name
+            ]);
+        }        
 
         // $sites =  new Site;
         // $sites->image = $name;

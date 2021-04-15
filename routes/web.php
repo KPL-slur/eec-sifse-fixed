@@ -111,6 +111,13 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         return view('pages.upgrade');
     })->name('upgrade');
 
+    //Admin profile
+    Route::group(['prefix' => 'profile', 'as' => 'profile.'], function (){
+        Route::get('/', [App\Http\Controllers\AdminProfileController::class, 'edit'])->name('edit');
+        Route::put('/', [App\Http\Controllers\AdminProfileController::class, 'update'])->name('update');
+        Route::put('/password', [App\Http\Controllers\AdminProfileController::class, 'password'])->name('password');
+    });
+
     //user management
     Route::get('userManagement', [App\Http\Controllers\UserController::class, 'index'])->name('userManagement');
     Route::post('addUser', [App\Http\Controllers\UserController::class, 'addData']);
