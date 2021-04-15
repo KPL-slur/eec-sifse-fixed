@@ -99,7 +99,10 @@ class SiteController extends Controller
         // $sites->save();
 
         //INSERT SITEDSTOCK TO SITE
-        foreach ($request->stocks as $stock) {
+        foreach ($request->stocks as $index => $stock) {
+            $request->validate([
+                'stocks.'.$index.'.stock_id' => 'required'
+            ], ['required'=>'This field is required']);
             if ($stock['stock_id']) {
 
                 $sitedstocks = new SitedStock;
@@ -162,9 +165,9 @@ class SiteController extends Controller
         // $sitedstocks->save();
 
         //INSERT SITEDSTOCK TO SITE
-        foreach ($request->stocks as $stock) {
+        foreach ($request->stocks as $index => $stock) {
             $request->validate([
-                'stock.stock_id' => 'required'
+                'stocks.'.$index.'.stock_id' => 'required'
             ], ['required'=>'This field is required']);
             if ($stock['stock_id']) {
 

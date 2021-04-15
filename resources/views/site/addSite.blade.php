@@ -71,7 +71,7 @@
                 </div>
 
                 <br>
-                <button type="submit" onclick="return confirm('Apakah yakin ingin menambahkan data?')" class="btn btn-primary">Submit</button>
+                <button type="submit" onclick="return confirm('Are you sure, you want to add new site ?')" class="btn btn-primary">Submit</button>
                 <a href="/site" class="btn btn-primary">Back</a>
               </form>
             </div>
