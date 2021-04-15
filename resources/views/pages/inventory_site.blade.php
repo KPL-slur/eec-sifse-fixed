@@ -6,14 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ __('Print Stock of'. ' '. $stocks[0]->station_id) }}</title>
     {{-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script> --}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous"> --}}
     <link href="{{ asset('user') }}/css/frameworks/gutenberg.css" rel="stylesheet" />
     <link rel="{{ asset('user')}}/css/print-inventory.css" rel="stylesheet" />
 </head>
 
 <body  style="font-family:'Times New Roman', Times, serif;">
-
+  
   <table>
     <thead>
       <tr>
@@ -53,7 +53,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Sparepart</th>
                         <th scope="col">Part Number</th>
-                        <th scope="col">Serial Number</th>
+                        <th scope="col">ref_des</th>
                         <th scope="col">Installed Date</th>
                         <th scope="col">Expired Date</th>
                       </tr>
@@ -64,7 +64,7 @@
                           <th scope="row">{{$loop->iteration}}</th>
                           <td>{{$stk->nama_barang}}</td>
                           <td>{{$stk->part_number}}</td>
-                          <td>{{$stk->serial_number}}</td>
+                          <td>{{$stk->ref_des}}</td>
                           <td>{{$stk->tgl_masuk}}</td>
                           <td>{{$stk->expired}}</td>
                         </tr>
