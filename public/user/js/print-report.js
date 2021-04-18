@@ -16,23 +16,14 @@ Array.from(swapper).forEach((element) => {
             case 2:
                 secondId = this.dataset.id;
 
-                firstSrc = document.getElementById("image_" + firstId).src;
-                secondSrc = document.getElementById("image_" + secondId).src;
-
-                firstText = document.getElementById("caption_" + firstId)
-                    .innerText;
-                secondText = document.getElementById("caption_" + secondId)
-                    .innerText;
-
-                document.getElementById("image_" + firstId).src = secondSrc;
-                document.getElementById("image_" + secondId).src = firstSrc;
-
-                document.getElementById(
-                    "caption_" + firstId
-                ).innerText = secondText;
-                document.getElementById(
-                    "caption_" + secondId
-                ).innerText = firstText;
+                swappingSrc(
+                    document.getElementById("image_" + firstId),
+                    document.getElementById("image_" + secondId)
+                );
+                swapping(
+                    document.getElementById("caption_" + firstId),
+                    document.getElementById("caption_" + secondId)
+                );
 
                 click = 0;
                 break;
@@ -66,4 +57,12 @@ function swapping(firstElement, secondElement) {
 
     firstElement.innerText = secondInner;
     secondElement.innerText = firstInner;
+}
+
+function swappingSrc(firstElement, secondElement) {
+    firstInner = firstElement.src;
+    secondInner = secondElement.src;
+
+    firstElement.src = secondInner;
+    secondElement.src = firstInner;
 }

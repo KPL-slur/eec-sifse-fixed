@@ -82,7 +82,7 @@
                                         <td id="expertName{{ $loop->iteration }}">{{ $expert->name }}</td>
                                         <td class="text-right" id="expertCompany{{ $loop->iteration }}">{{ $expert->expert_company }}</td>
                                         <td class="text-right not-print" style="width: 100px">
-                                            <button class="btn-up" data-index="{{ $loop->iteration }}">swap</button>
+                                            <button class="btn-up" data-index="{{ $loop->iteration }}">swap up</button>
                                         </td>
                                     </tr>
                                 @endif
