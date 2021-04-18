@@ -169,7 +169,7 @@ trait WithHeadReport
             $this->validate([
                 'manualExperts.'.$index.'.expert_name' => 'required|unique:experts,name',
                 'manualExperts.'.$index.'.expert_company' => 'required',
-                'manualExperts.'.$index.'.expert_nip' => 'required|numeric|digits:18|unique:experts,nip',
+                'manualExperts.'.$index.'.expert_nip' => 'numeric|digits:18|unique:experts,nip',
                 'manualExperts.'.$index.'.expert_role' => 'required',
             ],[
                 'required' => 'This field is required.',
