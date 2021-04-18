@@ -5,7 +5,11 @@
         <div class="container-fluid">
             <div class="card ">
                 <div class="card-header card-header-primary">
-                    <h4 class="card-title">{{ __('Preventive Maintenance Report') }}</h4>
+                    @if ($maintenance_type == 'pm')    
+                        <h4 class="card-title">{{ __('Preventive Maintenance Report') }}</h4>
+                    @else
+                        <h4 class="card-title">{{ __('Corrective Maintenance Report') }}</h4>
+                    @endif
                 </div>
                 <div class="card-body ">
                     <div class="">
