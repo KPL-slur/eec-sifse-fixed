@@ -99,6 +99,7 @@
                 <div class="row">
                   <div class="col">
                     <div class="table-responsive material-datatables ">
+                      <x-ui.spinner id="spinner" className="spinner-center"/>
                       <table class="table none table-striped table-no-bordered table-hover d-none" cellspacing="0" width="100" style="width:100%" id="indexStocksTable">
                         <thead class=" text-primary text-middle">
                           <tr>
@@ -141,7 +142,7 @@
                                     <form action="{{ url('stocks') }}/{{ $st->stock_id }}" class="d-inline" method="POST">
                                       @method('DELETE')
                                       @csrf
-                                      <button type="submit" class="btn btn-sm btn-danger m-2" title="delete" onclick="return confirm('Are you sure you want to delete '+ '{{ $st->nama_barang }}' +'?')">
+                                      <button type="submit" class="btn btn-sm btn-danger m-2" title="delete" onclick="return confirm('Are you sure you want to delete '+ '{{ $st->nama_barang }}' +' from sparepart list ?')">
                                         <i class="material-icons">delete</i>
                                         <div class="ripple-container"></div>
                                       </button>
@@ -217,7 +218,7 @@
 
       //kalo misalkan modal ditutup
       $('#modal_input_stocks_report').on('hide.bs.modal', () => {
-        confirm_close = confirm('Apakah Anda yakin ingin menutup input?\nSemua tanggal input akan di-reset');
+        confirm_close = confirm('Are you sure you want to close the input?\nAll input dates will be reset');
         if(confirm_close == true){
           if( $('#input_date_start_stocks_report').val() != "" || $('#input_date_end_stocks_report').val() != "" ){ //value dari value nya ada apa ngga
             $('#input_date_start_stocks_report').val(""); //ngosongin value input date start
@@ -256,6 +257,7 @@
           searchPlaceholder: "Search stock records",
         }
       });
+      $('#spinner').addClass('d-none');
       $("#indexStocksTable").removeClass('d-none');
     });
   </script>
