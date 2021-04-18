@@ -313,6 +313,8 @@
                                     Kepala Statsiun Meteorologi {{ $headReport->site->station_id }}
                                 </p>
                                 <div>&nbsp;</div>
+                                <div>&nbsp;</div>
+                                <div>&nbsp;</div>
                                 <p>
                                     <strong><u>{{ $headReport->kasat_name }}</u></strong><br>
                                     NIP. {{ $headReport->kasat_nip }}
