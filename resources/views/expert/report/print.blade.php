@@ -294,15 +294,18 @@
                             <table class="report ttd">
                                 @foreach ($headReport->experts as $expert)
                                     <tr>
-                                        <td>
+                                        <td id="expertNameNip{{ $loop->iteration }}">
                                             {{ $expert->name }}<br>
                                             {{ $expert->nip }}
                                         </td>
-                                        <td>
+                                        <td id="expertCompanyRole{{ $loop->iteration }}">
                                             {{ $expert->pivot->role }}<br>
                                             {{ $expert->expert_company }}
                                         </td>
                                         <td>&nbsp;</td>
+                                        <td class="text-right not-print" style="width: 100px">
+                                            <button class="btn-up2" data-index="{{ $loop->iteration }}">swap up</button>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </table>

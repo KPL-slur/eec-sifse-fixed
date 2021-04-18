@@ -34,6 +34,9 @@ Array.from(swapper).forEach((element) => {
     });
 });
 
+/**
+ * SWAPPER expert row
+ */
 let up = document.getElementsByClassName("btn-up");
 Array.from(up).forEach((element) => {
     element.addEventListener("click", function (e) {
@@ -47,6 +50,26 @@ Array.from(up).forEach((element) => {
         swapping(
             document.getElementById("expertCompany" + firstIndex),
             document.getElementById("expertCompany" + secondIndex)
+        );
+    });
+});
+
+/**
+ * SWAPPER signature row
+ */
+let up2 = document.getElementsByClassName("btn-up2");
+Array.from(up2).forEach((element) => {
+    element.addEventListener("click", function (e) {
+        firstIndex = this.dataset.index;
+        secondIndex = firstIndex - 1;
+
+        swapping(
+            document.getElementById("expertNameNip" + firstIndex),
+            document.getElementById("expertNameNip" + secondIndex)
+        );
+        swapping(
+            document.getElementById("expertCompanyRole" + firstIndex),
+            document.getElementById("expertCompanyRole" + secondIndex)
         );
     });
 });
