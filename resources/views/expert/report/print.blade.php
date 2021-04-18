@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ __('Print '.strtoupper($headReport->maintenance_type).' '. $headReport->site->station_id) }} | EECID</title>
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('material') }}/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="{{ asset('material') }}/img/favicon.png">
+    <link rel="icon" type="image/png" href="{{ asset('user') }}/img/eecidfix.png">
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
         name='viewport' />
     <link href="{{ asset('user') }}/css/frameworks/gutenberg.css" rel="stylesheet" />
@@ -52,7 +52,7 @@
                                         STATION ID
                                     </strong>
                                 </td>
-                                <td>
+                                <td colspan="2">
                                     {{ $headReport->site->station_id }}
                                 </td>
                             </tr>
@@ -62,7 +62,7 @@
                                         DATE
                                     </strong>
                                 </td>
-                                <td>
+                                <td colspan="2">
                                     {{ $date }}
                                 </td>
                             </tr>
@@ -74,20 +74,15 @@
                                                 EXPERTISE
                                             </strong>
                                         </td>
-                                        <td>
-                                            <table class="nested-table table-borderless">
-                                                <td>{{ $expert->name }}</td>
-                                                <td class="text-right">{{ $expert->expert_company }}</td>
-                                            </table>
-                                        </td>
+                                        <td id="expertName{{ $loop->iteration }}">{{ $expert->name }}</td>
+                                        <td class="text-right" id="expertCompany{{ $loop->iteration }}">{{ $expert->expert_company }}</td>
                                     </tr>
                                 @else
                                     <tr>
-                                        <td>
-                                            <table class="nested-table table-borderless">
-                                                <td>{{ $expert->name }}</td>
-                                                <td class="text-right">{{ $expert->expert_company }}</td>
-                                            </table>
+                                        <td id="expertName{{ $loop->iteration }}">{{ $expert->name }}</td>
+                                        <td class="text-right" id="expertCompany{{ $loop->iteration }}">{{ $expert->expert_company }}</td>
+                                        <td class="text-right not-print" style="width: 100px">
+                                            <button class="btn-up" data-index="{{ $loop->iteration }}">swap up</button>
                                         </td>
                                     </tr>
                                 @endif
@@ -299,15 +294,20 @@
                             <table class="report ttd">
                                 @foreach ($headReport->experts as $expert)
                                     <tr>
-                                        <td>
+                                        <td id="expertNameNip{{ $loop->iteration }}">
                                             {{ $expert->name }}<br>
                                             {{ $expert->nip }}
                                         </td>
-                                        <td>
+                                        <td id="expertCompanyRole{{ $loop->iteration }}">
                                             {{ $expert->pivot->role }}<br>
                                             {{ $expert->expert_company }}
                                         </td>
                                         <td>&nbsp;</td>
+                                        <td class="text-right not-print" style="width: 100px">
+                                            @if (!$loop->first) 
+                                                <button class="btn-up2" data-index="{{ $loop->iteration }}">swap up</button>
+                                            @endif
+                                        </td>
                                     </tr>
                                 @endforeach
                             </table>
@@ -317,6 +317,8 @@
                                     Mengetahui,<br>
                                     Kepala Statsiun Meteorologi {{ $headReport->site->station_id }}
                                 </p>
+                                <div>&nbsp;</div>
+                                <div>&nbsp;</div>
                                 <div>&nbsp;</div>
                                 <p>
                                     <strong><u>{{ $headReport->kasat_name }}</u></strong><br>
@@ -353,38 +355,7 @@
         </tbody>
 
     </table>
-
-    <script type="text/javascript">
-        window.print();
-        let click = 0;
-        let swapper = document.getElementsByClassName('btn-swap');
-        Array.from(swapper).forEach(element => {
-            element.addEventListener('click', function (e) { 
-                click++;
-                switch (click) {
-                    case 1:
-                        firstId =  this.dataset.id;
-                        break;
-
-                    case 2:
-                        secondId =  this.dataset.id;
-                        firstSrc = document.getElementById('image_'+firstId).src;
-                        secondSrc = document.getElementById('image_'+secondId).src;
-                        firstText = document.getElementById('caption_'+firstId).innerText;
-                        secondText = document.getElementById('caption_'+secondId).innerText;
-                        document.getElementById('image_'+firstId).src = secondSrc;
-                        document.getElementById('image_'+secondId).src = firstSrc;
-                        document.getElementById('caption_'+firstId).innerText = secondText;
-                        document.getElementById('caption_'+secondId).innerText = firstText;
-                        click = 0;
-                        break;
-                
-                    default:
-                        break;
-                }
-            });
-        });
-    </script>
+    <script src="{{ asset('user') }}/js/print-report.js"></script>
 </body>
 
 </html>
