@@ -3,7 +3,7 @@
 @section('content')
     
 <div class="content">
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
           <div class="card">
@@ -14,10 +14,7 @@
               
               <div class="row">
                   <div class="col-12 text-left">
-                    <a title="back" class="btn btn-sm btn-primary m-2" href="/distribution">
-                      <i class="material-icons">arrow_back</i>
-                      <div class="ripple-container"></div>
-                    </a>
+                    <a type="button" href="/distribution" class="btn btn-info btn-md ml-3">Back</a>
                   </div>
                   <div class="col-12 text-right">
                     <a rel="tooltip" title="Adding Distribution" href="/addDistribution/{{$sites->site_id}}" class="btn btn-sm btn-primary">
@@ -28,15 +25,16 @@
                   </div>
               </div>
               
-              <div class="table-responsive mt-3">
-                <table class="table table-striped">
+              <div class="col material-datatables">
+                <x-ui.spinner id="spinner" className="spinner-center"/>
+                <table class="table table-no-bordered table-hover d-none" cellspacing="0" width="100%" style="width: 100%" id="detailDistributions" >
                   <thead class=" text-primary">
                     <tr>
                       <th scope="col">#</th>
                       <th scope="col">Nama Teknisi</th>
                       <th scope="col">Expert Company</th>
                       <th scope="col">Station ID</th>
-                      <th class="text-center">Update or Delete</th>
+                      <th class="disabled-sorting text-center">Update or Delete</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -55,7 +53,7 @@
                               <form method="POST" action="/deleteDistribution/{{$dst->dist_id}}" class="d-inline">
                                 @csrf
                                 @method('delete')
-                                <button class="btn btn-danger m-2" title="delete" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')" >
+                                <button class="btn btn-danger m-2" title="delete" onclick="return confirm('Are you sure, you want to delete'+ '{{$dst->name}}'+  ' from this distribution'+ '?')" >
                                   <i class="material-icons">delete</i>
                                   <div class="ripple-container"></div>
                                 </button>
@@ -92,4 +90,25 @@
     </div>
   </div>
 </div>
+
+@push('scripts')
+<script>
+  $(document).ready( function () {
+      $('#detailDistributions').DataTable({
+          "pagingType": "numbers",
+          "lengthMenu": [
+              [10, 25, 50, 100, 250, 500],
+              [10, 25, 50, 100, 250, 500]
+          ],
+          responsive: true,
+          language: {
+          searchPlaceholder: "Search records",
+          }
+      });
+      $('#spinner').addClass('d-none');
+      $('#detailDistributions').removeClass('d-none');
+  });
+</script>
+@endpush
+
 @endsection

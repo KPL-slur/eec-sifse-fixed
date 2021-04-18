@@ -9,7 +9,7 @@
           <div class="card-header card-header-primary">
             <div class="row">
               <div class="col-md-6">
-                <h4 class="card-title mt-2">Perubahan Distribusi</h4>
+                <h4 class="card-title mt-2">Edit Distribution</h4>
               </div>
               <div class="col-md-6">
                
@@ -44,9 +44,9 @@
                 </div>
                 
                 <div class="form-group">
-                  <label>Nama Teknisi</label>
+                  <label>Expert Name</label>
                   <select name="expert_id" id="expert_id" class="form-control distribution @error('expert_id') is-invalid @enderror">
-                    <option selected disabled value="">--Pilih Nama Expert--</option>
+                    <option selected disabled value="">--Choose Expert Name--</option>
                       @foreach ($experts as $exp)
                           <option value="{{$exp->expert_id}}" {{ old('expert_id') == $exp->expert_id ? 'selected' : '' }} 
                             @if ($distributions->expert_id === $exp->expert_id) selected @endif
@@ -64,8 +64,8 @@
 
                 </div>
 
-                  <button type="submit" onclick="return confirm('Apakah anda yakin untuk mengubah data ini?')" class="btn btn-primary">Ubah</button>
-                  <a href="/viewDistribution/{{$sites[0]->site_id}}" class="btn btn-primary">Kembali</a>
+                  <button type="submit" onclick="return confirm('Are you sure, you want to change this distribution ?')" class="btn btn-primary">Submit</button>
+                  <a href="/viewDistribution/{{$sites[0]->site_id}}" class="btn btn-info">Back</a>
                 </form>
               </div>
             </div>

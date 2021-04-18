@@ -66,7 +66,6 @@
                     </div>
                     <a href="#" type="button" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"
                     wire:click.prevent="selectItem({{ $index }}, 'attachment')">
-                        <i class="fa fa-times"></i>
                         Remove
                     </a>
                 </div>

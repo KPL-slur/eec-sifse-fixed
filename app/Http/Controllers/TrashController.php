@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\Utility;
 use App\Models\Headreport;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class TrashController extends Controller
 {
@@ -60,7 +61,7 @@ class TrashController extends Controller
         // delete stored files
         $reportImageFiles = $headReport->reportImages;
         foreach ($reportImageFiles as $reportImageFile) {
-            \Storage::delete('public/'.$reportImageFile->image);
+            Storage::delete('public/'.$reportImageFile->image);
         }
 
         $headReport->forceDelete();

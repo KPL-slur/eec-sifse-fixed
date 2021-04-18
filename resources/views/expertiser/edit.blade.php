@@ -6,7 +6,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header card-header-Warning">
+          <div class="card-header card-header-primary">
             <h4 class="card-title ">Edit Expert</h4>
           </div>
 
@@ -17,7 +17,7 @@
                     @method('put')
 
                       <div class="form-group expert">
-                        <label for="name">Nama Expert</label>
+                        <label for="name">Expert Name</label>
                         <br>
                         <input type="text" class="form-control  @error('name') is-invalid @enderror" id="name" name="name" placeholder="Input the Expert's Name" value="{{ $experts->name }}">
                         
@@ -62,8 +62,8 @@
                         
                       </div>
                       
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                      <a href="{{ route('expertManagement') }}" class="btn btn-info ml-3 d-inline">Kembali</a>
+                      <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure, you want to change this expert data ?')">Submit</button>
+                      <a href="{{ route('expertManagement') }}" class="btn btn-info ml-3 d-inline">Back</a>
                   </form>
               </div>
           </div>

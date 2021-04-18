@@ -55,7 +55,7 @@
 }
 
 .report.body-report td:nth-child(1):not(.nested-table td) {
-    width: 350px;
+    width: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -90,6 +90,16 @@
     margin: 0;
     padding: 0;
     width: 100%;
+}
+
+@media print {
+    .not-print{
+        display: none !important;
+    }
+}
+
+.no-margin{
+    margin: 0 !important;
 }
 
 /*

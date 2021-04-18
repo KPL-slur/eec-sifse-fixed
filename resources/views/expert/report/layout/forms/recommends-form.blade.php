@@ -13,50 +13,29 @@
                             <th>Quantity</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @if (empty($recommends) && empty($manualRecommends))
+                    @if (empty($recommends) && empty($manualRecommends))
+                        <tbody>
                             <tr>
                                 <td colspan="3">
                                     <p class="text-danger">There are no recommendation(s) yet. You can add a new one or click next to skip</p>
                                 </td>
                             </tr>
-                        @endif
+                        </tbody>
+                    @else
+                        <tbody>
                         @foreach ($recommends as $index => $recommend)
-                            <tr>
-                                <td>
-                                    <div class='@error('recommends.'.$index.'.name') label-floating has-danger @enderror'>
-                                        @error('recommends.'.$index.'.name')
-                                            <label class="control-label force-has-danger">{{ $message }}</label>
-                                        @enderror
-                                        <select name="recommends[{{ $index }}][name]"
-                                            wire:model="recommends.{{ $index }}.name"
-                                            class="form-control"
-                                        >
-                                            <option value="">-- choose product --</option>
-                                            @foreach ($stocks as $stock)
-                                            <option value="{{ $stock['name'] }}">
-                                                {{ $stock['name'] }}
-                                            </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="@error('recommends.'.$index.'.jumlah_unit_needed') label-floating has-danger @enderror">
-                                        @error('recommends.'.$index.'.jumlah_unit_needed')
-                                            <label class="control-label force-has-danger">{{ $message }}</label>
-                                        @enderror
-                                        <input type="text" class="form-control recommends-qty"
-                                        name="recommends[{{ $index }}][jumlah_unit_needed]"
-                                        wire:model.defer="recommends.{{ $index }}.jumlah_unit_needed"
-                                        >
-                                    </div>
-                                </td>
-                                <td>
-                                    <a href="#" class="text-danger"
-                                        wire:click.prevent="selectItem({{ $index }}, 'recommendation')">Delete</a>
-                                </td>
-                            </tr>
+                            @if (array_key_exists('head_id', $recommend) && $recommend['head_id'] != $head_id)
+                                @include('expert.report.layout.forms.select-recommends')
+                            @endif
+                        @endforeach
+                        </tbody>
+                        <tbody class="border border-primary">
+                        @foreach ($recommends as $index => $recommend)
+                            @if (array_key_exists('head_id', $recommend) && $recommend['head_id'] == $head_id)
+                                @include('expert.report.layout.forms.select-recommends')
+                            @elseif (! array_key_exists('head_id', $recommend))
+                                @include('expert.report.layout.forms.select-recommends')
+                            @endif
                         @endforeach
                         @foreach ($manualRecommends as $index => $manualRecommend)
                             <tr>
@@ -87,7 +66,8 @@
                                 </td>
                             </tr>
                         @endforeach
-                    </tbody>
+                        </tbody>
+                    @endif
                 </table>
                 <div class="row">
                     <div class="col-md-12">

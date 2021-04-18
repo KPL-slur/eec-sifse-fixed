@@ -8,7 +8,7 @@
     @params type    optional, the type of the element. eg. success, warning, danger
     --}}
 @props(['on', 'type' => 'success'])
-
+<div></div>
 <div x-cloak x-data="{ shown: false, timeout: null }"
     x-init="@this.on('{{ $on }}', () => { clearTimeout(timeout); shown = true; timeout = setTimeout(() => { shown = false }, 4000);  })"
     x-show.transition.opacity.duration.1500ms="shown"

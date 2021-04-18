@@ -67,51 +67,66 @@ class SiteController extends Controller
     public function addData(StoreSiteRequest $request){
 
         //INSERT NEW SITE
-        $file = $request->file('image');
-        $name = $file->getClientOriginalName();
-        $path = $file->storeAs('public/image', $name);
-        Site::create([
-            'radar_name' => $request->radar_name,
-            'station_id' => $request->station_id,
-            'image' => $name
-        ]);
 
-        // $sites =  new Site;
-        // $sites->image = $name;
-        // $sites->radar_name = $request->radar_name;
-        // $sites->station_id = $request->station_id;
-        // $sites->save();
-
-        //INSERT SITEDSTOCK TO SITE
-        foreach ($request->stocks as $stock) {
+        foreach ($request->stocks as $index => $stock) {
+            $request->validate([
+                'stocks.'.$index.'.stock_id' => 'required'
+            ], ['required'=>'This field is required']);
             if ($stock['stock_id']) {
+
+            $file = $request->file('image');
+        
+            if(!file_exists($file)){
+                // $name = '027ce6f5bc035a08d207f0de97b23965.png';
+                // $path = $file->storeAs('public/image', $name);
+                
+                Site::create([
+                'radar_name' => $request->radar_name,
+                'station_id' => $request->station_id,
+                'image' => null
+                ]);
+                // dd($request);
 
                 $sitedstocks = new SitedStock;
                 $sitedstocks->site_id = DB::table('sites')->latest()->first()->site_id;
                 $sitedstocks->stock_id = $stock['stock_id'];
                 $sitedstocks->save();
-
+    
                 $stocks = DB::table('stocks')
                 ->where('stock_id', '=', $stock['stock_id'])
                 ->decrement('jumlah_unit');
+            }
+            else {
+                $name = $file->getClientOriginalName();
+                $path = $file->storeAs('public/image', $name);
                 
-                // SitedStock::create([
-                //     'site_id' => 
-                //     'stock_id' => $stock['stock_id']
-                // ]);
+                Site::create([
+                    'radar_name' => $request->radar_name,
+                    'station_id' => $request->station_id,
+                    'image' => $name
+                ]);
+                
+                $sitedstocks = new SitedStock;
+                $sitedstocks->site_id = DB::table('sites')->latest()->first()->site_id;
+                $sitedstocks->stock_id = $stock['stock_id'];
+                $sitedstocks->save();
+    
+                $stocks = DB::table('stocks')
+                ->where('stock_id', '=', $stock['stock_id'])
+                ->decrement('jumlah_unit');
+            }        
+
+                
             }
         }
         $sites = DB::table('sites')
         ->select('site_id')
         ->latest()
         ->first();
-        // dd($request);
-
 
         $validated = $request->validated();
         
         return redirect('inventory/'.$sites->site_id)->with('status1', 'Data Created!');
-        // return redirect('site')->with('success', 'Data Created!');
     }
 
     public function addInventorySite($id){
@@ -146,9 +161,9 @@ class SiteController extends Controller
         // $sitedstocks->save();
 
         //INSERT SITEDSTOCK TO SITE
-        foreach ($request->stocks as $stock) {
+        foreach ($request->stocks as $index => $stock) {
             $request->validate([
-                'stock.stock_id' => 'required'
+                'stocks.'.$index.'.stock_id' => 'required'
             ], ['required'=>'This field is required']);
             if ($stock['stock_id']) {
 

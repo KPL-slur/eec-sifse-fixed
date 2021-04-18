@@ -22,6 +22,7 @@ class CreateRecommendationsTable extends Migration
             $table->string('jumlah_unit_needed');
             $table->integer('year');
             $table->timestamps();
+            $table->softDeletes();
         });
         // ===== hasil rancangan erd =====
     }

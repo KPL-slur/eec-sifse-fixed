@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Services\Utility;
 use App\Models\HeadReport;
@@ -35,7 +36,7 @@ class PdfController extends Controller
     }
 
     /**
-     *
+     * ! Deprecated Method, Should not be used, delete later
      */
     public function store(Request $request, $maintenance_type, $id)
     {
@@ -49,7 +50,7 @@ class PdfController extends Controller
         if ($request->file()) {
 
             if($headReport->printedReport){
-                \Storage::delete('public/'.$headReport->printedReport->file);
+                Storage::delete('public/'.$headReport->printedReport->file);
                 $headReport->printedReport()->delete();
             }
 
@@ -68,29 +69,29 @@ class PdfController extends Controller
     /**
      * 
      */
-    public function show($maintenance_type, $id)
+    public function show($maintenance_type, $id, $path)
     {
-        $filePath = HeadReport::withTrashed()->Where('head_id', $id)->first()->printedReport->file; // pm/nama_file.pdf
-        return response()->file(('storage/'.$filePath));
+        HeadReport::find($id)->printedReports()->where('file', $maintenance_type.'/'.$path)->firstOrFail();
+        return response()->file(('storage/'.$maintenance_type.'/'.$path));
     }
     
     /**
      * 
      */
-    public function download($maintenance_type, $id)
+    public function download($maintenance_type, $id, $path)
     {
-        $filePath = HeadReport::withTrashed()->Where('head_id', $id)->first()->printedReport->file; // pm/nama_file.pdf
-        return response()->download(('storage/'.$filePath));
+        HeadReport::find($id)->printedReports()->where('file', $maintenance_type.'/'.$path)->firstOrFail();
+        return response()->download(('storage/'.$maintenance_type.'/'.$path));
     }
 
     /**
-     * 
+     * ! Deprecated Method, Should not be used, delete later
      */
     public function destroy($maintenance_type, $id) {
         $headReport = HeadReport::Where('head_id', $id)->first();
         $this->authorize('update', $headReport);
 
-        \Storage::delete('public/'.$headReport->printedReport->file);
+        Storage::delete('public/'.$headReport->printedReport->file);
         $headReport->printedReport()->delete();
 
         return back()->with('delete_success', 'File has been deleted.');

@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'site', 'titlePage' => __('Input Stocks on Site')])
+@extends('layouts.app', ['activePage' => 'site', 'titlePage' => __('Edit Stocks on Site')])
 
 @section('content')
 <div class="content">
@@ -14,7 +14,7 @@
             @method('put')
               @csrf
                 <div class="form-group my-4">
-                  <label for="nama_barang">Nama Barang</label>
+                  <label for="nama_barang">Item Name</label>
                   <input type="text" class="form-control @error('nama_barang') is-invalid @enderror " id="nama_barang" name="nama_barang" placeholder="Masukkan nama barang" value="{{$stocks->nama_barang}}">
                   <input type="hidden" class="form-control" id="site_id" name="site_id" value="{{ $sites->site_id }}">
                   
@@ -67,7 +67,7 @@
                   @enderror
                 </div>
                 <div class="form-group my-4">
-                  <label for="tgl_masuk">Tanggal Masuk / Edit</label>
+                  <label for="tgl_masuk">Date of Entry / Edit</label>
                   <input type="date" class="form-control @error('tgl_masuk') is-invalid @enderror" id="tgl_masuk" name="tgl_masuk" placeholder="Tanggal Input" value="{{$stocks->tgl_masuk}}">
                   @error('tgl_masuk')
                     <div class="invalid-feedback">
@@ -85,7 +85,7 @@
                   @enderror
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
-                <a href="/inventory/{{$sites->site_id}}" class="btn btn-info ml-3 d-inline">Kembali</a>
+                <a href="/inventory/{{$sites->site_id}}" class="btn btn-info ml-3 d-inline">Back</a>
             </form>
           </div>
         </div>

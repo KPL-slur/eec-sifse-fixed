@@ -26,7 +26,7 @@ class StoreSiteRequest extends FormRequest
         $rules = [
             'radar_name' => 'required',
             'station_id' => 'required',
-            'image' => 'image | required',
+            'image' => 'image'
             // 'stock_id' => 'required',
         ];
         return $rules;

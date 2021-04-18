@@ -16,7 +16,6 @@ class IsApproved
      */
     public function handle(Request $request, Closure $next)
     {
-        // dd(auth()->user()->is_approved);
         if(auth()->user()->is_approved == 1){
             return $next($request);
         }

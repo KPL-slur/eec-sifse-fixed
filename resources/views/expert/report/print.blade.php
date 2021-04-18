@@ -8,11 +8,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ __('Print '.strtoupper($headReport->maintenance_type).' '. $headReport->site->station_id) }} | EECID</title>
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('material') }}/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="{{ asset('material') }}/img/favicon.png">
+    <link rel="icon" type="image/png" href="{{ asset('user') }}/img/eecidfix.png">
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
         name='viewport' />
     <link href="{{ asset('user') }}/css/frameworks/gutenberg.css" rel="stylesheet" />
     <link href="{{ asset('user') }}/css/print.css" rel="stylesheet" />
+    <script type="module" src="{{ asset('user') }}/js/plugins/alpine.js"></script>
+    <script nomodule src="{{ asset('user') }}/js/plugins/alpine-ie11.js" defer></script>
 </head>
 
 <body>
@@ -40,7 +42,7 @@
                 <td>
                     <!--*** CONTENT GOES HERE ***-->
                     <main>
-                        <h1 class="text-center">WEATHER RADAR {{ $headReport->site->radar_name }} SERVICE REPORT</h1>
+                        <h4 class="text-center">WEATHER RADAR {{ $headReport->site->radar_name }} SERVICE REPORT</h4>
 
                         <!----------------------------------------------------------------------------------------- HEAD -->
                         <Table class="report head-report">
@@ -50,7 +52,7 @@
                                         STATION ID
                                     </strong>
                                 </td>
-                                <td>
+                                <td colspan="2">
                                     {{ $headReport->site->station_id }}
                                 </td>
                             </tr>
@@ -60,7 +62,7 @@
                                         DATE
                                     </strong>
                                 </td>
-                                <td>
+                                <td colspan="2">
                                     {{ $date }}
                                 </td>
                             </tr>
@@ -72,20 +74,15 @@
                                                 EXPERTISE
                                             </strong>
                                         </td>
-                                        <td>
-                                            <table class="nested-table table-borderless">
-                                                <td>{{ $expert->name }}</td>
-                                                <td class="text-right">{{ $expert->expert_company }}</td>
-                                            </table>
-                                        </td>
+                                        <td id="expertName{{ $loop->iteration }}">{{ $expert->name }}</td>
+                                        <td class="text-right" id="expertCompany{{ $loop->iteration }}">{{ $expert->expert_company }}</td>
                                     </tr>
                                 @else
                                     <tr>
-                                        <td>
-                                            <table class="nested-table table-borderless">
-                                                <td>{{ $expert->name }}</td>
-                                                <td class="text-right">{{ $expert->expert_company }}</td>
-                                            </table>
+                                        <td id="expertName{{ $loop->iteration }}">{{ $expert->name }}</td>
+                                        <td class="text-right" id="expertCompany{{ $loop->iteration }}">{{ $expert->expert_company }}</td>
+                                        <td class="text-right not-print" style="width: 100px">
+                                            <button class="btn-up" data-index="{{ $loop->iteration }}">swap up</button>
                                         </td>
                                     </tr>
                                 @endif
@@ -270,7 +267,7 @@
                         @endif
                         <!----------------------------------------------------------------------------------------- REMARK -->
                         <hr>
-                        <h3>Remark</h3>
+                        <h5>Remark</h5>
                         <?php echo $bodyReport->remark; ?>
                         <hr>
                         <!----------------------------------------------------------------------------------------- RECOMMENDATIONS -->
@@ -297,15 +294,20 @@
                             <table class="report ttd">
                                 @foreach ($headReport->experts as $expert)
                                     <tr>
-                                        <td>
+                                        <td id="expertNameNip{{ $loop->iteration }}">
                                             {{ $expert->name }}<br>
                                             {{ $expert->nip }}
                                         </td>
-                                        <td>
+                                        <td id="expertCompanyRole{{ $loop->iteration }}">
                                             {{ $expert->pivot->role }}<br>
                                             {{ $expert->expert_company }}
                                         </td>
                                         <td>&nbsp;</td>
+                                        <td class="text-right not-print" style="width: 100px">
+                                            @if (!$loop->first) 
+                                                <button class="btn-up2" data-index="{{ $loop->iteration }}">swap up</button>
+                                            @endif
+                                        </td>
                                     </tr>
                                 @endforeach
                             </table>
@@ -316,6 +318,8 @@
                                     Kepala Statsiun Meteorologi {{ $headReport->site->station_id }}
                                 </p>
                                 <div>&nbsp;</div>
+                                <div>&nbsp;</div>
+                                <div>&nbsp;</div>
                                 <p>
                                     <strong><u>{{ $headReport->kasat_name }}</u></strong><br>
                                     NIP. {{ $headReport->kasat_nip }}
@@ -323,57 +327,35 @@
                             </div>
                         </div>
                         <!----------------------------------------------------------------------------------------- LAMPIRAN -->
-                        <h3 class="page-break-before">Lampiran Kegiatan</h3>
-                        <table class="report page-break-after">
+                        <h5 class="page-break-before">Lampiran Kegiatan</h5>
+                        <table class="report no-margin">
                             <tr>
-                                @foreach ($headReport->reportImages as $reportImage)
-                                    <td colspan="{{ $loop->last ? 2 : 1 }}">
-                                        <img src="{{ asset('storage/' . $reportImage->image) }}" width="350"
-                                            height="200" class="m-center" alt="">
-                                        <p class="text-center">
+                                @foreach ($headReport->reportImages as $index => $reportImage)
+                                    <td colspan="{{ $loop->last ? 2 : 1 }}" x-data="{height: 200}">
+                                        <img src="{{ asset('storage/' . $reportImage->image) }}" width="350" height="200"
+                                            class="m-center" alt="" id="image_{{ $index }}"
+                                            x-bind:height="height">
+                                        <p class="text-center no-margin" id="caption_{{ $index }}">
                                             {{ $reportImage->caption }}
                                         </p>
+                                        <button class="not-print" x-on:click="height = (height == 'auto' ? 200 : 'auto')">Fit</button>
+                                        <button class="not-print btn-swap" data-id="{{ $index }}">Swap</button>
                                     </td>
                                     @if ($loop->iteration % 2 == 0)
                             </tr>
                             <tr>
-                                @endif
-                                @if ($loop->iteration % 8 == 0)
                         </table>
-                        <table class="report page-break-after">
+                        <table class="report no-margin">
                             @endif
                             @endforeach
                         </table>
-                        {{-- <table class="report page-break-after">
-                            <tr>
-                                @for ($i = 1; $i <= 29; $i++)
-                                    <td colspan={{ $i == 29 ? 2 : 1 }}>
-                                        <img src="{{ 'http://placeimg.com/' . rand(500, 3000) . '/' . rand(500, 300) . '/any' }}"
-                                            width="350" height="200" class="m-center" alt="">
-                                        <p class="text-center">
-                                            This is a lead paragraph. It stands out from regular paragraphs.
-                                        </p>
-                                    </td>
-                                    @if ($i % 2 == 0)
-                            </tr>
-                            <tr>
-                                @endif
-                                @if ($i % 8 == 0)
-                        </table>
-                        <table class="report page-break-after">
-                            @endif
-                            @endfor
-                        </table> --}}
                     </main>
                 </td>
             </tr>
         </tbody>
 
     </table>
-
-    <script type="text/javascript">
-        window.print();
-    </script>
+    <script src="{{ asset('user') }}/js/print-report.js"></script>
 </body>
 
 </html>

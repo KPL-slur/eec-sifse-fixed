@@ -75,7 +75,7 @@ class PmReport extends Component
         //INSERT REPORT IMAGE
         $this->upstoreReportImage();
 
-        return redirect()->route('report.index', ['maintenance_type' => 'pm']);
+        return redirect()->route('report.show', ['maintenance_type' => 'pm', 'id' => $this->head_id]);
     }
 
     /**

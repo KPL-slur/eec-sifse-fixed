@@ -1,12 +1,20 @@
-.header, .header-space,
-.footer, .footer-space {
+.headers, .header-spaces,
+.footers, .footer-spaces {
   height: 100px;
 }
-.header {
+.headers {
   position: fixed;
   top: 0;
 }
-.footer {
+.footers {
   position: fixed;
   bottom: 0;
+}
+
+.contents {
+  position: fixed;
+  width: 100%;
+  border: 4px solid #000000;
+  border-collapse: collapse;
+  padding: 5%;
 }

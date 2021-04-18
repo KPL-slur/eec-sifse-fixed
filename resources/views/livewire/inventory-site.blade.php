@@ -6,8 +6,8 @@
         <label>Stock</label>
         <div class="">
             @foreach ($sitedStock as $index => $sitedStock)
-                <div class='@error('stock.stock_id') label-floating has-danger @enderror'>
-                    @error('stock.stock_id')
+                <div class='@error('stocks.'.$index.'.stock_id') is-invalid label-floating has-danger @enderror'>
+                    @error('stocks.'.$index.'.stock_id')
                         <label class="control-label force-has-danger">{{ $message }}</label>
                         <span class="material-icons form-control-feedback">clear</span>
                     @enderror
