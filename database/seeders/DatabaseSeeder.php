@@ -52,16 +52,16 @@ class DatabaseSeeder extends Seeder
                     ->has(Recommendation::factory(5))
                     ->create();
 
-        // HeadReport::factory(10)
-        //             ->cm()
-        //             ->deleted()
-        //             ->has(ExpertReport::factory(1)->eecidExpert()->tenagaAhli())
-        //             ->has(ExpertReport::factory(1)->eecidExpert())
-        //             ->has(ExpertReport::factory(1)->kasieObs())
-        //             ->has(ExpertReport::factory(3))
-        //             ->has(CmBodyReport::factory(1))
-        //             ->has(Recommendation::factory(5))
-        //             ->create();
+        HeadReport::factory(10)
+                    ->cm()
+                    ->deleted()
+                    ->has(ExpertReport::factory(1)->eecidExpert()->tenagaAhli())
+                    ->has(ExpertReport::factory(1)->eecidExpert())
+                    ->has(ExpertReport::factory(1)->kasieObs())
+                    ->has(ExpertReport::factory(3))
+                    ->has(CmBodyReport::factory(1))
+                    ->has(Recommendation::factory(5))
+                    ->create();
 
         // ===== ================ =====
         $this->call([UsersTableSeeder::class]);
