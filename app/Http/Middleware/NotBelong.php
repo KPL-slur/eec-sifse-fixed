@@ -4,8 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use App\Providers\RouteServiceProvider;
 
-class IsApproved
+class NotBelong
 {
     /**
      * Handle an incoming request.
@@ -16,9 +17,9 @@ class IsApproved
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->user()->is_approved == 1){
+        if(auth()->user()->is_approved == 0 || ! $request->user()->hasVerifiedEmail()){
             return $next($request);
         }
-        return redirect('waiting-room');
+        return redirect(RouteServiceProvider::HOME);
     }
 }

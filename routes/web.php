@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use App\Providers\RouteServiceProvider;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
 
 Auth::routes();
 
-Route::group(['prefix' => 'email', 'middleware' =>['auth'] ], function () {
+Route::group(['prefix' => 'email', 'middleware' =>['auth', 'not_belong'] ], function () {
     Route::get('/verify', function () {
         return view('auth.verify');
     })->name('verification.notice');
@@ -27,7 +28,7 @@ Route::group(['prefix' => 'email', 'middleware' =>['auth'] ], function () {
     Route::get('/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
         $request->fulfill();
     
-        return redirect('/home');
+        return redirect(RouteServiceProvider::HOME);
     })->middleware(['signed'])->name('verification.verify');
 
     Route::post('/verification-notification', function (Request $request) {
@@ -48,7 +49,7 @@ Route::group(['prefix' => 'email', 'middleware' =>['auth'] ], function () {
 | ini digunakan middleware auth
 |
 */
-Route::middleware(['auth', 'verified'])->group(function (){
+Route::middleware(['auth', 'verified', 'not_belong'])->group(function (){
     Route::get('waiting-room', function () {
         return view('pages.waiting-room');
     })->name('waiting_room');
