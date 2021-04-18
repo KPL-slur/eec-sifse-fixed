@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\Utility;
 use App\Models\HeadReport;
 use App\Models\PmBodyReport;
 use App\Models\Site;
@@ -15,45 +16,55 @@ class ExpertActivityController extends Controller
         return view('Activity.index');
     }
 
-    public function indexPM(){
-        $pm = HeadReport::where('maintenance_type', 'pm')
+    public function indexActivity($maintenance_type){
+        $reports = HeadReport::where('maintenance_type', $maintenance_type)
         ->with(array('experts'=>function($query){
             $query->where('expert_company', 'Era Elektra Corpora Indonesia');
         }))
+        ->with('site')
+        ->orderBy('head_id', 'desc')
         ->get();
+        // return $pm;
         
-        return view('Activity.pm_activity.pm_activity', compact('pm'));
+        return view('Activity.activity', compact('reports', 'maintenance_type'));
     }
 
-    public function showPm($id){
+    public function show($maintenance_type, $id, Utility $utility){
         $headReport = HeadReport::Where('head_id', $id)->first();
-        $pmBodyReport = HeadReport::Where('head_id', $id)->first()->pmBodyReport;
-        $recommendations = HeadReport::Where('head_id', $id)->first()->recommendations;
-        $reportImages = HeadReport::Where('head_id', $id)->first()->reportImages;
-        // dd($reportImages);
+        abort_unless($headReport, 404, 'Report not found');
+        $date = $utility->easyToReadDate($headReport->report_date_start, $headReport->report_date_end);
 
-        if (!$pmBodyReport) {
-            return  'Detail report not found, please delete this report';
+        switch ($maintenance_type) {
+            case 'pm' :
+                $bodyReport = $headReport->pmBodyReport;
+                abort_unless($bodyReport, 404, 'Report not found');
+                break;
+            
+            case 'cm' :
+                $bodyReport = $headReport->cmBodyReport;
+                abort_unless($bodyReport, 404, 'Report not found');
+                break;
         }
-        return view('Activity.pm_activity.show_pm', compact('headReport', 'pmBodyReport', 'recommendations', 'reportImages'));
-    }
     
-    public function destroyPm($id){
-        $head_reports = DB::table('head_reports')->where('head_id',$id);
-        $head_reports->delete();
+        $recommendations = $headReport->recommendations()->withTrashed()->get();
+        $reportImages = $headReport->reportImages;
 
-        return redirect('pm')->with('status3', 'Data Deleted!');
+        if ($headReport->printedReport) {
+            $fileName = explode("/", $headReport->printedReport->file)[1]; // return "namafile.pdf" without "cm/"
+        } else {
+            $fileName = '';
+        }
+
+        return view('Activity.show', compact('headReport', 'date', 'bodyReport', 'recommendations', 'reportImages', 'fileName', 'maintenance_type'));
     }
 
-    public function indexCM(){
-        $cm = DB::table('head_reports')
-        ->join('sites', 'head_reports.site_id' ,'=', 'sites.site_id')
-        ->where('maintenance_type' , 'cm')
-        ->get();
 
-        return view('Activity.cmActivity.cm_activity', compact('cm'));
-    }
+    // public function destroyPm($id){
+    //     $head_reports = DB::table('head_reports')->where('head_id',$id);
+    //     $head_reports->delete();
 
+    //     return redirect('pm')->with('status3', 'Data Deleted!');
+    // }
 
     // public function add(){
     //     $sites = DB::table('sites')

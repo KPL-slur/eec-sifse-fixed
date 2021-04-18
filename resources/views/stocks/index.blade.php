@@ -115,7 +115,7 @@
                             <th>Status</th>
                             <th>Keterangan</th>
                             @is_admin()
-                              <th class="text-center">Actions</th>
+                              <th class="disabled-sorting text-center">Actions</th>
                             @endis_admin
                           </tr>
                         </thead>

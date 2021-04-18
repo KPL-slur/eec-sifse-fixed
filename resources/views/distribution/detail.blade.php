@@ -34,7 +34,7 @@
                       <th scope="col">Nama Teknisi</th>
                       <th scope="col">Expert Company</th>
                       <th scope="col">Station ID</th>
-                      <th class="text-center">Update or Delete</th>
+                      <th class="disabled-sorting text-center">Update or Delete</th>
                     </tr>
                   </thead>
                   <tbody>
