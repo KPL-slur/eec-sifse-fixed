@@ -27,7 +27,7 @@
                             <div class="card-icon">
                                 <i class="sidebar-mini">CM</i>
                             </div>
-                            <h3 class="card-title">Corective Maintenance</h3>
+                            <h3 class="card-title">Corrective Maintenance</h3>
                         </div>
                         <div class="card-footer">
                             <a class="btn btn-success" href="{{ route("report.create", ['maintenance_type' => 'cm']) }}">NEW</a>

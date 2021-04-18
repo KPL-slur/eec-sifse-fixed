@@ -183,15 +183,10 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
 
     //expertActivity
     Route::get('expertActivity', [App\Http\Controllers\ExpertActivityController::class, 'index'])->name('expertActivity'); 
-    Route::get('showPm/{id}', [App\Http\Controllers\ExpertActivityController::class, 'showPm']); 
-    Route::get('pm', [App\Http\Controllers\ExpertActivityController::class, 'indexPM']); 
-    Route::get('addPm', [App\Http\Controllers\ExpertActivityController::class, 'add']); 
-    Route::post('addPM', [App\Http\Controllers\ExpertActivityController::class, 'addData']); 
-    Route::delete('deletePm/{id}', [App\Http\Controllers\ExpertActivityController::class, 'destroyPm']);
-    Route::get('editPm/{id}', [App\Http\Controllers\ExpertActivityController::class, 'editPm']);
-    Route::post('editPM', [App\Http\Controllers\ExpertActivityController::class, 'editDataPm']);
-
-    Route::get('cm', [App\Http\Controllers\ExpertActivityController::class, 'indexCM']); 
+    Route::group(['prefix' => '{maintenance_type}', 'where' => ['maintenance_type' => '(pm|cm)'], 'as' => 'activity.'], function () {
+        Route::get('/', [App\Http\Controllers\ExpertActivityController::class, 'indexActivity'])->name('index');
+        Route::get('/{id}', [App\Http\Controllers\ExpertActivityController::class, 'show'])->name('show');
+    });
     
     //stock with currencies
     Route::get('stocks', [App\Http\Controllers\StockController::class, 'index'])->name('stocks'); // index stocks

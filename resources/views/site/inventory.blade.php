@@ -10,7 +10,7 @@
         <div class="card">
           {{-- header read plg luar --}}
           <div class="card-header card-header-primary">
-              <h4 class="card-title">Table Inventory {{$sites->radar_name}}</h4>
+              <h4 class="card-title">Table Part of {{$sites->radar_name}}</h4>
           </div>
 
           {{-- body paling luar --}}
@@ -33,22 +33,21 @@
             </div>
             
 
-            <div>
+            {{-- <div>
               <select name="selectGroupStock" class="form-control m-3" id="selectGroupStock" style="max-width:15%;">
                 <option selected value="">Semua</option>
                 @foreach ($stocks_group as $group)
                     <option value="{{$group}}">{{$group}}</option>
                 @endforeach
               </select>
-            </div>
+            </div> --}}
 
             {{-- card kedua --}}
             <div class="card m-3 my-5">
 
               {{-- header kedua --}}
               <div class="card-header card-header-rose">
-                {{-- <h4 class="card-title">Group 1 transmitter</h4> --}}
-                <p class="card-category" id="groupStocksCardHeader">Semua</p>
+                {{-- <p class="card-category" id="groupStocksCardHeader">Semua</p> --}}
               </div>
 
               {{-- card body kedua --}}
@@ -57,7 +56,7 @@
 
                   <div class="col material-datatables">
                     <x-ui.spinner id="spinner" className="spinner-center"/>
-                    <table class="table table-bordered table-hover d-none" cellspacing="0" width="100%" style="width: 100%" id="indexStocksTable">
+                    <table class="table none table-striped table-no-bordered table-hover d-none" cellspacing="0" width="100%" style="width: 100%" id="indexStocksTable">
                       <thead class=" text-primary text-middle">
                         <tr>
                           <th scope="col">#</th>
@@ -66,7 +65,7 @@
                           <th scope="col">Ref_des</th>
                           <th scope="col">Tanggal Masuk</th>
                           <th scope="col">Expired</th>
-                          <th class="text-center">Update or Delete</th>
+                          <th class="disabled-sorting text-center">Update or Delete</th>
                         </tr>
                       </thead>
 

@@ -23,7 +23,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Radar Name</th>
                         <th scope="col">Station ID</th>
-                        <th class="text-center">Detail</th>
+                        <th class="disabled-sorting text-center">Detail</th>
                       </tr>
                     </thead>
                     <tbody>

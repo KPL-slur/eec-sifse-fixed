@@ -25,14 +25,14 @@
 
                 <div class="col material-datatables">
                   <x-ui.spinner id="spinner" className="spinner-center"/>
-                  <table class="table table-bordered table-hover d-none" cellspacing="0" width="100%" style="width:100%" id="indexExpertsTable">
+                  <table class="table table-no-bordered table-hover d-none" cellspacing="0" width="100%" style="width:100%" id="indexExpertsTable">
                       <thead class="text-primary">
                         <tr>
                           <th scope="col">#</th>
                           <th scope="col">Name</th>
                           <th scope="col">NIP</th>
                           <th scope="col">Expert Company</th>
-                          <th class="text-center">Update or Delete</th>
+                          <th class="disabled-sorting text-center">Update or Delete</th>
                         </tr>
                       </thead>
                     <tbody>

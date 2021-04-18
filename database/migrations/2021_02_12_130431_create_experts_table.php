@@ -16,7 +16,7 @@ class CreateExpertsTable extends Migration
         Schema::create('experts', function (Blueprint $table) {
             $table->bigIncrements('expert_id');
             $table->string('name');
-            $table->string('nip');
+            $table->string('nip')->unique()->nullable();
             $table->string('expert_company');
             $table->timestamps();
         });
