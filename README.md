@@ -1,62 +1,57 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Sistem Informasi EECID
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistem Informasi EECID is a web app that allows experts and managers from Era Elektra Corpora Indonesia to make maintanance reports, manage stocks, and manage user managements. This project mainly build out of PHP framework *laravel* release 8.
 
-## About Laravel
+## Prerequisites
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Before you begin, we encourage you to have these tools :
+1. Git
+2. XAMPP, or any local web server solution that has PHP and MySQL in it.
+3. Composer
+4. Visual Studio Code, or any IDE that supports Git as their Version Control
+5. _OPTIONAL :_ any git tools that could help you tell how messy your branches are. Example : Git Graph extension at Visual Studio Code, or SourceTree desktop app.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Getting Started Sistem Infromasi EECID
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+To start using Sistem Informasi EECID, follow these steps:
+1. Clone the repo inside XAMPP htdocs (or other local web server)
+2. Go to `master` branch (*master is the development branch*)
+4. Copy and rename the `.env.example` to `.env`
+5. Edit your credentials in the `.env` file
+- Database credentials
+- Mail server configuration. Eg. mailtrap
+6. Run `$ composer install` in the project directory
+7. Run `$ composer dump-autoload`
+8. Run `$ php artisan key:generate`
+9. Run `$ php artisan migrate --seed`
+10. Run `$ php artisan storage:link`
+11. Thats it, now run `$ php artisan serve`
+12. Open your browser and fill the url `localhost:8000`
+13. To test the app, use this credential to login. (This login data added by seeder)
+- Admin credential email:`admin@eecid.com` password:`secret`
+- Expert credential email:`eko@eecid.com` password:`12345`
+- Or you can test the register features 
 
-## Learning Laravel
+## Start Developing
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+To start developing the program, you should follow these steps:
+1. Go to `master` branch
+2. Make new branch `git checkout -b <the_name_of_your_new_feature_branch>`
+3. If you think you've finished the changes on your branch, stage it, and put them on your local repository.
+4. Push them to remote repository
+5. Make a pull request from github
+6. Review the pull request, resolve conflict if exists, and merge.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## We Wish We Knew These Things Before We Started Developing
+* We should've used `main` for our development branch. `main` branch is actually only for our first commit. We never used them for anything else. Why? Because we're just an ignorant Uni student and we thought that `main` is just used for production. If you want to, use this branch for production or as in other words, deployment. OR make another branch from `master` branch and named it `release-<number>`, you can fill `<number>` incrementally according to preceding version, for example `release-1`, `release-2.0`, `release-2.1.2`
+* We should've named our feature branch `feature-<name>`. Our feature branch naming are over the place. `report-bugfix-improvement`, `reset-rezza-04-02`, you think those are good name for a branch? Of course not. 
+* Delete the branch after you have made Pull Request (PR) and merged them. As you can see, we never delete `feature` branches. Don't worry though,  if you want to revert, or see what changes that you had merged, you can see the Pull Request tab from github, there are histories of PR's that has been merged or closed.
 
-## Laravel Sponsors
+## Made With Love By Our Team :
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT). 
+* [@rizkybaihaqy](https://github.com/rizkybaihaqy)
+* [@rezzaldy](https://github.com/rezzaldy)
+* [@hilmiwicak](https://github.com/hilmiwicak)
+* [@madewantara](https://github.com/madewantara)
+* [@andranugraha](https://github.com/andranugraha)
+* `put your name here if you've contributed!`
