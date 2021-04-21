@@ -40,7 +40,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title">Modal title</h5>
+                      <h5 class="modal-title">Print</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -88,24 +88,22 @@
               @endif
             @endis_admin
 
-            {{-- card kedua --}}
-            <div class="card m-3 my-5">
-
-              {{-- header kedua --}}
-              <div class="card-header card-header-rose"></div>
-
-              {{-- card body kedua --}}
-              <div class="card-body">
                 <div class="row">
                   <div class="col">
                     <div class="table-responsive material-datatables ">
-                      <x-ui.spinner id="spinner" className="spinner-center"/>
+                      <x-ui.spinner id="spinner" className="spinner-center"/><br>
                       <table class="table none table-striped table-no-bordered table-hover d-none" cellspacing="0" width="100" style="width:100%" id="indexStocksTable">
                         <thead class=" text-primary text-middle">
                           <tr>
+<<<<<<< HEAD
                             <th>|</th>
                             <th>Item Name</th>
                             <th>Item's Group</th>
+=======
+                            <th>#</th>
+                            <th>Nama Barang</th>
+                            <th>Group</th>
+>>>>>>> ddcfb2f6de15db29bde69d0277eaf2d1421bca35
                             <th>Part Number</th>
                             <th>Ref Des</th>
                             <th>Date of Entry</th>
@@ -158,10 +156,6 @@
                   </div>
                   </div>
                 </div>
-              </div>
-              {{-- card body kedua --}}
-            </div>
-            {{-- card kedua --}}
 
           </div>
           {{-- body paling luar --}}
