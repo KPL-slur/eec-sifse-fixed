@@ -12,14 +12,14 @@
           <div class="card-header card-header-primary">
             <h4 class="card-title ">Table Inventory and their actions</h4>
             @is_admin()
-              <p class="card-category">Here you can make new stock row, edit specific stock, or delete them.</p>
+              <p class="card-category">Here you can make new Item row, edit specific Item, or delete them.</p>
             @endis_admin
           </div>
 
           {{-- body paling luar --}}
           <div class="card-body">
             @is_admin()
-              <p class="text-center">Harga Kurs Sekarang : <div class="text-primary text-center display-4">Rp {{ $rate_fix }}</div></p>
+              <p class="text-center">Current Exchange Rates : <div class="text-primary text-center display-4">Rp {{ $rate_fix }}</div></p>
               <div class="text-right">
                 {{-- button modal trigger  --}}
                 <button type="button" rel="tooltip" title="print data" class="btn btn-outline-primary" data-toggle="modal" data-target="#modal_input_stocks_report">
@@ -104,16 +104,16 @@
                         <thead class=" text-primary text-middle">
                           <tr>
                             <th>|</th>
-                            <th>Nama Barang</th>
-                            <th>Group</th>
+                            <th>Item Name</th>
+                            <th>Item's Group</th>
                             <th>Part Number</th>
                             <th>Ref Des</th>
-                            <th>Tanggal Masuk</th>
+                            <th>Date of Entry</th>
                             <th>Expired</th>
-                            <th>Kurs Beli</th>
-                            <th>Jumlah Unit</th>
+                            <th>Buying Rate</th>
+                            <th>Number of Units</th>
                             <th>Status</th>
-                            <th>Keterangan</th>
+                            <th>Item's Information</th>
                             @is_admin()
                               <th class="disabled-sorting text-center">Actions</th>
                             @endis_admin

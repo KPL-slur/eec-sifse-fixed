@@ -46,7 +46,7 @@
                 <div class="form-group">
                   <label>Expert Name</label>
                   <select name="expert_id" id="expert_id" class="form-control distribution @error('expert_id') is-invalid @enderror">
-                    <option selected disabled value="">--Choose Expert Name--</option>
+                    <option selected disabled value="">--Choose FSE Name--</option>
                       @foreach ($experts as $exp)
                           <option value="{{$exp->expert_id}}" {{ old('expert_id') == $exp->expert_id ? 'selected' : '' }} 
                             @if ($distributions->expert_id === $exp->expert_id) selected @endif
@@ -55,7 +55,8 @@
                           </option>
                       @endforeach
                   </select>
-                  
+                  <small class="form-text text-muted">If the FSE not exist, then add it to the FSE Management feature first</small>
+
                   @error('expert_id')
                     <div class="invalid-feedback">
                       {{$message}}

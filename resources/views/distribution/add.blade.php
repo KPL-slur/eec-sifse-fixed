@@ -30,7 +30,7 @@
                         <option value="{{ $st->site_id }}" {{ old('site_id') == $st->site_id ? 'selected' : '' }}>{{$st->station_id}}</option>
                       @endforeach
                     </select>
-                    <small class="form-text text-muted">If the site does not exist, then add it to the site feature first</small>
+                    <small class="form-text text-muted">If the site does not exist, then add it to the Site feature first</small>
 
                     @error('site_id')
                         <div class="invalid-feedback">
@@ -43,11 +43,12 @@
                   <div class="form-group">
                     <label >Expert Name</label>
                     <select name="expert_id" id="expert_id" class="form-control distribution @error('expert_id') is-invalid @enderror ">
-                        <option value="" selected disabled>--Choose Expert Name--</option>
+                        <option value="" selected disabled>--Choose FSE Name--</option>
                         @foreach ($experts as $exp)
                           <option value={{$exp->expert_id}} {{old('expert_id') == $exp->expert_id ? 'selected' : '' }}>{{$exp->name}}</option>
                         @endforeach                        
                     </select>
+                    <small class="form-text text-muted">If the FSE not exist, then add it to the FSE Management feature first</small>
                     
                     @error('expert_id')
                       <div class="invalid-feedback">

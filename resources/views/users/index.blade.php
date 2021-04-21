@@ -23,7 +23,6 @@
                           <th scope="col">#</th>
                           <th scope="col">Name</th>
                           <th scope="col">Email</th>
-                          <th scope="col">Password</th>
                           <th scope="col">Creation Date</th>
                           <th class="text-center">Delete</th>
                           <th class="text-center">Status</th>
@@ -36,7 +35,6 @@
                           <td scope="row">{{$loop->iteration}}</td>
                           <td>{{$user->name}}</td>
                           <td>{{$user->email}}</td>
-                          <td>{{$user->password}}</td>
                           <td>{{$user->created_at}}</td>
   
                           <td class="td-actions text-center">
