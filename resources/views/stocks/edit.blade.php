@@ -7,17 +7,17 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-warning">
-            <h4 class="card-title ">Input Inventory with Exchange Rate</h4>
-            <p class="card-category"> Here is a subtitle for this table</p>
+            <h4 class="card-title ">Edit Inventory with Exchange Rate</h4>
+            <p class="card-category"> Here you can edit company item</p>
           </div>
           <div class="card-body">
-              <p class="mb-4 text-center h3">Harga Kurs Sekarang : <span class="text-primary display-4">Rp {{ $rate_fix }}</span> ke USD</p>
+              <p class="mb-4 text-center h3">Current Exchange Rates : <span class="text-primary display-4">Rp {{ $rate_fix }}</span> to USD</p>
               <form action="{{ url('stocks/') }}/{{ $stock->stock_id }}/update" method="POST">
                 @method('PUT')
                 @csrf
                   <div class="form-group my-4">
-                    <label for="nama_barang">Nama Barang</label>
-                    <input type="text" class="form-control @error('nama_barang') is-invalid @enderror" id="nama_barang" name="nama_barang" placeholder="Masukkan nama barang" value="{{ $stock->nama_barang }}" >
+                    <label for="nama_barang">Item Name</label>
+                    <input type="text" class="form-control @error('nama_barang') is-invalid @enderror" id="nama_barang" name="nama_barang" placeholder="Input Item Name" value="{{ $stock->nama_barang }}" >
                     @error('nama_barang')
                       <div class="invalid-feedback">
                         {{ $message }}
@@ -25,9 +25,9 @@
                     @enderror
                   </div>
                   <div class="form-group my-4">
-                    <label for="group">Group nya</label><br>
+                    <label for="group">Item's Group</label><br>
                     <select name="group" id="group" class="form-control @error('group') is-invalid @enderror">
-                      <option value="" disabled @if($stock->group === "") selected @endif {{ old('group') == '' ? 'selected' : '' }} >-- Pilih jenis barang --</option>
+                      <option value="" disabled @if($stock->group === "") selected @endif {{ old('group') == '' ? 'selected' : '' }} >-- Choose Item Group --</option>
                       @foreach ($stocks_group as $sg)
                         <option value="{{$sg}}" @if($sg === $stock->group) selected @endif {{ old('group') == $sg ? 'selected' : '' }}>{{ $sg }}</option>
                       @endforeach
@@ -40,7 +40,7 @@
                   </div>
                   <div class="form-group my-4">
                     <label for="part_number">Part Number</label>
-                    <input type="text" class="form-control @error('part_number') is-invalid @enderror" id="part_number" name="part_number" placeholder="Masukkan part number" value="{{ $stock->part_number }}" >
+                    <input type="text" class="form-control @error('part_number') is-invalid @enderror" id="part_number" name="part_number" placeholder="Input Part Number" value="{{ $stock->part_number }}" >
                     @error('part_number')
                       <div class="invalid-feedback">
                         {{ $message }}
@@ -48,8 +48,8 @@
                     @enderror
                   </div>
                   <div class="form-group my-4">
-                    <label for="ref_des">Ref Des</label>
-                    <input type="text" class="form-control @error('ref_des') is-invalid @enderror" id="ref_des" name="ref_des" placeholder="Masukkan Ref Des" value="{{ $stock->ref_des }}" >
+                    <label for="ref_des">Ref des</label>
+                    <input type="text" class="form-control @error('ref_des') is-invalid @enderror" id="ref_des" name="ref_des" placeholder="Input Ref des" value="{{ $stock->ref_des }}" >
                     @error('ref_des')
                       <div class="invalid-feedback">
                         {{ $message }}
@@ -57,8 +57,8 @@
                     @enderror
                   </div>
                   <div class="form-group my-4">
-                    <label for="tgl_masuk">Tanggal Masuk / Edit</label>
-                    <input type="date" class="form-control @error('tgl_masuk') is-invalid @enderror" id="tgl_masuk" name="tgl_masuk" placeholder="Tanggal Input" value="{{ $stock->tgl_masuk }}">
+                    <label for="tgl_masuk">Date of Entry / Edit</label>
+                    <input type="date" class="form-control @error('tgl_masuk') is-invalid @enderror" id="tgl_masuk" name="tgl_masuk" placeholder="Date Input" value="{{ $stock->tgl_masuk }}">
                     @error('tgl_masuk')
                       <div class="invalid-feedback">
                         {{ $message }}
@@ -75,8 +75,8 @@
                     @enderror
                   </div>
                   <div class="form-group my-4">
-                    <label for="kurs_beli">Kurs Beli</label>
-                    <input type="text" class="form-control @error('kurs_beli') is-invalid @enderror" id="kurs_beli" name="kurs_beli" placeholder="Kurs Beli" value="{{ $stock->kurs_beli }}">
+                    <label for="kurs_beli">Buying Rate</label>
+                    <input type="text" class="form-control @error('kurs_beli') is-invalid @enderror" id="kurs_beli" name="kurs_beli" placeholder="Input Buying Rate" value="{{ $stock->kurs_beli }}">
                     @error('kurs_beli')
                       <div class="invalid-feedback">
                         {{ $message }}
@@ -84,8 +84,9 @@
                     @enderror
                   </div>
                   <div class="form-group my-4">
-                    <label for="jumlah_unit">Jumlah Unit</label>
-                    <input type="text" class="form-control @error('jumlah_unit') is-invalid @enderror " id="jumlah_unit" name="jumlah_unit" value="{{ $stock->jumlah_unit }}">
+                    <label for="jumlah_unit">Number of Units</label>
+                    <input type="text" class="form-control @error('jumlah_unit') is-invalid @enderror " id="jumlah_unit" name="jumlah_unit"
+                    placeholder="How many units do you want to include ?" value="{{ $stock->jumlah_unit }}">
                     @error('jumlah_unit')
                       <div class="invalid-feedback">
                         {{ $message }}
@@ -106,7 +107,7 @@
                     @enderror
                   </div>                    
                   <div class="form-group my-4">
-                    <label for="keterangan">Keterangan</label>
+                    <label for="keterangan">Item's Information</label>
                     <input type="text" class="form-control @error('keterangan') is-invalid @enderror " id="keterangan" name="keterangan" value="{{ $stock->keterangan }}">
                     @error('keterangan')
                       <div class="invalid-feedback">
@@ -115,7 +116,7 @@
                     @enderror
                   </div>
                   <button type="submit" class="btn btn-primary">Submit</button>
-                  <a href="{{ url()->previous() }}" class="btn btn-info ml-3 d-inline">Kembali</a>
+                  <a href="{{ url()->previous() }}" class="btn btn-info ml-3 d-inline">Back</a>
               </form>
           </div>
         </div>

@@ -24,6 +24,7 @@ class UserController extends Controller
         ->join('experts', 'users.expert_id', 'experts.expert_id')
         ->where('is_admin', '<>', 1)
         ->orWhere('is_admin', '=', null)
+        ->orderBy('users.created_at', 'desc')
         ->get();
 
         $experts = Expert::where('expert_company', 'Era Elektra Corpora Indonesia')

@@ -45,12 +45,12 @@
             </div>
             {{-- div card header --}}
             <div class="card-body table-responsive-md">
-              <table class="table table-hover table-striped" id="dashboardPmTable">
+              <table class="table table-hover table-striped">
                 <thead>
                   <th>No</th>
                   <th>Lokasi</th>
                   <th>Date</th>
-                  <th>Technicians</th>
+                  <th>FSE</th>
                   <th class="text-center">Remark</th>
                 </thead>
                 <tbody>
@@ -64,7 +64,7 @@
                           {{ $expert->name }}, 
                         @endforeach
                       </td>
-                      <td>{{ $pm->pmBodyReport->remark }}</td>
+                      <td class="text-center">{{ $pm->pmBodyReport->remark }}</td>
                     </tr>
                   @endforeach
                 </tbody>
@@ -85,12 +85,12 @@
               <h4 class="card-title">CM</h4>
             </div>
             <div class="card-body table-responsive-md">
-              <table class="table table-hover">
+              <table class="table table-hover table-striped">
                 <thead class="text-warning">
                   <th>No</th>
                   <th>Lokasi</th>
                   <th>Date</th>
-                  <th>Technicians</th>
+                  <th>FSE</th>
                   <th class="text-center">Remark</th>
                 </thead>
                 <tbody>
@@ -104,7 +104,7 @@
                           {{ $expert->name }},
                         @endforeach
                       </td>
-                      <td>{{ $cm->cmBodyReport->remark }}</td>
+                      <td class="text-center">{{ $cm->cmBodyReport->remark }}</td>
                     </tr>
                   @endforeach
                 </tbody>
