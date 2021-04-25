@@ -99,7 +99,7 @@ trait WithRecommendation
         foreach ($siteHeadReports as $siteHeadReport){ //headreport
             foreach ($siteHeadReport->recommendations as $index => $recommendation) {
                 $this->recommends[] = [
-                                        'date' => $siteHeadReport->report_date_end,
+                                        'date' => date('j F Y', strtotime($siteHeadReport->report_date_end)),
                                         'name' => $recommendation->name,
                                         'jumlah_unit_needed' => $recommendation->jumlah_unit_needed,
                                         'head_id' => $recommendation->head_id,
@@ -112,7 +112,7 @@ trait WithRecommendation
             $deletedRecommends = $headReport->recommendations()->onlyTrashed()->get();
             foreach ($deletedRecommends as $deletedRecommend) {
                 $this->recommends[] = [
-                                        'date' => $headReport->report_date_end,
+                                        'date' => date('j F Y', strtotime($headReport->report_date_end)),
                                         'name' => $deletedRecommend->name,
                                         'jumlah_unit_needed' => $deletedRecommend->jumlah_unit_needed,
                                         'head_id' => $deletedRecommend->head_id,
