@@ -24,7 +24,7 @@ class StockFactory extends Factory
         $tgl_masuk = $this->faker->dateTimeInInterval('-1 years', '+1 years');
          
         return [
-            'nama_barang' => $this->faker->word(),
+            'nama_barang' => $this->faker->unique()->word(),
             'group' => $this->faker->randomElement(['Receiver', 'Transmitter', 'Antenna', 'Tambahan']),
             'part_number' => strtoupper($this->faker->numerify('PL-######-###')), //PL-133157-100
             'ref_des' => $this->faker->bothify('#?###'),

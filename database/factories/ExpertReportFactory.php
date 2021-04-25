@@ -34,7 +34,7 @@ class ExpertReportFactory extends Factory
      *
      * @return \Illuminate\Database\Eloquent\Factories\Factory
      */
-    public function kasieObs()
+    public function chanceKasieObs()
     {
         return $this->state(function (array $attributes) {
             return [

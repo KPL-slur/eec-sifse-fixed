@@ -24,7 +24,7 @@ class SiteFactory extends Factory
         return [
             'radar_name'=> $this->faker->randomElement([$this->faker->numerify('RANGER-X#'), strtoupper($this->faker->bothify('DWSR-####?'))]),
             'image'=>'default.png',
-            'station_id'=> $this->faker->city(),
+            'station_id'=> $this->faker->unique()->city(),
         ];
     }
 }
