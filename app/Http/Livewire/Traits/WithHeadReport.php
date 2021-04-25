@@ -80,7 +80,6 @@ trait WithHeadReport
             $auth = auth()->user();
             $this->experts = [
                 ['expert_id' => $auth->expert_id, 'expert_company' => $auth->expert->expert_company, 'expert_nip' => $auth->expert->nip, 'expert_role' => ''],
-                ['expert_id' => '', 'expert_company' => '', 'expert_nip' => '', 'expert_role' => ''],
             ];
         }
     }
@@ -298,6 +297,9 @@ trait WithHeadReport
         $this->validateManualExpert();
         if ($this->manualExperts) {
             foreach ($this->manualExperts as $manualExpert) {
+                if ($manualExpert['expert_nip'] == "") {
+                    $manualExpert['expert_nip'] = NULL;
+                }
                 if ($manualExpert['expert_name']) {
                     Expert::create([
                         'name' => $manualExpert['expert_name'],
