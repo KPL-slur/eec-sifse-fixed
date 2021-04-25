@@ -280,11 +280,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($headReport->recommendations as $recomendation)
+                                @foreach ($recomendations as $recomendation)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $recomendation->name }}</td>
-                                        <td>{{ $recomendation->jumlah_unit_needed }}</td>
+                                        <td>{{ $recomendation['name'] }}</td>
+                                        <td>{{ $recomendation['jumlah_unit_needed'] }}</td>
                                     </tr>
                                 @endforeach
                             <tbody>
