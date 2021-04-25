@@ -22,12 +22,6 @@
 
                 {{-- NAME FIELD --}}
                 <div class="row">
-                  <div class="col-12 text-left mt-2">
-                    <a title="back" class="btn btn-sm btn-primary m-2" href="{{ route('home') }}">
-                      <i class="material-icons">arrow_back</i>
-                      <div class="ripple-container"></div>
-                    </a>
-                  </div>
                   <label class="col-sm-2 col-form-label mt-2">{{ __('Name') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
