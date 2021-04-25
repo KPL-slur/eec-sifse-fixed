@@ -100,7 +100,7 @@ trait WithReportImage
                     'attachments.'.$index.'.caption' => 'required',
                     'attachments.'.$index.'.image' => 'required|image'
                 ],[
-                    'required' => 'This field is required.',
+                    'required' => 'The input must be an image.',
                     'image' => 'The input must be an image.',
                 ]);
             }
