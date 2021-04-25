@@ -52,8 +52,8 @@ trait WithHeadReport
      */
     public function mountWithHeadReport($id=null)
     {
-        $this->sites = Site::all();
-        $this->expertsData = Expert::all(); 
+        $this->sites = Site::OrderBy('station_id', 'asc')->get();
+        $this->expertsData = Expert::OrderBy('name', 'asc')->get(); 
         $this->uniqueCompanies = $this->expertsData->unique('expert_company');
 
         if ($id) {

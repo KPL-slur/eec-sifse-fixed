@@ -187,6 +187,7 @@ trait WithRecommendation
         $utility = new Utility; // instance kelas helper
         // preparing for recommend dropdown option
         $this->stocks = Stock::select('nama_barang AS name')
+                            ->orderBy('name', 'asc')
                             ->get()
                             ->toArray();
         foreach ($this->recommends as $recommend){
