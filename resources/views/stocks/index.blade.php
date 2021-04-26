@@ -47,11 +47,11 @@
                     </div>
                     <div class="modal-body">
                       <div class="form-group">
-                        <label for="input_date_start_stocks_report">Tanggal Awal</label>
+                        <label for="input_date_start_stocks_report">Date Start</label>
                         <input type="date" name="input_date_start_stocks_report" id="input_date_start_stocks_report" class="form-control">
                       </div>
                       <div class="form-group">
-                        <label for="input_date_end_stocks_report">Tanggal Akhir</label>
+                        <label for="input_date_end_stocks_report">Date End</label>
                         <input type="date" name="input_date_end_stocks_report" id="input_date_end_stocks_report" class="form-control" disabled>
                       </div>
                     </div>
@@ -95,15 +95,9 @@
                       <table class="table none table-striped table-no-bordered table-hover d-none" cellspacing="0" width="100" style="width:100%" id="indexStocksTable">
                         <thead class=" text-primary text-middle">
                           <tr>
-<<<<<<< HEAD
-                            <th>|</th>
+                            <th class="disabled-sorting"></th>
                             <th>Item Name</th>
                             <th>Item's Group</th>
-=======
-                            <th>#</th>
-                            <th>Nama Barang</th>
-                            <th>Group</th>
->>>>>>> ddcfb2f6de15db29bde69d0277eaf2d1421bca35
                             <th>Part Number</th>
                             <th>Ref Des</th>
                             <th>Date of Entry</th>

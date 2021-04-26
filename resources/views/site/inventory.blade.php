@@ -60,7 +60,7 @@
                       <thead class=" text-primary text-middle">
                         <tr>
                           <th scope="col">#</th>
-                          <th scope="col">Item Nameclea</th>
+                          <th scope="col">Item Name</th>
                           <th scope="col">Part Number</th>
                           <th scope="col">Ref_des</th>
                           <th scope="col">Tanggal Masuk</th>

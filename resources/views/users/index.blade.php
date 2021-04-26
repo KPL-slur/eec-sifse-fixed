@@ -24,7 +24,7 @@
                           <th scope="col">Name</th>
                           <th scope="col">Email</th>
                           <th scope="col">Creation Date</th>
-                          <th class="text-center">Delete</th>
+                          <th class="disabled-sorting text-center">Delete</th>
                           <th class="text-center">Status</th>
                         </tr>
                       </thead>

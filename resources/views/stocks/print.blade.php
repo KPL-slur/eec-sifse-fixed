@@ -21,7 +21,8 @@
         <div class="headers">
           <img class="mT-30 mL-20" src="{{asset('user')}}/img/kop.png" alt="kop image" style="width: 300px !important;" />
           <p class="text-tiny">
-            Jl. Benyamin Suaeb No. 5 Grand Palace Blok A No. 16 Kemayoran<br>
+            Head Office : Eightyeight@Kasablanka Tower A 26D floor. Jl. Raya Casablanca Kav. 88 Jakarta Selatan - 12870<br>
+            Operational Office : Jl. Benyamin Suaeb No. 5 Grand Palace Blok A No. 16 Kemayoran<br>
             Jakarta Pusat 10630, Indonesia<br>
             Phone : 021-22606878<br>
             FAX : 021-22606878<br>
@@ -50,14 +51,14 @@
                 <table class="table tablesorter" id="">
                     <thead class=" text-primary">
                         <th scope="col">#</th>
-                        <th scope="col">Group</th>
-                        <th scope="col">Nama Barang</th>
+                        <th scope="col">Item's Group</th>
+                        <th scope="col">Item Name</th>
                         <th scope="col">Ref des</th>
                         <th scope="col">Part Number</th>
-                        <th scope="col">Tanggal Masuk</th>
+                        <th scope="col">Date of Entry</th>
                         <th scope="col">Expired</th>
-                        <th scope="col">Kurs Beli</th>
-                        <th scope="col">Jumlah Unit</th>
+                        <th scope="col">Buying Rate</th>
+                        <th scope="col">Number of Units</th>
                         <th scope="col">Status</th>
                     </thead>
                     <tbody>
