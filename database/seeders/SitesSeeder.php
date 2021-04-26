@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
+use App\Models\Site;
+use App\Models\SitedStock;
+use App\Models\Distribution;
 
 class SitesSeeder extends Seeder
 {
@@ -13,6 +16,11 @@ class SitesSeeder extends Seeder
      */
     public function run()
     {
+        Site::factory(config('seeder.site_count'))
+                    ->has(Distribution::factory(2))
+                    ->has(SitedStock::factory(config('seeder.sitedstock_count')))
+                    ->create();
+        
         DB::table('sites')->insert([
             'radar_name'=>'DWSR-2501C',
             'image'=>'027ce6f5bc035a08d207f0de97b23965.png',

@@ -36,6 +36,6 @@ class UsersTableSeeder extends Seeder
             'updated_at' => now()
         ]);
 
-        User::factory(9)->create();
+        User::factory(config('seeder.eecid_expert_count')-1)->create();
     }
 }

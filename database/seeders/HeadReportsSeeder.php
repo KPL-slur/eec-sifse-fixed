@@ -4,6 +4,11 @@ namespace Database\Seeders;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
+use App\Models\HeadReport;
+use App\Models\ExpertReport;
+use App\Models\CmBodyReport;
+use App\Models\PmBodyReport;
+use App\Models\Recommendation;
 
 class HeadReportsSeeder extends Seeder
 {
@@ -14,44 +19,44 @@ class HeadReportsSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('head_reports')->insert([
-            'site_id' => 1,
-            'maintenance_type' => 'pm',
-            'kasat_name' => 'Hermawan Dwi',
-            'kasat_nip' => '123456789123456789',
-            'report_date_start' => now(),
-            'report_date_end' => now(),
-            'created_at' => now(),
-        ]);
-        DB::table('head_reports')->insert([
-            'site_id' => 1,
-            'maintenance_type' => 'pm',
-            'kasat_name' => 'Hermawan Dwi',
-            'kasat_nip' => '123456789123456789',
-            'report_date_start' => now(),
-            'report_date_end' => now(),
+        HeadReport::factory(config('seeder.pm_count'))
+                    ->has(ExpertReport::factory(1)->eecidExpert()->tenagaAhli())
+                    ->has(ExpertReport::factory(1)->eecidExpert())
+                    ->has(ExpertReport::factory(1)->chanceKasieObs())
+                    ->has(ExpertReport::factory(3))
+                    ->has(PmBodyReport::factory(1))
+                    ->has(Recommendation::factory(config('seeder.recommendation_count')))
+                    ->create();
 
-            'created_at' => now(),
-        ]);
-        DB::table('head_reports')->insert([
-            'site_id' => 2,
-            'maintenance_type' => 'cm',
-            'kasat_name' => 'Dwi Cahyono',
-            'kasat_nip' => '123456789123456789',
-            'report_date_start' => now(),
-            'report_date_end' => now(),
+        HeadReport::factory(config('seeder.cm_count'))
+                    ->cm()
+                    ->has(ExpertReport::factory(1)->eecidExpert()->tenagaAhli())
+                    ->has(ExpertReport::factory(1)->eecidExpert())
+                    ->has(ExpertReport::factory(1)->chanceKasieObs())
+                    ->has(ExpertReport::factory(3))
+                    ->has(CmBodyReport::factory(1))
+                    ->has(Recommendation::factory(config('seeder.recommendation_count')))
+                    ->create();
 
-            'created_at' => now(),
-        ]);
-        DB::table('head_reports')->insert([
-            'site_id' => 2,
-            'maintenance_type' => 'cm',
-            'kasat_name' => 'Dwi Cahyono',
-            'kasat_nip' => '123456789123456789',
-            'report_date_start' => now(),
-            'report_date_end' => now(),
+        HeadReport::factory(config('seeder.deleted_pm_count'))
+                    ->deleted()
+                    ->has(ExpertReport::factory(1)->eecidExpert()->tenagaAhli())
+                    ->has(ExpertReport::factory(1)->eecidExpert())
+                    ->has(ExpertReport::factory(1)->chanceKasieObs())
+                    ->has(ExpertReport::factory(3))
+                    ->has(PmBodyReport::factory(1))
+                    ->has(Recommendation::factory(config('seeder.recommendation_count')))
+                    ->create();
 
-            'created_at' => now(),
-        ]);
+        HeadReport::factory(config('seeder.deleted_cm_count'))
+                    ->cm()
+                    ->deleted()
+                    ->has(ExpertReport::factory(1)->eecidExpert()->tenagaAhli())
+                    ->has(ExpertReport::factory(1)->eecidExpert())
+                    ->has(ExpertReport::factory(1)->chanceKasieObs())
+                    ->has(ExpertReport::factory(3))
+                    ->has(CmBodyReport::factory(1))
+                    ->has(Recommendation::factory(config('seeder.recommendation_count')))
+                    ->create();
     }
 }
