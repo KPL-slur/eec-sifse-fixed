@@ -22,7 +22,7 @@ class SitedStockFactory extends Factory
     public function definition()
     {
         return [
-            'stock_id'=>$this->faker->numberBetween(1, 100),
+            'stock_id'=>$this->faker->numberBetween(1, config('seeder.stock_count')),
             'created_at' => now()
         ];
     }

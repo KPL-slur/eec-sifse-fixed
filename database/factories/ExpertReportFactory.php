@@ -23,7 +23,7 @@ class ExpertReportFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'expert_id' => $this->faker->numberBetween(1, 10),
+                'expert_id' => $this->faker->numberBetween(1, config('seeder.eecid_expert_count')),
                 'role' => 'Teknisi',
             ];
         });
@@ -65,7 +65,7 @@ class ExpertReportFactory extends Factory
     public function definition()
     {
         return [
-            'expert_id'=> $this->faker->numberBetween(11, 60),
+            'expert_id'=> $this->faker->numberBetween(config('seeder.eecid_expert_count')+1, config('seeder.eecid_expert_count')+config('seeder.expert_count')),
             'role' => 'Teknisi',
             'created_at'=>now()
         ];

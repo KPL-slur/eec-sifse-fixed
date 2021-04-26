@@ -19,26 +19,36 @@ class HeadReportsSeeder extends Seeder
      */
     public function run()
     {
-        HeadReport::factory(10)
+        HeadReport::factory(config('seeder.pm_count'))
                     ->has(ExpertReport::factory(1)->eecidExpert()->tenagaAhli())
                     ->has(ExpertReport::factory(1)->eecidExpert())
                     ->has(ExpertReport::factory(1)->chanceKasieObs())
                     ->has(ExpertReport::factory(3))
                     ->has(PmBodyReport::factory(1))
-                    ->has(Recommendation::factory(5))
+                    ->has(Recommendation::factory(config('seeder.recommendation_count')))
                     ->create();
 
-        HeadReport::factory(10)
+        HeadReport::factory(config('seeder.cm_count'))
                     ->cm()
                     ->has(ExpertReport::factory(1)->eecidExpert()->tenagaAhli())
                     ->has(ExpertReport::factory(1)->eecidExpert())
                     ->has(ExpertReport::factory(1)->chanceKasieObs())
                     ->has(ExpertReport::factory(3))
                     ->has(CmBodyReport::factory(1))
-                    ->has(Recommendation::factory(5))
+                    ->has(Recommendation::factory(config('seeder.recommendation_count')))
                     ->create();
 
-        HeadReport::factory(10)
+        HeadReport::factory(config('seeder.deleted_pm_count'))
+                    ->deleted()
+                    ->has(ExpertReport::factory(1)->eecidExpert()->tenagaAhli())
+                    ->has(ExpertReport::factory(1)->eecidExpert())
+                    ->has(ExpertReport::factory(1)->chanceKasieObs())
+                    ->has(ExpertReport::factory(3))
+                    ->has(PmBodyReport::factory(1))
+                    ->has(Recommendation::factory(config('seeder.recommendation_count')))
+                    ->create();
+
+        HeadReport::factory(config('seeder.deleted_cm_count'))
                     ->cm()
                     ->deleted()
                     ->has(ExpertReport::factory(1)->eecidExpert()->tenagaAhli())
@@ -46,7 +56,7 @@ class HeadReportsSeeder extends Seeder
                     ->has(ExpertReport::factory(1)->chanceKasieObs())
                     ->has(ExpertReport::factory(3))
                     ->has(CmBodyReport::factory(1))
-                    ->has(Recommendation::factory(5))
+                    ->has(Recommendation::factory(config('seeder.recommendation_count')))
                     ->create();
     }
 }

@@ -22,7 +22,7 @@ class DistributionFactory extends Factory
     public function definition()
     {
         return [
-            'expert_id'=> $this->faker->numberBetween(1, 10),
+            'expert_id'=> $this->faker->numberBetween(1, config('seeder.eecid_expert_count')),
             'created_at' => now()
         ];
     }

@@ -16,9 +16,9 @@ class SitesSeeder extends Seeder
      */
     public function run()
     {
-        Site::factory(20)
+        Site::factory(config('seeder.site_count'))
                     ->has(Distribution::factory(2))
-                    ->has(SitedStock::factory(30))
+                    ->has(SitedStock::factory(config('seeder.sitedstock_count')))
                     ->create();
         
         DB::table('sites')->insert([

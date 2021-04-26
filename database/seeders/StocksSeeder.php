@@ -15,7 +15,7 @@ class StocksSeeder extends Seeder
      */
     public function run()
     {
-        Stock::factory(250)->create();
+        Stock::factory(config('seeder.stock_count'))->create();
 
         DB::table('stocks')->insert([
             'nama_barang' => 'STALO',

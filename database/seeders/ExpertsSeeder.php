@@ -15,8 +15,8 @@ class ExpertsSeeder extends Seeder
      */
     public function run()
     {
-        Expert::factory(10)->eecid()->create();
-        Expert::factory(50)->create();
+        Expert::factory(config('seeder.eecid_expert_count'))->eecid()->create();
+        Expert::factory(config('seeder.expert_count'))->create();
         
         DB::table('experts')->insert([
             'name' => 'M. Fris',
