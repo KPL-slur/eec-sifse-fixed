@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\Stock;
 
 class StocksSeeder extends Seeder
 {
@@ -14,6 +15,8 @@ class StocksSeeder extends Seeder
      */
     public function run()
     {
+        Stock::factory(config('seeder.stock_count'))->create();
+
         DB::table('stocks')->insert([
             'nama_barang' => 'STALO',
             'group' => 'Receiver',

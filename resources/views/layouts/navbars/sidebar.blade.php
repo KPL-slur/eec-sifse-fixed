@@ -35,8 +35,8 @@
             </li>
             <li class="nav-item{{ $activePage == 'expert-management' ? ' active' : '' }}">
               <a class="nav-link" href="{{ route('expertManagement') }}">
-                <span class="sidebar-mini"> EM </span>
-                <span class="sidebar-normal">{{ __('Expert Management') }} </span>
+                <span class="sidebar-mini"> FM </span>
+                <span class="sidebar-normal">{{ __('FSE Management') }} </span>
               </a>
             </li>
             <li class="nav-item{{ $activePage == 'distribution-management' ? ' active' : '' }}">
@@ -57,7 +57,7 @@
       <li class="nav-item{{ $activePage == 'activity' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('expertActivity') }}">
           <i class="material-icons">content_paste</i>
-            <p>{{ __('Expert Activity') }}</p>
+            <p>{{ __('FSE Activity') }}</p>
         </a>
       </li>
       <li class="nav-item{{ $activePage == 'stock_currency' ? ' active' : '' }}">

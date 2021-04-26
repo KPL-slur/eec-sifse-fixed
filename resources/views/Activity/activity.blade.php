@@ -27,7 +27,7 @@
                           <th scope="col">Station ID</th>
                           <th scope="col">Date Start</th>
                           <th scope="col">Date End</th>
-                          <th scope="col">Expertises</th>
+                          <th scope="col">FSE</th>
                           <th class="disabled-sorting text-center">Detail</th>
                         </tr>
                       </thead>

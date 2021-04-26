@@ -19,6 +19,11 @@
 
               {{-- card body kedua --}}
               <div class="row">
+
+                <div class="col-12 text-left">
+                  <a type="button" href="/stocks" class="btn btn-info btn-md ml-3">Back</a>
+                </div>
+
                 <div class="col">
                   <div class="table-responsive material-datatables">
                     <table class="table none table-striped table-no-bordered table-hover" cellspacing="0" width="100" style="width:100%" id="indexRecommendsTable" >
@@ -28,7 +33,7 @@
                           <th>#</th>
                           <th>Radar Name</th>
                           <th>Station ID</th>
-                          <th>Nama Barang</th>
+                          <th>Item Name</th>
                           <th>Amount Required</th>
                           <th>Year</th>
                         </tr>

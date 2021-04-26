@@ -51,7 +51,7 @@ class HeadReportFactory extends Factory
     {
         $startDate = $this->faker->dateTimeThisYear('+24 months');
         return [
-            'site_id' => $this->faker->numberBetween(1, 20),
+            'site_id' => $this->faker->numberBetween(1, config('seeder.site_count')),
             'maintenance_type' => 'pm', //$this->faker->randomElement(['pm','cm']),
             'kasat_name' => $this->faker->firstNameFemale()." ".$this->faker->lastName(),
             'kasat_nip' => $this->faker->numerify('##################'),

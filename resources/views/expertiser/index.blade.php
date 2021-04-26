@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'expert-management', 'titlePage' => __('Expert Management')])
+@extends('layouts.app', ['activePage' => 'expert-management', 'titlePage' => __('FSE Management')])
 
 @section('content')
     
@@ -9,7 +9,7 @@
         
           <div class="card">
             <div class="card-header card-header-primary">
-              <h4 class="card-title ">Experts Management</h4>
+              <h4 class="card-title ">FSE Management</h4>
             </div>
             
             <div class="card-body">

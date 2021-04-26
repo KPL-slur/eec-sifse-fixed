@@ -31,7 +31,7 @@
                   <thead class=" text-primary">
                     <tr>
                       <th scope="col">#</th>
-                      <th scope="col">Nama Teknisi</th>
+                      <th scope="col">FSE Name</th>
                       <th scope="col">Expert Company</th>
                       <th scope="col">Station ID</th>
                       <th class="disabled-sorting text-center">Update or Delete</th>

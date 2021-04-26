@@ -15,7 +15,7 @@
               @csrf
                 <div class="form-group my-4">
                   <label for="nama_barang">Item Name</label>
-                  <input type="text" class="form-control @error('nama_barang') is-invalid @enderror " id="nama_barang" name="nama_barang" placeholder="Masukkan nama barang" value="{{$stocks->nama_barang}}">
+                  <input type="text" class="form-control @error('nama_barang') is-invalid @enderror " id="nama_barang" name="nama_barang" placeholder="Input Item Name" value="{{$stocks->nama_barang}}">
                   <input type="hidden" class="form-control" id="site_id" name="site_id" value="{{ $sites->site_id }}">
                   
                   @error('nama_barang')
@@ -26,10 +26,10 @@
                       
                 </div>
                 <div class="form-group my-4">
-                  <label for="group">Stock Group</label>
+                  <label for="group">Item Group</label>
                   <br>
                   <select name="group" id="group" class="form-control @error('group') is-invalid @enderror">
-                    <option value="" disabled @if($stocks->group === "") selected @endif {{ old('group') == '' }}>--Pilih jenis group--</option>
+                    <option value="" disabled @if($stocks->group === "") selected @endif {{ old('group') == '' }}>--Choose Item Group--</option>
                     @foreach ($stocks_group as $group)
                         <option value="{{$group}}" @if($group === $stocks->group) selected @endif {{ old('group') == $group ? 'selected' : '' }}>{{$group}}</option>
                     @endforeach
@@ -50,7 +50,7 @@
                 </div>
                 <div class="form-group my-4">
                   <label for="part_number">Part Number</label>
-                  <input type="text" class="form-control @error('part_number') is-invalid @enderror" id="part_number" name="part_number" placeholder="Masukkan part number" value="{{$stocks->part_number}}">
+                  <input type="text" class="form-control @error('part_number') is-invalid @enderror" id="part_number" name="part_number" placeholder="Input Part Number" value="{{$stocks->part_number}}">
                   @error('part_number')
                     <div class="invalid-feedback">
                       {{$message}}
@@ -58,8 +58,8 @@
                   @enderror
                 </div>
                 <div class="form-group my-4">
-                  <label for="serial_number">Serial Number</label>
-                  <input type="text" class="form-control @error('serial_number') is-invalid @enderror" id="serial_number" name="serial_number" placeholder="Masukkan part number" value="{{$stocks->serial_number}}">
+                  <label for="serial_number">Ref des</label>
+                  <input type="text" class="form-control @error('serial_number') is-invalid @enderror" id="serial_number" name="serial_number" placeholder="Input Ref des" value="{{$stocks->serial_number}}">
                   @error('serial_number')
                     <div class="invalid-feedback">
                       {{$message}}
@@ -68,7 +68,7 @@
                 </div>
                 <div class="form-group my-4">
                   <label for="tgl_masuk">Date of Entry / Edit</label>
-                  <input type="date" class="form-control @error('tgl_masuk') is-invalid @enderror" id="tgl_masuk" name="tgl_masuk" placeholder="Tanggal Input" value="{{$stocks->tgl_masuk}}">
+                  <input type="date" class="form-control @error('tgl_masuk') is-invalid @enderror" id="tgl_masuk" name="tgl_masuk" placeholder="Date Input" value="{{$stocks->tgl_masuk}}">
                   @error('tgl_masuk')
                     <div class="invalid-feedback">
                       {{$message}}
