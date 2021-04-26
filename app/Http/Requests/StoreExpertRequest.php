@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\DigitsOr;
 
 class StoreExpertRequest extends FormRequest
 {
@@ -25,7 +26,7 @@ class StoreExpertRequest extends FormRequest
     {
         $rules = [
             'name' => 'required|max:15',
-            'nip' => 'required|digits:18',
+            'nip' => ['required', new DigitsOr(11, 18)],
             'expert_company' => 'required'
         ];
     return $rules;
