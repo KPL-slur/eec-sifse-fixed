@@ -6,6 +6,7 @@ use App\Models\Site;
 use App\Models\HeadReport;
 use App\Models\Expert;
 use App\Models\ExpertReport;
+use App\Rules\DigitsOr;
 
 /**
  * 
@@ -166,16 +167,15 @@ trait WithHeadReport
     {
         foreach ($this->manualExperts as $index => $manualExpert) {
             $this->validate([
-                'manualExperts.'.$index.'.expert_name' => 'required|unique:experts,name',
+                'manualExperts.'.$index.'.expert_name' => ['required','unique:experts,name'],
                 'manualExperts.'.$index.'.expert_company' => 'required',
-                'manualExperts.'.$index.'.expert_nip' => 'numeric|digits:18|unique:experts,nip',
+                'manualExperts.'.$index.'.expert_nip' => ['numeric', new DigitsOr(11, 18),'unique:experts,nip'],
                 'manualExperts.'.$index.'.expert_role' => 'required',
             ],[
                 'required' => 'This field is required.',
                 'manualExperts.'.$index.'.expert_name.unique' => 'Name has already been taken.',
                 'manualExperts.'.$index.'.expert_nip.unique' => 'Nip has already been taken.',
                 'numeric' => 'The input must be a number.',
-                'digits' => 'The input must be 18 digits.',
             ]);
         };
     }

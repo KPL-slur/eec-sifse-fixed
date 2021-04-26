@@ -20,19 +20,19 @@ class ExpertsSeeder extends Seeder
         
         DB::table('experts')->insert([
             'name' => 'M. Fris',
-            'nip' => NULL,
+            'nip' => 12345678901,
             'expert_company'=>'Era Elektra Corpora Indonesia',
             'created_at' => now()
         ]);
         DB::table('experts')->insert([
             'name' => 'Ruhaedi Kurniawan',
-            'nip' => NULL,
+            'nip' => 12345678902,
             'expert_company'=>'Era Elektra Corpora Indonesia',
             'created_at' => now()
         ]);
         DB::table('experts')->insert([
             'name' => 'Pontjo Agus Winarno',
-            'nip' => NULL,
+            'nip' => 12345678903,
             'expert_company'=>'Era Elektra Corpora Indonesia',
             'created_at' => now()
         ]);
