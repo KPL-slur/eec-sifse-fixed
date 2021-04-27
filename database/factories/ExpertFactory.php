@@ -23,6 +23,7 @@ class ExpertFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
+                'nip' => $this->faker->unique()->numerify('###########'),
                 'expert_company' => 'Era Elektra Corpora Indonesia',
             ];
         });
