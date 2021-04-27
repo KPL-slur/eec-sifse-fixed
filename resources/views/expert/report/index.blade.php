@@ -28,7 +28,7 @@
                                         <th>Radar Name</th>
                                         <th>Station ID</th>
                                         <th>Date</th>
-                                        <th>Expertises</th>
+                                        <th>Field Service Engineer</th>
                                         <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
                                 </thead>
