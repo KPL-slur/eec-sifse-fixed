@@ -123,10 +123,6 @@
     </div>
   </div>
 
-  <button href="#" class="btn btn-info btn-fab btn-lg btn-float" id="menu-share">
-    <i class="material-icons">arrow_back</i>
-  </button>
-
 @if (session('status'))
   <script>
     window.onload = () => {
