@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire\Traits;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Models\ReportImage;
+use Intervention\Image\Facades\Image;
 
 /**
  * 
@@ -117,11 +119,15 @@ trait WithReportImage
         $this->validateUploads();
         foreach ($this->attachments as $index => $attachment) {
             if ($this->attachments[$index]['uploaded'] == 0) {
-                $image[$index] = $this->attachments[$index]['image']->storePublicly('files', 'public');
+                $image = $this->attachments[$index]['image'];
+                $fileName = 'files/' . Str::random(40) . '.jpg';
+                $img = Image::make($image->getRealPath())->encode('jpg', 0)->widen(650)->orientate();;
+                $img->stream();
+                Storage::disk('local')->put('public' . '/' . $fileName, $img, 'public');
         
                 ReportImage::create([
                     'head_id' => $this->head_id,
-                    'image' => $image[$index],
+                    'image' => $fileName,
                     'caption' => $this->attachments[$index]['caption']
                 ]);
 
