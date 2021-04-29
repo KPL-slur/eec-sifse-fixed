@@ -6,6 +6,7 @@ use App\Models\Site;
 use App\Models\HeadReport;
 use App\Models\Expert;
 use App\Models\ExpertReport;
+use App\Rules\DigitsOr;
 
 /**
  * 
@@ -52,8 +53,8 @@ trait WithHeadReport
      */
     public function mountWithHeadReport($id=null)
     {
-        $this->sites = Site::all();
-        $this->expertsData = Expert::all(); 
+        $this->sites = Site::OrderBy('station_id', 'asc')->get();
+        $this->expertsData = Expert::OrderBy('name', 'asc')->get(); 
         $this->uniqueCompanies = $this->expertsData->unique('expert_company');
 
         if ($id) {
@@ -80,7 +81,6 @@ trait WithHeadReport
             $auth = auth()->user();
             $this->experts = [
                 ['expert_id' => $auth->expert_id, 'expert_company' => $auth->expert->expert_company, 'expert_nip' => $auth->expert->nip, 'expert_role' => ''],
-                ['expert_id' => '', 'expert_company' => '', 'expert_nip' => '', 'expert_role' => ''],
             ];
         }
     }
@@ -167,16 +167,15 @@ trait WithHeadReport
     {
         foreach ($this->manualExperts as $index => $manualExpert) {
             $this->validate([
-                'manualExperts.'.$index.'.expert_name' => 'required|unique:experts,name',
+                'manualExperts.'.$index.'.expert_name' => ['required','unique:experts,name'],
                 'manualExperts.'.$index.'.expert_company' => 'required',
-                'manualExperts.'.$index.'.expert_nip' => 'numeric|digits:18|unique:experts,nip',
+                'manualExperts.'.$index.'.expert_nip' => ['numeric', new DigitsOr(11, 18),'unique:experts,nip'],
                 'manualExperts.'.$index.'.expert_role' => 'required',
             ],[
                 'required' => 'This field is required.',
                 'manualExperts.'.$index.'.expert_name.unique' => 'Name has already been taken.',
                 'manualExperts.'.$index.'.expert_nip.unique' => 'Nip has already been taken.',
                 'numeric' => 'The input must be a number.',
-                'digits' => 'The input must be 18 digits.',
             ]);
         };
     }
@@ -298,6 +297,9 @@ trait WithHeadReport
         $this->validateManualExpert();
         if ($this->manualExperts) {
             foreach ($this->manualExperts as $manualExpert) {
+                if ($manualExpert['expert_nip'] == "") {
+                    $manualExpert['expert_nip'] = NULL;
+                }
                 if ($manualExpert['expert_name']) {
                     Expert::create([
                         'name' => $manualExpert['expert_name'],

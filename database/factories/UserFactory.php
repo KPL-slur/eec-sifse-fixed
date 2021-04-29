@@ -23,7 +23,7 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'expert_id' => $this->faker->unique()->numberBetween(2, 10),
+            'expert_id' => $this->faker->unique()->numberBetween(2, config('seeder.eecid_expert_count')),
             'is_admin' => 0,
             'is_approved' => $this->faker->numberBetween(0, 1),
             'email' => $this->faker->unique()->freeEmail(),

@@ -27,10 +27,9 @@
                     <div class="page-header-space">
                         <img class="" src="{{ asset('user') }}/img/kop.png" width="300px" height="100px" />
                         <p class="text-tiny">
-                            Jl. Benyamin Suaeb No. 5 Grand Palace Blok A No. 16 Kemayoran<br>
-                            Jakarta Pusat 10630, Indonesia<br>
-                            Phone : 021-22606878<br>
-                            FAX : 021-22606878<br>
+                            Head Office : Eightyeight@Kasablanka Tower A 26D floor. Jl. Raya Casablanca Kav. 88 Jakarta Selatan - 12870<br>
+                            Operational Office : Grand Palace Rukan A-16. Jl. Benyamin Suaeb No.5 - Kemayoran. Jakarta Pusat - 10630<br>
+                            Phone : 62-21-22606878, Email : eecindonesia@eecindonesia.co.id<br>
                         </p>
                     </div>
                 </td>
@@ -280,11 +279,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($headReport->recommendations as $recomendation)
+                                @foreach ($recomendations as $recomendation)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $recomendation->name }}</td>
-                                        <td>{{ $recomendation->jumlah_unit_needed }}</td>
+                                        <td>{{ $recomendation['name'] }}</td>
+                                        <td>{{ $recomendation['jumlah_unit_needed'] }}</td>
                                     </tr>
                                 @endforeach
                             <tbody>

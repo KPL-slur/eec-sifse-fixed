@@ -16,6 +16,16 @@ class PdfController extends Controller
     {
         $headReport = HeadReport::findOrFail($id);
 
+        $siteHeadReports = HeadReport::Where('site_id', $headReport->site_id)->with('recommendations')->get();
+        foreach ($siteHeadReports as $siteHeadReport){ //headreport
+            foreach ($siteHeadReport->recommendations as $index => $recommendation) {
+                $recomendations[] = [
+                    'name' => $recommendation->name,
+                    'jumlah_unit_needed' => $recommendation->jumlah_unit_needed,
+                ];
+            }
+        }
+
         switch ($maintenance_type) {
             case 'pm':
                 $bodyReport = $headReport->pmBodyReport;
@@ -32,7 +42,7 @@ class PdfController extends Controller
 
         $date = $utility->easyToReadDate($headReport->report_date_start, $headReport->report_date_end);
 
-        return view('expert.report.print', compact('headReport', 'date', 'bodyReport'));
+        return view('expert.report.print', compact('headReport', 'date', 'bodyReport', 'recomendations'));
     }
 
     /**
