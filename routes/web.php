@@ -62,7 +62,7 @@ Route::group(['prefix' => 'expert', 'middleware' =>['auth', 'verified', 'is_appr
     Route::get('/stocks', [App\Http\Controllers\ExpertController::class, 'stocks'])->name('expert_stocks');
 
     //PROFILE MANAGEMENT
-    Route::group(['prefix' => 'profile', 'as' => 'profile.'], function () {
+    Route::group(['prefix' => 'profile', 'as' => 'expert.profile.'], function () {
         Route::get('/', [App\Http\Controllers\ProfileController::class, 'edit'])->name('edit');
         Route::put('/', [App\Http\Controllers\ProfileController::class, 'update'])->name('update');
         Route::put('/password', [App\Http\Controllers\ProfileController::class, 'password'])->name('password');

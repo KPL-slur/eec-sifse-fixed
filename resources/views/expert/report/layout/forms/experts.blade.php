@@ -1,7 +1,7 @@
 <div class="row">
     <div class="card ">
         <div class="card-header card-header-primary">
-            <h4 class="card-title">{{ __('Experts') }}</h4>
+            <h4 class="card-title">{{ __('Field Service Engineer') }}</h4>
         </div>
 
         <div class="card-body">
@@ -154,16 +154,16 @@
                 <div class="row">
                     <div class="col-md-12">
                         <x-ui.action-message on="unsetExpert" type="danger">
-                            Expert Record Deleted
+                            FSE Record Deleted
                         </x-ui.action-message>
                         @error('dupes')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
-                        <button class="btn btn-sm btn-secondary" wire:click.prevent="addExpert">+ Add Another Expert</button>
+                        <button class="btn btn-sm btn-secondary" wire:click.prevent="addExpert">+ Add Another FSE</button>
                         @if (empty($experts))
                             <p class="text-danger d-inline"> select atleast one expert to continue </p>
                         @else
-                            <button class="btn btn-sm btn-secondary" id="btnManualExpert" wire:click.prevent="addManualExpert">+ Add Manual Expert</button>
+                            <button class="btn btn-sm btn-secondary" id="btnManualExpert" wire:click.prevent="addManualExpert">+ Add Manual FSE</button>
                         @endif
                     </div>
                 </div>

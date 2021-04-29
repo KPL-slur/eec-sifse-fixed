@@ -9,6 +9,7 @@
                 <table class="table" id="products_table">
                     <thead>
                         <tr>
+                            <th>Date</th>
                             <th>Product</th>
                             <th>Quantity</th>
                         </tr>
@@ -39,6 +40,9 @@
                         @endforeach
                         @foreach ($manualRecommends as $index => $manualRecommend)
                             <tr>
+                                <td>
+                                    {{ $manualRecommend['date'] ?? '' }}
+                                </td>
                                 <td>
                                     <div class="@error('manualRecommends.'.$index.'.name') label-floating has-danger @enderror">
                                         @error('manualRecommends.'.$index.'.name')

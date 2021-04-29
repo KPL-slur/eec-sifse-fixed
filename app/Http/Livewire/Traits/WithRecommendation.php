@@ -52,7 +52,7 @@ trait WithRecommendation
      */
     public function addRecommend()
     {
-        $this->recommends[] = ['name' => '', 'jumlah_unit_needed' => "1 units"];
+        $this->recommends[] = ['name' => '', 'jumlah_unit_needed' => "1 units", 'date' => ''];
     }
     
     /**
@@ -99,6 +99,7 @@ trait WithRecommendation
         foreach ($siteHeadReports as $siteHeadReport){ //headreport
             foreach ($siteHeadReport->recommendations as $index => $recommendation) {
                 $this->recommends[] = [
+                                        'date' => date('j F Y', strtotime($siteHeadReport->report_date_end)),
                                         'name' => $recommendation->name,
                                         'jumlah_unit_needed' => $recommendation->jumlah_unit_needed,
                                         'head_id' => $recommendation->head_id,
@@ -107,9 +108,11 @@ trait WithRecommendation
             }
         }
         if (isset($this->head_id)) {
-            $deletedRecommends = HeadReport::find($this->head_id)->recommendations()->onlyTrashed()->get();
+            $headReport = HeadReport::find($this->head_id);
+            $deletedRecommends = $headReport->recommendations()->onlyTrashed()->get();
             foreach ($deletedRecommends as $deletedRecommend) {
                 $this->recommends[] = [
+                                        'date' => date('j F Y', strtotime($headReport->report_date_end)),
                                         'name' => $deletedRecommend->name,
                                         'jumlah_unit_needed' => $deletedRecommend->jumlah_unit_needed,
                                         'head_id' => $deletedRecommend->head_id,
@@ -141,7 +144,7 @@ trait WithRecommendation
      */
     public function addManualRecommends ()
     {
-        $this->manualRecommends[] = ['name' => '', 'jumlah_unit_needed' => "1 units"];
+        $this->manualRecommends[] = ['name' => '', 'jumlah_unit_needed' => "1 units", 'date' => ''];
     }
 
     /**
@@ -184,6 +187,7 @@ trait WithRecommendation
         $utility = new Utility; // instance kelas helper
         // preparing for recommend dropdown option
         $this->stocks = Stock::select('nama_barang AS name')
+                            ->orderBy('name', 'asc')
                             ->get()
                             ->toArray();
         foreach ($this->recommends as $recommend){

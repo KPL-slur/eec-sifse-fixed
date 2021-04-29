@@ -60,7 +60,7 @@
                     </div>
                     <div class="card ">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-title">{{ __('Expertise') }}</h4>
+                            <h4 class="card-title">{{ __('Field Service Engineer') }}</h4>
                         </div>
                         <div class="card-body ">
                             <div class="row">
@@ -106,7 +106,7 @@
                     </div>
                     <div class="card ">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-title">{{ __('Recoomendation') }}</h4>
+                            <h4 class="card-title">{{ __('Recommendation') }}</h4>
                         </div>
                         <div class="card-body ">
                             <div class="row">

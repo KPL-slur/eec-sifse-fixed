@@ -1,5 +1,8 @@
 <tr>
     <td>
+        {{ $recommend['date'] ?? '' }}
+    </td>
+    <td>
         <div class='@error('recommends.'.$index.'.name') label-floating has-danger @enderror'>
             @error('recommends.'.$index.'.name')
                 <label class="control-label force-has-danger">{{ $message }}</label>
