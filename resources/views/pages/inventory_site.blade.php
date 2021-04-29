@@ -22,7 +22,8 @@
               <div>
                 <img class="mT-30 mL-20" src="{{ asset('user') }}/img/kop.png" style="width: 300px !important;" alt="kop image" />
                 <p class="text-tiny">
-                    Jl. Benyamin Suaeb No. 5 Grand Palace Blok A No. 16 Kemayoran<br>
+                    Head Office : Eightyeight@Kasablanka Tower A 26D floor. Jl. Raya Casablanca Kav. 88 Jakarta Selatan - 12870<br>
+                    Operational Office : Jl. Benyamin Suaeb No. 5 Grand Palace Blok A No. 16 Kemayoran<br>
                     Jakarta Pusat 10630, Indonesia<br>
                     Phone : 021-22606878<br>
                     FAX : 021-22606878<br>
