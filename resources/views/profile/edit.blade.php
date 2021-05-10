@@ -7,7 +7,7 @@
       {{-- PROFILE MANAGEMENT --}}
       <div class="row">
         <div class="col-md-12">
-          <form method="post" action="{{ route('profile.update') }}" autocomplete="off" class="form-horizontal">
+          <form method="post" action="{{ route('expert.profile.update') }}" autocomplete="off" class="form-horizontal">
             @csrf
             @method('put')
 
@@ -72,7 +72,7 @@
       {{-- PASSWORD MANAGEMENT --}}
       <div class="row">
         <div class="col-md-12">
-          <form method="post" action="{{ route('profile.password') }}" class="form-horizontal">
+          <form method="post" action="{{ route('expert.profile.password') }}" class="form-horizontal">
             @csrf
             @method('put')
 
