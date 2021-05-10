@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\PmBodyReport;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Services\FactoryHelper;
 
 class PmBodyReportFactory extends Factory
 {
@@ -21,6 +22,8 @@ class PmBodyReportFactory extends Factory
      */
     public function definition()
     {
+        $helper = new FactoryHelper;
+
         return [
             'radio_general_visual' => $this->faker->numberBetween(0, 1),
             'radio_rcms' => $this->faker->numberBetween(0, 1),
@@ -58,7 +61,7 @@ class PmBodyReportFactory extends Factory
             'reverse_power' => $this->faker->randomFloat(2),
             'vswr' => $this->faker->randomFloat(2),
             
-            'remark' => $this->faker->paragraphs(3, true),
+            'remark' => $helper->createPara(10),
             'created_at' => now(),
         ];
     }

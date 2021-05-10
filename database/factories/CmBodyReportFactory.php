@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\CmBodyReport;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Services\FactoryHelper;
 
 class CmBodyReportFactory extends Factory
 {
@@ -21,8 +22,10 @@ class CmBodyReportFactory extends Factory
      */
     public function definition()
     {
+        $helper = new FactoryHelper;
+
         return [
-            'remark' => $this->faker->paragraphs(3, true),
+            'remark' => $helper->createPara(10),
             'created_at' => now()
         ];
     }
