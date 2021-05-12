@@ -15,7 +15,6 @@
                 <thead>
                   <th>No</th>
                   <th>Name</th>
-                  {{-- <th>Serial Number</th> --}}
                   <th class="text-center">Units Needed</th>
                   <th class="text-center">Units on Stock</th>
                 </thead>
@@ -44,10 +43,11 @@
               <h4 class="card-title">PM</h4>
             </div>
             {{-- div card header --}}
-            <div class="card-body table-responsive-md">
-              <table class="table table-hover table-striped">
+            <div class="card-body table-responsive-md material-datatables">
+              <x-ui.spinner id="spinner-pm" className="spinner-center"/><br>
+              <table class="table table-hover table-striped d-none" id="PMTable" cellspacing="0" width="100" style="width:100%">
                 <thead>
-                  <th>No</th>
+                  <th>#</th>
                   <th>Lokasi</th>
                   <th>Date</th>
                   <th>FSE</th>
@@ -64,7 +64,7 @@
                           {{ $expert->name }}, 
                         @endforeach
                       </td>
-                      <td class="text-center">{{ $pm->pmBodyReport->remark }}</td>
+                      <td class="text-center"><?php echo $pm->pmBodyReport->remark ?></td>
                     </tr>
                   @endforeach
                 </tbody>
@@ -84,10 +84,11 @@
             <div class="card-header card-header-warning">
               <h4 class="card-title">CM</h4>
             </div>
-            <div class="card-body table-responsive-md">
-              <table class="table table-hover table-striped">
+            <div class="card-body table-responsive-md material-datatables">
+              <x-ui.spinner id="spinner-cm" className="spinner-center"/><br>
+              <table class="table table-hover table-striped d-none" id="CMTable" cellspacing="0" width="100" style="width:100%">
                 <thead class="text-warning">
-                  <th>No</th>
+                  <th>#</th>
                   <th>Lokasi</th>
                   <th>Date</th>
                   <th>FSE</th>
@@ -104,7 +105,7 @@
                           {{ $expert->name }},
                         @endforeach
                       </td>
-                      <td class="text-center">{{ $cm->cmBodyReport->remark }}</td>
+                      <td class="text-center"><?php echo $cm->cmBodyReport->remark ?></td>
                     </tr>
                   @endforeach
                 </tbody>
@@ -122,4 +123,39 @@
     {{-- div container fluid --}}
   </div>
   {{-- div content --}}
+
+@push('scripts')
+{{-- script for datatable --}}
+<script>
+  $(document).ready( () => {
+    $("#PMTable").DataTable({
+      responsive: true,
+      "columnDefs": [
+        { className: "none", "targets": [ -1 ] },
+        { orderable: false, "targets" : [ 0, 1, 2, 3] },
+      ],
+      "searching" : false,
+      "paging" : false,
+      "info" : false,
+    });
+    $('#spinner-pm').addClass('d-none');
+    $("#PMTable").removeClass('d-none');
+
+    $("#CMTable").DataTable({
+      responsive: true,
+      "columnDefs": [
+        { className: "none", "targets": [ -1 ] },
+        { orderable: false, "targets" : [ 0, 1, 2, 3] },
+      ],
+      "searching" : false,
+      "paging" : false,
+      "info" : false
+    });
+    $('#spinner-cm').addClass('d-none');
+    $("#CMTable").removeClass('d-none');
+  });
+</script>
+{{-- script for datatable --}}
+@endpush
+
 @endsection

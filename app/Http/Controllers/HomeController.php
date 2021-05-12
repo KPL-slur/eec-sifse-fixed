@@ -44,23 +44,6 @@ class HomeController extends Controller
                         }])
                         ->get();
         
-
-        foreach($pm as $p){
-            $p->pmBodyReport->remark = html_entity_decode($p->pmBodyReport->remark); //decode dari kode html ke string biasa
-            if(strripos($p->pmBodyReport->remark, "kesimpulan")){
-                $pos_kesimpulan = strripos($p->pmBodyReport->remark, "kesimpulan"); //cari posisi terakhir dari kata kesimpulan di string remark
-                $p->pmBodyReport->remark = substr($p->pmBodyReport->remark, $pos_kesimpulan); // ngambil substring dari posisi kesimpulan ke belakang
-                if(stripos($p->pmBodyReport->remark, "</ul>")){
-                    $pos_ul_kesimpulan = stripos($p->pmBodyReport->remark, "</ul>"); //nyari posisi </ul> kesimpulan
-                    $p->pmBodyReport->remark = substr($$p->pmBodyReport->remark, 0, $pos_ul_kesimpulan + 5); // taro dalem remark, ilangin string setelah </ul>
-                }
-                $p->pmBodyReport->remark = strip_tags($p->pmBodyReport->remark);
-            } else {
-                $p->pmBodyReport->remark = "Tidak dapat ditarik kesimpulan dalam remark PM ini";
-            }
-        }
-
-        
         $cm = HeadReport::take(5)
                         ->orderBy('updated_at', 'desc')
                         ->where('maintenance_type', 'cm')
@@ -75,22 +58,6 @@ class HomeController extends Controller
                             $query->select('sites.site_id', 'station_id');
                         }])
                         ->get();
-        // return $cm;
-
-        foreach($cm as $c){
-            $c->cmBodyReport->remark = html_entity_decode($c->cmBodyReport->remark); //decode dari kode html ke string biasa
-            if(strripos($c->cmBodyReport->remark, "kesimpulan")){
-                $pos_kesimpulan = strripos($c->cmBodyReport->remark, "kesimpulan"); //cari posisi terakhir dari kata kesimpulan di string remark
-                $c->cmBodyReport->remark = substr($c->cmBodyReport->remark, $pos_kesimpulan); // ngambil substring dari posisi kesimpulan ke belakang
-                if(stripos($c->cmBodyReport->remark, "</ul>")){
-                    $pos_ul_kesimpulan = stripos($c->cmBodyReport->remark, "</ul>"); //nyari posisi </ul> kesimpulan
-                    $c->cmBodyReport->remark = substr($c->cmBodyReport->remark, 0, $pos_ul_kesimpulan + 5);  // taro dalem remark, ilangin string setelah </ul>
-                }
-                $c->cmBodyReport->remark = strip_tags($c->cmBodyReport->remark);
-            }else{
-                $c->cmBodyReport->remark = "Tidak dapat ditarik kesimpulan dalam remark CM ini";
-            }
-        }
 
 
         $recommends = Recommendation::take(5)
