@@ -1,0 +1,39 @@
+@startuml printPM 
+
+skinparam style strictuml
+
+actor teknisi
+boundary "pm-item" as item <<boundary>>
+boundary "pm-print" as print <<boundary>>
+
+ref over teknisi, item : Melihat Laporan PM
+
+teknisi -> item : teknisi masuk\nke item laporan
+    activate item
+item -> print : teknisi menekan\ntombol print
+    deactivate item
+    activate print
+print -> print : mencetak halaman\nke bentuk pdf
+
+@enduml
+
+
+
+@startuml printCM
+
+skinparam style strictuml
+
+actor teknisi
+boundary "cm-item" as item <<boundary>>
+boundary "cm-print" as print <<boundary>>
+
+ref over teknisi, item : Melihat Laporan CM
+
+teknisi -> item : teknisi masuk\nke item laporan
+    activate item
+item -> print : teknisi menekan\ntombol generate PDF
+    deactivate item
+    activate print
+print -> print : mencetak halaman\nke bentuk pdf
+
+@enduml

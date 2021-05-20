@@ -1,0 +1,155 @@
+@startuml classdiag
+
+skinparam classAttributeIconSize 0
+skinparam dpi 300
+
+entity HeadReport {
+    - head_id : bigint
+    - site : Site
+    - maintenance_type : char[2]
+    - report_date_start : date
+    - report_date_end : date
+    - kasat_name : string
+    - kasat_nip : string
+    void browse()
+    void create()
+    void show()
+    void edit()
+    void delete()
+}
+entity ExpertReport {
+    - expert_report_id : bigint
+    - head_id : Headreport
+    - expert_id : expert
+    - role : string
+}
+entity PmBodyReport {
+    - pm_id : bigint
+    - head_id : Headreport
+    - general : string
+    - compressor : string
+    - transmitter : string
+    - receiver : string
+    - antenna : string
+    - remark : longText
+    ' - radio_general_visual : boolean
+    ' - radio_wipe_down : boolean
+    ' - radio_inspect_all : boolean
+    ' - radio_compressor_visual  : boolean
+    ' - radio_duty_cycle : boolean
+    ' - radio_transmitter_visual : boolean
+    ' - radio_running_time : boolean
+    ' - radio_radiate_time : boolean
+    ' - radio_0_4_us : boolean
+    ' - radio_0_8_us : boolean
+    ' - radio_1_0_us : boolean
+    ' - radio_2_0_us : boolean
+    ' - radio_forward_power : boolean
+    ' - radio_reverse_power : boolean
+    ' - radio_vswr : boolean
+    ' - radio_receiver_visual  : boolean
+    ' - radio_stalo_check : boolean
+    ' - radio_afc_check : boolean
+    ' - radio_mrp_check : boolean
+    ' - radio_rcu_check : boolean
+    ' - radio_iq2_check : boolean
+    ' - radio_antenna_visual : boolean
+    ' - radio_inspect_motor : boolean
+    ' - radio_clean_slip : boolean
+    ' - radio_grease_gear : boolean
+    ' - general_visual : string
+    ' - rcms : string
+    ' - wipe_down : string
+    ' - inspect_all : string
+    ' - compressor_visual : string
+    ' - duty_cycle : string
+    ' - transmitter_visual : string
+    ' - running_time : string
+    ' - radiate_time : string
+    ' - hvps_v_0_4us : string
+    ' - hvps_i_0_4us : string
+    ' - mag_v_0_4us : string
+    ' - hvps_v_0_8us : string
+    ' - hvps_i_0_8us : string
+    ' - hvps_v_1_0us : string
+    ' - hvps_i_1_0us : string
+    ' - mag_i_1_0us : string
+    ' - hvps_v_2_0us : string
+    ' - hvps_i_2_0us : string
+    ' - mag_i_2_0us : string
+    ' - forward_power : string
+    ' - reverse_power : string
+    ' - vswr : string
+    ' - receiver_visual : string 
+    ' - stalo_check : string
+    ' - afc_check : string
+    ' - mrp_check : string
+    ' - rcu_check : string
+    ' - iq2_check : string
+    ' - antenna_visual : string
+    ' - inspect_motor : string
+    ' - clean_slip : string
+    ' - grease_gear : string
+}
+entity CmBodyReport {
+    - cm_id : bigint
+    - head_id : Headreport
+    - remark : longText
+}
+entity Recommendation {
+    - rec_id : bigint
+    - head_id : Headreport
+    - name : string
+    - jumlah_unit_needed : string
+    - year : string
+}
+entity ReportImage {
+    - image_id : bigint
+    - head_id : Headreport
+    - image : string
+    - kaption : string
+}
+entity PrintedReport {
+    - printed_report_id : bigint
+    - head_id : Headreport
+    - file : string
+    void upload()
+    void show()
+    void changeFile()
+    void delete()
+    void download()
+}
+entity Expert {
+    - expert_id : bigint
+    - name : string
+    - nip : string
+    - expert_company : string
+    void create()
+    void show()
+}
+entity User {
+    - id : bigint
+    - expert_id : Expert
+    - is_admin : boolean
+    - is_approved : boolean
+    - email : string
+    - email_verified_at : timestamp
+    - password : string
+    void register()
+    void profile()
+    void approve()
+    void isAdmin()
+}
+
+'HeadReport Composite
+HeadReport *-- ExpertReport
+HeadReport *-- PmBodyReport
+HeadReport *-- CmBodyReport
+HeadReport *-- Recommendation
+HeadReport *-- ReportImage
+HeadReport *-- PrintedReport
+
+Expert *-- ExpertReport
+User --* Expert
+
+@enduml

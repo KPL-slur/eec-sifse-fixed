@@ -1,0 +1,49 @@
+@startuml authzEmail
+
+skinparam style strictuml
+
+actor teknisi
+boundary "halaman-tunggu-verifikasi-email" as waiting <<boundary>>
+control verified <<middleware>>
+boundary dashboard <<boundary>>
+
+ref over teknisi : login
+
+alt sudah melakukan verifikasi email
+    teknisi -> verified : sudah verifikasi email
+    verified -> dashboard : masuk ke dashboard
+    
+else belum melakukan verifikasi email
+    teknisi -> verified : belum verifikasi email
+    verified -> waiting : tidak bisa melanjutkan
+    waiting --> teknisi : pesan untuk melakukan verifikasi email
+
+end
+
+@enduml
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+@startuml authzApproval
+
+skinparam style strictuml
+
+actor teknisi
+boundary "halaman-tunggu-persetujuan-admin" as waitingAdmin <<boundary>>
+control IsApprove <<middleware>>
+boundary dashboard <<boundary>>
+
+ref over teknisi : login
+
+alt sudah verifikasi dan disetujui
+    teknisi -> IsApprove : sudah disetujui oleh admin
+    IsApprove -> dashboard : masuk ke dashboard
+
+else belum disetujui
+    teknisi -> IsApprove : belum disetujui oleh admin
+    IsApprove -> waitingAdmin : tidak bisa melanjutkan
+    waitingAdmin --> teknisi : pesan untuk menuggu persetujuan admin
+
+end
+
+@enduml

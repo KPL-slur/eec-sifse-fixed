@@ -1,0 +1,17 @@
+@startuml viewStocks
+
+skinparam style strictuml
+
+actor teknisi
+boundary dashboard <<boundary>>
+boundary stocks <<boundary>>
+
+ref over teknisi, dashboard : login
+
+activate dashboard
+dashboard -> stocks : teknisi memilih\nmenu stok\nsuku cadang
+    deactivate dashboard
+    activate stocks
+stocks -> stocks : menampilkan\nseluruh laporan stok\nsuku cadang\nyang tersedia
+
+@enduml

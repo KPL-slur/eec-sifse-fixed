@@ -1,0 +1,156 @@
+@startuml createPM
+
+skinparam style strictuml
+
+actor teknisi
+boundary "pm-reports" as pm <<boundary>>
+boundary "pm-create" as pmCreate <<boundary>>
+control ReportController <<control>>
+entity HeadReports <<entity>>
+entity ExpertReports <<entity>>
+entity PmBodyReports <<entity>>
+entity Recommendations <<entity>>
+entity ReportImages <<entity>>
+
+ref over teknisi, pm : Menampilkan\nSemua Laporan PM
+
+activate pm
+pm -> pmCreate : teknisi\nmengisi\nform
+    deactivate pm
+    activate pmCreate
+pmCreate -> ReportController : verifikasi input
+    deactivate pmCreate
+    activate ReportController
+
+alt data sesuai
+    ReportController -> HeadReports : bagian kepala\ndari laporan
+        activate HeadReports
+        return berhasil
+    ReportController -> ExpertReports : teknisi yang bertugas\npada laporan
+        activate ExpertReports
+        return berhasil
+    ReportController -> PmBodyReports : bagian badandari laporan
+        activate PmBodyReports
+        return berhasil
+    ReportController -> Recommendations : bagian rekomendasi sparepart
+        activate Recommendations
+        return berhasil
+    ReportController -> ReportImages : bagian lampiran
+        activate ReportImages
+        return berhasil
+    ReportController -> pm : teknisi dipindahkan
+        activate pm
+    pm -> teknisi : pesan\nberhasil
+        deactivate pm
+    
+else data tidak sesuai
+    ReportController -> pmCreate : masukan\ntidak sesuai
+        deactivate ReportController
+        activate pmCreate
+    pmCreate --> teknisi : pesan masukan\ntidak sesuai
+        deactivate pmCreate
+
+end
+
+@enduml
+
+
+
+@startuml viewPM
+
+skinparam style strictuml
+
+actor teknisi
+boundary "pm-reports" as pm <<boundary>>
+boundary "pm-item" as pmItem <<boundary>>
+
+ref over teknisi, pm : Menampilkan\nSemua Laporan PM
+
+activate pm
+pm -> pmItem : teknisi memilih\nlaporan
+    deactivate pm
+    activate pmItem
+pmItem -> pmItem : menampilkan\ndata laporan
+
+@enduml
+
+
+
+@startuml editPM
+
+skinparam style strictuml
+
+actor teknisi
+boundary "pm-item" as pmItem <<boundary>>
+boundary "pm-create" as pmCreate <<boundary>>
+control ReportController <<control>>
+entity HeadReports <<entity>>
+entity ExpertReports <<entity>>
+entity PmBodyReports <<entity>>
+entity Recommendations <<entity>>
+entity ReportImages <<entity>>
+
+ref over teknisi, pmItem : Melihat Laporan PM
+
+activate pmItem
+pmItem -> pmCreate : mengisi form\ndengan\ndata lama
+    deactivate pmItem
+pmCreate -> ReportController : verifikasi input
+    activate ReportController
+
+alt data sesuai
+    ReportController -> HeadReports : bagian kepala\ndari laporan
+        activate HeadReports
+        return berhasil
+    ReportController -> ExpertReports : teknisi yang bertugas\npada laporan
+        activate ExpertReports
+        return berhasil
+    ReportController -> PmBodyReports : bagian badan dari laporan
+        activate PmBodyReports
+        return berhasil
+    ReportController -> Recommendations : bagian rekomendasi sparepart
+        activate Recommendations
+        return berhasil
+    ReportController -> ReportImages : bagian lampiran
+        activate ReportImages
+        return berhasil
+    ReportController -> pmItem : teknisi dipindahkan
+        activate pmItem
+    pmItem -> teknisi : pesan\nberhasil
+        deactivate pmItem
+    
+else data tidak sesuai
+    ReportController -> pmCreate : masukan\ntidak sesuai
+        deactivate ReportController
+    pmCreate --> teknisi : pesan masukan\ntidak sesuai
+        deactivate pmCreate
+end
+
+@enduml
+
+
+
+@startuml deletePM
+
+skinparam style strictuml
+
+actor teknisi
+boundary "pm-reports" as pm <<boundary>>
+boundary "pm-item" as pmItem <<boundary>>
+control ReportController <<control>>
+entity HeadReports <<entity>>
+
+ref over teknisi, pmItem : Melihat Laporan PM
+
+pmItem -> ReportController : teknisi memilih\nmenu delete
+    deactivate pmItem
+    activate ReportController
+ReportController -> HeadReports : data diberikan\nflag dihapus
+    activate HeadReports
+    return berhasil
+ReportController -> pm : teknisi dipindahkan
+    activate pm
+pm --> teknisi : pesan\nberhasil
+    deactivate pm
+
+@enduml

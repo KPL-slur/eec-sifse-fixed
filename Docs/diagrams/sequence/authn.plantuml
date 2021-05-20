@@ -1,0 +1,37 @@
+@startuml authn
+
+skinparam style strictuml
+
+actor users
+boundary login <<boundary>>
+control LoginController <<control>>
+boundary dashboard <<boundary>>
+
+group Login
+    users -> login : masukan email dan kata sandi
+        activate login
+    login -> LoginController: verifikasi masukan
+        deactivate login 
+        activate LoginController
+    alt login sukses
+        LoginController -> dashboard: menampilkan dashboard
+            activate dashboard
+    else login gagal
+        LoginController -> login: kombinasi email dan password salah
+            deactivate LoginController
+            activate login
+        login --> users: pesan login gagal
+            deactivate login
+    end
+end
+
+group Logout
+    users -> dashboard: klik tombol logout
+    dashboard -> LoginController: logout user
+        deactivate dashboard
+        activate LoginController
+    LoginController --> users: pesan logout berhasil
+        deactivate LoginController
+end
+
+@enduml

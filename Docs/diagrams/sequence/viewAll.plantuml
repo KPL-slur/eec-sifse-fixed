@@ -1,0 +1,37 @@
+@startuml viewAllPM
+
+skinparam style strictuml
+
+actor teknisi
+boundary dashboard <<boundary>>
+boundary "pm-reports" as pm <<boundary>>
+
+ref over teknisi, dashboard : login
+
+activate dashboard
+dashboard -> pm : teknisi memilih\nmenu PM Reports
+    deactivate dashboard
+    activate pm
+pm -> pm : menampilkan\nseluruh laporan PM\nyang belum dihapus
+
+@enduml
+
+
+
+@startuml viewAllCM
+
+skinparam style strictuml
+
+actor teknisi
+boundary dashboard <<boundary>>
+boundary "cm-reports" as cm <<boundary>>
+
+ref over teknisi, dashboard : login
+
+activate dashboard
+dashboard -> cm : teknisi memilih\nmenu CM Reports
+    deactivate dashboard
+    activate cm
+cm -> cm : menampilkan\nseluruh laporan CM\nyang belum dihapus
+
+@enduml

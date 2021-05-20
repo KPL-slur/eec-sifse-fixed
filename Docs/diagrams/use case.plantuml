@@ -1,0 +1,72 @@
+@startuml usecase
+
+skinparam Style strictuml
+left to right direction
+
+actor teknisi
+actor admin
+
+usecase Autentikasi as authn
+authn ..> (Otorisasi Sistem) : include
+
+usecase (Otorisasi laporan) as authz
+
+rectangle sistem {
+
+    usecase (Pendaftaran teknisi baru) as register
+    teknisi --> register
+
+    usecase (Lupa kata sandi) as forget
+    teknisi --> forget
+
+    usecase (Menampilkan seluruh laporan) as viewAll
+    teknisi --> viewAll
+    viewAll ..> authn : inlcude
+
+    usecase (Menampilkan seluruh laporan\nyang telah dihapus) as trash
+    teknisi --> trash
+    trash ..> authn : inlcude
+
+    usecase (Mengelola laporan PM) as pm
+    teknisi --> pm
+    pm ..> authz : include
+    authz ..> authn : include
+
+    usecase (Mengembalikan laporan\nyang telah dihapus) as restore
+    teknisi --> restore
+    restore ..> authz : include
+    authz ..> authn : include
+
+    usecase (Menghapus laporan secara permanen) as permaDel
+    teknisi --> permaDel
+    permaDel ..> authz : include
+    authz ..> authn : include
+
+    usecase (Mengelola laporan\nyang telah dipindai) as scanned
+    teknisi --> scanned
+    scanned ..> authz : include
+    authz ..> authn : include
+
+    usecase (Mencetak Laporan) as print
+    teknisi --> print
+    print ..> authn : include
+
+    usecase (Mengunduh file laporan\nyang telah dipindai) as download
+    teknisi --> download
+    download ..> authn : include
+    
+    usecase (Menampilkan stok suku cadang\nyang tersedia) as stock
+    teknisi --> stock
+    stock ..> authn : include
+
+    usecase (Mengelola profil) as profile
+    teknisi --> profile
+    profile ..> authn : include
+
+    usecase (Menyetujui pendaftaran teknisi baru) as approve
+    admin --> approve
+    approve ..> authn : include
+
+}
+
+@enduml

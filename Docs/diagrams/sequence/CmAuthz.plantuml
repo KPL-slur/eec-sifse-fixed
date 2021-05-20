@@ -1,0 +1,60 @@
+@startuml cmAuthzUpdate
+
+skinparam style strictuml
+
+actor teknisi
+boundary "cm-item" as cmItem <<boundary>>
+control ReportController <<control>>
+boundary "cm-create" as cmCreate <<boundary>>
+
+ref over teknisi, cmItem : Melihat Laporan CM
+
+activate cmItem
+alt teknisi adalah pembuat laporan 
+    cmItem -> ReportController : mencoba melakukan update
+        activate ReportController
+
+    ReportController -> cmCreate : melakukan update
+        deactivate ReportController
+
+else teknisi bukan pembuat laporan
+    cmItem -> ReportController : mencoba melakukan update
+        activate ReportController
+
+    ReportController -> cmItem : tidak bisa melanjutkan
+        deactivate ReportController
+        deactivate cmItem
+end
+
+@enduml
+
+
+
+@startuml cmAuthzDelete
+
+skinparam style strictuml
+
+actor teknisi
+boundary "cm-item" as cmItem <<boundary>>
+control ReportController <<control>>
+
+ref over teknisi, cmItem : Melihat Laporan CM
+
+activate cmItem
+alt teknisi adalah pembuat laporan 
+    cmItem -> ReportController : mencoba melakukan delete
+        activate ReportController
+
+    ReportController -> ReportController : melakukan delete
+        deactivate ReportController
+
+else teknisi bukan pembuat laporan
+    cmItem -> ReportController : mencoba melakukan delete
+        activate ReportController
+
+    ReportController -> cmItem : tidak bisa melanjutkan
+        deactivate ReportController
+        deactivate cmItem
+end
+
+@enduml

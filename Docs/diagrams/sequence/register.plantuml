@@ -1,0 +1,71 @@
+@startuml register
+
+skinparam style strictuml
+
+actor teknisi
+boundary register <<boundary>>
+boundary "halaman-tunggu-verifikasi-email" as waiting <<boundary>>
+control RegisterController <<control>>
+entity Experts <<entity>>
+entity Users <<entity>>
+
+teknisi -> register : masukan nama, email, nip, kata sandi
+    activate register
+register -> RegisterController : verfikasi masukan
+    deactivate register
+    activate RegisterController
+
+alt data valid
+    RegisterController -> Experts : simpan data nama dan nip
+        activate Experts
+    return expert_id
+
+    RegisterController -> Users : simpan data expert_id, email, dan password
+        activate Users
+    return data disimpan
+
+    RegisterController -> waiting : teknisi dipindahkan ke halaman tunggu
+        activate waiting
+    waiting --> teknisi : pesan pendaftaran berhasil
+        deactivate waiting
+
+else data invalid
+    RegisterController -> register : data tidak valid
+        deactivate RegisterController
+        activate register
+    register --> teknisi : pesan pendaftaran gagal
+        deactivate register
+end
+
+@enduml
+
+
+
+@startuml verifyEmail
+
+skinparam style strictuml
+
+actor teknisi
+boundary "halaman-tunggu-verifikasi-email" as waiting <<boundary>>
+control EmailController <<control>>
+actor "email provider" as email <<external>>
+boundary "halaman-tunggu-persetujuan-admin" as waitingAdmin <<boundary>>
+
+ref over teknisi : login
+teknisi -> waiting : teknisi di arahkan ke ruang tunggu
+    activate waiting
+waiting -> EmailController : request email verification
+    activate EmailController
+EmailController -> waiting : email berhasil dikirim
+waiting --> teknisi : pesan email berhasil dirikim
+    deactivate waiting
+
+teknisi -> email : teknisi mengeklik konfirmasi pada email
+    activate email
+email -> EmailController : validasi oleh kontroler
+    deactivate email
+EmailController -> waitingAdmin : teknisi dipindahkan ke halaman tunggu selanjutnya
+    activate waitingAdmin
+waitingAdmin --> teknisi : pesan untuk menunggu persetujuan admin
+
+@enduml

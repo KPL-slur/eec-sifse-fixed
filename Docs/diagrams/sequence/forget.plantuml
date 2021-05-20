@@ -1,0 +1,51 @@
+@startuml requestReset
+
+skinparam style strictuml
+
+actor teknisi
+boundary email <<boundary>>
+control ForgotPasswordController <<control>>
+
+teknisi -> email : Teknisi mengisi email
+    activate email
+email -> ForgotPasswordController : mengirim email
+    activate ForgotPasswordController
+ForgotPasswordController -> email : email dikirim
+    deactivate ForgotPasswordController
+email --> teknisi : pesan bahwa email telah dikirim
+    deactivate email
+
+@enduml
+
+@startuml doReset
+
+skinparam style strictuml
+
+actor teknisi
+actor "email provider" as email <<external>>
+boundary dashboard <<boundary>>
+boundary reset <<boundary>>
+control ResetPasswordController <<control>>
+entity Users <<entity>>
+
+ref over teknisi : Meminta email lupa kata sandi 
+
+teknisi -> email : teknisi mengklik link pada email
+    activate email
+email -> reset : teknisi dipindahkan ke reset password
+    deactivate email
+    activate reset
+
+teknisi -> reset : teknisi mengisi password yang baru
+reset -> ResetPasswordController : verifikasi masukan
+    deactivate reset
+    activate ResetPasswordController
+ResetPasswordController -> Users : simpan password baru
+    activate Users
+Users -> ResetPasswordController : data disimpan
+    deactivate Users
+ResetPasswordController -> dashboard : teknisi dipindahkan ke dashboard
+    deactivate ResetPasswordController
+    activate dashboard
+
+@enduml

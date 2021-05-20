@@ -1,0 +1,81 @@
+@startuml editProfile
+
+skinparam style strictuml
+
+actor teknisi
+boundary dashboard <<boundary>>
+boundary profile <<boundary>>
+control ProfileController <<control>>
+entity Expert <<entity>>
+entity User <<entity>>
+
+ref over teknisi, dashboard : login
+
+activate dashboard
+dashboard -> profile : teknisi memilih\nikon berbentuk orang
+    deactivate dashboard
+    activate profile
+profile -> profile : menampilkan form\ndengan nilai sebelumnya
+profile -> profile : teknisi mengganti\nnilai dari form
+profile -> ProfileController : verifikasi input
+    activate ProfileController
+
+alt data valid
+    ProfileController -> Expert : simpan data nama dan nip
+        activate Expert
+    return expert_id
+
+    ProfileController -> User : simpan data email
+        activate User
+    return data disimpan
+
+    ProfileController -> profile : berhasil mengganti
+    profile --> teknisi : pesan profile diupdate
+
+else data invalid
+    ProfileController -> profile : data tidak valid
+        deactivate ProfileController
+    profile --> teknisi : pesan profile gagal diupdate
+
+end
+
+@enduml
+
+
+
+@startuml editPassword
+
+skinparam style strictuml
+
+actor teknisi
+boundary dashboard <<boundary>>
+boundary profile <<boundary>>
+control ProfileController <<control>>
+entity User <<entity>>
+
+ref over teknisi, dashboard : login
+
+activate dashboard
+dashboard -> profile : teknisi memilih\nikon berbentuk orang
+    deactivate dashboard
+    activate profile
+profile -> profile : teknisi mengisi\npassword lama dan baru
+profile -> ProfileController : verifikasi input dan\ncek apakah password lama sesuai
+    activate ProfileController
+
+alt data valid dan password lama sesuai
+    ProfileController -> User : simpan data password baru
+        activate User
+    return data disimpan
+
+    ProfileController -> profile : berhasil mengganti
+    profile --> teknisi : pesan password diupdate
+
+else data invalid atau password lama tidak sesuai
+    ProfileController -> profile : data tidak valid atau\npassword lama tidak sesuai
+        deactivate ProfileController
+    profile --> teknisi : pesan password gagal diupdate
+
+end
+
+@enduml

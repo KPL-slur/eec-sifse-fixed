@@ -1,0 +1,157 @@
+@startuml createCM
+
+skinparam style strictuml
+
+actor teknisi
+boundary "cm-reports" as cm <<boundary>>
+boundary "cm-create" as cmCreate <<boundary>>
+control ReportController <<control>>
+entity HeadReports <<entity>>
+entity ExpertReports <<entity>>
+entity CmBodyReports <<entity>>
+entity Recommendations <<entity>>
+entity ReportImages <<entity>>
+
+ref over teknisi, cm : Menampilkan\nSemua Laporan CM
+
+activate cm
+cm -> cmCreate : teknisi\nmengisi\nform
+    deactivate cm
+    activate cmCreate
+cmCreate -> ReportController : verifikasi input
+    deactivate cmCreate
+    activate ReportController
+
+alt data sesuai
+    ReportController -> HeadReports : bagian kepala\ndari laporan
+        activate HeadReports
+        return berhasil
+    ReportController -> ExpertReports : teknisi yang bertugas\npada laporan
+        activate ExpertReports
+        return berhasil
+    ReportController -> CmBodyReports : bagian badan dari laporan
+        activate CmBodyReports
+        return berhasil
+    ReportController -> Recommendations : bagian rekomendasi sparepart
+        activate Recommendations
+        return berhasil
+    ReportController -> ReportImages : bagian lampiran
+        activate ReportImages
+        return berhasil
+    ReportController -> cm : teknisi dipindahkan
+        activate cm
+    cm -> teknisi : pesan\nberhasil
+        deactivate cm
+    
+else data tidak sesuai
+    ReportController -> cmCreate : masukan\ntidak sesuai
+        deactivate ReportController
+        activate cmCreate
+    cmCreate --> teknisi : pesan masukan\ntidak sesuai
+        deactivate cmCreate
+
+end
+
+@enduml
+
+
+
+@startuml viewCM
+
+skinparam style strictuml
+
+actor teknisi
+boundary dashboard <<boundary>>
+boundary "cm-reports" as cm <<boundary>>
+boundary "cm-item" as cmItem <<boundary>>
+
+ref over teknisi, cm : Menampilkan\nSemua Laporan CM
+
+activate cm
+cm -> cmItem : teknisi memilih\nlaporan
+    deactivate cm
+    activate cmItem
+cmItem -> cmItem : menampilkan\ndata laporan
+
+@enduml
+
+
+
+@startuml editCM
+
+skinparam style strictuml
+
+actor teknisi
+boundary "cm-item" as cmItem <<boundary>>
+boundary "cm-create" as cmCreate <<boundary>>
+control ReportController <<control>>
+entity HeadReports <<entity>>
+entity ExpertReports <<entity>>
+entity CmBodyReports <<entity>>
+entity Recommendations <<entity>>
+entity ReportImages <<entity>>
+
+ref over teknisi, cmItem : Melihat Laporan PM
+
+activate cmItem
+cmItem -> cmCreate : mengisi form\ndengan\ndata lama
+    deactivate cmItem
+cmCreate -> ReportController : verifikasi input
+    activate ReportController
+
+alt data sesuai
+    ReportController -> HeadReports : bagian kepala\ndari laporan
+        activate HeadReports
+        return berhasil
+    ReportController -> ExpertReports : teknisi yang bertugas\npada laporan
+        activate ExpertReports
+        return berhasil
+    ReportController -> CmBodyReports : bagian badan dari laporan
+        activate CmBodyReports
+        return berhasil
+    ReportController -> Recommendations : bagian rekomendasi sparepart
+        activate Recommendations
+        return berhasil
+    ReportController -> ReportImages : bagian lampiran
+        activate ReportImages
+        return berhasil
+    ReportController -> cmItem : teknisi dipindahkan
+        activate cmItem
+    cmItem -> teknisi : pesan\nberhasil
+        deactivate cmItem
+    
+else data tidak sesuai
+    ReportController -> cmCreate : masukan\ntidak sesuai
+        deactivate ReportController
+    cmCreate --> teknisi : pesan masukan\ntidak sesuai
+        deactivate cmCreate
+end
+
+@enduml
+
+
+
+@startuml deleteCM
+
+skinparam style strictuml
+
+actor teknisi
+boundary "cm-reports" as cm <<boundary>>
+boundary "cm-item" as cmItem <<boundary>>
+control ReportController <<control>>
+entity HeadReports <<entity>>
+
+ref over teknisi, cmItem : Melihat Laporan PM
+
+cmItem -> ReportController : teknisi memilih\nmenu delete
+    deactivate cmItem
+    activate ReportController
+ReportController -> HeadReports : data diberikan\nflag dihapus
+    activate HeadReports
+    return berhasil
+ReportController -> cm : teknisi dipindahkan
+    activate cm
+cm --> teknisi : pesan\nberhasil
+    deactivate cm
+
+@enduml

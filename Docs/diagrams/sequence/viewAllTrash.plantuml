@@ -1,0 +1,37 @@
+@startuml viewAllTrashPM
+
+skinparam style strictuml
+
+actor teknisi
+boundary "pm-reports" as pm <<boundary>>
+boundary "pm-trash" as trash <<boundary>>
+
+ref over teknisi, pm : Menampilkan\nSemua Laporan PM
+
+activate pm
+pm -> trash : teknisi memilih menu trash
+    deactivate pm 
+    activate trash
+trash -> trash : menampilkan\nseluruh laporan PM\nyang telah dihapus
+
+@enduml
+
+
+
+@startuml viewAllTrashCM
+
+skinparam style strictuml
+
+actor teknisi
+boundary "cm-reports" as cm <<boundary>>
+boundary "cm-trash" as trash <<boundary>>
+
+ref over teknisi, cm : Menampilkan\nSemua Laporan CM
+
+activate cm
+cm -> trash : teknisi memilih menu trash
+    deactivate cm 
+    activate trash
+trash -> trash : menampilkan\nseluruh laporan CM\nyang telah dihapus
+
+@enduml

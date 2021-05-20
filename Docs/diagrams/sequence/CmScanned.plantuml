@@ -1,0 +1,107 @@
+@startuml createCmScanned
+
+skinparam style strictuml
+
+actor teknisi
+boundary "cm-item" as item <<boundary>>
+control PDFController <<control>>
+entity PrintedReport <<entity>>
+
+ref over teknisi, item : Melihat Laporan CM
+
+teknisi -> item : memilih kategori file
+    activate item
+item -> item : mengupload file
+item -> PDFController : verifikasi input
+    activate PDFController
+PDFController -> PrintedReport : menyimpan data
+    activate PrintedReport
+    return berhasil 
+PDFController -> item : input berhasil
+    deactivate PDFController
+item --> teknisi : pesan upload berhasil
+    deactivate item
+
+@enduml
+
+
+
+@startuml viewCmScanned
+
+skinparam style strictuml
+
+actor teknisi
+boundary "cm-item" as item <<boundary>>
+
+ref over teknisi, item : Melihat Laporan CM
+
+teknisi -> item : memilih menu view
+    activate item
+item -> item : menampilkan file\nyang telah diunggah
+
+@enduml
+
+
+
+@startuml editCmScanned
+
+skinparam style strictuml
+
+actor teknisi
+boundary "cm-item" as item <<boundary>>
+control PDFController <<control>>
+entity PrintedReport <<entity>>
+
+ref over teknisi, item : Melihat Laporan CM
+
+teknisi -> item : memilih menu change file
+    activate item
+item -> item : memilih\nkategori file
+item -> item : mengupload file
+item -> PDFController : verifikasi input
+    activate PDFController
+PDFController -> PrintedReport : menyimpan data
+    activate PrintedReport
+    return berhasil 
+PDFController -> item : input berhasil
+    deactivate PDFController
+item --> teknisi : pesan upload berhasil
+    deactivate item
+
+@enduml
+
+
+
+@startuml deleteCmScanned
+
+skinparam style strictuml
+
+actor teknisi
+boundary "cm-item" as item <<boundary>>
+control PDFController <<control>>
+entity PrintedReport <<entity>>
+
+ref over teknisi, item : Melihat Laporan CM
+
+teknisi -> item : memilih menu delete
+    activate item
+    return dialog konfirmasi
+
+alt memilih yes
+    teknisi -> item : memilih yes
+        activate item
+    item -> PDFController : memilih menghapus
+        activate PDFController
+    PDFController -> PrintedReport : menghapus data\ndari database
+        activate PrintedReport
+        return berhasil 
+    PDFController -> item : berhasil dihapus
+        deactivate PDFController
+    item --> teknisi : pesan delete berhasil
+        deactivate item
+else memilih cancel  
+    teknisi -> item : kembali ke list
+        activate item
+end
+
+@enduml

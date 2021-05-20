@@ -1,0 +1,29 @@
+@startuml activity
+
+|aktor|Admin dan Teknisi
+start
+:Login;
+
+|sistem| Sistem
+repeat
+    :Form Login;
+
+|aktor|
+:input email;
+
+|sistem|
+repeat while (benar?) is (tidak)
+->ya;
+
+switch (cek role)
+case (Teknisi)
+  :Dashboard Teknisi;
+case (Admin) 
+  :Dashboard Admin;
+endswitch
+
+:Logout;
+
+stop
+
+@enduml

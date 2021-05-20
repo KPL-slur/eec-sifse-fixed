@@ -1,0 +1,60 @@
+@startuml pmAuthzUpdate
+
+skinparam style strictuml
+
+actor teknisi
+boundary "pm-item" as pmItem <<boundary>>
+control ReportController <<control>>
+boundary "pm-create" as pmCreate <<boundary>>
+
+ref over teknisi, pmItem : Melihat Laporan PM
+
+activate pmItem
+alt teknisi adalah pembuat laporan 
+    pmItem -> ReportController : mencoba melakukan update
+        activate ReportController
+
+    ReportController -> pmCreate : melakukan update
+        deactivate ReportController
+
+else teknisi bukan pembuat laporan
+    pmItem -> ReportController : mencoba melakukan update
+        activate ReportController
+
+    ReportController -> pmItem : tidak bisa melanjutkan
+        deactivate ReportController
+        deactivate pmItem
+end
+
+@enduml
+
+
+
+@startuml pmAuthzDelete
+
+skinparam style strictuml
+
+actor teknisi
+boundary "pm-item" as pmItem <<boundary>>
+control ReportController <<control>>
+
+ref over teknisi, pmItem : Melihat Laporan PM
+
+activate pmItem
+alt teknisi adalah pembuat laporan 
+    pmItem -> ReportController : mencoba melakukan delete
+        activate ReportController
+
+    ReportController -> ReportController : melakukan delete
+        deactivate ReportController
+
+else teknisi bukan pembuat laporan
+    pmItem -> ReportController : mencoba melakukan delete
+        activate ReportController
+
+    ReportController -> pmItem : tidak bisa melanjutkan
+        deactivate ReportController
+        deactivate pmItem
+end
+
+@enduml

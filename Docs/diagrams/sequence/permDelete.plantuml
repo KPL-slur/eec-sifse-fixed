@@ -1,0 +1,81 @@
+@startuml permDeletePM
+
+skinparam style strictuml
+
+actor teknisi
+boundary "pm-trash" as trash <<boundary>>
+control TrashController <<control>>
+entity HeadReports <<entity>>
+entity ExpertReports <<entity>>
+entity PmBodyReports <<entity>>
+entity Recommendations <<entity>>
+entity ReportImages <<entity>>
+
+ref over teknisi, trash : Menampilkan Seluruh Laporan\nPM yang Telah Dihapus
+
+activate trash
+trash -> TrashController : teknisi\nmemilih ikon\ndelete pada\nitem laporan
+
+TrashController -> HeadReports : menghapus data\ndari database
+    activate HeadReports
+    return berhasil
+TrashController -> ExpertReports : menghapus data\ndari database
+    activate ExpertReports
+    return berhasil
+TrashController -> PmBodyReports : menghapus data\ndari database
+    activate PmBodyReports
+    return berhasil
+TrashController -> Recommendations : menghapus data\ndari database
+    activate Recommendations
+    return berhasil
+TrashController -> ReportImages : menghapus data\ndari database
+    activate ReportImages
+    return berhasil
+
+TrashController -> trash : berhasil\nmenghapus
+trash --> teknisi : pesan laporan\nberhasil dihapus\nsecara permanen
+    deactivate trash
+
+@enduml
+
+
+
+@startuml permDeleteCM
+
+skinparam style strictuml
+
+actor teknisi
+boundary "cm-trash" as trash <<boundary>>
+control TrashController <<control>>
+entity HeadReports <<entity>>
+entity ExpertReports <<entity>>
+entity CmBodyReports <<entity>>
+entity Recommendations <<entity>>
+entity ReportImages <<entity>>
+
+ref over teknisi, trash : Menampilkan Seluruh Laporan\nCM yang Telah Dihapus
+
+activate trash
+trash -> TrashController : teknisi\nmemilih ikon\ndelete pada\nitem laporan
+
+TrashController -> HeadReports : menghapus data\ndari database
+    activate HeadReports
+    return berhasil
+TrashController -> ExpertReports : menghapus data dari database
+    activate ExpertReports
+    return berhasil
+TrashController -> CmBodyReports : menghapus data dari database
+    activate CmBodyReports
+    return berhasil
+TrashController -> Recommendations : menghapus data dari database
+    activate Recommendations
+    return berhasil
+TrashController -> ReportImages : menghapus data dari database
+    activate ReportImages
+    return berhasil
+
+TrashController -> trash : berhasil\nmenghapus
+trash --> teknisi : pesan laporan\nberhasil dihapus\nsecara permanen
+    deactivate trash
+
+@enduml
