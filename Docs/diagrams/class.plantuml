@@ -3,6 +3,9 @@
 skinparam classAttributeIconSize 0
 skinparam dpi 300
 
+'========================================
+'ENTITY DECLARATION
+'========================================
 entity HeadReport {
     - head_id : bigint
     - site : Site
@@ -11,11 +14,6 @@ entity HeadReport {
     - report_date_end : date
     - kasat_name : string
     - kasat_nip : string
-    void browse()
-    void create()
-    void show()
-    void edit()
-    void delete()
 }
 entity ExpertReport {
     - expert_report_id : bigint
@@ -113,19 +111,12 @@ entity PrintedReport {
     - printed_report_id : bigint
     - head_id : Headreport
     - file : string
-    void upload()
-    void show()
-    void changeFile()
-    void delete()
-    void download()
 }
 entity Expert {
     - expert_id : bigint
     - name : string
     - nip : string
     - expert_company : string
-    void create()
-    void show()
 }
 entity User {
     - id : bigint
@@ -135,21 +126,71 @@ entity User {
     - email : string
     - email_verified_at : timestamp
     - password : string
-    void register()
-    void profile()
-    void approve()
-    void isAdmin()
 }
 
-'HeadReport Composite
-HeadReport *-- ExpertReport
-HeadReport *-- PmBodyReport
-HeadReport *-- CmBodyReport
-HeadReport *-- Recommendation
-HeadReport *-- ReportImage
-HeadReport *-- PrintedReport
+'========================================
+'CLASS DECLARATION
+'========================================
+class Admin {
+    boolean isAdmin()
+}
+class ReportController {
+    void browse()
+    void create()
+    void show()
+    void edit()
+    void delete()
+}
+class TrashController {
+    void restore()
+    void permanentDelete()
+}
+class PM
+class CM
+class PDFController {
+    void upload()
+    void show()
+    void changeFile()
+    void delete()
+    void download()
+}   
+class UserController {
+    void register()
+    void approve()
+    void browse()
+}
+class ProfileController {
+    void profile()
+    void resetPassword()
+}
 
-Expert *-- ExpertReport
-User --* Expert
+'========================================
+'RELATION
+'========================================
+
+HeadReport "1" *-- "Many" ExpertReport
+HeadReport "1" *-- "1" PmBodyReport
+HeadReport "1" *-- "1" CmBodyReport
+HeadReport "1" *-- "Many" Recommendation
+HeadReport "1" *-- "Many" ReportImage
+HeadReport "1" *-- "Many" PrintedReport
+
+Expert "1" *-- "Many" ExpertReport
+User "1" --* "1" Expert
+
+Admin -- User
+
+ReportController 	<|-- PM
+ReportController 	<|-- CM
+TrashController 	<|-- PM
+TrashController 	<|-- CM
+
+PM -- HeadReport
+CM -- HeadReport
+
+UserController -- User
+ProfileController -- User
+
+PDFController -- PrintedReport
 
 @enduml
