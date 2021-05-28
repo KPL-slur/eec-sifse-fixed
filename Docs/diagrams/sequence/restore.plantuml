@@ -5,14 +5,14 @@ skinparam style strictuml
 actor teknisi
 boundary "pm-trash" as trash <<boundary>>
 control TrashController <<control>>
-entity HeadReports <<entity>>
+entity HeadReport <<entity>>
 
 ref over teknisi, trash : Menampilkan Seluruh Laporan\nPM yang Telah Dihapus
 
 activate trash
 trash -> TrashController : teknisi\nmemilih ikon\nrestore pada\nitem laporan
-TrashController -> HeadReports : menghapus\nflag "dihapus"\npada\nitem laporan
-    activate HeadReports
+TrashController -> HeadReport : menghapus\nflag "dihapus"\npada\nitem laporan
+    activate HeadReport
     return berhasil
 TrashController -> trash : berhasil merestore
 trash --> teknisi : pesan laporan\nberhasil di restore
@@ -29,14 +29,14 @@ skinparam style strictuml
 actor teknisi
 boundary "cm-trash" as trash <<boundary>>
 control TrashController <<control>>
-entity HeadReports <<entity>>
+entity HeadReport <<entity>>
 
 ref over teknisi, trash : Menampilkan Seluruh Laporan\nCM yang Telah Dihapus
 
 activate trash
 trash -> TrashController : teknisi\nmemilih ikon\nrestore pada\nitem laporan
-TrashController -> HeadReports : menghapus\nflag "dihapus"\npada\nitem laporan
-    activate HeadReports
+TrashController -> HeadReport : menghapus\nflag "dihapus"\npada\nitem laporan
+    activate HeadReport
     return berhasil
 TrashController -> trash : berhasil merestore
 trash --> teknisi : pesan laporan\nberhasil di restore

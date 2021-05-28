@@ -6,8 +6,8 @@ actor teknisi
 boundary register <<boundary>>
 boundary "halaman-tunggu-verifikasi-email" as waiting <<boundary>>
 control RegisterController <<control>>
-entity Experts <<entity>>
-entity Users <<entity>>
+entity Expert <<entity>>
+entity User <<entity>>
 
 teknisi -> register : masukan nama, email, nip, kata sandi
     activate register
@@ -16,12 +16,12 @@ register -> RegisterController : verfikasi masukan
     activate RegisterController
 
 alt data valid
-    RegisterController -> Experts : simpan data nama dan nip
-        activate Experts
+    RegisterController -> Expert : simpan data nama dan nip
+        activate Expert
     return expert_id
 
-    RegisterController -> Users : simpan data expert_id, email, dan password
-        activate Users
+    RegisterController -> User : simpan data expert_id, email, dan password
+        activate User
     return data disimpan
 
     RegisterController -> waiting : teknisi dipindahkan ke halaman tunggu

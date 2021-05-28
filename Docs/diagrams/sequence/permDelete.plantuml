@@ -5,31 +5,31 @@ skinparam style strictuml
 actor teknisi
 boundary "pm-trash" as trash <<boundary>>
 control TrashController <<control>>
-entity HeadReports <<entity>>
-entity ExpertReports <<entity>>
-entity PmBodyReports <<entity>>
-entity Recommendations <<entity>>
-entity ReportImages <<entity>>
+entity HeadReport <<entity>>
+entity ExpertReport <<entity>>
+entity PmBodyReport <<entity>>
+entity Recommendation <<entity>>
+entity ReportImage <<entity>>
 
 ref over teknisi, trash : Menampilkan Seluruh Laporan\nPM yang Telah Dihapus
 
 activate trash
 trash -> TrashController : teknisi\nmemilih ikon\ndelete pada\nitem laporan
 
-TrashController -> HeadReports : menghapus data\ndari database
-    activate HeadReports
+TrashController -> HeadReport : menghapus data\ndari database
+    activate HeadReport
     return berhasil
-TrashController -> ExpertReports : menghapus data\ndari database
-    activate ExpertReports
+TrashController -> ExpertReport : menghapus data\ndari database
+    activate ExpertReport
     return berhasil
-TrashController -> PmBodyReports : menghapus data\ndari database
-    activate PmBodyReports
+TrashController -> PmBodyReport : menghapus data\ndari database
+    activate PmBodyReport
     return berhasil
-TrashController -> Recommendations : menghapus data\ndari database
-    activate Recommendations
+TrashController -> Recommendation : menghapus data\ndari database
+    activate Recommendation
     return berhasil
-TrashController -> ReportImages : menghapus data\ndari database
-    activate ReportImages
+TrashController -> ReportImage : menghapus data\ndari database
+    activate ReportImage
     return berhasil
 
 TrashController -> trash : berhasil\nmenghapus
@@ -47,31 +47,31 @@ skinparam style strictuml
 actor teknisi
 boundary "cm-trash" as trash <<boundary>>
 control TrashController <<control>>
-entity HeadReports <<entity>>
-entity ExpertReports <<entity>>
-entity CmBodyReports <<entity>>
-entity Recommendations <<entity>>
-entity ReportImages <<entity>>
+entity HeadReport <<entity>>
+entity ExpertReport <<entity>>
+entity CmBodyReport <<entity>>
+entity Recommendation <<entity>>
+entity ReportImage <<entity>>
 
 ref over teknisi, trash : Menampilkan Seluruh Laporan\nCM yang Telah Dihapus
 
 activate trash
 trash -> TrashController : teknisi\nmemilih ikon\ndelete pada\nitem laporan
 
-TrashController -> HeadReports : menghapus data\ndari database
-    activate HeadReports
+TrashController -> HeadReport : menghapus data\ndari database
+    activate HeadReport
     return berhasil
-TrashController -> ExpertReports : menghapus data dari database
-    activate ExpertReports
+TrashController -> ExpertReport : menghapus data dari database
+    activate ExpertReport
     return berhasil
-TrashController -> CmBodyReports : menghapus data dari database
-    activate CmBodyReports
+TrashController -> CmBodyReport : menghapus data dari database
+    activate CmBodyReport
     return berhasil
-TrashController -> Recommendations : menghapus data dari database
-    activate Recommendations
+TrashController -> Recommendation : menghapus data dari database
+    activate Recommendation
     return berhasil
-TrashController -> ReportImages : menghapus data dari database
-    activate ReportImages
+TrashController -> ReportImage : menghapus data dari database
+    activate ReportImage
     return berhasil
 
 TrashController -> trash : berhasil\nmenghapus

@@ -6,11 +6,11 @@ actor teknisi
 boundary "cm-reports" as cm <<boundary>>
 boundary "cm-create" as cmCreate <<boundary>>
 control ReportController <<control>>
-entity HeadReports <<entity>>
-entity ExpertReports <<entity>>
-entity CmBodyReports <<entity>>
-entity Recommendations <<entity>>
-entity ReportImages <<entity>>
+entity HeadReport <<entity>>
+entity ExpertReport <<entity>>
+entity CmBodyReport <<entity>>
+entity Recommendation <<entity>>
+entity ReportImage <<entity>>
 
 ref over teknisi, cm : Menampilkan\nSemua Laporan CM
 
@@ -23,20 +23,20 @@ cmCreate -> ReportController : verifikasi input
     activate ReportController
 
 alt data sesuai
-    ReportController -> HeadReports : bagian kepala\ndari laporan
-        activate HeadReports
+    ReportController -> HeadReport : bagian kepala\ndari laporan
+        activate HeadReport
         return berhasil
-    ReportController -> ExpertReports : teknisi yang bertugas\npada laporan
-        activate ExpertReports
+    ReportController -> ExpertReport : teknisi yang bertugas\npada laporan
+        activate ExpertReport
         return berhasil
-    ReportController -> CmBodyReports : bagian badan dari laporan
-        activate CmBodyReports
+    ReportController -> CmBodyReport : bagian badan dari laporan
+        activate CmBodyReport
         return berhasil
-    ReportController -> Recommendations : bagian rekomendasi sparepart
-        activate Recommendations
+    ReportController -> Recommendation : bagian rekomendasi sparepart
+        activate Recommendation
         return berhasil
-    ReportController -> ReportImages : bagian lampiran
-        activate ReportImages
+    ReportController -> ReportImage : bagian lampiran
+        activate ReportImage
         return berhasil
     ReportController -> cm : teknisi dipindahkan
         activate cm
@@ -85,11 +85,11 @@ actor teknisi
 boundary "cm-item" as cmItem <<boundary>>
 boundary "cm-create" as cmCreate <<boundary>>
 control ReportController <<control>>
-entity HeadReports <<entity>>
-entity ExpertReports <<entity>>
-entity CmBodyReports <<entity>>
-entity Recommendations <<entity>>
-entity ReportImages <<entity>>
+entity HeadReport <<entity>>
+entity ExpertReport <<entity>>
+entity CmBodyReport <<entity>>
+entity Recommendation <<entity>>
+entity ReportImage <<entity>>
 
 ref over teknisi, cmItem : Melihat Laporan PM
 
@@ -100,20 +100,20 @@ cmCreate -> ReportController : verifikasi input
     activate ReportController
 
 alt data sesuai
-    ReportController -> HeadReports : bagian kepala\ndari laporan
-        activate HeadReports
+    ReportController -> HeadReport : bagian kepala\ndari laporan
+        activate HeadReport
         return berhasil
-    ReportController -> ExpertReports : teknisi yang bertugas\npada laporan
-        activate ExpertReports
+    ReportController -> ExpertReport : teknisi yang bertugas\npada laporan
+        activate ExpertReport
         return berhasil
-    ReportController -> CmBodyReports : bagian badan dari laporan
-        activate CmBodyReports
+    ReportController -> CmBodyReport : bagian badan dari laporan
+        activate CmBodyReport
         return berhasil
-    ReportController -> Recommendations : bagian rekomendasi sparepart
-        activate Recommendations
+    ReportController -> Recommendation : bagian rekomendasi sparepart
+        activate Recommendation
         return berhasil
-    ReportController -> ReportImages : bagian lampiran
-        activate ReportImages
+    ReportController -> ReportImage : bagian lampiran
+        activate ReportImage
         return berhasil
     ReportController -> cmItem : teknisi dipindahkan
         activate cmItem
@@ -139,15 +139,15 @@ actor teknisi
 boundary "cm-reports" as cm <<boundary>>
 boundary "cm-item" as cmItem <<boundary>>
 control ReportController <<control>>
-entity HeadReports <<entity>>
+entity HeadReport <<entity>>
 
 ref over teknisi, cmItem : Melihat Laporan PM
 
 cmItem -> ReportController : teknisi memilih\nmenu delete
     deactivate cmItem
     activate ReportController
-ReportController -> HeadReports : data diberikan\nflag dihapus
-    activate HeadReports
+ReportController -> HeadReport : data diberikan\nflag dihapus
+    activate HeadReport
     return berhasil
 ReportController -> cm : teknisi dipindahkan
     activate cm

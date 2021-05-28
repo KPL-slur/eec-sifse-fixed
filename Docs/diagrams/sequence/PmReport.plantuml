@@ -6,11 +6,11 @@ actor teknisi
 boundary "pm-reports" as pm <<boundary>>
 boundary "pm-create" as pmCreate <<boundary>>
 control ReportController <<control>>
-entity HeadReports <<entity>>
-entity ExpertReports <<entity>>
-entity PmBodyReports <<entity>>
-entity Recommendations <<entity>>
-entity ReportImages <<entity>>
+entity HeadReport <<entity>>
+entity ExpertReport <<entity>>
+entity PmBodyReport <<entity>>
+entity Recommendation <<entity>>
+entity ReportImage <<entity>>
 
 ref over teknisi, pm : Menampilkan\nSemua Laporan PM
 
@@ -23,20 +23,20 @@ pmCreate -> ReportController : verifikasi input
     activate ReportController
 
 alt data sesuai
-    ReportController -> HeadReports : bagian kepala\ndari laporan
-        activate HeadReports
+    ReportController -> HeadReport : bagian kepala\ndari laporan
+        activate HeadReport
         return berhasil
-    ReportController -> ExpertReports : teknisi yang bertugas\npada laporan
-        activate ExpertReports
+    ReportController -> ExpertReport : teknisi yang bertugas\npada laporan
+        activate ExpertReport
         return berhasil
-    ReportController -> PmBodyReports : bagian badandari laporan
-        activate PmBodyReports
+    ReportController -> PmBodyReport : bagian badandari laporan
+        activate PmBodyReport
         return berhasil
-    ReportController -> Recommendations : bagian rekomendasi sparepart
-        activate Recommendations
+    ReportController -> Recommendation : bagian rekomendasi sparepart
+        activate Recommendation
         return berhasil
-    ReportController -> ReportImages : bagian lampiran
-        activate ReportImages
+    ReportController -> ReportImage : bagian lampiran
+        activate ReportImage
         return berhasil
     ReportController -> pm : teknisi dipindahkan
         activate pm
@@ -84,11 +84,11 @@ actor teknisi
 boundary "pm-item" as pmItem <<boundary>>
 boundary "pm-create" as pmCreate <<boundary>>
 control ReportController <<control>>
-entity HeadReports <<entity>>
-entity ExpertReports <<entity>>
-entity PmBodyReports <<entity>>
-entity Recommendations <<entity>>
-entity ReportImages <<entity>>
+entity HeadReport <<entity>>
+entity ExpertReport <<entity>>
+entity PmBodyReport <<entity>>
+entity Recommendation <<entity>>
+entity ReportImage <<entity>>
 
 ref over teknisi, pmItem : Melihat Laporan PM
 
@@ -99,20 +99,20 @@ pmCreate -> ReportController : verifikasi input
     activate ReportController
 
 alt data sesuai
-    ReportController -> HeadReports : bagian kepala\ndari laporan
-        activate HeadReports
+    ReportController -> HeadReport : bagian kepala\ndari laporan
+        activate HeadReport
         return berhasil
-    ReportController -> ExpertReports : teknisi yang bertugas\npada laporan
-        activate ExpertReports
+    ReportController -> ExpertReport : teknisi yang bertugas\npada laporan
+        activate ExpertReport
         return berhasil
-    ReportController -> PmBodyReports : bagian badan dari laporan
-        activate PmBodyReports
+    ReportController -> PmBodyReport : bagian badan dari laporan
+        activate PmBodyReport
         return berhasil
-    ReportController -> Recommendations : bagian rekomendasi sparepart
-        activate Recommendations
+    ReportController -> Recommendation : bagian rekomendasi sparepart
+        activate Recommendation
         return berhasil
-    ReportController -> ReportImages : bagian lampiran
-        activate ReportImages
+    ReportController -> ReportImage : bagian lampiran
+        activate ReportImage
         return berhasil
     ReportController -> pmItem : teknisi dipindahkan
         activate pmItem
@@ -138,15 +138,15 @@ actor teknisi
 boundary "pm-reports" as pm <<boundary>>
 boundary "pm-item" as pmItem <<boundary>>
 control ReportController <<control>>
-entity HeadReports <<entity>>
+entity HeadReport <<entity>>
 
 ref over teknisi, pmItem : Melihat Laporan PM
 
 pmItem -> ReportController : teknisi memilih\nmenu delete
     deactivate pmItem
     activate ReportController
-ReportController -> HeadReports : data diberikan\nflag dihapus
-    activate HeadReports
+ReportController -> HeadReport : data diberikan\nflag dihapus
+    activate HeadReport
     return berhasil
 ReportController -> pm : teknisi dipindahkan
     activate pm

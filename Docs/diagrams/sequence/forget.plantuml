@@ -26,7 +26,7 @@ actor "email provider" as email <<external>>
 boundary dashboard <<boundary>>
 boundary reset <<boundary>>
 control ResetPasswordController <<control>>
-entity Users <<entity>>
+entity User <<entity>>
 
 ref over teknisi : Meminta email lupa kata sandi 
 
@@ -40,10 +40,10 @@ teknisi -> reset : teknisi mengisi password yang baru
 reset -> ResetPasswordController : verifikasi masukan
     deactivate reset
     activate ResetPasswordController
-ResetPasswordController -> Users : simpan password baru
-    activate Users
-Users -> ResetPasswordController : data disimpan
-    deactivate Users
+ResetPasswordController -> User : simpan password baru
+    activate User
+User -> ResetPasswordController : data disimpan
+    deactivate User
 ResetPasswordController -> dashboard : teknisi dipindahkan ke dashboard
     deactivate ResetPasswordController
     activate dashboard
