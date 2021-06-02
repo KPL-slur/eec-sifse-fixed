@@ -25,7 +25,8 @@ class PrintedReport extends Component
     private $errMessage = [
         'required' => 'This input is required.',
         'mimes' => 'This input must be a file of type: pdf.',
-        'unique' => 'This report already has this kind of file, please check your file category input again.'
+        'unique' => 'This report already has this kind of file, please check your file category input again.',
+        'size' => 'The file must be under 10 MB.'
     ];
 
     //* LIVEWIRE METHOD
@@ -197,7 +198,7 @@ class PrintedReport extends Component
         $this->authorize('update', $this->headReport);
         $this->reports[$index]['fileName'] = $this->maintenance_type.'/'.$this->setFileName($index);
         $this->validate([
-            'reports.'.$index.'.file' => 'required|mimes:pdf',
+            'reports.'.$index.'.file' => 'required|mimes:pdf|size:10000',
         ], $this->errMessage);
         
         if ($this->reports[$index]['uploaded'] == 1) {
@@ -229,7 +230,7 @@ class PrintedReport extends Component
         $this->authorize('update', $this->headReport);
         $this->reports[$index]['fileName'] = $this->maintenance_type.'/'.$this->setFileName($index);
         $this->validate([
-            'reports.'.$index.'.file' => 'required|mimes:pdf',
+            'reports.'.$index.'.file' => 'required|mimes:pdf|size:10000',
             'reports.'.$index.'.fileName' => 'unique:App\Models\PrintedReport,file',
         ], $this->errMessage);
 
