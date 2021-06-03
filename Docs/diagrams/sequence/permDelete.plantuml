@@ -11,11 +11,10 @@ entity PmBodyReport <<entity>>
 entity Recommendation <<entity>>
 entity ReportImage <<entity>>
 
-ref over teknisi, trash : Menampilkan Seluruh Laporan\nPM yang Telah Dihapus
-
-activate trash
-trash -> TrashController : teknisi\nmemilih ikon\ndelete pada\nitem laporan
-
+teknisi -> trash : teknisi\nmemilih ikon\ndelete pada\nitem laporan
+    activate trash
+trash -> TrashController : melakukan delete
+    activate TrashController
 TrashController -> HeadReport : menghapus data\ndari database
     activate HeadReport
     return berhasil
@@ -33,6 +32,7 @@ TrashController -> ReportImage : menghapus data\ndari database
     return berhasil
 
 TrashController -> trash : berhasil\nmenghapus
+    deactivate TrashController
 trash --> teknisi : pesan laporan\nberhasil dihapus\nsecara permanen
     deactivate trash
 
@@ -53,9 +53,10 @@ entity CmBodyReport <<entity>>
 entity Recommendation <<entity>>
 entity ReportImage <<entity>>
 
-ref over teknisi, trash : Menampilkan Seluruh Laporan\nCM yang Telah Dihapus
-
-activate trash
+teknisi -> trash : teknisi\nmemilih ikon\ndelete pada\nitem laporan
+    activate trash
+trash -> TrashController : melakukan delete
+    activate TrashController
 trash -> TrashController : teknisi\nmemilih ikon\ndelete pada\nitem laporan
 
 TrashController -> HeadReport : menghapus data\ndari database
@@ -75,6 +76,7 @@ TrashController -> ReportImage : menghapus data dari database
     return berhasil
 
 TrashController -> trash : berhasil\nmenghapus
+    deactivate TrashController
 trash --> teknisi : pesan laporan\nberhasil dihapus\nsecara permanen
     deactivate trash
 

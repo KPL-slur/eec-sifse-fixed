@@ -28,8 +28,6 @@ boundary reset <<boundary>>
 control ResetPasswordController <<control>>
 entity User <<entity>>
 
-ref over teknisi : Meminta email lupa kata sandi 
-
 teknisi -> email : teknisi mengklik link pada email
     activate email
 email -> reset : teknisi dipindahkan ke reset password

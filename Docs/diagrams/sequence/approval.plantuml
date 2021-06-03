@@ -8,19 +8,17 @@ boundary "user-management" as management <<boundary>>
 control UserController <<control>>
 entity User <<entity>>
 
-ref over admin, dashboard : login
-
-activate dashboard 
-admin -> dashboard : masuk kedalam dashboard admin
-dashboard -> management : masuk ke menu user management
+admin -> dashboard : masuk ke menu\nuser management
+    activate dashboard 
+dashboard -> management : memilih menu approve\npada teknisi yang akan\ndisetujui pendaftarannya
     deactivate dashboard
     activate management
-management -> UserController : memilih menu approve\npada teknisi yang akan\ndisetujui pendaftarannya
+management -> UserController : memproses\npermintaan
     activate UserController
 UserController -> User : memberikan flag disetujui\npada data teknisi yang\ndisetujui pendaftarannya
     activate User 
 return berhasil
-UserController -> management : berhasil menyetujui
+UserController -> management : berhasil\nmenyetujui
     deactivate UserController
 management -> admin : pesan persetujuan pendaftaran teknisi berhasil
 

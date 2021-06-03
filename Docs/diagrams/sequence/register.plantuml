@@ -51,7 +51,6 @@ control EmailController <<control>>
 actor "email provider" as email <<external>>
 boundary "halaman-tunggu-persetujuan-admin" as waitingAdmin <<boundary>>
 
-ref over teknisi : login
 teknisi -> waiting : teknisi di arahkan ke ruang tunggu
     activate waiting
 waiting -> EmailController : request email verification

@@ -27,9 +27,9 @@ rectangle sistem {
     teknisi --> trash
     trash ..> authn : inlcude
 
-    usecase (Mengelola laporan PM) as pm
-    teknisi --> pm
-    pm ..> authz : include
+    usecase (Mengelola laporan) as report
+    teknisi --> report
+    report ..> authz : include
     authz ..> authn : include
 
     usecase (Mengembalikan laporan\nyang telah dihapus) as restore

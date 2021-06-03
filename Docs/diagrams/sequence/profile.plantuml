@@ -9,10 +9,9 @@ control ProfileController <<control>>
 entity Expert <<entity>>
 entity User <<entity>>
 
-ref over teknisi, dashboard : login
-
-activate dashboard
-dashboard -> profile : teknisi memilih\nikon berbentuk orang
+teknisi -> dashboard : teknisi memilih\nikon profil
+    activate dashboard
+dashboard -> profile : teknisi\ndipindahkan ke\nhalaman profil
     deactivate dashboard
     activate profile
 profile -> profile : menampilkan form\ndengan nilai sebelumnya
@@ -53,10 +52,9 @@ boundary profile <<boundary>>
 control ProfileController <<control>>
 entity User <<entity>>
 
-ref over teknisi, dashboard : login
-
-activate dashboard
-dashboard -> profile : teknisi memilih\nikon berbentuk orang
+teknisi -> dashboard : teknisi memilih\nikon profil
+    activate dashboard
+dashboard -> profile : teknisi\ndipindahkan ke\nhalaman profil
     deactivate dashboard
     activate profile
 profile -> profile : teknisi mengisi\npassword lama dan baru

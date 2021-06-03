@@ -7,9 +7,8 @@ boundary "pm-item" as pmItem <<boundary>>
 control ReportController <<control>>
 boundary "pm-create" as pmCreate <<boundary>>
 
-ref over teknisi, pmItem : Melihat Laporan PM
-
-activate pmItem
+teknisi -> pmItem : teknisi\nmenekan\nikon edit
+    activate pmItem
 alt teknisi adalah pembuat laporan 
     pmItem -> ReportController : mencoba melakukan update
         activate ReportController
@@ -38,9 +37,8 @@ actor teknisi
 boundary "pm-item" as pmItem <<boundary>>
 control ReportController <<control>>
 
-ref over teknisi, pmItem : Melihat Laporan PM
-
-activate pmItem
+teknisi -> pmItem : teknisi\nmenekan\nikon delete
+    activate pmItem
 alt teknisi adalah pembuat laporan 
     pmItem -> ReportController : mencoba melakukan delete
         activate ReportController

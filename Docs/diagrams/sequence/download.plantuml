@@ -6,14 +6,12 @@ actor teknisi
 boundary "pm-item" as item <<boundary>>
 control PDFController <<control>>
 
-ref over teknisi, item : Melihat Laporan PM
-
-teknisi -> item : teknisi masuk\nke item laporan
+teknisi -> item : teknisi memilih\nmenu download
     activate item
-item -> PDFController : teknisi memilih\nmenu download
+item -> PDFController : mengunduh file\nmelalui browser
     deactivate item
     activate PDFController
-PDFController -> PDFController : mengunduh file\nmelalui browser
+PDFController -> teknisi : teknisi menerima file
 
 @enduml
 
@@ -27,13 +25,11 @@ actor teknisi
 boundary "cm-item" as item <<boundary>>
 control PDFController <<control>>
 
-ref over teknisi, item : Melihat Laporan CM
-
-teknisi -> item : teknisi masuk\nke item laporan
+teknisi -> item : teknisi memilih\nmenu download
     activate item
-item -> PDFController : teknisi memilih\nmenu download
+item -> PDFController : mengunduh file\nmelalui browser
     deactivate item
     activate PDFController
-PDFController -> PDFController : mengunduh file\nmelalui browser
+PDFController -> teknisi : teknisi menerima file
 
 @enduml

@@ -9,7 +9,8 @@ repeat
     :Form Login;
 
 |aktor|
-:input email;
+:input email 
+dan password;
 
 |sistem|
 repeat while (benar?) is (tidak)

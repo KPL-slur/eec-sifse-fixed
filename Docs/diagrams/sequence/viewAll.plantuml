@@ -6,10 +6,9 @@ actor teknisi
 boundary dashboard <<boundary>>
 boundary "pm-reports" as pm <<boundary>>
 
-ref over teknisi, dashboard : login
-
-activate dashboard
-dashboard -> pm : teknisi memilih\nmenu PM Reports
+teknisi -> dashboard : teknisi memilih\nmenu PM Reports
+    activate dashboard
+dashboard -> pm : teknisi\ndipindahkan\nke halaman PM
     deactivate dashboard
     activate pm
 pm -> pm : menampilkan\nseluruh laporan PM\nyang belum dihapus
@@ -26,10 +25,9 @@ actor teknisi
 boundary dashboard <<boundary>>
 boundary "cm-reports" as cm <<boundary>>
 
-ref over teknisi, dashboard : login
-
-activate dashboard
-dashboard -> cm : teknisi memilih\nmenu CM Reports
+teknisi -> dashboard : teknisi memilih\nmenu CM Reports
+    activate dashboard
+dashboard -> cm : teknisi\ndipindahkan\nke halaman CM
     deactivate dashboard
     activate cm
 cm -> cm : menampilkan\nseluruh laporan CM\nyang belum dihapus

@@ -7,8 +7,6 @@ boundary "halaman-tunggu-verifikasi-email" as waiting <<boundary>>
 control verified <<middleware>>
 boundary dashboard <<boundary>>
 
-ref over teknisi : login
-
 alt sudah melakukan verifikasi email
     teknisi -> verified : sudah verifikasi email
     verified -> dashboard : masuk ke dashboard
@@ -32,8 +30,6 @@ actor teknisi
 boundary "halaman-tunggu-persetujuan-admin" as waitingAdmin <<boundary>>
 control IsApprove <<middleware>>
 boundary dashboard <<boundary>>
-
-ref over teknisi : login
 
 alt sudah verifikasi dan disetujui
     teknisi -> IsApprove : sudah disetujui oleh admin

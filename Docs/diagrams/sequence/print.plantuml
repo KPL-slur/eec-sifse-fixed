@@ -6,11 +6,9 @@ actor teknisi
 boundary "pm-item" as item <<boundary>>
 boundary "pm-print" as print <<boundary>>
 
-ref over teknisi, item : Melihat Laporan PM
-
-teknisi -> item : teknisi masuk\nke item laporan
+teknisi -> item : teknisi memilih\nmenu print
     activate item
-item -> print : teknisi menekan\ntombol print
+item -> print : teknisi dipindahkan\nke halaman print
     deactivate item
     activate print
 print -> print : mencetak halaman\nke bentuk pdf
@@ -27,11 +25,9 @@ actor teknisi
 boundary "cm-item" as item <<boundary>>
 boundary "cm-print" as print <<boundary>>
 
-ref over teknisi, item : Melihat Laporan CM
-
-teknisi -> item : teknisi masuk\nke item laporan
+teknisi -> item : teknisi memilih\nmenu print
     activate item
-item -> print : teknisi menekan\ntombol generate PDF
+item -> print : teknisi dipindahkan\nke halaman print
     deactivate item
     activate print
 print -> print : mencetak halaman\nke bentuk pdf

@@ -6,10 +6,9 @@ actor teknisi
 boundary "pm-reports" as pm <<boundary>>
 boundary "pm-trash" as trash <<boundary>>
 
-ref over teknisi, pm : Menampilkan\nSemua Laporan PM
-
-activate pm
-pm -> trash : teknisi memilih menu trash
+teknisi -> pm : teknisi\nmemilih\nmenu trash
+    activate pm
+pm -> trash : teknisi dipindahkan\nke halaman trash
     deactivate pm 
     activate trash
 trash -> trash : menampilkan\nseluruh laporan PM\nyang telah dihapus
@@ -26,10 +25,9 @@ actor teknisi
 boundary "cm-reports" as cm <<boundary>>
 boundary "cm-trash" as trash <<boundary>>
 
-ref over teknisi, cm : Menampilkan\nSemua Laporan CM
-
-activate cm
-cm -> trash : teknisi memilih menu trash
+teknisi -> cm : teknisi\nmemilih\nmenu trash
+    activate cm
+cm -> trash : teknisi dipindahkan\nke halaman trash
     deactivate cm 
     activate trash
 trash -> trash : menampilkan\nseluruh laporan CM\nyang telah dihapus

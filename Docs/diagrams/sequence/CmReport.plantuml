@@ -12,9 +12,8 @@ entity CmBodyReport <<entity>>
 entity Recommendation <<entity>>
 entity ReportImage <<entity>>
 
-ref over teknisi, cm : Menampilkan\nSemua Laporan CM
-
-activate cm
+teknisi -> cm : teknisi\nmenekan\ntombol add 
+    activate cm
 cm -> cmCreate : teknisi\nmengisi\nform
     deactivate cm
     activate cmCreate
@@ -61,14 +60,12 @@ end
 skinparam style strictuml
 
 actor teknisi
-boundary dashboard <<boundary>>
 boundary "cm-reports" as cm <<boundary>>
 boundary "cm-item" as cmItem <<boundary>>
 
-ref over teknisi, cm : Menampilkan\nSemua Laporan CM
-
-activate cm
-cm -> cmItem : teknisi memilih\nlaporan
+teknisi -> cm : teknisi\nmenekan\nikon view
+    activate cm
+cm -> cmItem : teknisi\ndipindahkan ke\nhalaman detail
     deactivate cm
     activate cmItem
 cmItem -> cmItem : menampilkan\ndata laporan
@@ -82,7 +79,7 @@ cmItem -> cmItem : menampilkan\ndata laporan
 skinparam style strictuml
 
 actor teknisi
-boundary "cm-item" as cmItem <<boundary>>
+boundary "cm-reports" as cm <<boundary>>
 boundary "cm-create" as cmCreate <<boundary>>
 control ReportController <<control>>
 entity HeadReport <<entity>>
@@ -91,11 +88,10 @@ entity CmBodyReport <<entity>>
 entity Recommendation <<entity>>
 entity ReportImage <<entity>>
 
-ref over teknisi, cmItem : Melihat Laporan PM
-
-activate cmItem
-cmItem -> cmCreate : mengisi form\ndengan\ndata lama
-    deactivate cmItem
+teknisi -> cm : teknisi\nmenekan\nikon edit
+    activate cm
+cm -> cmCreate : mengisi form\ndengan\ndata lama
+    deactivate cm
 cmCreate -> ReportController : verifikasi input
     activate ReportController
 
@@ -115,10 +111,10 @@ alt data sesuai
     ReportController -> ReportImage : bagian lampiran
         activate ReportImage
         return berhasil
-    ReportController -> cmItem : teknisi dipindahkan
-        activate cmItem
-    cmItem -> teknisi : pesan\nberhasil
-        deactivate cmItem
+    ReportController -> cm : teknisi dipindahkan
+        activate cm
+    cm -> teknisi : pesan\nberhasil
+        deactivate cm
     
 else data tidak sesuai
     ReportController -> cmCreate : masukan\ntidak sesuai
@@ -137,14 +133,13 @@ skinparam style strictuml
 
 actor teknisi
 boundary "cm-reports" as cm <<boundary>>
-boundary "cm-item" as cmItem <<boundary>>
 control ReportController <<control>>
 entity HeadReport <<entity>>
 
-ref over teknisi, cmItem : Melihat Laporan PM
-
-cmItem -> ReportController : teknisi memilih\nmenu delete
-    deactivate cmItem
+teknisi -> cm : teknisi\nmenekan\nikon delete
+    activate cm
+cm -> ReportController : teknisi memilih\nmenu delete
+    deactivate cm
     activate ReportController
 ReportController -> HeadReport : data diberikan\nflag dihapus
     activate HeadReport

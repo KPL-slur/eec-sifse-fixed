@@ -7,9 +7,8 @@ boundary "cm-item" as cmItem <<boundary>>
 control ReportController <<control>>
 boundary "cm-create" as cmCreate <<boundary>>
 
-ref over teknisi, cmItem : Melihat Laporan CM
-
-activate cmItem
+teknisi -> cmItem : teknisi\nmenekan\nikon edit
+    activate cmItem
 alt teknisi adalah pembuat laporan 
     cmItem -> ReportController : mencoba melakukan update
         activate ReportController
@@ -38,9 +37,8 @@ actor teknisi
 boundary "cm-item" as cmItem <<boundary>>
 control ReportController <<control>>
 
-ref over teknisi, cmItem : Melihat Laporan CM
-
-activate cmItem
+teknisi -> cmItem : teknisi\nmenekan\nikon delete
+    activate cmItem
 alt teknisi adalah pembuat laporan 
     cmItem -> ReportController : mencoba melakukan delete
         activate ReportController

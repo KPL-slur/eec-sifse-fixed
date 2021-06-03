@@ -12,9 +12,8 @@ entity PmBodyReport <<entity>>
 entity Recommendation <<entity>>
 entity ReportImage <<entity>>
 
-ref over teknisi, pm : Menampilkan\nSemua Laporan PM
-
-activate pm
+teknisi -> pm : teknisi\nmenekan\ntombol add 
+    activate pm
 pm -> pmCreate : teknisi\nmengisi\nform
     deactivate pm
     activate pmCreate
@@ -64,10 +63,9 @@ actor teknisi
 boundary "pm-reports" as pm <<boundary>>
 boundary "pm-item" as pmItem <<boundary>>
 
-ref over teknisi, pm : Menampilkan\nSemua Laporan PM
-
-activate pm
-pm -> pmItem : teknisi memilih\nlaporan
+teknisi -> pm : teknisi\nmenekan\nikon view
+    activate pm
+pm -> pmItem : teknisi\ndipindahkan ke\nhalaman detail
     deactivate pm
     activate pmItem
 pmItem -> pmItem : menampilkan\ndata laporan
@@ -81,7 +79,7 @@ pmItem -> pmItem : menampilkan\ndata laporan
 skinparam style strictuml
 
 actor teknisi
-boundary "pm-item" as pmItem <<boundary>>
+boundary "pm-reports" as pm <<boundary>>
 boundary "pm-create" as pmCreate <<boundary>>
 control ReportController <<control>>
 entity HeadReport <<entity>>
@@ -90,11 +88,10 @@ entity PmBodyReport <<entity>>
 entity Recommendation <<entity>>
 entity ReportImage <<entity>>
 
-ref over teknisi, pmItem : Melihat Laporan PM
-
-activate pmItem
-pmItem -> pmCreate : mengisi form\ndengan\ndata lama
-    deactivate pmItem
+teknisi -> pm : teknisi\nmenekan\nikon edit
+    activate pm
+pm -> pmCreate : mengisi form\ndengan\ndata lama
+    deactivate pm
 pmCreate -> ReportController : verifikasi input
     activate ReportController
 
@@ -114,10 +111,10 @@ alt data sesuai
     ReportController -> ReportImage : bagian lampiran
         activate ReportImage
         return berhasil
-    ReportController -> pmItem : teknisi dipindahkan
-        activate pmItem
-    pmItem -> teknisi : pesan\nberhasil
-        deactivate pmItem
+    ReportController -> pm : teknisi dipindahkan
+        activate pm
+    pm -> teknisi : pesan\nberhasil
+        deactivate pm
     
 else data tidak sesuai
     ReportController -> pmCreate : masukan\ntidak sesuai
@@ -136,14 +133,13 @@ skinparam style strictuml
 
 actor teknisi
 boundary "pm-reports" as pm <<boundary>>
-boundary "pm-item" as pmItem <<boundary>>
 control ReportController <<control>>
 entity HeadReport <<entity>>
 
-ref over teknisi, pmItem : Melihat Laporan PM
-
-pmItem -> ReportController : teknisi memilih\nmenu delete
-    deactivate pmItem
+teknisi -> pm : teknisi\nmenekan\nikon delete
+    activate pm
+pm -> ReportController : teknisi memilih\nmenu delete
+    deactivate pm
     activate ReportController
 ReportController -> HeadReport : data diberikan\nflag dihapus
     activate HeadReport

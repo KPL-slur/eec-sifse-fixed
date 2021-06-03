@@ -7,8 +7,6 @@ boundary "pm-item" as item <<boundary>>
 control PDFController <<control>>
 entity PrintedReport <<entity>>
 
-ref over teknisi, item : Melihat Laporan PM
-
 teknisi -> item : memilih kategori file
     activate item
 item -> item : mengupload file
@@ -33,8 +31,6 @@ skinparam style strictuml
 actor teknisi
 boundary "pm-item" as item <<boundary>>
 
-ref over teknisi, item : Melihat Laporan PM
-
 teknisi -> item : memilih menu view
     activate item
 item -> item : menampilkan file\nyang telah diunggah
@@ -51,8 +47,6 @@ actor teknisi
 boundary "pm-item" as item <<boundary>>
 control PDFController <<control>>
 entity PrintedReport <<entity>>
-
-ref over teknisi, item : Melihat Laporan PM
 
 teknisi -> item : memilih menu change file
     activate item
@@ -80,8 +74,6 @@ actor teknisi
 boundary "pm-item" as item <<boundary>>
 control PDFController <<control>>
 entity PrintedReport <<entity>>
-
-ref over teknisi, item : Melihat Laporan PM
 
 teknisi -> item : memilih menu delete
     activate item

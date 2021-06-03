@@ -7,14 +7,15 @@ boundary "pm-trash" as trash <<boundary>>
 control TrashController <<control>>
 entity HeadReport <<entity>>
 
-ref over teknisi, trash : Menampilkan Seluruh Laporan\nPM yang Telah Dihapus
-
-activate trash
-trash -> TrashController : teknisi\nmemilih ikon\nrestore pada\nitem laporan
+teknisi -> trash : teknisi\nmemilih ikon\nrestore pada\nitem laporan
+    activate trash
+trash -> TrashController : melakukan restore
+    activate TrashController
 TrashController -> HeadReport : menghapus\nflag "dihapus"\npada\nitem laporan
     activate HeadReport
     return berhasil
 TrashController -> trash : berhasil merestore
+    deactivate TrashController
 trash --> teknisi : pesan laporan\nberhasil di restore
     deactivate trash
 
@@ -31,14 +32,15 @@ boundary "cm-trash" as trash <<boundary>>
 control TrashController <<control>>
 entity HeadReport <<entity>>
 
-ref over teknisi, trash : Menampilkan Seluruh Laporan\nCM yang Telah Dihapus
-
-activate trash
-trash -> TrashController : teknisi\nmemilih ikon\nrestore pada\nitem laporan
+teknisi -> trash : teknisi\nmemilih ikon\nrestore pada\nitem laporan
+    activate trash
+trash -> TrashController : melakukan restore
+    activate TrashController
 TrashController -> HeadReport : menghapus\nflag "dihapus"\npada\nitem laporan
     activate HeadReport
     return berhasil
 TrashController -> trash : berhasil merestore
+    deactivate TrashController
 trash --> teknisi : pesan laporan\nberhasil di restore
     deactivate trash
 
