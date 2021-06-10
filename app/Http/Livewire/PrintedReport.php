@@ -198,7 +198,7 @@ class PrintedReport extends Component
         $this->authorize('update', $this->headReport);
         $this->reports[$index]['fileName'] = $this->maintenance_type.'/'.$this->setFileName($index);
         $this->validate([
-            'reports.'.$index.'.file' => 'required|mimes:pdf|size:10000',
+            'reports.'.$index.'.file' => 'required|mimes:pdf|max:10240',
         ], $this->errMessage);
         
         if ($this->reports[$index]['uploaded'] == 1) {
@@ -230,7 +230,7 @@ class PrintedReport extends Component
         $this->authorize('update', $this->headReport);
         $this->reports[$index]['fileName'] = $this->maintenance_type.'/'.$this->setFileName($index);
         $this->validate([
-            'reports.'.$index.'.file' => 'required|mimes:pdf|size:10000',
+            'reports.'.$index.'.file' => 'required|mimes:pdf|max:10240',
             'reports.'.$index.'.fileName' => 'unique:App\Models\PrintedReport,file',
         ], $this->errMessage);
 

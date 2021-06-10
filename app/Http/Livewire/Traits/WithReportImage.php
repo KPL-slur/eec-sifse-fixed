@@ -100,7 +100,7 @@ trait WithReportImage
             if ($this->attachments[$index]['uploaded'] == 0) {
                 $this->validate([
                     'attachments.'.$index.'.caption' => 'required',
-                    'attachments.'.$index.'.image' => 'required|image|size:10000'
+                    'attachments.'.$index.'.image' => 'required|image|max:10240'
                 ],[
                     'attachments.'.$index.'.caption.required' => 'This field is required.',
                     'attachments.'.$index.'.image.required' => 'The input must be an image.',
