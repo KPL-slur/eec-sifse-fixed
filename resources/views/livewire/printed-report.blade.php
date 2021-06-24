@@ -64,6 +64,9 @@
                                             File Category
                                         </td>
                                         <td>
+                                            @error('fileNameChecks.'.$index.'*')
+                                                <p class="text-danger mb-0">{{ $message }}</p>
+                                            @enderror
                                             @include('livewire.include.fileNameCheck')
                                         </td>
                                     </tr>

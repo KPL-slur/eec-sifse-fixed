@@ -143,17 +143,18 @@ class PrintedReport extends Component
     }
 
     /**
-     * ! Deprecated not really used but still kept just in case
      * nilai MAX harus sama dengan nilai max_len 
      * pada fungsi js di view livewire.printed-report
      */
     public function validateFileNameChecks()
     {
-        foreach ($this->fileNameChecks as $index => $fileNameCheck) {
-            foreach ($this->fileNameCheck as $jndex => $fileName) {
-                $this->validate(['fileNameChecks.'.$jndex => 'required|max:30']);
-            }
-        }
+        $this->validate(
+                ['fileNameChecks.*.*' => 'required|max:30'],
+                [
+                'required' => 'File Category is required',
+                'max' => 'File Category may not be greater than :max characters.',
+            ]
+        );
     }
 
     /**
@@ -196,6 +197,7 @@ class PrintedReport extends Component
     public function update($index)
     {
         $this->authorize('update', $this->headReport);
+        $this->validateFileNameChecks();
         $this->reports[$index]['fileName'] = $this->maintenance_type.'/'.$this->setFileName($index);
         $this->validate([
             'reports.'.$index.'.file' => 'required|mimes:pdf|max:10240',
@@ -228,6 +230,7 @@ class PrintedReport extends Component
     public function store($index)
     {
         $this->authorize('update', $this->headReport);
+        $this->validateFileNameChecks();
         $this->reports[$index]['fileName'] = $this->maintenance_type.'/'.$this->setFileName($index);
         $this->validate([
             'reports.'.$index.'.file' => 'required|mimes:pdf|max:10240',
