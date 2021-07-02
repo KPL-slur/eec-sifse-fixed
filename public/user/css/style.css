@@ -19,7 +19,12 @@
     margin-top: 0 !important;
 }
 
-.off-canvas-sidebar-custom .navbar .navbar-collapse .navbar-nav .nav-item .nav-link {
+.off-canvas-sidebar-custom
+    .navbar
+    .navbar-collapse
+    .navbar-nav
+    .nav-item
+    .nav-link {
     color: inherit !important;
 }
 
@@ -91,7 +96,7 @@ main .ck-editor[role='application'] .ck.ck-content
 select.form-control:not([size]):not([multiple]) {
     width: 100% !important;
 }
-select.site:not([size]):not([multiple]){
+select.site:not([size]):not([multiple]) {
     width: 50% !important;
 }
 select.distribution:not([size]):not([multiple]) {
@@ -107,22 +112,22 @@ select.distribution:not([size]):not([multiple]) {
 /*
  *
  */
-.toast-top-right{
-	position:fixed !important;
-	top: 40px;
-	right:40px;
+.toast-top-right {
+    position: fixed !important;
+    top: 40px;
+    right: 40px;
     width: 260px;
-	box-shadow: 2px 2px 3px #999;
-	z-index:1000;
-	animation: bot-to-top 2s ease-out;
+    box-shadow: 2px 2px 3px #999;
+    z-index: 1000;
+    animation: bot-to-top 2s ease-out;
 }
 
-.logos{
+.logos {
     width: 150px;
     height: auto;
 }
 
-.backgrounds{
+.backgrounds {
     background-repeat: no-repeat;
     background-size: cover;
     height: 100%;
