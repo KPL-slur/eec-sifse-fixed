@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\Utility;
-use App\Models\Headreport;
+use App\Models\HeadReport;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
