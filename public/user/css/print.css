@@ -1,7 +1,7 @@
 /* STYLE FOR HEADER AND FOOTER */
 
 .table {
-    table-layout:fixed !important;
+    table-layout: fixed !important;
 }
 
 .page-header,
@@ -93,12 +93,12 @@
 }
 
 @media print {
-    .not-print{
+    .not-print {
         display: none !important;
     }
 }
 
-.no-margin{
+.no-margin {
     margin: 0 !important;
 }
 
@@ -150,4 +150,50 @@
 .m-center {
     display: block;
     margin: 0 auto;
+}
+
+/* 
+ *  Warning Modal
+ */
+/* The Modal (background) */
+.modal {
+    display: block; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.7) !important; /* Black w/ opacity */
+}
+
+.text-warning  {
+    background-color: yellow !important;
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe !important;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: rgb(255, 0, 0);
+    text-decoration: none;
+    cursor: pointer;
 }

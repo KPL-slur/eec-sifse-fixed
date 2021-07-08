@@ -1,4 +1,20 @@
-window.print();
+/**
+ * Warning  Modal
+ */
+const modal = document.getElementById('warning-modal');
+
+// When the user clicks on <span> (x), close the modal
+document.getElementsByClassName("close")[0].onclick = function () {
+    modal.style.display = "none";
+    window.print();
+};
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+    if (event.target == modal) {
+        document.getElementById('warning-modal').style.display = "none";
+    }
+};
 
 /**
  * SWAPPER GAMBAR

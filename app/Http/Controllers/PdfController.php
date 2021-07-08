@@ -17,7 +17,7 @@ class PdfController extends Controller
         $headReport = HeadReport::findOrFail($id);
 
         $siteHeadReports = HeadReport::Where('site_id', $headReport->site_id)->with('recommendations')->get();
-        foreach ($siteHeadReports as $siteHeadReport){ //headreport
+        foreach ($siteHeadReports as $siteHeadReport) { //headreport
             foreach ($siteHeadReport->recommendations as $index => $recommendation) {
                 $recomendations[] = [
                     'name' => $recommendation->name,
@@ -40,9 +40,21 @@ class PdfController extends Controller
                 break;
         }
 
+        $zombieFiles = [];
+        $healthyFiles = [];
+        foreach ($headReport->reportImages as $index => $reportImage) {
+            if (!Storage::disk('public')->exists($reportImage->image)) {
+                array_push($zombieFiles, $reportImage->caption);
+            } else {
+                array_push($healthyFiles, $reportImage);
+            }
+        }
+        // dump($zombieFiles);
+        // dd($healthyFiles);
+
         $date = $utility->easyToReadDate($headReport->report_date_start, $headReport->report_date_end);
 
-        return view('expert.report.print', compact('headReport', 'date', 'bodyReport', 'recomendations'));
+        return view('expert.report.print', compact('headReport', 'date', 'bodyReport', 'recomendations', 'zombieFiles', 'healthyFiles'));
     }
 
     /**
@@ -58,8 +70,7 @@ class PdfController extends Controller
         $this->authorize('update', $headReport);
     
         if ($request->file()) {
-
-            if($headReport->printedReport){
+            if ($headReport->printedReport) {
                 Storage::delete('public/'.$headReport->printedReport->file);
                 $headReport->printedReport()->delete();
             }
@@ -77,7 +88,7 @@ class PdfController extends Controller
     }
 
     /**
-     * 
+     *
      */
     public function show($maintenance_type, $id, $path)
     {
@@ -86,7 +97,7 @@ class PdfController extends Controller
     }
     
     /**
-     * 
+     *
      */
     public function download($maintenance_type, $id, $path)
     {
@@ -97,7 +108,8 @@ class PdfController extends Controller
     /**
      * ! Deprecated Method, Should not be used, delete later
      */
-    public function destroy($maintenance_type, $id) {
+    public function destroy($maintenance_type, $id)
+    {
         $headReport = HeadReport::Where('head_id', $id)->first();
         $this->authorize('update', $headReport);
 
