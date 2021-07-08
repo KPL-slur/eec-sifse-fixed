@@ -1,7 +1,7 @@
 @extends('layouts.app', ['class' => 'off-canvas-sidebar', 'activePage' => 'login', 'title' => __('ERA ELEKTRA CORPORA INDONESIA')])
 
 @section('content')
-<div class="container" style="height: auto;">
+<div class="container">
   <x-ui.logo-row-center/>
   <div class="row align-items-center">
     <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
