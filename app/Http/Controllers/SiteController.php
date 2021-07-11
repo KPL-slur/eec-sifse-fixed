@@ -68,43 +68,38 @@ class SiteController extends Controller
 
         //INSERT NEW SITE
 
+        // Site::create([
+        //     'radar_name' => $request->radar_name,
+        //     'station_id' => $request->station_id,
+        //     'image' => null
+        //     ]);
+        
+        $file = $request->file('image');
+        if(!file_exists($file)){
+            // $name = 'default.png';
+            // $path = $file->storeAs('public/image', $name);
+            
+            Site::create([
+                'radar_name' => $request->radar_name,
+                'station_id' => $request->station_id,
+                'image' => null
+            ]);
+        }
+        else{
+            $name = $file->getClientOriginalName();
+            $path = $file->storeAs('public/image', $name);
+                
+            Site::create([
+                'radar_name' => $request->radar_name,
+                'station_id' => $request->station_id,
+                'image' => $name
+            ]);
+        }
         foreach ($request->stocks as $index => $stock) {
             $request->validate([
                 'stocks.'.$index.'.stock_id' => 'required'
             ], ['required'=>'This field is required']);
             if ($stock['stock_id']) {
-
-            $file = $request->file('image');
-        
-            if(!file_exists($file)){
-                // $name = '027ce6f5bc035a08d207f0de97b23965.png';
-                // $path = $file->storeAs('public/image', $name);
-                
-                Site::create([
-                'radar_name' => $request->radar_name,
-                'station_id' => $request->station_id,
-                'image' => null
-                ]);
-                // dd($request);
-
-                $sitedstocks = new SitedStock;
-                $sitedstocks->site_id = DB::table('sites')->latest()->first()->site_id;
-                $sitedstocks->stock_id = $stock['stock_id'];
-                $sitedstocks->save();
-    
-                $stocks = DB::table('stocks')
-                ->where('stock_id', '=', $stock['stock_id'])
-                ->decrement('jumlah_unit');
-            }
-            else {
-                $name = $file->getClientOriginalName();
-                $path = $file->storeAs('public/image', $name);
-                
-                Site::create([
-                    'radar_name' => $request->radar_name,
-                    'station_id' => $request->station_id,
-                    'image' => $name
-                ]);
                 
                 $sitedstocks = new SitedStock;
                 $sitedstocks->site_id = DB::table('sites')->latest()->first()->site_id;
@@ -114,9 +109,7 @@ class SiteController extends Controller
                 $stocks = DB::table('stocks')
                 ->where('stock_id', '=', $stock['stock_id'])
                 ->decrement('jumlah_unit');
-            }        
-
-                
+                                
             }
         }
         $sites = DB::table('sites')
