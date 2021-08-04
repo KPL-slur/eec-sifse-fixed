@@ -12,6 +12,20 @@
   </div>
   <div class="sidebar-wrapper">
     <ul class="nav">
+      <li class="nav-item dropdown {{ ($activePage == 'profile' || $activePage == 'profile') ? ' active' : '' }}">
+        <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="material-icons">person</i>
+          <p>{{ __('Profile') }}</p>
+          {{-- <p class="d-lg-none d-md-block">
+            {{ __('Account') }}
+          </p> --}}
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
+          <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('Profile') }}</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Log out') }}</a>
+        </div>
+      </li>
       <li class="nav-item{{ $activePage == 'dashboard' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('home') }}">
           <i class="material-icons">dashboard</i>
