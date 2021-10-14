@@ -1,7 +1,7 @@
 /* STYLE FOR HEADER AND FOOTER */
 
 .table {
-    table-layout: fixed !important;
+  table-layout: fixed;
 }
 
 .page-header,
@@ -15,91 +15,91 @@
 }
 
 .page-footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
 
 .page-header {
-    position: fixed;
-    top: 0mm;
-    width: 100%;
+  position: fixed;
+  top: 0mm;
+  width: 100%;
 }
 
 .page {
-    page-break-after: always;
+  page-break-after: always;
 }
 
 /* PERSONAL STYLING */
 
 .header td {
-    border-left: 31px solid white;
-    border-right: 32px solid white;
+  border-left: 31px solid white;
+  border-right: 32px solid white;
 }
 
 .report {
-    width: 100%;
-    border: 1px solid #000000;
-    border-collapse: collapse;
-    padding: 5px;
+  width: 100%;
+  border: 1px solid #000;
+  border-collapse: collapse;
+  padding: 5px;
 }
 
 .report th {
-    border: 1px solid #000000;
-    padding: 5px;
+  border: 1px solid #000;
+  padding: 5px;
 }
 
 .report td {
-    border: 1px solid #000000;
-    padding: 5px;
+  border: 1px solid #000;
+  padding: 5px;
 }
 
 .report.body-report td:nth-child(1):not(.nested-table td) {
-    width: 200px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .report.body-report td:nth-child(4):not(.nested-table td) {
-    width: 400px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  width: 400px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .report.ttd td:nth-child(3) {
-    width: 150px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .report.recommendation td:nth-child(1) {
-    width: 50px;
-    text-align: center;
+  width: 50px;
+  text-align: center;
 }
 
 .report.recommendation td:nth-child(3) {
-    text-align: center;
+  text-align: center;
 }
 
 .report.body-report td:nth-child(2):not(.nested-table td),
 .report.body-report td:nth-child(3):not(.nested-table td) {
-    text-align: center;
+  text-align: center;
 }
 
 .nested-table {
-    margin: 0;
-    padding: 0;
-    width: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
 @media print {
     .not-print {
-        display: none !important;
+      display: none;
     }
 }
 
 .no-margin {
-    margin: 0 !important;
+  margin: 0;
 }
 
 /*
@@ -107,93 +107,98 @@
  */
 .nested-table td,
 .nested-table th {
-    border: 1px solid #000000;
+  border: 1px solid #000;
 }
+
 .nested-table tr:first-child td,
 .nested-table tr:first-child th {
-    border-top: 0;
+  border-top: 0;
 }
+
 .nested-table tr td:first-child,
 .nested-table tr th:first-child {
-    border-left: 0;
+  border-left: 0;
 }
+
 .nested-table tr:last-child td,
 .nested-table th:last-child td {
-    border-bottom: 0;
+  border-bottom: 0;
 }
+
 .nested-table tr td:last-child,
 .nested-table tr th:last-child {
-    border-right: 0;
+  border-right: 0;
 }
 
 .table-borderless th,
 .table-borderless td {
-    border: 0 !important;
+  border: 0;
 }
 
 .text-right {
-    text-align: right;
+  text-align: right;
 }
 
 .text-left {
-    text-align: left !important;
+  text-align: left;
 }
 
 .text-center {
-    text-align: center;
+  text-align: center;
 }
 
 .text-tiny {
-    font-size: 10px;
+  font-size: 10px;
 }
 
 .m-center {
-    display: block;
-    margin: 0 auto;
+  display: block;
+  margin: 0 auto;
 }
 
 /* 
  *  Warning Modal
  */
+
 /* The Modal (background) */
 .modal {
-    display: block; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0); /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.7) !important; /* Black w/ opacity */
+  display: block; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.7) !important; /* Black w/ opacity */
 }
 
-.text-warning  {
-    background-color: yellow !important;
+.text-warning {
+  background-color: yellow;
 }
 
 /* Modal Content */
 .modal-content {
-    background-color: #fefefe !important;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
 }
 
 /* The Close Button */
 .close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 18px;
-    font-weight: bold;
+  color: #aaaaaa;
+  float: right;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
-    color: rgb(255, 0, 0);
-    text-decoration: none;
-    cursor: pointer;
+  color: rgb(255, 0, 0);
+  text-decoration: none;
+  cursor: pointer;
 }
