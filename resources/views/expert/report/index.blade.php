@@ -94,21 +94,21 @@
     @if (session('status_success'))
         <script>
             window.onload = () => {
-                showNotification('top', 'right', 'success', "<?php echo session('status_success'); ?>");
+                showNotification('top', 'right', 'success', {{ session('status_success'); }});
             };
         </script>
     @endif
     @if (session('status_edit'))
         <script>
             window.onload = () => {
-                showNotification('top', 'right', 'warning', "<?php echo session('status_edit'); ?>");
+                showNotification('top', 'right', 'warning', {{ session('status_edit'); }});
             };
         </script>
     @endif
     @if (session('status_delete'))
         <script>
             window.onload = () => {
-                showNotification('top', 'right', 'danger', "<?php echo session('status_delete'); ?>");
+                showNotification('top', 'right', 'danger', {{ session('status_delete'); }});
             };
         </script>
     @endif
