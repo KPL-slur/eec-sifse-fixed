@@ -167,13 +167,13 @@
               @if (session('status1'))
               <script>
                 window.onload = () => {
-                  showNotification('top', 'right', 'success' ,'<?php echo session('status1') ?>');
+                  showNotification('top', 'right', 'success' ,"{{ session('status1') }}");
                 };
               </script>
               @elseif (session('status3'))
               <script>
                 window.onload = () => {
-                  showNotification('top', 'right', 'danger' ,'<?php echo session('status3') ?>');
+                  showNotification('top', 'right', 'danger' ,"{{ session('status3') }}");
                 };
               </script>
               @endif
