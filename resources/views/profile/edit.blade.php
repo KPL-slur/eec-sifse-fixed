@@ -126,14 +126,14 @@
 @if (session('status'))
   <script>
     window.onload = () => {
-      showNotification('top', 'right', 'success' ,'<?php echo session('status') ?>');
+      showNotification('top', 'right', 'success' ,"{{ session('status') }}");
     };
   </script>
 @endif
 @if (session('status_password'))
   <script>
     window.onload = () => {
-      showNotification('top', 'right', 'success' ,'<?php echo session('status_password') ?>');
+      showNotification('top', 'right', 'success' ,"{{ session('status_password') }}");
     };
   </script>
 @endif
