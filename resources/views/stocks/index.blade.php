@@ -68,21 +68,21 @@
               @if (session('status1'))
                   <script>
                     window.onload = () => {
-                      showNotification('top', 'right', 'success' ,'{{ session(\'status1\') }}');
+                      showNotification('top', 'right', 'success' ,"{{ session('status1') }}");
                     };
                   </script>
               {{-- success edited sparepart --}}
               @elseif (session('status2'))
                 <script>
                   window.onload = () => {
-                    showNotification('top', 'right', 'warning' ,'{{ session(\'status2\) }}');
+                    showNotification('top', 'right', 'warning' ,"{{ session('status2') }}");
                   };
                 </script>
               {{-- success deleted sparepart --}}
               @elseif (session('status0'))
                 <script>
                   window.onload = () => {
-                    showNotification('top', 'right', 'danger' ,'{{ session(\'status0\') }}');
+                    showNotification('top', 'right', 'danger' ,"{{ session('status0') }}");
                   };
                 </script>
               @endif
