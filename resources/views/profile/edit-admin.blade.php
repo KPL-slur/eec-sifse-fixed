@@ -61,14 +61,14 @@
 @if (session('email_status'))
   <script>
     window.onload = () => {
-      showNotification('top', 'right', 'success' ,'<?php echo session('email_status') ?>');
+      showNotification('top', 'right', 'success' ,"{{ session('email_status') }}");
     };
   </script>
 @endif
 @if (session('password_status'))
   <script>
     window.onload = () => {
-      showNotification('top', 'right', 'success' ,'<?php echo session('password_status') ?>');
+      showNotification('top', 'right', 'success' ,"{{ session('password_status') }}");
     };
   </script>
 @endif
