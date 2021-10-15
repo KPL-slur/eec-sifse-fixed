@@ -119,19 +119,19 @@
       @if (session('status1'))
       <script>
         window.onload = () => {
-          showNotification('top', 'right', 'success' ,'<?php echo session('status1') ?>');
+          showNotification('top', 'right', 'success' , {{ session('status1') }});
         };
       </script>
       @elseif (session('status2'))
       <script>
         window.onload = () => {
-          showNotification('top', 'right', 'warning' ,'<?php echo session('status2') ?>');
+          showNotification('top', 'right', 'warning' , {{ session('status2') }});
         };
       </script>
       @elseif (session('status3'))
       <script>
         window.onload = () => {
-          showNotification('top', 'right', 'danger' ,'<?php echo session('status3') ?>');
+          showNotification('top', 'right', 'danger' , {{ session('status3') }});
         };
       </script>
       @endif
@@ -148,7 +148,7 @@
   
     $("#selectGroupStock").change(()=>{
 
-      var stock_group = JSON.parse('<?php echo json_encode($stocks_group)?>');
+      var stock_group = JSON.parse({{ json_encode($stocks_group) }});
 
       var input, header, table, tr, td, i, j;
       // dropdown name
