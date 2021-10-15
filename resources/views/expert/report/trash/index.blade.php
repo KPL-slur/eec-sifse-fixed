@@ -116,14 +116,14 @@
     @if (session('status_restore'))
         <script>
             window.onload = () => {
-                showNotification('top', 'right', 'success', "<?php echo session('status_restore'); ?>");
+                showNotification('top', 'right', 'success', "{{ session('status_restore'); }}");
             };
         </script>
     @endif
     @if (session('status_perm_delete'))
         <script>
             window.onload = () => {
-                showNotification('top', 'right', 'danger', "<?php echo session('status_perm_delete'); ?>");
+                showNotification('top', 'right', 'danger', "{{ session('status_perm_delete'); }}");
             };
         </script>
     @endif
