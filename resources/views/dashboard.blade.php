@@ -64,7 +64,7 @@
                           {{ $expert->name }}, 
                         @endforeach
                       </td>
-                      <td class="text-center"><?php echo $pm->pmBodyReport->remark ?></td>
+                      <td class="text-center">{{ $pm->pmBodyReport->remark }}</td>
                     </tr>
                   @endforeach
                 </tbody>
@@ -105,7 +105,7 @@
                           {{ $expert->name }},
                         @endforeach
                       </td>
-                      <td class="text-center"><?php echo $cm->cmBodyReport->remark ?></td>
+                      <td class="text-center">{{ $cm->cmBodyReport->remark }}</td>
                     </tr>
                   @endforeach
                 </tbody>
