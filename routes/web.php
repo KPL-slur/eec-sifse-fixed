@@ -71,9 +71,9 @@ Route::group(['prefix' => 'expert', 'middleware' =>['auth', 'verified', 'is_appr
     Route::group(['prefix' => '{maintenance_type}', 'where' => ['maintenance_type' => '(pm|cm)'], 'as'=>'report.'], function () {
         Route::group(['prefix' => 'trash', 'as' => 'trash.'], function () {
             Route::get('/', [App\Http\Controllers\TrashController::class, 'index'])->name('index');
-            Route::get('/{id}', [App\Http\Controllers\TrashController::class, 'show'])->name('show');
-            Route::post('/{id}', [App\Http\Controllers\TrashController::class, 'restore'])->name('restore');
-            Route::delete('/{id}', [App\Http\Controllers\TrashController::class, 'permDelete'])->name('perm_delete');
+            Route::get('/{id_report}', [App\Http\Controllers\TrashController::class, 'show'])->name('show');
+            Route::post('/{id_report}', [App\Http\Controllers\TrashController::class, 'restore'])->name('restore');
+            Route::delete('/{id_report}', [App\Http\Controllers\TrashController::class, 'permDelete'])->name('perm_delete');
         });
         Route::group(['prefix' => 'pdf', 'as' => 'pdf.'], function () {
             Route::get('/{id_report}/{path}/view', [App\Http\Controllers\PdfController::class, 'show'])->name('show');

@@ -27,7 +27,7 @@ class TrashController extends Controller
         ->orderBy('head_id', 'desc')
         ->onlyTrashed()
         ->get();
-        
+
         return view('expert.report.trash.index', compact('headReports', 'maintenance_type'));
     }
 
@@ -37,11 +37,11 @@ class TrashController extends Controller
      * @param  string  $maintenance_type
      * @return \Illuminate\Http\Response
      */
-    public function restore($maintenance_type, $id)
+    public function restore($maintenance_type, $id_report)
     {
-        $headReport = HeadReport::onlyTrashed()->findOrFail($id);
+        $headReport = HeadReport::onlyTrashed()->findOrFail($id_report);
         $this->authorize('update', $headReport);
-        
+
         $headReport->restore();
 
         return redirect()->route('report.trash.index', compact('maintenance_type'))->with('status_restore', 'Data Berhasil Direstore');
@@ -53,9 +53,9 @@ class TrashController extends Controller
      * @param  string  $maintenance_type
      * @return \Illuminate\Http\Response
      */
-    public function permDelete($maintenance_type, $id)
+    public function permDelete($maintenance_type, $id_report)
     {
-        $headReport = HeadReport::onlyTrashed()->findOrFail($id);
+        $headReport = HeadReport::onlyTrashed()->findOrFail($id_report);
         $this->authorize('update', $headReport);
 
         // delete stored files
@@ -77,9 +77,9 @@ class TrashController extends Controller
      * @param  string  $maintenance_type
      * @return \Illuminate\Http\Response
      */
-    public function show($maintenance_type, $id, Utility $utility)
+    public function show($maintenance_type, $id_report, Utility $utility)
     {
-        $headReport = HeadReport::onlyTrashed()->Where('head_id', $id)->first();
+        $headReport = HeadReport::onlyTrashed()->Where('head_id', $id_report)->first();
         abort_unless($headReport, 404, 'Report not found');
 
         $date = $utility->easyToReadDate($headReport->report_date_start, $headReport->report_date_end);
@@ -93,7 +93,7 @@ class TrashController extends Controller
             case 'cm':
                 $bodyReport = $headReport->cmBodyReport;
                 abort_unless($bodyReport, 404, 'Report not found');
-            
+
             default:
                 # code...
                 break;
