@@ -1,7 +1,7 @@
 /**
  * Warning  Modal
  */
-const modal = document.getElementById('warning-modal');
+const modal = document.getElementById("warning-modal");
 
 // When the user clicks on <span> (x), close the modal
 document.getElementsByClassName("close")[0].onclick = function () {
@@ -11,14 +11,16 @@ document.getElementsByClassName("close")[0].onclick = function () {
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
-    if (event.target == modal) {
-        document.getElementById('warning-modal').style.display = "none";
+    if (event.target === modal) {
+        document.getElementById("warning-modal").style.display = "none";
     }
 };
 
 /**
  * SWAPPER GAMBAR
  */
+let firstId = null;
+let secondId = null;
 let click = 0;
 let swapper = document.getElementsByClassName("btn-swap");
 Array.from(swapper).forEach((element) => {
@@ -53,6 +55,8 @@ Array.from(swapper).forEach((element) => {
 /**
  * SWAPPER expert row
  */
+let firstIndex = null;
+let secondIndex = null;
 let up = document.getElementsByClassName("btn-up");
 Array.from(up).forEach((element) => {
     element.addEventListener("click", function (e) {
@@ -73,6 +77,8 @@ Array.from(up).forEach((element) => {
 /**
  * SWAPPER signature row
  */
+let firstIndex = null;
+let secondIndex = null;
 let up2 = document.getElementsByClassName("btn-up2");
 Array.from(up2).forEach((element) => {
     element.addEventListener("click", function (e) {
@@ -90,6 +96,8 @@ Array.from(up2).forEach((element) => {
     });
 });
 
+let firstInner = null;
+let secondInner = null;
 function swapping(firstElement, secondElement) {
     firstInner = firstElement.innerText;
     secondInner = secondElement.innerText;
@@ -98,6 +106,8 @@ function swapping(firstElement, secondElement) {
     secondElement.innerText = firstInner;
 }
 
+let firstInner = null;
+let secondInner = null;
 function swappingSrc(firstElement, secondElement) {
     firstInner = firstElement.src;
     secondInner = secondElement.src;
