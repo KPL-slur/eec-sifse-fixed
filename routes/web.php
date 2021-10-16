@@ -76,11 +76,11 @@ Route::group(['prefix' => 'expert', 'middleware' =>['auth', 'verified', 'is_appr
             Route::delete('/{id}', [App\Http\Controllers\TrashController::class, 'permDelete'])->name('perm_delete');
         });
         Route::group(['prefix' => 'pdf', 'as' => 'pdf.'], function () {
-            Route::get('/{id}/{path}/view', [App\Http\Controllers\PdfController::class, 'show'])->name('show');
-            Route::get('/{id}/{path}/download', [App\Http\Controllers\PdfController::class, 'download'])->name('download');
-            Route::get('/{id}', [App\Http\Controllers\PdfController::class, 'print'])->name('print');
-            Route::post('/{id}', [App\Http\Controllers\PdfController::class, 'store'])->name('store');
-            Route::delete('/{id}', [App\Http\Controllers\PdfController::class, 'destroy'])->name('delete');
+            Route::get('/{id_report}/{path}/view', [App\Http\Controllers\PdfController::class, 'show'])->name('show');
+            Route::get('/{id_report}/{path}/download', [App\Http\Controllers\PdfController::class, 'download'])->name('download');
+            Route::get('/{id_report}', [App\Http\Controllers\PdfController::class, 'print'])->name('print');
+            Route::post('/{id_report}', [App\Http\Controllers\PdfController::class, 'store'])->name('store');
+            Route::delete('/{id_report}', [App\Http\Controllers\PdfController::class, 'destroy'])->name('delete');
         });
         Route::get('/', [App\Http\Controllers\ReportController::class, 'index'])->name('index');
         Route::get('/create', [App\Http\Controllers\ReportController::class, 'create'])->name('create');

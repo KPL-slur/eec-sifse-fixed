@@ -12,9 +12,9 @@ class PdfController extends Controller
     /**
      *
      */
-    public function print($maintenance_type, $id, Utility $utility)
+    public function print($maintenance_type, $id_report, Utility $utility)
     {
-        $headReport = HeadReport::findOrFail($id);
+        $headReport = HeadReport::findOrFail($id_report);
 
         $siteHeadReports = HeadReport::Where('site_id', $headReport->site_id)->with('recommendations')->get();
         foreach ($siteHeadReports as $siteHeadReport) { //headreport
@@ -34,7 +34,7 @@ class PdfController extends Controller
             case 'cm':
                 $bodyReport = $headReport->cmBodyReport;
                 break;
-            
+
             default:
                 # code...
                 break;
@@ -60,15 +60,15 @@ class PdfController extends Controller
     /**
      * ! Deprecated Method, Should not be used, delete later
      */
-    public function store(Request $request, $maintenance_type, $id)
+    public function store(Request $request, $maintenance_type, $id_report)
     {
         $request->validate([
             'uploadedPdf' => 'required|mimes:pdf'
             ]);
 
-        $headReport = HeadReport::Where('head_id', $id)->first();
+        $headReport = HeadReport::Where('head_id', $id_report)->first();
         $this->authorize('update', $headReport);
-    
+
         if ($request->file()) {
             if ($headReport->printedReport) {
                 Storage::delete('public/'.$headReport->printedReport->file);
@@ -79,10 +79,10 @@ class PdfController extends Controller
             $filePath = $request->file('uploadedPdf')->storePubliclyAs($maintenance_type, $fileName, 'public');
 
             $headReport->printedReport()->updateOrCreate(
-                ['head_id' => $id],
+                ['head_id' => $id_report],
                 ['file' => $filePath]
             );
-    
+
             return back()->with('upload_success', 'File has been uploaded.');
         }
     }
@@ -90,27 +90,27 @@ class PdfController extends Controller
     /**
      *
      */
-    public function show($maintenance_type, $id, $path)
+    public function show($maintenance_type, $id_report, $path)
     {
-        HeadReport::find($id)->printedReports()->where('file', $maintenance_type.'/'.$path)->firstOrFail();
+        HeadReport::find($id_report)->printedReports()->where('file', $maintenance_type.'/'.$path)->firstOrFail();
         return response()->file(('storage/'.$maintenance_type.'/'.$path));
     }
-    
+
     /**
      *
      */
-    public function download($maintenance_type, $id, $path)
+    public function download($maintenance_type, $id_report, $path)
     {
-        HeadReport::find($id)->printedReports()->where('file', $maintenance_type.'/'.$path)->firstOrFail();
+        HeadReport::find($id_report)->printedReports()->where('file', $maintenance_type.'/'.$path)->firstOrFail();
         return response()->download(('storage/'.$maintenance_type.'/'.$path));
     }
 
     /**
      * ! Deprecated Method, Should not be used, delete later
      */
-    public function destroy($maintenance_type, $id)
+    public function destroy($maintenance_type, $id_report)
     {
-        $headReport = HeadReport::Where('head_id', $id)->first();
+        $headReport = HeadReport::Where('head_id', $id_report)->first();
         $this->authorize('update', $headReport);
 
         Storage::delete('public/'.$headReport->printedReport->file);
