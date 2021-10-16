@@ -42,7 +42,7 @@ class UserController extends Controller
         $users->password = bcrypt($request->password);
         $users->save();
         
-        $validated = $request->validated();
+        $request->validated();
         // User::create($request->validated());
 
         return redirect('userManagement')->with('status1', 'Data Created!');
