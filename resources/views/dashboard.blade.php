@@ -54,14 +54,14 @@
                   <th class="text-center">Remark</th>
                 </thead>
                 <tbody>
-                  @foreach ($pm as $pm)
+                  @foreach ($pm_home as $pm)
                     <tr>
                       <td>{{ $loop->iteration }}</td>
                       <td>{{ $pm->site->station_id }}</td>
                       <td>{{ date('j M Y', strtotime($pm->report_date_start))}} until {{ date('j M Y', strtotime($pm->report_date_end)) }}</td>
                       <td>
                         @foreach ($pm->experts as $expert)
-                          {{ $expert->name }}, 
+                          {{ $expert->name }},
                         @endforeach
                       </td>
                       <td class="text-center">{{ $pm->pmBodyReport->remark }}</td>
@@ -95,7 +95,7 @@
                   <th class="text-center">Remark</th>
                 </thead>
                 <tbody>
-                  @foreach ($cm as $cm)
+                  @foreach ($cm_home as $cm)
                     <tr>
                       <td>{{ $loop->iteration }}</td>
                       <td>{{ $cm->site->station_id }}</td>
@@ -118,7 +118,7 @@
         {{-- div col --}}
       </div>
       {{-- div row --}}
-      
+
     </div>
     {{-- div container fluid --}}
   </div>

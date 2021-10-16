@@ -29,7 +29,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $pm = HeadReport::take(5)
+        $pm_home = HeadReport::take(5)
                         ->orderBy('updated_at','desc')
                         ->where('maintenance_type', 'pm')
                         ->with(['experts'=>function($query){
@@ -43,8 +43,8 @@ class HomeController extends Controller
                             $query->select('sites.site_id', 'station_id');
                         }])
                         ->get();
-        
-        $cm = HeadReport::take(5)
+
+        $cm_home = HeadReport::take(5)
                         ->orderBy('updated_at', 'desc')
                         ->where('maintenance_type', 'cm')
                         ->with(['experts'=>function($query){
@@ -90,7 +90,7 @@ class HomeController extends Controller
                 $stock_rec["".$rcm->name] = 0;
             }
         }
-        
-        return view('dashboard', compact('pm', 'cm', 'recommends', 'stock_rec'));
+
+        return view('dashboard', compact('pm_home', 'cm_home', 'recommends', 'stock_rec'));
     }
 }
