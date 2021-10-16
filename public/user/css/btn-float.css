@@ -1,32 +1,32 @@
 .btn-float {
-  position:fixed;
-  bottom:40px;
-  right:40px;
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
   box-shadow: 2px 2px 3px #999;
-  z-index:1000;
+  z-index: 1000;
   animation: bot-to-top 2s ease-out;
 }
 
 .btn-float-list {
-  position:fixed;
-  right:40px;
-  padding-bottom:10px;
-  bottom:80px;
-  z-index:100;
+  position: fixed;
+  right: 40px;
+  padding-bottom: 10px;
+  bottom: 80px;
+  z-index: 100;
 }
 
 .btn-float-list li {
-  list-style:none;
-  margin-bottom:10px;
+  list-style: none;
+  margin-bottom: 10px;
 }
 
 .btn-float-list li button{
-  display:block;
+  display: block;
 }
 
 ul:hover {
-  visibility:visible!important;
-  opacity:1!important;
+  visibility: visible;
+  opacity: 1;
 }
 
 button#menu-share + ul,
