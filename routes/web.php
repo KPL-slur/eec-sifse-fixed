@@ -27,13 +27,13 @@ Route::group(['prefix' => 'email', 'middleware' =>['auth', 'not_belong'] ], func
 
     Route::get('/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
         $request->fulfill();
-    
+
         return redirect(RouteServiceProvider::HOME);
     })->middleware(['signed'])->name('verification.verify');
 
     Route::post('/verification-notification', function (Request $request) {
         $request->user()->sendEmailVerificationNotification();
-    
+
         return back()->with('message', 'A fresh verification link has been sent to your email address.');
     })->middleware(['throttle:6,1'])->name('verification.send');
 });
@@ -160,11 +160,11 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
 
     //distribution
     Route::get('distribution', [App\Http\Controllers\DistributionController::class, 'index'])->name('distribution');
-    Route::get('viewDistribution/{id}', [App\Http\Controllers\DistributionController::class, 'show']);
-    Route::get('editDistribution/{id}', [App\Http\Controllers\DistributionController::class, 'edit']);
+    Route::get('viewDistribution/{dist_id}', [App\Http\Controllers\DistributionController::class, 'show']);
+    Route::get('editDistribution/{dist_id}', [App\Http\Controllers\DistributionController::class, 'edit']);
     Route::put('edit/{distribution}', [App\Http\Controllers\DistributionController::class, 'editData']);
-    Route::delete('deleteDistribution/{id}', [App\Http\Controllers\DistributionController::class, 'deleteData']);
-    Route::get('addDistribution/{id}', [App\Http\Controllers\DistributionController::class, 'add']);
+    Route::delete('deleteDistribution/{dist_id}', [App\Http\Controllers\DistributionController::class, 'deleteData']);
+    Route::get('addDistribution/{dist_id}', [App\Http\Controllers\DistributionController::class, 'add']);
     Route::post('addDst', [App\Http\Controllers\DistributionController::class, 'addData']);
 
     //site
@@ -182,12 +182,12 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
     Route::delete('deleteInventorySite/{sitedstock}', [App\Http\Controllers\SiteController::class, 'destroyInventorySite']);
 
     //expertActivity
-    Route::get('expertActivity', [App\Http\Controllers\ExpertActivityController::class, 'index'])->name('expertActivity'); 
+    Route::get('expertActivity', [App\Http\Controllers\ExpertActivityController::class, 'index'])->name('expertActivity');
     Route::group(['prefix' => '{maintenance_type}', 'where' => ['maintenance_type' => '(pm|cm)'], 'as' => 'activity.'], function () {
         Route::get('/', [App\Http\Controllers\ExpertActivityController::class, 'indexActivity'])->name('index');
         Route::get('/{id}', [App\Http\Controllers\ExpertActivityController::class, 'show'])->name('show');
     });
-    
+
     //stock with currencies
     Route::get('stocks', [App\Http\Controllers\StockController::class, 'index'])->name('stocks'); // index stocks
     Route::get('stocks/create', [App\Http\Controllers\StockController::class, 'create'])->name('stocks-create'); // input new spare part
