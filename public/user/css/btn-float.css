@@ -1,40 +1,40 @@
-.btn-float{
-	position:fixed !important;
-	bottom:40px;
-	right:40px;
-	box-shadow: 2px 2px 3px #999;
-	z-index:1000;
-	animation: bot-to-top 2s ease-out;
+.btn-float {
+  position:fixed;
+  bottom:40px;
+  right:40px;
+  box-shadow: 2px 2px 3px #999;
+  z-index:1000;
+  animation: bot-to-top 2s ease-out;
 }
 
-.btn-float-list{
-	position:fixed;
-	right:40px;
-	padding-bottom:10px;
-	bottom:80px;
-	z-index:100;
+.btn-float-list {
+  position:fixed;
+  right:40px;
+  padding-bottom:10px;
+  bottom:80px;
+  z-index:100;
 }
 
-.btn-float-list li{
-	list-style:none;
-	margin-bottom:10px;
+.btn-float-list li {
+  list-style:none;
+  margin-bottom:10px;
 }
 
 .btn-float-list li button{
-	display:block;
+  display:block;
 }
 
-ul:hover{
-	visibility:visible!important;
-	opacity:1!important;
+ul:hover {
+  visibility:visible!important;
+  opacity:1!important;
 }
 
 button#menu-share + ul,
-a#menu-share:hover + ul{
+a#menu-share:hover + ul {
   visibility: hidden;
 }
 
 button#menu-share:hover + ul,
-a#menu-share:hover + ul{
+a#menu-share:hover + ul {
   visibility: visible
 }
