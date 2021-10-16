@@ -1,6 +1,6 @@
 /* digunakan di pm report form */
 .force-has-danger {
-  color: #f44336 !important;
+  color: #f44336;
 }
 
 .main-panel.no-sidebar {
@@ -16,16 +16,16 @@
 }
 
 .no-margin .content {
-  margin-top: 0 !important;
+  margin-top: 0;
 }
 
 .off-canvas-sidebar-custom
-  .navbar
-  .navbar-collapse
-  .navbar-nav
-  .nav-item
-  .nav-link {
-    color: inherit;
+.navbar
+.navbar-collapse
+.navbar-nav
+.nav-item
+.nav-link {
+  color: inherit;
 }
 
 /*
@@ -43,25 +43,25 @@
 }
 
 .hidden {
-  display: none !important;
+  display: none;
 }
 
 .select2 {
-  width: 20vw !important;
+  width: 20vw;
 }
 
 .has-error .select2-selection {
-  border-color: rgb(185, 74, 72) !important;
+  border-color: rgb(185, 74, 72);
   border-width: 3px;
 }
 
 .image-upload-preview {
-  width: 35vw !important;
-  height: auto !important;
+  width: 35vw;
+  height: auto;
 }
 
 .check-inside-table .form-check-sign {
-  top: 0px !important;
+  top: 0px;
 }
 
 /*
@@ -71,11 +71,11 @@
  */
 .modal-open {
   overflow: auto;
-  padding-right: 0 !important;
+  padding-right: 0;
 }
 
 /* 
- *  CK EDITOR STYLING
+ *CK EDITOR STYLING
  */
 .editor__editable,
 /* Classic build. */
@@ -83,7 +83,7 @@ main .ck-editor[role='application'] .ck.ck-content
 /* Decoupled document build. */
 .ck.editor__editable[role='textbox'],
 .ck.ck-editor__editable[role='textbox'] {
-  line-height: 1.6em !important;
+  line-height: 1.6em;
   width: 73vw;
   min-height: 400px;
 }
@@ -94,15 +94,15 @@ main .ck-editor[role='application'] .ck.ck-content
 }
 
 select.form-control:not([size]):not([multiple]) {
-  width: 100% !important;
+  width: 100%;
 }
 
 select.site:not([size]):not([multiple]) {
-  width: 50% !important;
+  width: 50%;
 }
 
 select.distribution:not([size]):not([multiple]) {
-  width: 100% !important;
+  width: 100%;
 }
 
 /*
@@ -116,7 +116,7 @@ select.distribution:not([size]):not([multiple]) {
  *
  */
 .toast-top-right {
-  position: fixed !important;
+  position: fixed;
   top: 40px;
   right: 40px;
   width: 260px;
