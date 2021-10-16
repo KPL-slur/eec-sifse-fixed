@@ -24,7 +24,7 @@ class ReportController extends Controller
         ->with('site')
         ->orderBy('head_id', 'desc')
         ->get();
-        
+
         return view('expert.report.index', compact('headReports', 'maintenance_type'));
     }
 
@@ -44,9 +44,9 @@ class ReportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($maintenance_type, $id, Utility $utility)
+    public function show($maintenance_type, $id_report, Utility $utility)
     {
-        $headReport = HeadReport::Where('head_id', $id)->first();
+        $headReport = HeadReport::Where('head_id', $id_report)->first();
         abort_unless($headReport, 404, 'Report not found');
 
         $date = $utility->easyToReadDate($headReport->report_date_start, $headReport->report_date_end);
@@ -56,7 +56,7 @@ class ReportController extends Controller
                 $bodyReport = $headReport->pmBodyReport;
                 abort_unless($bodyReport, 404, 'Report not found');
                 break;
-            
+
             case 'cm':
                 $bodyReport = $headReport->cmBodyReport;
                 abort_unless($bodyReport, 404, 'Report not found');
@@ -84,11 +84,11 @@ class ReportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($maintenance_type, $id)
+    public function edit($maintenance_type, $id_report)
     {
-        $headReport = HeadReport::findOrFail($id);
+        $headReport = HeadReport::findOrFail($id_report);
         $this->authorize('update', $headReport);
-        
+
         return view('expert.report.edit', compact('id', 'maintenance_type'));
     }
 
@@ -98,12 +98,12 @@ class ReportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($maintenance_type, $id)
+    public function destroy($maintenance_type, $id_report)
     {
-        $headReport = HeadReport::findOrFail($id);
+        $headReport = HeadReport::findOrFail($id_report);
         $this->authorize('update', $headReport);
 
-        HeadReport::destroy($id);
+        HeadReport::destroy($id_report);
         return redirect()->route('report.index', $maintenance_type)->with('status_delete', 'Data Dihapus');
     }
 }

@@ -84,9 +84,9 @@ Route::group(['prefix' => 'expert', 'middleware' =>['auth', 'verified', 'is_appr
         });
         Route::get('/', [App\Http\Controllers\ReportController::class, 'index'])->name('index');
         Route::get('/create', [App\Http\Controllers\ReportController::class, 'create'])->name('create');
-        Route::get('/{id}/edit', [App\Http\Controllers\ReportController::class, 'edit'])->name('edit');
-        Route::get('/{id}', [App\Http\Controllers\ReportController::class, 'show'])->name('show');
-        Route::delete('/{id}', [App\Http\Controllers\ReportController::class, 'destroy'])->name('delete');
+        Route::get('/{id_report}/edit', [App\Http\Controllers\ReportController::class, 'edit'])->name('edit');
+        Route::get('/{id_report}', [App\Http\Controllers\ReportController::class, 'show'])->name('show');
+        Route::delete('/{id_report}', [App\Http\Controllers\ReportController::class, 'destroy'])->name('delete');
     });
 });
 
