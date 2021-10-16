@@ -1,67 +1,67 @@
 /* digunakan di pm report form */
 .force-has-danger {
-    color: #f44336 !important;
+  color: #f44336 !important;
 }
 
 .main-panel.no-sidebar {
-    width: 100%;
-    float: none;
+  width: 100%;
+  float: none;
 }
 
 .navbar.navbar-static {
-    position: static;
-    width: 100%;
-    padding-top: 10px;
-    z-index: 1029;
+  position: static;
+  width: 100%;
+  padding-top: 10px;
+  z-index: 1029;
 }
 
 .no-margin .content {
-    margin-top: 0 !important;
+  margin-top: 0 !important;
 }
 
 .off-canvas-sidebar-custom
-    .navbar
-    .navbar-collapse
-    .navbar-nav
-    .nav-item
-    .nav-link {
-    color: inherit !important;
+  .navbar
+  .navbar-collapse
+  .navbar-nav
+  .nav-item
+  .nav-link {
+    color: inherit;
 }
 
-/* 
-*  
+/*
+*
 */
 #towers {
-    height: 100px;
-    width: 85px;
+  height: 100px;
+  width: 85px;
 }
 
 .form-group-site {
-    position: relative;
-    margin-top: auto;
-    text-align: center;
+  position: relative;
+  margin-top: auto;
+  text-align: center;
 }
 
 .hidden {
-    display: none !important;
+  display: none !important;
 }
 
 .select2 {
-    width: 20vw !important;
+  width: 20vw !important;
 }
 
 .has-error .select2-selection {
-    border-color: rgb(185, 74, 72) !important;
-    border-width: 3px;
+  border-color: rgb(185, 74, 72) !important;
+  border-width: 3px;
 }
 
 .image-upload-preview {
-    width: 35vw !important;
-    height: auto !important;
+  width: 35vw !important;
+  height: auto !important;
 }
 
 .check-inside-table .form-check-sign {
-    top: 0px !important;
+  top: 0px !important;
 }
 
 /*
@@ -70,8 +70,8 @@
  * from modal or delete this code
  */
 .modal-open {
-    overflow: auto;
-    padding-right: 0 !important;
+  overflow: auto;
+  padding-right: 0 !important;
 }
 
 /* 
@@ -83,54 +83,57 @@ main .ck-editor[role='application'] .ck.ck-content
 /* Decoupled document build. */
 .ck.editor__editable[role='textbox'],
 .ck.ck-editor__editable[role='textbox'] {
-    line-height: 1.6em !important;
-    width: 73vw;
-    min-height: 400px;
+  line-height: 1.6em !important;
+  width: 73vw;
+  min-height: 400px;
 }
 
 .ck.ck-editor__editable > .ck-placeholder::before {
-    color: #f44336;
-    font-weight: 400;
+  color: #f44336;
+  font-weight: 400;
 }
 
 select.form-control:not([size]):not([multiple]) {
-    width: 100% !important;
+  width: 100% !important;
 }
+
 select.site:not([size]):not([multiple]) {
-    width: 50% !important;
+  width: 50% !important;
 }
+
 select.distribution:not([size]):not([multiple]) {
-    width: 100% !important;
+  width: 100% !important;
 }
 
 /*
  * alpine js
  */
 [x-cloak] {
-    display: none;
+  display: none;
 }
+
 /*
  *
  */
 .toast-top-right {
-    position: fixed !important;
-    top: 40px;
-    right: 40px;
-    width: 260px;
-    box-shadow: 2px 2px 3px #999;
-    z-index: 1000;
-    animation: bot-to-top 2s ease-out;
+  position: fixed !important;
+  top: 40px;
+  right: 40px;
+  width: 260px;
+  box-shadow: 2px 2px 3px #999;
+  z-index: 1000;
+  animation: bot-to-top 2s ease-out;
 }
 
 .logos {
-    width: 150px;
-    height: auto;
+  width: 150px;
+  height: auto;
 }
 
 .backgrounds {
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100%;
-    width: auto;
-    padding: 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: auto;
+  padding: 0;
 }
