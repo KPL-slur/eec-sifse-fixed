@@ -13,17 +13,17 @@ function selectGroupIndexStocks(){
   for (i = 1; i < tr.length; i++) {
     td = tr[i].getElementsByTagName("input")[0].value;
     if (td){
-      if (input == td || input == ""){
+      if (input === td || input === ""){
         tr[i].style.display = "";
-          if (input == ""){
+          if (input === ""){
             header.innerHTML = "Semua"
-          } else if(input == 1){
+          } else if(input === 1){
             header.innerHTML = "Transmitter";
-          } else if (input == 2){
+          } else if (input === 2){
             header.innerHTML = "Receiver"
-          } else if ( input == 3){
+          } else if ( input === 3){
             header.innerHTML = "Antenna"
-          } else if (input == 0){
+          } else if (input === 0){
             header.innerHTML = "Tambahan"
           }
       } else {
@@ -49,17 +49,17 @@ function selectGroupIndexStocks(){
     for (i = 1; i < tr.length; i++) {
       td = tr[i].getElementsByTagName("input")[0].value;
       if (td){
-        if (input == td || input == ""){
+        if (input === td || input === ""){
           tr[i].style.display = "";
-            if (input == ""){
+            if (input === ""){
               header.innerHTML = "Semua"
-            } else if(input == 2020){
+            } else if(input === 2020){
               header.innerHTML = "2020";
-            } else if (input == 2021){
+            } else if (input === 2021){
               header.innerHTML = "2021"
-            } else if ( input == 2022){
+            } else if ( input === 2022){
               header.innerHTML = "2022"
-            } else if (input == 2023){
+            } else if (input === 2023){
               header.innerHTML = "2023"
             } 
         } else {
