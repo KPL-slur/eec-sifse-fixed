@@ -171,12 +171,12 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
     Route::get('site', [App\Http\Controllers\SiteController::class, 'index'])->name('site');
     Route::post('add', [App\Http\Controllers\SiteController::class, 'addData']);
     Route::get('addSite', [App\Http\Controllers\SiteController::class, 'add']);
-    Route::delete('deleteSite/{id}', [App\Http\Controllers\SiteController::class, 'destroySite']);
+    Route::delete('deleteSite/{id_site}', [App\Http\Controllers\SiteController::class, 'destroySite']);
     //inventory site
-    Route::get('inventory/{id}', [App\Http\Controllers\SiteController::class, 'show']);
-    Route::get('addInventorySite/{id}', [App\Http\Controllers\SiteController::class, 'addInventorySite']);
+    Route::get('inventory/{id_site}', [App\Http\Controllers\SiteController::class, 'show']);
+    Route::get('addInventorySite/{id_site}', [App\Http\Controllers\SiteController::class, 'addInventorySite']);
     Route::post('addInventorySite', [App\Http\Controllers\SiteController::class, 'addDataInventorySite']);
-    Route::get('inventorySite/{id}', [App\Http\Controllers\SiteController::class, 'print']);
+    Route::get('inventorySite/{id_site}', [App\Http\Controllers\SiteController::class, 'print']);
     Route::get('editInventorySite/{sitedstock}', [App\Http\Controllers\SiteController::class, 'editInventorySite']);
     Route::put('editInventorySite/{stock}', [App\Http\Controllers\SiteController::class, 'editDataInventorySite']);
     Route::delete('deleteInventorySite/{sitedstock}', [App\Http\Controllers\SiteController::class, 'destroyInventorySite']);

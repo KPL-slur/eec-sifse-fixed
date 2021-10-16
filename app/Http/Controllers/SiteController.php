@@ -20,18 +20,18 @@ class SiteController extends Controller
         ->get();
         return view('site.site', compact('sites'));
     }
-    
-    public function show($id){
+
+    public function show($id_site){
         $sites = DB::table('sites')
         //->select('radar_name')
-        ->where('sites.site_id', '=', $id)
+        ->where('sites.site_id', '=', $id_site)
         ->first();
         //dd($sites);
-        
+
         $stocks = DB::table('stocks')
         ->join('sited_stocks', 'stocks.stock_id', '=', 'sited_stocks.stock_id')
         ->join('sites', 'sited_stocks.site_id', '=', 'sites.site_id')
-        ->where('sites.site_id', '=', $id)
+        ->where('sites.site_id', '=', $id_site)
         ->get();
         // dd($stocks);
 
@@ -47,22 +47,22 @@ class SiteController extends Controller
         return view('site.inventory', compact('sites', 'stocks', 'stocks_group'));
     }
 
-    public function print($id){
+    public function print($id_site){
         $stocks = DB::table('stocks')
         ->join('sited_stocks', 'stocks.stock_id', '=', 'sited_stocks.stock_id')
         ->join('sites', 'sited_stocks.site_id', '=', 'sites.site_id')
-        ->where('sites.site_id', '=', $id)
+        ->where('sites.site_id', '=', $id_site)
         ->get();
         // dd($stocks);
 
         return view('pages.inventory_site', compact('stocks'));
     }
-    
+
     public function add(){
         $stocks = Stock::all();
 
         return view('site.addSite', compact('stocks'));
-    } 
+    }
 
     public function addData(StoreSiteRequest $request){
 
@@ -73,12 +73,12 @@ class SiteController extends Controller
         //     'station_id' => $request->station_id,
         //     'image' => null
         //     ]);
-        
+
         $file = $request->file('image');
         if(!file_exists($file)){
             // $name = 'default.png';
             // $path = $file->storeAs('public/image', $name);
-            
+
             Site::create([
                 'radar_name' => $request->radar_name,
                 'station_id' => $request->station_id,
@@ -87,8 +87,8 @@ class SiteController extends Controller
         }
         else{
             $name = $file->getClientOriginalName();
-            $path = $file->storeAs('public/image', $name);
-                
+            $file->storeAs('public/image', $name);
+
             Site::create([
                 'radar_name' => $request->radar_name,
                 'station_id' => $request->station_id,
@@ -100,16 +100,16 @@ class SiteController extends Controller
                 'stocks.'.$index.'.stock_id' => 'required'
             ], ['required'=>'This field is required']);
             if ($stock['stock_id']) {
-                
+
                 $sitedstocks = new SitedStock;
                 $sitedstocks->site_id = DB::table('sites')->latest()->first()->site_id;
                 $sitedstocks->stock_id = $stock['stock_id'];
                 $sitedstocks->save();
-    
-                $stocks = DB::table('stocks')
+
+                DB::table('stocks')
                 ->where('stock_id', '=', $stock['stock_id'])
                 ->decrement('jumlah_unit');
-                                
+
             }
         }
         $sites = DB::table('sites')
@@ -117,15 +117,15 @@ class SiteController extends Controller
         ->latest()
         ->first();
 
-        $validated = $request->validated();
-        
+        $request->validated();
+
         return redirect('inventory/'.$sites->site_id)->with('status1', 'Data Created!');
     }
 
-    public function addInventorySite($id){
+    public function addInventorySite($id_site){
 
         $sites = DB::table('sites')
-        ->where('sites.site_id', '=', $id)
+        ->where('sites.site_id', '=', $id_site)
         ->first();
         //dd($sites);
 
@@ -138,8 +138,8 @@ class SiteController extends Controller
      }
 
      public function addDataInventorySite(Request $request){
-    
-        // $stocks = new Stock; 
+
+        // $stocks = new Stock;
         // $stocks->nama_barang = $request->nama_barang;
         // $stocks->group = $request->group;
         // $stocks->part_number = $request->part_number;
@@ -200,7 +200,7 @@ class SiteController extends Controller
 
     public function editDataInventorySite(ValidateInventoryRequest $request, Stock $stock){
         //dd($request);
-        $stocks = Stock::find($stock->stock_id)
+        Stock::find($stock->stock_id)
         ->update($request->validated()
         // (
         //     [
@@ -209,23 +209,23 @@ class SiteController extends Controller
         //         'part_number'=>$request->part_number,
         //         'serial_number'=>$request->serial_number,
         //         'tgl_masuk'=>$request->tgl_masuk,
-        //         'expired'=>$request->expired       
+        //         'expired'=>$request->expired
         //     ]
         // )
     );
-        
+
         return redirect('inventory/'.$request->site_id)->with('status2', 'Data Edited!');
      }
 
     public function destroyInventorySite(SitedStock $sitedstock, Request $request){
         $sites = $sitedstock->site_id;
-        $stocks = SitedStock::destroy($sitedstock->sited_stock_id);
+        SitedStock::destroy($sitedstock->sited_stock_id);
 
         return redirect('inventory/'.$sites)->with('status3', 'Data Deleted!');
     }
 
-    public function destroySite($id){
-        $sites = DB::table('sites')->where('site_id',$id);
+    public function destroySite($id_site){
+        $sites = DB::table('sites')->where('site_id',$id_site);
         $sites->delete();
 
         return redirect('site')->with('status3', 'Data Deleted!');
