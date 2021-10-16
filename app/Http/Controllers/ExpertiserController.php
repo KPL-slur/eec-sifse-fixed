@@ -30,7 +30,7 @@ class ExpertiserController extends Controller
         $experts->expert_company = $request->expert_company;
         $experts->save();
 
-        $request->validated();
+        $validated = $request->validated();
 
         // dd($request);
         return redirect('expertManagement')->with('status1', 'Data Created!');
