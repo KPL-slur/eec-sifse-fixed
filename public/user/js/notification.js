@@ -2,12 +2,12 @@ function showNotification(from, align, type ,message){
 
     var icons;
 
-    if (type == 'success'){
-        icons = 'check';
-    } else if(type == 'danger'){
-        icons = 'error_outline';
-    } else if (type == 'warning'){
-        icons = 'warning_amber';
+    if (type === "success"){
+        icons = "check";
+    } else if(type === "danger"){
+        icons = "error_outline";
+    } else if (type === "warning"){
+        icons = "warning_amber";
     }
 
   $.notify({
