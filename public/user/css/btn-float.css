@@ -20,7 +20,7 @@
   margin-bottom: 10px;
 }
 
-.btn-float-list li button{
+.btn-float-list li button {
   display: block;
 }
 
@@ -36,5 +36,5 @@ a#menu-share:hover + ul {
 
 button#menu-share:hover + ul,
 a#menu-share:hover + ul {
-  visibility: visible
+  visibility: visible;
 }
