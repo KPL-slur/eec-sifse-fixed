@@ -16,15 +16,15 @@ function selectGroupIndexStocks(){
       if (input === td || input === ""){
         tr[i].style.display = "";
           if (input === ""){
-            header.innerHTML = "Semua"
+            header.innerHTML = "Semua";
           } else if(input === 1){
             header.innerHTML = "Transmitter";
           } else if (input === 2){
-            header.innerHTML = "Receiver"
+            header.innerHTML = "Receiver";
           } else if ( input === 3){
-            header.innerHTML = "Antenna"
+            header.innerHTML = "Antenna";
           } else if (input === 0){
-            header.innerHTML = "Tambahan"
+            header.innerHTML = "Tambahan";
           }
       } else {
         tr[i].style.display = "none";
@@ -56,11 +56,11 @@ function selectGroupIndexStocks(){
             } else if(input === 2020){
               header.innerHTML = "2020";
             } else if (input === 2021){
-              header.innerHTML = "2021"
+              header.innerHTML = "2021";
             } else if ( input === 2022){
-              header.innerHTML = "2022"
+              header.innerHTML = "2022";
             } else if (input === 2023){
-              header.innerHTML = "2023"
+              header.innerHTML = "2023";
             } 
         } else {
           tr[i].style.display = "none";
