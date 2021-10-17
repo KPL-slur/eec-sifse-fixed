@@ -85,7 +85,7 @@
                     want to enter the current exchange rate ?</button>
                   <script type="text/javascript">
                     document.getElementById("button_kurs_beli").addEventListener("click", (e) => {
-                      document.getElementById("kurs_beli").value = '<?php echo $rate_fix ?>';
+                      document.getElementById("kurs_beli").value = '{{ $rate_fix }}';
                     });
                   </script>
                   @error('kurs_beli')
