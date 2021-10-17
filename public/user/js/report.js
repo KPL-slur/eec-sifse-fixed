@@ -22,8 +22,8 @@ window.onload = function () {
     /*
      *  Memanggil method addSpaceBeforeChar
      */
-    window.addEventListener('list-added', event => {
-        addSpaceBeforeChar('recommends-qty');
+    window.addEventListener("list-added", event => {
+        addSpaceBeforeChar("recommends-qty");
     });
     // $('#recommends-qty').on('keyup', addSpaceBeforeChar('recommendsQty'));
     // $('#manualRecommendsQty').on('keyup', addSpaceBeforeChar('manualRecommendsQty'));
@@ -35,7 +35,7 @@ window.onload = function () {
     }
     $("#experts\\[0\\]\\[expert_id\\]").on("change", function () {
         // console.log($("#experts\\[0\\]\\[expert_id\\]").val());
-        if ($("#experts[0][expert_id]").val() != "") {
+        if ($("#experts[0][expert_id]").val() !== "") {
             $("#btnManualExpert").prop("disabled", true);
         }
     });
