@@ -78,7 +78,7 @@
 @if (session('status3'))
     <script>
       window.onload = () => {
-        showNotification('top', 'right', 'danger', '<?php echo session('status3') ?>');
+        showNotification('top', 'right', 'danger', "{{ session('status3') }}");
       }
     </script>
 @endif
