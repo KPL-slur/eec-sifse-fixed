@@ -116,7 +116,7 @@
                         <div class="card-body ">
                             <div class="row">
                                 <div class="container">
-                                    <?php echo $bodyReport->remark; ?>
+                                    {{ $bodyReport->remark; }}
                                 </div>
                             </div>
                         </div>
