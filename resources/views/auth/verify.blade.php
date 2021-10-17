@@ -32,7 +32,7 @@
 @if (session('message'))
     <script>
        window.onload = () => {
-         showNotification('top', 'right', 'success' ,'<?php echo session('message') ?>');
+         showNotification('top', 'right', 'success' ,"{{ session('message') }}");
        };
      </script>
 @endif
