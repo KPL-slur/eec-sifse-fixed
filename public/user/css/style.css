@@ -19,18 +19,15 @@
   margin-top: 0;
 }
 
-.off-canvas-sidebar-custom
-.navbar
-.navbar-collapse
-.navbar-nav
-.nav-item
+.off-canvas-sidebar-custom,
+.navbar,
+.navbar-collapse,
+.navbar-nav,
+.nav-item,
 .nav-link {
   color: inherit;
 }
 
-/*
-*
-*/
 #towers {
   height: 100px;
   width: 85px;
@@ -64,23 +61,13 @@
   top: 0px;
 }
 
-/*
- * Try to fix modal adding padding to the right
- * If this code cause problem remove fade class
- * from modal or delete this code
- */
 .modal-open {
   overflow: auto;
   padding-right: 0;
 }
 
-/* 
- *CK EDITOR STYLING
- */
 .editor__editable,
-/* Classic build. */
-main .ck-editor[role='application'] .ck.ck-content
-/* Decoupled document build. */
+main .ck-editor[role='application'] .ck.ck-content,
 .ck.editor__editable[role='textbox'],
 .ck.ck-editor__editable[role='textbox'] {
   line-height: 1.6em;
@@ -105,16 +92,10 @@ select.distribution:not([size]):not([multiple]) {
   width: 100%;
 }
 
-/*
- * alpine js
- */
 [x-cloak] {
   display: none;
 }
 
-/*
- *
- */
 .toast-top-right {
   position: fixed;
   top: 40px;
